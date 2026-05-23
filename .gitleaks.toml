@@ -1,0 +1,18 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Generated local artifacts"
+  paths = [
+    '''(^|/)node_modules/''',
+    '''(^|/)\.next/''',
+    '''(^|/)\.wrangler/''',
+  '''(^|/)target/''',
+  '''(^|/)dist/''',
+  '''(^|/)out/''',
+  '''(^|/)allure-results/''',
+  '''(^|/)allure-report/''',
+  '''(^|/)playwright-report/''',
+  '''(^|/)test-results/''',
+  '''(^|/)qa-artifacts/''',
+  ]

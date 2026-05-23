@@ -1,0 +1,838 @@
+{
+  "Orders": {
+    "list": {
+      "intro": {
+        "heading": "我的订单",
+        "description": "接单、购买、交付、验收和争议都沉淀在这里，市场只保留仍可交易的发布。",
+        "backToMarket": "返回首页"
+      },
+      "badges": {
+        "order": "订单"
+      },
+      "filters": {
+        "all": "全部"
+      },
+      "stages": {
+        "count": "{count} 单",
+        "payment": {
+          "heading": "待支付",
+          "description": "先完成付款，交付方才会开始处理。"
+        },
+        "delivery": {
+          "heading": "待交付",
+          "description": "交付方正在提交结果或阶段进度。"
+        },
+        "acceptance": {
+          "heading": "待验收",
+          "description": "结果已提交，付款方需要确认或发起争议。"
+        },
+        "dispute": {
+          "heading": "争议中",
+          "description": "争议会暂停原流程，等待撤回或平台给出处理结果。"
+        },
+        "complete": {
+          "heading": "已完成",
+          "description": "订单已经进入最终结果，保留记录便于回看。"
+        }
+      },
+      "meta": {
+        "payer": "{role}：{name}",
+        "fulfiller": "{role}：{name}",
+        "parties": "{payer} / {fulfiller}",
+        "phase": "阶段：{phase}",
+        "payerShort": "付款：{name}",
+        "fulfillerShort": "交付：{name}",
+        "counterparty": "对方：{name}",
+        "partiesShort": "付款方：{payer} / 交付方：{fulfiller}",
+        "pendingCounterparty": "待确认",
+        "participantsPending": "参与方待确认",
+        "unknownAccount": "未知账号"
+      },
+      "roles": {
+        "buyer": "买家",
+        "seller": "卖家",
+        "initiator": "发起方",
+        "executor": "执行方"
+      },
+      "amount": {
+        "label": "结算",
+        "money": "$",
+        "shares": "虚拟股份"
+      },
+      "payment": {
+        "waitingForYou": "等待你付款",
+        "waitingForPayer": "等待付款方付款",
+        "dueAt": "截止 {date}"
+      },
+      "empty": {
+        "title": "当前账号暂无订单",
+        "description": "购买或接单后会在这里出现独立订单。"
+      },
+      "error": {
+        "generic": {
+          "title": "订单加载失败",
+          "description": "订单或账号信息没有正常返回，请稍后重试。"
+        },
+        "auth": {
+          "title": "需要重新登录",
+          "description": "当前浏览器会话无法读取订单，请重新登录后查看。"
+        },
+        "forbidden": {
+          "title": "当前账号无权查看订单列表",
+          "description": "订单列表只展示当前账号参与或具备审核权限的订单。"
+        }
+      }
+    },
+    "detail": {
+      "intro": {
+        "description": "订单页先说明现在走到哪一步、轮到谁、下一步做什么。",
+        "backToMarket": "返回首页"
+      },
+      "accessDenied": {
+        "heading": "当前账号无权查看此订单",
+        "description": "订单 {orderNo} 只对买方、交付方、评审员和项目处理人开放。",
+        "note": "请切换到订单参与方账号，或从具备后台审核权限的入口查询订单。",
+        "backToOrders": "返回个人中心市场"
+      },
+      "common": {
+        "none": "无",
+        "yes": "会",
+        "orderDetail": "订单详情",
+        "currentState": "当前状态"
+      },
+      "account": {
+        "verifiedMeta": "{handle} · 来自 @{source}",
+        "unknown": "未知账号",
+        "pending": "待确认"
+      },
+      "amount": {
+        "moneyValue": "${amount}",
+        "moneyPending": "金额待定",
+        "sharesValue": "{amount} 虚拟股份"
+      },
+      "flow": {
+        "claimed": {
+          "label": "已接单",
+          "helper": "订单已生成"
+        },
+        "payment": {
+          "label": "等待付款",
+          "helper": "买方完成付款"
+        },
+        "delivery": {
+          "label": "等待交付",
+          "helper": "交付方提交结果"
+        },
+        "acceptance": {
+          "label": "等待验收",
+          "helper": "买方确认结果"
+        },
+        "accepted": {
+          "label": "已验收",
+          "helper": "争议窗口开放中"
+        },
+        "settled": {
+          "label": "最终完成",
+          "helper": "订单结束"
+        },
+        "disputed": {
+          "label": "争议中",
+          "helper": "等待撤回或裁决"
+        },
+        "closed": {
+          "label": "已关闭",
+          "helper": "订单未完成"
+        },
+        "timeoutClosed": {
+          "label": "付款超时关闭",
+          "helper": "未付款，名额已释放"
+        }
+      },
+      "proof": {
+        "heading": "交付证明",
+        "description": "证明决定验收和争议判断。",
+        "deliveryResultHeading": "交付结果",
+        "empty": "还没有提交证明。",
+        "attachments": "附件",
+        "deliveryLink": "交付链接",
+        "linkOnlyDescription": "交付方未填写说明。",
+        "noSummary": "交付方未填写说明。",
+        "reviewDecision": "评审结论",
+        "kind": {
+          "work_proof": "任务证明",
+          "review_proof": "评审证明"
+        }
+      },
+      "executionMode": {
+        "human": "人工执行",
+        "agent": "我的智能体执行",
+        "mixed": "混合执行"
+      },
+      "decision": {
+        "acceptOriginal": "接受原交付",
+        "closeOriginal": "关闭原订单"
+      },
+      "runtime": {
+        "codexLocalWorker": "本地工作执行器",
+        "reviewAgent": "评审执行器"
+      },
+      "delivery": {
+        "heading": "交付要求",
+        "description": "用户判断订单结果时只需要先看这两件事。",
+        "deliverable": "你会收到",
+        "acceptance": "验收标准",
+        "sourceItem": "来源项目",
+        "sourcePost": "来源发布"
+      },
+      "progress": {
+        "heading": "执行进度",
+        "description": "进度只展示执行方已经提交的阶段结果。",
+        "step": "第 {step} 步",
+        "update": "进度更新"
+      },
+      "parties": {
+        "heading": "参与方",
+        "description": "这里展示订单付款方、收款方和本次支付金额。",
+        "paymentAmount": "支付金额"
+      },
+      "summary": {
+        "heading": "订单摘要"
+      },
+      "currentState": {
+        "paymentDueAt": "请在 {date} 前完成付款；超时后订单会关闭，商品库存或名额会释放。",
+        "paymentPending": "付款成功后交付流程才会继续，超时未付款会释放商品库存或名额。",
+        "deliveryDueAt": "付款已完成，建议交付方在 {date} 前提交交付或进度；逾期不会阻止发货，买家可基于逾期发起协商或争议。",
+        "disputeWindowEnds": "窗口将在 {date} 结束；期间仍可发起争议，到期后订单会最终完成。",
+        "disputeWindowUnknown": "交付已确认通过，正在等待争议窗口结束；窗口期内仍可发起争议。"
+      },
+      "paymentCountdown": {
+        "remaining": "剩余 {time} · 截止 {date}",
+        "expired": "已超过付款截止时间 · 截止 {date}"
+      },
+      "finalSummary": {
+        "closed": "订单已关闭，结算不会继续推进。",
+        "sharesPending": "订单已完成，虚拟股份正在等待发放确认。",
+        "sharesReady": "订单已完成，虚拟股份会按结算记录发放。",
+        "moneyDone": "订单已完成，资金结算已进入最终状态。"
+      },
+      "dispute": {
+        "heading": "争议处理中",
+        "resultHeading": "争议结果",
+        "viewDetails": "查看争议详情",
+        "openedBy": "争议发起人",
+        "reason": "争议原因",
+        "handler": "处理方",
+        "handlerPending": "待分配",
+        "cancelled": "撤回争议",
+        "reviewer": "评审人",
+        "dueAt": " · 截止 {date}",
+        "backofficeHandling": "负责人处理",
+        "originalOrder": "原订单",
+        "reviewOrder": "评审订单",
+        "openOriginalOrder": "查看原订单",
+        "openReviewOrder": "查看评审订单",
+        "summary": {
+          "cancelled": "争议已撤回，订单回到发起争议前的验收路径。",
+          "accepted": "争议已处理，结果为交付通过。",
+          "closed": "争议已处理，结果为订单关闭。",
+          "active": "争议处理中，可以进入详情页查看来源、证据和处理入口。"
+        }
+      },
+      "settlement": {
+        "heading": "结算",
+        "description": "这里直接说明资金或虚拟股份当前在哪里、下一步由谁处理。",
+        "method": "结算方式",
+        "payableAmount": "订单金额",
+        "sharesAmount": "虚拟股份数量",
+        "counterparty": "对方",
+        "shareReceiver": "虚拟股份接收方",
+        "recipient": "收款方",
+        "disputeWindowEnds": "争议窗口截止",
+        "paymentStatus": "支付状态",
+        "windowPending": "等待验收后生成",
+        "waitingApproval": "等待虚拟股份发放审批",
+        "waitingDisputeWindow": "等待争议窗口结束",
+        "waitingAcceptance": "等待订单验收",
+        "payer": "付款方：{payer}",
+        "nextOwner": "下一处理：{owner}",
+        "releaseReady": "订单完成后会发放虚拟股份。",
+        "waitingFinalStatus": "等待最终状态",
+        "lockReasonLine": "当前暂停发放：{reason}",
+        "lockReason": {
+          "acceptance_window": "验收争议窗口",
+          "disputed": "争议冻结",
+          "approval_pending": "发放审批中",
+          "fallback": "等待锁定"
+        },
+        "approvalPending": "虚拟股份发放正在等待处理人确认。",
+        "paymentIntent": {
+          "missing": "待创建",
+          "pending": "待支付",
+          "authorized": "确认中",
+          "captured": "已付款",
+          "failed": "支付失败",
+          "cancelled": "已取消",
+          "refunded": "已退款",
+          "disputed": "争议中"
+        },
+        "type": {
+          "money": "$ 结算",
+          "shares": "虚拟股份结算"
+        },
+        "status": {
+          "locked": "已锁定",
+          "released": "已释放",
+          "cancelled": "已取消",
+          "pending": "待审批",
+          "approved": "已审批",
+          "skipped": "免审批",
+          "fallback": "等待推进"
+        }
+      },
+      "events": {
+        "summary": "订单记录",
+        "recent": "最近动态",
+        "empty": "事件记录为空。",
+        "hasMore": "已显示最近 3 条，另有 {hidden} 条历史记录。"
+      },
+      "event": {
+        "listing_claimed": "任务已领取",
+        "progress_submitted": "阶段进度已提交",
+        "proof_submitted": "证明已提交",
+        "order_accepted": "订单已验收",
+        "order_disputed": "订单进入争议",
+        "review_listing_opened": "评审条目已打开",
+        "review_order_claimed": "评审订单已领取",
+        "review_proof_submitted": "评审证明已提交",
+        "reviewer_assigned": "评审员已指派",
+        "backoffice_override_applied": "负责人已覆盖争议结果",
+        "order_closed": "订单已关闭",
+        "timeout_release": "锁单超时已释放",
+        "shares_minted": "虚拟股份已发放",
+        "unknown": "订单有新记录"
+      }
+    },
+    "dispute": {
+      "intro": {
+        "heading": "争议详情"
+      },
+      "common": {
+        "waitingRecord": "等待记录",
+        "none": "无",
+        "unknownAccount": "未知账号"
+      },
+      "current": {
+        "heading": "当前处理",
+        "nextAction": "下一步",
+        "openedAt": "发起时间"
+      },
+      "source": {
+        "heading": "发起信息",
+        "order": "订单",
+        "openOrder": "查看原始订单",
+        "openedBy": "发起人",
+        "buyer": "买家",
+        "seller": "卖家",
+        "handler": "处理方",
+        "handlerPending": "待分配",
+        "reason": "争议原因",
+        "cancelRecord": "撤回记录"
+      },
+      "evidence": {
+        "heading": "交付记录与依据",
+        "deliveryResult": "交付结果",
+        "acceptance": "验收依据",
+        "deliveryEvidence": "交付证据",
+        "disputeEvidence": "争议证据",
+        "emptyRefs": "暂无证据附件。",
+        "emptyDelivery": "暂无交付附件。",
+        "emptyDispute": "暂无争议附件。",
+        "download": "下载文件",
+        "open": "打开链接",
+        "copy": "复制链接",
+        "copied": "已复制",
+        "uploadPrefix": "上传文件",
+        "waitingDelivery": "暂无交付说明。",
+        "decision": " · 结论：{decision}"
+      },
+      "timeline": {
+        "heading": "争议时间线",
+        "empty": "暂无争议记录。"
+      },
+      "progress": {
+        "heading": "处理进度",
+        "opened": "争议已发起",
+        "assignment": "等待平台分配处理人",
+        "materials": "双方补充材料",
+        "ruling": "平台裁定",
+        "ended": "争议结束",
+        "cancelled": "争议撤回",
+        "done": "已完成",
+        "current": "当前步骤",
+        "pending": "待开始"
+      },
+      "management": {
+        "heading": "争议管理",
+        "note": "平台将在核实双方材料后给出处理结果。"
+      },
+      "notes": {
+        "heading": "处理说明",
+        "description": "平台将在核实双方材料后给出处理结果，争议期间原验收、交付和结算动作会被冻结。"
+      },
+      "handling": {
+        "cancelled": {
+          "title": "争议已撤回",
+          "action": "回到订单页继续原来的验收路径。"
+        },
+        "final": {
+          "title": "争议已处理",
+          "action": "详情页保留来源、证据和处理记录。"
+        },
+        "authority": {
+          "title": "等待平台处理",
+          "action": ""
+        },
+        "opener": {
+          "title": "争议处理中",
+          "action": ""
+        },
+        "assign": {
+          "title": "等待指派处理人",
+          "action": "先选择处理人，再推进争议处理。"
+        },
+        "appeal": {
+          "title": "可以申请二审",
+          "action": "补充说明一审遗漏的事实后申请复核。"
+        },
+        "waiting": {
+          "title": "争议处理中",
+          "action": ""
+        }
+      },
+      "state": {
+        "cancelled": "已撤回",
+        "active": "处理中",
+        "final": "已处理"
+      },
+      "result": {
+        "acceptOriginal": "接受原交付",
+        "closeOriginal": "关闭原订单",
+        "cancelled": "争议撤回",
+        "pending": "等待处理"
+      },
+      "status": {
+        "claimed": "已接单",
+        "delivered": "等待验收",
+        "disputed": "争议处理中",
+        "accepted_open": "验收窗口开放",
+        "final_accepted": "最终完成",
+        "final_closed": "最终关闭"
+      },
+      "event": {
+        "post_item_claimed": "任务已领取",
+        "auto_delivery_completed": "自动交付完成",
+        "order_disputed": "争议已发起",
+        "review_task_opened": "评审任务已打开",
+        "review_listing_opened": "评审入口已打开",
+        "review_workbench_published": "评审待办已发布",
+        "dispute_cancelled": "争议已撤回",
+        "backoffice_override_applied": "平台已处理",
+        "order_closed": "订单已关闭",
+        "order_accepted": "订单已接受",
+        "unknown": "争议有新记录"
+      },
+      "eventDetail": {
+        "reason": "原因：{reason}",
+        "cancelled": "撤回原因：{reason}；订单回到 {status}。",
+        "override": "最终处理：{decision}",
+        "overrideWithReason": "最终处理：{decision}；原因：{reason}",
+        "reviewer": "评审人：{reviewer}"
+      }
+    },
+    "requestCurrentState": {
+      "viewerPayment": {
+        "title": "等待你付款"
+      },
+      "publisherPayment": {
+        "title": "等待发布人付款"
+      },
+      "openPaymentOrder": "进入订单付款"
+    },
+    "actionPanel": {
+      "heading": "下一步",
+      "description": "根据订单状态展示交付记录、支付、验收、争议和评审动作。",
+      "currentPhase": "当前阶段",
+      "nextProgressDue": "下次进度截止：{date}",
+      "emptyActions": "现在还不用你处理。",
+      "defaults": {
+        "overrideReason": "",
+        "appealReason": "一审结论存在遗漏，申请二审复核。",
+        "cancelDisputeReason": "双方已确认交付有效，撤回本次争议。",
+        "openDisputeReason": "从订单页打开争议复核。"
+      },
+      "account": {
+        "verifiedSuffix": " · 来自 @{handle}"
+      },
+      "errors": {
+        "missingPaymentRequirement": "OKX 支付要求缺少 {key}",
+        "missingPaymentExtra": "OKX 支付要求缺少扩展信息。",
+        "missingPaymentExtraVersion": "OKX 支付要求缺少版本信息。",
+        "createPaymentFirst": "请先创建 OKX 支付会话。",
+        "walletMissing": "未检测到钱包插件。请安装或启用 OKX Wallet / MetaMask 后重试。",
+        "requirementsMissing": "OKX 支付要求尚未生成。",
+        "walletAccountMissing": "钱包没有返回账号。",
+        "walletRejected": "你已取消钱包操作。",
+        "walletConnectFailed": "钱包连接没有完成，请重试。",
+        "walletSwitchFailed": "没有切换到 X Layer，暂时无法付款。",
+        "walletSignFailed": "钱包签名没有完成，请重试。",
+        "walletRequestFailed": "钱包操作没有完成，请重试。",
+        "walletRequestTimeout": "钱包响应超时，请重新发起支付。",
+        "invalidPaymentPayload": "外部钱包数据格式不正确，请重新生成后再提交。"
+      },
+      "progress": {
+        "heading": "进度更新（可选）",
+        "description": "只记录过程进展，不会提交验收；完成交付请使用上面的“提交交付结果”。",
+        "titlePlaceholder": "例如：首版页面可访问",
+        "summaryPlaceholder": "说明这一阶段推进了什么，下一步准备做什么。",
+        "submit": "记录进度"
+      },
+      "proof": {
+        "summary": "证明摘要",
+        "summaryPlaceholder": "说明交付内容、链接和执行来源",
+        "reviewDecision": "评审结论",
+        "acceptanceCriteria": "引用完成标准",
+        "attachment": "附件",
+        "attachmentHint": "支持 PNG / JPG / WEBP / PDF；提交证明前必须添加至少一个附件。",
+        "attachmentRequired": "请先添加证明附件。",
+        "submit": "提交证明",
+        "current": "当前证明"
+      },
+      "decision": {
+        "acceptOriginal": "接受原交付",
+        "closeOriginal": "关闭原订单"
+      },
+      "optional": "（可选）",
+      "autoDelivery": {
+        "heading": "提交交付结果",
+        "description": "这是最终交付入口，提交后订单会进入待验收。",
+        "summary": "交付说明",
+        "summaryPlaceholder": "说明你交付了什么，{reviewer}应该如何查看或使用。",
+        "url": "结果链接",
+        "urlPlaceholder": "填写{reviewer}可访问的结果链接",
+        "attachment": "附件",
+        "chooseAttachment": "选择附件",
+        "noAttachment": "未添加附件",
+        "attachmentCount": "已添加 {count} 个附件",
+        "removeAttachment": "删除附件",
+        "attachmentHint": "支持 PNG / JPG / WEBP / PDF；链接和附件会一起写入订单交付记录。",
+        "waitForPayment": "{payer}付款后才能提交交付结果。",
+        "submit": "提交给{reviewer}验收",
+        "deliveryLink": "交付链接"
+      },
+      "instantDelivery": {
+        "heading": "直接发货",
+        "done": "发货结果已写入订单。",
+        "waiting": "付款成功后系统会自动发货。",
+        "status": "发货状态",
+        "delivered": "已发货",
+        "waitingReceipt": "等待发货结果",
+        "retry": "重试发货"
+      },
+      "stockDelivery": {
+        "heading": "交付内容",
+        "reveal": "查看内容",
+        "copy": "复制",
+        "copySuccess": "已复制交付内容",
+        "copyFailed": "复制失败，请手动选择内容。"
+      },
+      "actions": {
+        "accept": "确认通过",
+        "openDispute": "发起争议"
+      },
+      "disputeOpen": {
+        "heading": "发起争议",
+        "description": "发起后订单会暂停验收，进入争议处理。",
+        "reason": "争议原因",
+        "reasonRequired": "请填写争议原因。",
+        "reasonPlaceholder": "说明哪里未达到完成标准，以及希望如何处理。",
+        "evidenceUrl": "证据链接",
+        "evidenceUrlPlaceholder": "截图、PR、工单或交付记录链接",
+        "attachment": "证据附件",
+        "chooseAttachment": "选择附件",
+        "noAttachment": "未添加附件",
+        "attachmentCount": "已添加 {count} 个附件",
+        "removeAttachment": "删除附件",
+        "attachmentHint": "支持 PNG / JPG / WEBP / PDF；证据仅用于本次争议处理。",
+        "review": "发起争议",
+        "cancel": "取消",
+        "confirmTitle": "确认发起争议",
+        "confirmDescription": "订单会暂停验收，进入争议处理。",
+        "cancelConfirm": "返回修改",
+        "confirm": "确认发起争议"
+      },
+      "disputeManagement": {
+        "heading": "争议管理",
+        "cancelHint": "撤回后订单回到发起争议前的状态。",
+        "cancelReason": "撤回原因",
+        "cancelPlaceholder": "说明为什么撤回争议",
+        "cancel": "撤回争议",
+        "cancelConfirmTitle": "确认撤回争议",
+        "cancelConfirmDescription": "撤回后本次争议会关闭，订单回到发起争议前的验收路径。",
+        "backToEdit": "返回修改",
+        "appealHint": "补充一审遗漏的事实后，可以申请二次处理。",
+        "appealPlaceholder": "说明为什么申请二审",
+        "appeal": "申请二审",
+        "waitingReviewer": "等待评审方处理。",
+        "selectReviewer": "选择处理人",
+        "assignReviewer": "分配处理人",
+        "chooseReviewerFirst": "先选择处理人。",
+        "noReviewers": "没有可指派评审人。",
+        "openOverride": "结束争议",
+        "overridePlaceholder": "说明处理原因",
+        "overrideAccept": "判定交付通过",
+        "overrideClose": "关闭订单",
+        "overrideAcceptConfirmTitle": "确认判定交付通过",
+        "overrideCloseConfirmTitle": "确认关闭订单",
+        "overrideConfirmDescription": "平台将直接给出处理结果，订单会进入最终状态。"
+      },
+      "final": {
+        "accepted": "订单已最终完成",
+        "closed": "订单已关闭",
+        "settlementPreview": "结算预览：{amount} 虚拟股份"
+      },
+      "result": {
+        "heading": "操作已完成",
+        "description": "订单已更新为：{status}",
+        "failed": "操作没有完成"
+      },
+      "payment": {
+        "heading": "支付状态",
+        "amountPending": "待生成",
+        "amount": "金额",
+        "payableAmount": "应付金额",
+        "backendSessionHint": "支付会话由服务端生成，状态以系统记录为准。",
+        "createSession": "创建支付会话",
+        "refreshStatus": "刷新支付状态",
+        "paying": "支付中",
+        "abandon": "放弃付款",
+        "abandonConfirmTitle": "确认放弃付款",
+        "abandonConfirmDescription": "订单会关闭，商品库存或名额会释放。",
+        "abandonCancel": "返回",
+        "abandonConfirm": "确认放弃",
+        "dueAt": "付款截止：{date}",
+        "synced": "支付状态已同步",
+        "syncedDescription": "{status}，金额 {amount}。",
+        "regenerateRequirements": "重新生成支付要求",
+        "generateRequirements": "生成 OKX 支付要求",
+        "wallet": "钱包：{address}",
+        "payer": {
+          "buyer": "买家",
+          "request": "发布人"
+        },
+        "failure": {
+          "insufficientBalance": "余额不足：{message}"
+        },
+        "disabled": {
+          "settled": "这笔订单已完成支付，付款入口已关闭。",
+          "buyerOnly": "当前账号可以查看支付状态，付款需要买方账号完成。",
+          "payerOnly": "当前账号可以查看支付状态，付款需要{payer}账号完成。"
+        },
+        "status": {
+          "authorized": {
+            "label": "确认中",
+            "title": "支付确认中",
+            "description": "钱包授权已提交，仍在等待链上入账确认。确认完成前，交付和验收不会解锁。",
+            "action": "继续确认支付"
+          },
+          "paid": {
+            "label": "已付款",
+            "title": "支付已完成",
+            "description": "链上结算已经完成，付款入口已关闭，后续继续交付或验收流程。",
+            "action": "已完成支付"
+          },
+          "failed": {
+            "label": "支付失败",
+            "title": "上次支付失败",
+            "description": "上次支付没有完成，重新签名会复用当前订单并刷新支付状态。",
+            "action": "重新签名并支付"
+          },
+          "cancelled": {
+            "label": "已取消",
+            "title": "支付已取消",
+            "description": "当前支付会话已取消，重新签名会开启新的支付尝试。",
+            "action": "重新签名并支付"
+          },
+          "refunded": {
+            "label": "已退款",
+            "title": "支付已退款",
+            "description": "资金已经进入退款处理结果，订单支付入口已关闭。",
+            "action": "已退款"
+          },
+          "disputed": {
+            "label": "争议中",
+            "title": "支付进入争议",
+            "description": "当前支付需要人工处理，先完成争议或退款流程。",
+            "action": "争议处理中"
+          },
+          "pending": {
+            "label": "待支付",
+            "title": "等待钱包签名",
+            "description": "用钱包签名后，系统会自动同步支付结果。",
+            "action": "使用钱包支付"
+          },
+          "missing": {
+            "label": "待创建",
+            "title": "等待创建支付要求",
+            "description": "先生成 OKX 支付要求，再用钱包支付。",
+            "action": "使用钱包支付"
+          }
+        }
+      }
+    },
+    "marketSelection": {
+      "title": {
+        "offer": "选择售卖内容",
+        "request": "选择任务接单",
+        "project": "可领取任务"
+      },
+      "description": {
+        "offer": "买家从售卖内容中选择购买，付款后进入订单交付。",
+        "request": "执行方从任务中选择接单，发布人付款后进入交付。",
+        "project": ""
+      },
+      "action": {
+        "viewOrder": "查看订单",
+        "disabled": "当前不可选择",
+        "payToBuy": "先付款购买",
+        "buy": "立即购买",
+        "claimTask": "领取任务",
+        "joinProject": "加入项目",
+        "claimRequest": "立即接单"
+      },
+      "createItem": "新增内容",
+      "createProjectTask": "新增任务",
+      "selected": "当前选择",
+      "selectPlaceholder": "请选择一项",
+      "projectNotePlaceholder": "给任务补充一段执行备注。",
+      "buyerNotePlaceholder": "给交付方补充一段备注，可写账号、风格或交付偏好。",
+      "loginPrompt": "登录后会继续当前选择，并返回这里完成操作。",
+      "notes": {
+        "title": "购买说明",
+        "quantity": "购买数量",
+        "quantityValue": "默认购买 1 份"
+      },
+      "order": {
+        "title": "订单确认",
+        "selected": "已选内容",
+        "unitPrice": "单价",
+        "quantity": "数量",
+        "total": "合计",
+        "decreaseQuantity": "减少数量",
+        "increaseQuantity": "增加数量"
+      },
+      "instantDelivery": {
+        "heading": "直接发货",
+        "phonePlaceholder": "手机号，例如 13800138000",
+        "phoneError": "请输入 11 位有效手机号。",
+        "slaFallback": "付款成功后自动到账。",
+        "provider": "Provider：{provider}"
+      },
+      "stockDelivery": {
+        "heading": "平台库存托管",
+        "description": "平台锁库存，付款成功后自动发货。",
+        "confirmValue": "付款后自动交付一条托管库存"
+      },
+      "payment": {
+        "okxDirectPay": "OKX 直接支付",
+        "okxDescription": "当前仅支持 OKX 钱包支付。",
+        "sharesDescription": "这笔交易使用股份结算，订单页会展示具体结算进度。"
+      },
+      "confirm": {
+        "deliverable": "交付要求",
+        "deliverableFallback": "按内容说明交付",
+        "acceptance": "完成标准",
+        "acceptanceFallback": "按订单证明和完成标准确认",
+        "paymentMethod": "付款方式",
+        "shares": "虚拟股份",
+        "dispute": "争议入口",
+        "disputeValue": "交付后可在订单页打开争议",
+        "refund": "退款规则",
+        "refundValue": "订单关闭或终裁关闭后按结算记录处理"
+      },
+      "errors": {
+        "orderMissing": "订单已提交，但没有返回订单号，请刷新后查看订单状态。"
+      }
+    },
+    "requestItemPicker": {
+      "empty": "这个需求还没有开放可接任务。",
+      "emptyDescription": "发布人开放具体任务后，接单入口会出现在这里。",
+      "heading": "可接任务",
+      "description": "选择一项任务，看清交付要求和完成标准；资金到位后进入交付。",
+      "ownerView": "发布人视图",
+      "selected": "当前已选",
+      "priority": "优先级：{priority}",
+      "hasOrder": "已有订单",
+      "buyerNotePlaceholder": "补充交付偏好、参考链接或账号信息。",
+      "claim": "立即接单",
+      "loginToClaim": "登录后接单",
+      "viewOrder": "查看订单",
+      "loginPrompt": "登录后会保留当前页面，回来继续接单。",
+      "waitingState": "当前任务不可接单，可查看已有订单或等待状态更新。",
+      "instantDelivery": {
+        "phoneLabel": "直接发货手机号",
+        "slaFallback": "付款成功后自动发货。"
+      },
+      "stockDelivery": {
+        "heading": "平台库存托管",
+        "description": "平台会锁定库存，付款成功后自动发货。",
+        "confirmValue": "付款后自动交付一条托管库存"
+      },
+      "errors": {
+        "invalidRecipient": "请填写有效的收款钱包地址。",
+        "clipboardReadFailed": "无法读取剪贴板，请手动粘贴钱包地址。"
+      },
+      "status": {
+        "open": "可接单",
+        "released": "可接单",
+        "locked": "已锁定",
+        "in_progress": "交付中",
+        "in_review": "等待验收",
+        "accepted_window_open": "验收窗口",
+        "completed": "已完成",
+        "closed": "已关闭",
+        "archived": "已归档",
+        "unavailable": "不可接单"
+      },
+      "paymentStatus": {
+        "pending": "待付款",
+        "missing_payment_intent": "待创建支付",
+        "authorized": "授权中",
+        "captured": "已付款",
+        "failed": "支付失败",
+        "cancelled": "支付取消",
+        "refunded": "已退款",
+        "disputed": "支付争议"
+      },
+      "details": {
+        "deliverable": "交付要求",
+        "acceptance": "完成标准"
+      },
+      "recipient": {
+        "label": "收款钱包地址",
+        "hint": "填写接单人的 OKX / X Layer USDC 收款地址。发布人接受接单后会向该地址付款。",
+        "paste": "粘贴",
+        "valid": "地址格式正确"
+      },
+      "confirm": {
+        "deliverable": "交付要求",
+        "acceptance": "完成标准",
+        "paymentMethod": "付款方式",
+        "shares": "虚拟股份",
+        "dispute": "争议入口",
+        "disputeValue": "交付后在订单页打开争议",
+        "refund": "退款规则",
+        "refundValue": "订单关闭或终裁关闭后按结算记录处理"
+      }
+    }
+  }
+}

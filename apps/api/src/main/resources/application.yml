@@ -1,0 +1,109 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      cookie:
+        name: ${SESSION_COOKIE_NAME:MONOPOLYFUN_SESSION}
+        http-only: true
+        secure: ${COOKIE_SECURE:false}
+        same-site: ${COOKIE_SAME_SITE:Lax}
+        path: /
+
+spring:
+  application:
+    name: monopolyfun-api
+  profiles:
+    default: postgres
+  session:
+    store-type: jdbc
+    timeout: ${SESSION_TTL:30d}
+    jdbc:
+      initialize-schema: never
+      table-name: SPRING_SESSION
+      cleanup-cron: "0 * * * * *"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: db,ping
+        liveness:
+          include: ping
+  health:
+    diskspace:
+      enabled: true
+    ping:
+      enabled: true
+
+monopolyfun:
+  security:
+    production: ${APP_PRODUCTION:false}
+    csrf-cookie-name: ${CSRF_COOKIE_NAME:MONOPOLYFUN_CSRF}
+    csrf-header-name: ${CSRF_HEADER_NAME:X-CSRF-Token}
+    cookie-secure: ${COOKIE_SECURE:false}
+    cookie-same-site: ${COOKIE_SAME_SITE:Lax}
+    web-origin: ${WEB_ORIGIN:http://localhost:3000}
+    web-origin-patterns: ${WEB_ORIGIN_PATTERNS:}
+  uploads:
+    provider: ${UPLOAD_PROVIDER:fake}
+    bucket: ${UPLOAD_BUCKET:monopolyfun-proof-artifacts}
+    endpoint: ${UPLOAD_ENDPOINT:}
+    region: ${UPLOAD_REGION:auto}
+    access-key-id: ${UPLOAD_ACCESS_KEY_ID:}
+    secret-access-key: ${UPLOAD_SECRET_ACCESS_KEY:}
+    upload-base-url: ${UPLOAD_BASE_URL:https://r2.example/monopolyfun-proof-artifacts}
+    public-base-url: ${PUBLIC_BASE_URL:https://r2.example/monopolyfun-proof-artifacts}
+    presign-ttl: ${UPLOAD_PRESIGN_TTL:15m}
+    download-presign-ttl: ${UPLOAD_DOWNLOAD_PRESIGN_TTL:5m}
+    max-upload-bytes: ${UPLOAD_MAX_BYTES:10485760}
+    allowed-content-types:
+      - image/png
+      - image/jpeg
+      - image/webp
+      - application/pdf
+  payments:
+    provider: ${PAYMENT_PROVIDER:fake}
+    callback-secret: ${PAYMENT_CALLBACK_SECRET:}
+    fake-callback-enabled: ${PAYMENT_FAKE_CALLBACK_ENABLED:false}
+    public-base-url: ${PAYMENT_PUBLIC_BASE_URL:http://localhost:8080}
+    currency: ${PAYMENT_CURRENCY:USD}
+    okx:
+      api-base-url: ${OKX_ONCHAIN_PAY_API_BASE_URL:https://web3.okx.com}
+      api-key: ${OKX_ONCHAIN_PAY_API_KEY:}
+      api-secret: ${OKX_ONCHAIN_PAY_API_SECRET:}
+      api-passphrase: ${OKX_ONCHAIN_PAY_API_PASSPHRASE:}
+      project-id: ${OKX_ONCHAIN_PAY_PROJECT_ID:}
+      default-recipient: ${OKX_ONCHAIN_PAY_DEFAULT_RECIPIENT:}
+      default-asset: ${OKX_ONCHAIN_PAY_DEFAULT_ASSET:USDC}
+      default-network: ${OKX_ONCHAIN_PAY_DEFAULT_NETWORK:xlayer}
+      max-timeout-seconds: ${OKX_ONCHAIN_PAY_MAX_TIMEOUT_SECONDS:300}
+  digital-inventory:
+    encryption-secret: ${DIGITAL_INVENTORY_ENCRYPTION_SECRET:}
+  oauth:
+    github:
+      client-id: ${GITHUB_CLIENT_ID:}
+      client-secret: ${GITHUB_CLIENT_SECRET:}
+      authorize-url: ${GITHUB_AUTHORIZE_URL:https://github.com/login/oauth/authorize}
+      token-url: ${GITHUB_TOKEN_URL:https://github.com/login/oauth/access_token}
+      user-url: ${GITHUB_USER_URL:https://api.github.com/user}
+      redirect-uri: ${GITHUB_REDIRECT_URI:http://localhost:8080/api/v1/auth/oauth/github/callback}
+      verification-redirect-uri: ${GITHUB_VERIFICATION_REDIRECT_URI:http://localhost:8080/api/v1/identity/oauth/github/callback}
+      web-callback-url: ${GITHUB_WEB_CALLBACK_URL:http://localhost:3000/oauth/callback}
+  github-app:
+    api-base-url: ${GITHUB_APP_API_BASE_URL:https://api.github.com}
+    app-id: ${GITHUB_APP_ID:}
+    client-id: ${GITHUB_APP_CLIENT_ID:}
+    client-secret: ${GITHUB_APP_CLIENT_SECRET:}
+    private-key: ${GITHUB_APP_PRIVATE_KEY:}
+    webhook-secret: ${GITHUB_APP_WEBHOOK_SECRET:}
+    organization: ${GITHUB_APP_ORGANIZATION:}
+    template-owner: ${GITHUB_APP_TEMPLATE_OWNER:}
+    template-repo: ${GITHUB_APP_TEMPLATE_REPO:}
+    default-branch: ${GITHUB_APP_DEFAULT_BRANCH:main}

@@ -1,0 +1,397 @@
+{
+  "MarketSurface": {
+    "filters": {
+      "label": "分类",
+      "allShort": "全部",
+      "offerShort": "供给",
+      "requestShort": "需求",
+      "projectShort": "项目",
+      "all": "全部",
+      "offer": "供给",
+      "request": "需求",
+      "project": "项目"
+    },
+    "amount": {
+      "pricePending": "价格待定",
+      "budgetPending": "预算待定",
+      "projectSlots": "项目",
+      "projectSlot": "项目"
+    },
+    "inventory": {
+      "unlimited": "不限量",
+      "unlimitedSlots": "不限名额",
+      "remaining": "剩 {count} 个",
+      "claimable": "可接 {remaining}/{total}",
+      "joined": "已加入 {joined}/{total}"
+    },
+    "stats": {
+      "all": "全部条目",
+      "offers": "卖方供给",
+      "requests": "买方需求",
+      "projects": "项目位",
+      "accounts": "参与账号"
+    },
+    "toolbar": {
+      "section": "分区",
+      "search": "搜索",
+      "searchPlaceholder": "搜索标题、描述、项目摘要",
+      "sort": "排序",
+      "apply": "立即筛选",
+      "reset": "重置"
+    },
+    "sort": {
+      "label": "排序",
+      "recent": "最近更新",
+      "oldest": "最早发布",
+      "title": "按标题排序"
+    },
+    "sortShort": {
+      "recent": "最新",
+      "oldest": "最早",
+      "title": "标题"
+    },
+    "empty": {
+      "featuredTitle": "当前还没有热门条目。",
+      "featuredDescription": "先发布一个供给、需求或项目，首页会自动聚合进来。",
+      "filteredTitle": "当前筛选没有结果。",
+      "filteredDescription": "调整分区、搜索词或排序后再查看这一批条目。"
+    },
+    "card": {
+      "amount": "金额",
+      "inventory": "库存",
+      "updated": "更新",
+      "price": "价格",
+      "budget": "预算",
+      "unitPrice": "单项价格",
+      "itemBudget": "单项预算",
+      "shares": "虚拟股份池",
+      "projectQuota": "项目名额",
+      "stock": "库存",
+      "claimable": "可接",
+      "availableStock": "余量",
+      "openSlots": "名额",
+      "slots": "项目位",
+      "joined": "已加入",
+      "settlementLabel": "付款方式",
+      "noSummary": "发布人暂未补充介绍。",
+      "settlement": {
+        "shares": "虚拟股份",
+        "cash": "现金",
+        "pending": "待定"
+      },
+      "status": {
+        "open": "开放中",
+        "active": "进行中",
+        "claimable": "可领取",
+        "draft": "草稿",
+        "paused": "已暂停",
+        "closed": "已结束",
+        "archived": "已归档"
+      },
+      "owner": {
+        "githubVerified": "GitHub 已认证",
+        "coreProject": "核心项目"
+      },
+      "actions": {
+        "offer": "查看供给",
+        "request": "查看需求",
+        "project": "进入项目"
+      }
+    },
+    "actions": {
+      "enterMarket": "浏览首页",
+      "publish": "发布",
+      "backHome": "返回首页"
+    }
+  },
+  "Market": {
+    "title": "市场",
+    "description": "浏览可购买的供给、可接单的需求和开放协作项目，选择后进入详情页完成下一步。",
+    "visibleCount": "当前展示 <strong>{count}</strong> 条结果"
+  },
+  "MarketDetailShared": {
+    "publisherTitle": "发布人",
+    "publisherDescription": "先确认谁负责交付或验收。"
+  },
+  "OfferDetail": {
+    "paymentMethods": {
+      "shares": "虚拟股份支付",
+      "okxDirectPay": "OKX 直接支付",
+      "pending": "付款方式待定"
+    },
+    "pricePending": "价格待定",
+    "backToMarket": "返回首页",
+    "sold": "已成交",
+    "itemCount": "{count} 项",
+    "summary": {
+      "price": "价格",
+      "openItems": "库存",
+      "totalItems": "总共 {count} 项",
+      "publisher": "发布人",
+      "payment": "付款方式"
+    },
+    "tabs": {
+      "items": "售卖内容",
+      "info": "详情"
+    },
+    "workspace": {
+      "payment": "付款方式",
+      "paymentHelper": "以具体选项展示为准",
+      "openItems": "可交易项",
+      "updated": "更新",
+      "updatedHelper": "以发布内容最近变更为准",
+      "itemCount": "{count} 个",
+      "totalItems": "总共 {count} 个条目"
+    },
+    "itemStatus": {
+      "open": "可购买",
+      "claimed": "已下单",
+      "locked": "已锁定",
+      "inProgress": "交付中",
+      "inReview": "等待验收",
+      "acceptedWindowOpen": "验收窗口",
+      "completed": "已完成",
+      "closed": "已关闭",
+      "archived": "已归档",
+      "unavailable": "不可购买"
+    },
+    "paymentStatus": {
+      "pending": "待付款",
+      "authorized": "确认中",
+      "captured": "已付款",
+      "failed": "支付失败",
+      "cancelled": "已取消",
+      "refunded": "已退款",
+      "disputed": "争议中"
+    },
+    "publisherBadges": {
+      "verified": "已认证"
+    },
+    "publisher": {
+      "title": "发布人"
+    },
+    "closedNotice": "这个商品已经成交，市场列表已收起。买卖双方可在订单中心继续查看交付、支付、验收和争议状态。",
+    "detail": {
+      "title": "交付要求",
+      "description": "购买前确认会收到什么，以及后续如何验收。",
+      "empty": "发布人暂未补充整体交付要求，请先查看售卖内容里的交付要求和完成标准。"
+    },
+    "acceptancePrefix": "验收：{acceptance}"
+  },
+  "RequestDetail": {
+    "paymentMethods": {
+      "shares": "虚拟股份支付",
+      "okxDirectPay": "OKX 直接支付",
+      "pending": "付款方式待定"
+    },
+    "budgetPending": "预算待定",
+    "backToMarket": "返回首页",
+    "itemCount": "{count} 个",
+    "ownerWorkspace": {
+      "title": "发布人维护",
+      "description": "发布人可以在这里维护可接任务。"
+    },
+    "itemStatus": {
+      "open": "可接单",
+      "released": "可接单",
+      "locked": "已锁定",
+      "inProgress": "交付中",
+      "inReview": "等待验收",
+      "acceptedWindowOpen": "验收窗口",
+      "completed": "已完成",
+      "closed": "已关闭",
+      "archived": "已归档"
+    },
+    "paymentStatus": {
+      "authorized": "支付确认中",
+      "failed": "支付失败",
+      "cancelled": "支付已取消",
+      "refunded": "支付已退款",
+      "disputed": "支付争议中"
+    },
+    "state": {
+      "payment": {
+        "title": "等待发布人付款"
+      },
+      "acceptance": {
+        "title": "等待发布人验收"
+      },
+      "working": {
+        "title": "订单正在执行"
+      },
+      "waitingClaim": {
+        "title": "等待接单"
+      },
+      "closed": {
+        "title": "需求已结束"
+      },
+      "waitingItems": {
+        "title": "等待发布可接任务"
+      }
+    },
+    "summary": {
+      "budget": "预算",
+      "openItems": "可接任务",
+      "totalItems": "总共 {count} 个任务",
+      "publisher": "发布人",
+      "payment": "付款方式"
+    },
+    "tabs": {
+      "tasks": "可接任务",
+      "info": "详情"
+    },
+    "needSection": {
+      "heading": "交付要求与完成标准",
+      "description": "接单前确认要交付什么，以及什么情况算完成。",
+      "empty": "发布人暂未补充整体要求，请先查看任务里的交付要求和完成标准。"
+    },
+    "publisher": {
+      "title": "发布人",
+      "badges": {
+        "publisher": "需求发布人",
+        "open": "开放中",
+        "closed": "已结束"
+      }
+    }
+  },
+  "ProjectDetail": {
+    "backToMarket": "返回首页",
+    "releaseCurve": "虚拟股份",
+    "sharesAmount": "{count} 虚拟股份",
+    "taskClaimNotePlaceholder": "可选。写给发起人的领取说明，例如你的执行计划、相关经验或需要确认的前置条件。",
+    "sharesUnavailableShort": "暂不可用",
+    "sharesUnavailable": "虚拟股份数据暂不可用",
+    "sharesUnavailableDescription": "后端没有返回虚拟股份池时，暂不展示预估虚拟股份。",
+    "metrics": {
+      "openTasks": "开放任务",
+      "claimedAccounts": "领取人数",
+      "releasedShares": "已发虚拟股份",
+      "taskPoolRemaining": "可分配虚拟股份"
+    },
+    "taskStatus": {
+      "empty": "暂无开放任务",
+      "openCount": "{count} 个可领取任务"
+    },
+    "itemStatus": {
+      "open": "可领取",
+      "released": "可领取",
+      "locked": "进行中",
+      "in_progress": "进行中",
+      "in_review": "等待验收",
+      "completed": "已完成",
+      "closed": "已关闭",
+      "archived": "已归档",
+      "unavailable": "不可领取"
+    },
+    "actions": {
+      "joinProject": "加入项目",
+      "viewTasks": "查看任务",
+      "status": "状态",
+      "openTaskDescription": "任务在下方列表中领取，领取后进入订单履约。",
+      "noOpenTaskDescription": "暂无可领取任务"
+    },
+    "tabs": {
+      "tasks": "任务列表",
+      "myTasks": "我的任务",
+      "members": "贡献记录",
+      "platformGrants": "维护席位",
+      "governance": "虚拟股份与贡献",
+      "memory": "项目记忆",
+      "timeline": "动态",
+      "info": "详情"
+    },
+    "validationMetrics": {
+      "activeTasks": "任务",
+      "pendingReviews": "待验证",
+      "acceptedProofs": "已确认",
+      "settledRewards": "已发虚拟股份"
+    },
+    "contributorMetrics": {
+      "tasks": "任务",
+      "results": "成果",
+      "rewards": "虚拟股份",
+      "score": "权重"
+    },
+    "publisher": {
+      "title": "发起人",
+      "badges": {
+        "open": "项目开放中",
+        "verified": "已认证"
+      }
+    },
+    "governance": {
+      "title": "虚拟股份规则",
+      "description": "项目展示虚拟股份池、已发虚拟股份和贡献记录。"
+    },
+    "contributionRecords": {
+      "title": "贡献记录",
+      "description": "贡献记录由任务、成果、验证和虚拟股份共同推导。"
+    },
+    "commercialization": {
+      "title": "虚拟股份与贡献账本",
+      "description": "成果、验证、虚拟股份和贡献记录来自同一个项目账本。",
+      "status": {
+        "planned": "计划中",
+        "active": "执行中",
+        "proving": "验证中",
+        "validated": "已验证",
+        "collecting": "收集中",
+        "ready": "可分配"
+      },
+      "metrics": {
+        "tasks": "任务",
+        "results": "成果",
+        "accepted": "已确认",
+        "virtualSharePool": "虚拟股份池",
+        "claimed": "领取",
+        "virtualShares": "虚拟股份"
+      }
+    },
+    "team": {
+      "title": "维护席位",
+      "description": "维护席位只处理平台级事务；普通项目协作由任务列表、我的任务和贡献记录完成。",
+      "unassigned": "空缺"
+    },
+    "more": {
+      "title": "更多信息"
+    },
+    "detail": {
+      "title": "项目详情介绍",
+      "description": "项目详情页展示项目背景、任务列表、虚拟股份和执行规则。"
+    },
+    "baseInfo": {
+      "projectNo": "项目编号",
+      "publishedAt": "发布时间",
+      "totalShares": "虚拟股份总量",
+      "releasedShares": "已发虚拟股份",
+      "taskPoolRemaining": "待分配虚拟股份",
+      "reservePool": "预留虚拟股份"
+    },
+    "info": {
+      "projectBrief": "项目说明",
+      "deliverables": "交付内容",
+      "joinGuide": "参与方式",
+      "ownerIntro": "发起人说明",
+      "referenceLinks": "项目工作区",
+      "inventoryPolicy": "库存规则",
+      "visibility": "可见范围",
+      "empty": "项目暂未补充更多公开信息。"
+    },
+    "deliverablePrefix": "交付：{deliverable}",
+    "acceptancePrefix": "验收：{acceptance}",
+    "timeline": {
+      "title": "项目时间线",
+      "empty": "当前还没有项目时间线事件。",
+      "pendingDate": "等待时间",
+      "type": {
+        "project_published": "项目发布",
+        "role_assigned": "角色分配",
+        "owner_claimed": "发起人认领",
+        "task_claimed": "任务领取",
+        "task_completed": "任务完成",
+        "shares_released": "虚拟股份释放",
+        "order_closed": "订单关闭"
+      }
+    }
+  }
+}

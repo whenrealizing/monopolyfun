@@ -1,0 +1,454 @@
+{
+  "Publish": {
+    "kind": {
+      "offer": "卖出",
+      "request": "买入"
+    },
+    "tabs": {
+      "offer": {
+        "label": "卖出",
+        "description": "发布可购买的服务或资产"
+      },
+      "request": {
+        "label": "买入",
+        "description": "发布可接单的任务或预算"
+      }
+    },
+    "trade": {
+      "createTitle": "创建交易",
+      "offer": {
+        "headerLabel": "卖出交易",
+        "headerTitle": "发布卖出内容",
+        "headerDescription": "填写标题、说明和多个售卖内容，买家付款后进入交付。",
+        "titlePlaceholder": "填写标题",
+        "descriptionPlaceholder": "说明这项服务整体提供什么。"
+      },
+      "request": {
+        "headerLabel": "买入交易",
+        "headerTitle": "发布买入任务",
+        "headerDescription": "填写标题、说明和多个任务内容，执行人接单后进入交付。",
+        "titlePlaceholder": "填写标题",
+        "descriptionPlaceholder": "说明这项任务整体需要什么。"
+      }
+    },
+    "project": {
+      "headerLabel": "项目发布",
+      "headerTitle": "创建项目",
+      "headerDescription": "填写项目名称、初始目标和目标下的任务，发布后进入项目进展页继续推进。",
+      "titlePlaceholder": "填写项目名称",
+      "goalPlaceholder": "填写第一个要推进的项目目标",
+      "descriptionPlaceholder": "可选：用一句话说明这个项目做什么，留空时会自动生成简短介绍。",
+      "descriptionFallback": "{title} 是一个开放协作项目。",
+      "itemDescription": "完成「{taskName}」相关工作。",
+      "deliveryStandard": "提交与「{taskName}」相关的可验证交付结果。"
+    },
+    "fields": {
+      "title": "标题",
+      "description": "任务说明",
+      "sellerWallet": "OKX / X Layer 收款地址",
+      "paymentNetwork": "支付网络",
+      "companyGoal": "项目目标",
+      "initialGoal": "初始目标",
+      "taskName": "任务名称",
+      "taskDescription": "任务说明",
+      "difficulty": "难度",
+      "itemName": "名称",
+      "serviceItemName": "售卖内容",
+      "price": "价格",
+      "budget": "预算",
+      "inventory": "可购买份数",
+      "requestSlots": "需要人数",
+      "deliveryStandard": "买家会收到什么",
+      "acceptanceStandard": "完成标准",
+      "projectDeliveryStandard": "预期结果",
+      "projectAcceptanceStandard": "完成标准",
+      "companyTitle": "项目名称",
+      "companyDescription": "项目说明",
+      "paymentRecipient": "收款钱包",
+      "deadline": "截止时间",
+      "optional": "可选"
+    },
+    "hints": {
+      "sellerWallet": "填写 OKX 钱包中的 X Layer EVM 地址。",
+      "walletValid": "地址格式正确",
+      "paymentNetwork": "当前使用 OKX Direct Pay。",
+      "difficulty": "难度越高，领取时预估释放的虚拟股份越高。",
+      "moneyAmount": "{label}需要填写大于等于 0.01 的金额，最多 2 位小数",
+      "positiveIntegerQuantity": "数量需要填写正整数",
+      "lengthOk": "{label}已满足要求",
+      "lengthMissing": "{label}至少 {min} 个字符，当前 {current} 个，还差 {remaining} 个"
+    },
+    "difficultyHelp": {
+      "title": "难度怎么计算",
+      "description": "D1-D5 是快捷档位，背后对应 0.5 到 8 的难度分数。分数越高，任务越复杂，领取时预估释放的虚拟股份越多。",
+      "levels": [
+        "D1 = 0.5：很小的整理、修正或确认任务",
+        "D2 = 1：常规小任务",
+        "D3 = 2：需要完整交付的中等任务",
+        "D4 = 4：复杂实现、研究或协作任务",
+        "D5 = 8：高风险、高复杂度的核心任务"
+      ]
+    },
+    "paymentRule": {
+      "offer": "买家付款后，你可以在订单中提交交付内容。",
+      "request": "发布后等待接单，执行人接单时填写收款钱包。"
+    },
+    "deliveryMode": {
+      "label": "发货模式",
+      "reviewed": {
+        "label": "手动发货"
+      },
+      "stock": {
+        "label": "库存自动发货"
+      }
+    },
+    "digitalInventory": {
+      "fieldLabel": "库存内容",
+      "currentCount": "当前 {count} 条",
+      "placeholder": "库存内容 1\n库存内容 2",
+      "defaultDeliveryStandard": "付款后系统自动展示一条库存内容。",
+      "defaultAcceptanceCriteria": "买家收到的内容与售卖说明一致，且可正常访问或使用。"
+    },
+    "items": {
+      "listDescription": "可以添加多个{unit}，每项单独设置金额和数量。",
+      "sectionTitle": "{unit} {index}",
+      "offerSectionTitle": "选项",
+      "requestSectionTitle": "任务",
+      "quantityPlaceholder": "填写数量",
+      "offer": {
+        "listTitle": "售卖内容",
+        "unit": "售卖内容",
+        "add": "添加选项",
+        "defaultTitle": "售卖内容",
+        "defaultDescription": "库存默认 1，购买后进入订单交付流程。",
+        "sectionDescription": "买家会从这些内容中选择购买，每项独立定价。",
+        "taskPlaceholder": "填写售卖内容名称",
+        "amountPlaceholder": "填写价格",
+        "deliveryPlaceholder": "例如：交付 1 张 1024x1024 PNG 图片，提供下载链接。",
+        "acceptancePlaceholder": "例如：图片清晰、无水印，符合约定尺寸和风格后视为完成。"
+      },
+      "request": {
+        "listTitle": "任务内容",
+        "unit": "任务",
+        "add": "添加任务",
+        "defaultTitle": "任务内容",
+        "defaultDescription": "可接单人数默认 1，领取后进入订单交付流程。",
+        "sectionDescription": "执行人会从这些任务中选择接单，每项独立预算。",
+        "taskPlaceholder": "填写任务名称",
+        "amountPlaceholder": "填写预算",
+        "deliveryPlaceholder": "例如：提交一份包含 10 个竞品的结构化表格，字段完整且可复查。",
+        "acceptancePlaceholder": "例如：字段齐全、来源链接有效、无明显重复或遗漏后视为完成。"
+      },
+      "project": {
+        "listTitle": "目标下的初始任务",
+        "listDescription": "可以添加多个任务，每个任务都归到上面的初始目标里。",
+        "unit": "任务",
+        "add": "添加任务",
+        "defaultTitle": "首个任务",
+        "defaultDescription": "发布时同步创建第一条项目任务，后续任务在项目详情页继续添加。",
+        "sectionDescription": "任务会挂在初始目标下，难度用于领取时计算虚拟股份。",
+        "taskPlaceholder": "填写任务名称",
+        "descriptionPlaceholder": "可选：补充任务背景或范围。",
+        "deliveryPlaceholder": "说明领取人需要交付什么结果。",
+        "acceptancePlaceholder": "说明什么情况下算完成，可每行写一条。"
+      }
+    },
+    "preview": {
+      "title": "预览",
+      "emptyTitle": "等待填写标题",
+      "emptyAmount": "等待填写金额",
+      "emptyDescription": "填写描述后，这里会预览交易内容。",
+      "projectEmptyTitle": "等待填写项目名称",
+      "projectEmptyDescription": "填写初始目标后，这里会预览项目。",
+      "namedItems": "{completed}/{total} 条已命名",
+      "optionCount": "{count} 个选项",
+      "taskCount": "{count} 个任务",
+      "inventoryTotal": "共 {count} 份",
+      "slotTotal": "共 {count} 人",
+      "difficultyRange": "{min}-{max}",
+      "repositoryManaged": "系统创建",
+      "offerPayment": "OKX 收款钱包",
+      "requestPayment": "接单时填写收款钱包",
+      "projectShares": "任务领取后按难度释放虚拟股份",
+      "ready": "填写完成，可以发布。",
+      "remaining": "还需填写：{fields}",
+      "separator": "、",
+      "items": {
+        "title": "标题",
+        "description": "描述",
+        "price": "价格",
+        "budget": "预算",
+        "items": "选项",
+        "tasks": "任务",
+        "companyTitle": "项目名称",
+        "companyGoal": "项目目标",
+        "initialGoal": "初始目标",
+        "repository": "Project Workspace",
+        "payment": "支付",
+        "delivery": "交付"
+      }
+    },
+    "submit": {
+      "readyTitle": "准备发布",
+      "readyDescription": "提交后会进入对应详情页，后续交易在订单中处理。",
+      "offer": "发布供给",
+      "request": "发布需求",
+      "project": "创建项目",
+      "publishing": "发布中..."
+    },
+    "loginNotice": {
+      "text": "当前发布需要登录账号。登录后会继续保留这页表单内容。",
+      "action": "登录账号"
+    },
+    "draft": {
+      "restored": "已恢复上次未发布的内容"
+    },
+    "actions": {
+      "delete": "删除",
+      "deleteFilledConfirm": "这个{unit}已经填写了内容，确认删除吗？",
+      "cancelDelete": "取消",
+      "confirmDelete": "删除",
+      "paste": "粘贴"
+    },
+    "errors": {
+      "loginRequired": "请先登录后再发布，当前表单内容会保留在本页。",
+      "summaryTitle": "请先处理以下问题：",
+      "itemPrefix": "{unit} {index}：{message}",
+      "apiField": "{label}：{message}",
+      "maxItems": {
+        "item": "发布时最多同步创建 {count} 个选项。",
+        "task": "发布时最多同步创建 {count} 个任务。"
+      },
+      "minCharsSimple": "{label}至少 {min} 个字符",
+      "minCharsCurrent": "{label}至少 {min} 个字符，当前 {current} 个",
+      "remainingChars": "{label}还差 {remaining} 个字符",
+      "required": "请填写{label}",
+      "difficultyRange": "难度需要在 0.5 到 8 之间",
+      "positiveInteger": "{label}需要填写正整数",
+      "sellerWallet": "请填写有效的 X Layer EVM 收款地址",
+      "clipboardReadFailed": "无法读取剪贴板，请手动粘贴地址",
+      "digitalInventoryRequired": "库存自动发货需要至少填写一条库存内容",
+      "inventoryUploadFailed": "交易已发布，但库存上传失败。请在详情页管理面板补传库存后再让买家购买。"
+    }
+  },
+  "PostItems": {
+    "workspace": {
+      "title": "任务内容",
+      "projectTitle": "项目任务",
+      "tradeTitle": "可交易内容",
+      "description": "发布人把供给拆成售卖选项，把需求和项目拆成任务；其他用户选择具体内容后生成订单。",
+      "ownerView": "发起人视图",
+      "participantView": "参与者视图"
+    },
+    "manage": {
+      "title": "内容管理",
+      "description": "只给发布人维护选项和任务。买家或接单人仍在详情页完成选择，避免出现两个操作入口。"
+    },
+    "create": {
+      "offerTitle": "新增售卖选项",
+      "taskTitle": "创建任务",
+      "offerDescription": "写清楚买家购买后会收到什么，以及什么情况算完成。",
+      "taskDescription": "写清楚执行人要交付什么，以及发布人如何验收。",
+      "openOffer": "新增选项",
+      "openTask": "创建任务",
+      "hide": "收起新建",
+      "descriptionPlaceholder": "可选：补充背景、范围或注意事项。",
+      "deliveryStandardPlaceholder": "写清楚对方会收到什么，例如文件格式、数量、链接或说明文档。",
+      "acceptanceCriteriaPlaceholder": "写清楚什么情况算完成，可每行一条。",
+      "agentInstructionPlaceholder": "可选：说明 agent 如何执行、整理或交付结果。",
+      "submitOffer": "发布选项",
+      "submitTask": "发布任务"
+    },
+    "fields": {
+      "taskName": "任务名称",
+      "itemName": "选项名称",
+      "description": "说明",
+      "taskDescription": "任务说明",
+      "deliveryStandard": "交付要求",
+      "acceptanceCriteria": "完成标准",
+      "acceptanceStandard": "完成标准",
+      "taskType": "任务类型",
+      "difficultyScore": "难度分数",
+      "difficulty": "难度",
+      "price": "价格",
+      "budget": "预算",
+      "amount": "金额",
+      "inventory": "可购买份数",
+      "requestSlots": "需要人数",
+      "quantity": "数量",
+      "agentInstruction": "Agent 执行说明",
+      "optional": "可选"
+    },
+    "taskTypes": {
+      "normal": "普通任务",
+      "bug": "Bug 反馈",
+      "review": "Review",
+      "dispute": "异议"
+    },
+    "claim": {
+      "projectTitle": "领取任务",
+      "purchaseTitle": "确认购买",
+      "buyTitle": "确认购买",
+      "acceptTitle": "确认接单",
+      "noteLabel": "补充说明",
+      "noteHint": "可写执行计划、交付偏好或需要提前确认的问题。",
+      "projectNotePlaceholder": "给任务补充一段执行备注。",
+      "notePlaceholder": "给履约方补充一段备注。",
+      "project": "领取任务",
+      "payFirst": "先付款购买",
+      "buy": "购买",
+      "accept": "接单",
+      "login": "登录后继续"
+    },
+    "actions": {
+      "manage": "管理",
+      "cancel": "取消",
+      "showDetails": "查看要求",
+      "hideDetails": "收起要求",
+      "collapseEdit": "收起修改",
+      "editItem": "编辑内容",
+      "closeItem": "关闭任务",
+      "saveItem": "保存任务",
+      "closeConfirm": "关闭后这条任务不再允许新领取，已经领取的订单仍会继续处理。",
+      "cancelClose": "保持开放",
+      "confirmClose": "关闭任务"
+    },
+    "edit": {
+      "descriptionPlaceholder": "可选：补充背景、范围或注意事项。",
+      "acceptanceCriteriaPlaceholder": "完成标准，每行一条"
+    },
+    "defaults": {
+      "agentInstruction": "未填写 Agent 执行说明。"
+    },
+    "orders": {
+      "continueMine": "继续我的订单",
+      "view": "查看订单"
+    },
+    "settlement": {
+      "shares": "{count} 虚拟股份",
+      "pending": "待定"
+    },
+    "status": {
+      "open": "可领取",
+      "released": "可领取",
+      "locked": "进行中",
+      "in_progress": "进行中",
+      "in_review": "等待验收",
+      "completed": "已完成",
+      "closed": "已关闭",
+      "archived": "已归档"
+    },
+    "placeholders": {
+      "offerAmount": "填写价格",
+      "requestAmount": "填写预算",
+      "offerQuantity": "填写可购买份数",
+      "requestQuantity": "填写需要人数",
+      "difficultyScore": "难度 0.5-8"
+    },
+    "validation": {
+      "name": "请先填写至少 3 个字符的任务名称。",
+      "deliveryStandard": "请填写至少 8 个字符的交付要求。",
+      "acceptanceCriteria": "请填写至少 1 条完成标准。",
+      "difficultyScore": "请选择 D1-D5，或填写 0.5 到 8 之间的难度分数。",
+      "amount": "请填写大于 0 的金额。",
+      "quantity": "请填写大于 0 的整数数量。"
+    },
+    "deliveryMode": {
+      "label": "履约方式",
+      "reviewed": {
+        "label": "人工交付",
+        "helper": "付款后卖家在订单里填写交付内容"
+      },
+      "instant": {
+        "label": "服务商自动履约",
+        "helper": "由系统服务商在付款后自动处理，不需要上传库存"
+      },
+      "stock": {
+        "label": "库存自动发货",
+        "helper": "平台锁定库存，付款后自动交付一条"
+      }
+    },
+    "directDelivery": {
+      "heading": "服务商自动履约",
+      "phonePlaceholder": "手机号，例如 13800138000",
+      "slaFallback": "付款成功后自动到账",
+      "failurePolicyFallback": "失败后可重试",
+      "retryHint": "失败时订单保留可重试动作。"
+    },
+    "digitalInventory": {
+      "heading": "自动发货库存",
+      "fieldLabel": "库存内容",
+      "createHint": "每行填写一份可自动交付的内容，平台加密托管，买家付款后自动交付一条。",
+      "editHint": "继续上传会追加到自动发货库存。",
+      "currentCount": " 当前 {count} 条。",
+      "placeholder": "兑换码-001\n账号----密码\n下载链接 + 密钥",
+      "notice": "平台会在下单时锁定一条库存，付款成功后自动交付给买家。",
+      "badge": "{hasSummary, select, yes {库存自动发货 · 可售 {count}} other {库存自动发货}}",
+      "uploadAction": "上传库存",
+      "validation": {
+        "required": "库存自动发货需要先上传至少一条库存内容。",
+        "empty": "请先输入要上传的库存内容。"
+      },
+      "toast": {
+        "uploaded": "已上传 {count} 条库存"
+      },
+      "summary": {
+        "available": "可售",
+        "reserved": "已锁",
+        "delivered": "已发货",
+        "total": "总库存",
+        "inventory": "库存",
+        "loading": "读取中"
+      }
+    },
+    "progressDue": "下次进度截止：{date}",
+    "progressOverdue": "进度已逾期：{date}",
+    "capacity": "容量 {active}/{total}",
+    "empty": {
+      "title": "还没有可选择的内容",
+      "ownerDescription": "先新增一个选项或任务，其他人才能在详情页购买或接单。",
+      "viewerDescription": "发布人还没有开放具体内容，可以稍后回来查看。"
+    },
+    "toast": {
+      "itemCreated": "选项已发布",
+      "taskCreated": "任务已发布",
+      "itemSaved": "修改已保存",
+      "itemClosed": "已关闭，新的领取入口已停用"
+    }
+  },
+  "PostOwnerControls": {
+    "title": "发布管理",
+    "labels": {
+      "project": "项目保持长期开放，只允许更新内容和任务。",
+      "offer": "供给可以更新内容，也可以关闭交易入口。",
+      "request": "需求可以更新内容，也可以关闭接单入口。"
+    },
+    "actions": {
+      "collapse": "收起",
+      "edit": "修改",
+      "cancel": "取消",
+      "manageItems": "管理选项",
+      "close": "关闭",
+      "save": "保存修改"
+    },
+    "closeConfirm": {
+      "title": "确认关闭交易入口？",
+      "offer": "关闭后买家不能再购买这个供给，已有订单仍会继续处理。",
+      "request": "关闭后执行人不能再接这个需求，已有订单仍会继续处理。",
+      "project": "项目不能在这里关闭。",
+      "cancel": "保持开放",
+      "confirm": "确认关闭"
+    },
+    "fields": {
+      "title": "标题",
+      "description": "公开说明",
+      "companyGoal": "项目目标"
+    },
+    "toast": {
+      "saved": "修改已保存",
+      "offerClosed": "供给已关闭，新的购买入口已停用",
+      "requestClosed": "需求已关闭，新的接单入口已停用",
+      "projectClosed": "项目状态未变化"
+    }
+  }
+}

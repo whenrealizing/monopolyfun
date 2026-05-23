@@ -1,0 +1,116 @@
+{
+  "SupportContent": {
+    "contents": "Contents"
+  },
+  "About": {
+    "title": "About monopolyfun",
+    "description": "monopolyfun puts publishing, claiming, delivery, acceptance, payments, and Virtual Share incentives into one collaboration workspace.",
+    "nav": {
+      "version": "Current version",
+      "direction": "Product direction"
+    },
+    "capabilities": [
+      "Marketplace: discover offers, requests, projects, and trustworthy public profiles.",
+      "Publishing: create offers, requests, projects, and claimable project tasks.",
+      "Order fulfillment: move delivery through claiming, progress, proof, acceptance, disputes, and closure.",
+      "Profile: maintain display details, verification entry points, verification marks, Virtual Share ledger, and locked records.",
+      "Backoffice: scan audit, risk, payments, and uploaded assets, then drill into exceptions."
+    ],
+    "version": {
+      "title": "Current version",
+      "description": "The current version prioritizes browsing, publishing, claiming, delivering, accepting, and backoffice review around real server state. Legacy capabilities that are not connected yet are hidden, disabled, or explained as unavailable."
+    },
+    "direction": {
+      "title": "Product direction",
+      "description": "Transactions, projects, profile data, and organization permissions sit in one compact workspace so publishers, workers, reviewers, and operators collaborate around the same state.",
+      "badge": "Collaboration workspace",
+      "marketCta": "Browse home",
+      "publishCta": "Create listing"
+    }
+  },
+  "Terms": {
+    "title": "Terms of Service",
+    "description": "This is productized terms information for the current version, intended to help users understand service scope, account responsibilities, transaction and delivery rules, and usage risks; the operating entity still needs formal legal text before launch.",
+    "sections": [
+      {
+        "heading": "Service scope",
+        "items": [
+          "monopolyfun currently provides marketplace publishing, project tasks, order collaboration, payment sessions, delivery uploads, public profiles, Virtual Share ledger records, and backoffice review capabilities.",
+          "Page entry points follow currently implemented server capabilities; unavailable capabilities may be hidden, disabled, or marked as not available.",
+          "The platform may adjust pages, APIs, permissions, and available features as backend capabilities and product strategy evolve."
+        ]
+      },
+      {
+        "heading": "Account responsibilities",
+        "items": [
+          "You are responsible for protecting your account, password, sessions, and external verification grants.",
+          "Content, delivery evidence, payment information, and profile details you submit should be accurate, lawful, and authorized for use.",
+          "If your account is used abnormally, sign out promptly and contact the platform operator."
+        ]
+      },
+      {
+        "heading": "Transactions and delivery",
+        "items": [
+          "Offers, requests, and project tasks are entered by publishers or participants, and pages display server records.",
+          "Order status, acceptance, disputes, closure, payments, and Virtual Share release are determined by the final server-side result.",
+          "When payment, upload, or external verification services are not configured, pages show a clear error or unavailable state."
+        ]
+      },
+      {
+        "heading": "Restrictions and risks",
+        "items": [
+          "Do not publish illegal, infringing, fraudulent, manipulative, system-attacking, or permission-bypassing content or actions.",
+          "The current version may still experience feature changes, API adjustments, data model upgrades, and third-party service outages.",
+          "Backoffice permissions, risk controls, audits, and manual operations may affect the final state of some orders or assets."
+        ]
+      }
+    ],
+    "note": {
+      "title": "Pre-launch note",
+      "description": "This page is product information and not a formal legal agreement or legal advice. Before launch, the operating entity should add dispute resolution, liability limits, refund policy, governing law, and contact details."
+    }
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "description": "This is current-version data handling information, intended to help users understand how account, marketplace, order, payment, upload, and profile data is used; formal compliance text is still needed before launch.",
+    "sections": [
+      {
+        "heading": "Information we process",
+        "items": [
+          "Account information: username, display name, avatar URL, sign-in state, and required verification information.",
+          "Transaction information: offers, requests, projects, orders, payment records, delivery evidence, progress records, and dispute handling records.",
+          "Profile information: external accounts you bind or verify, display skins, verification marks, and public profile data.",
+          "Technical information: request times, API paths, error codes, trace IDs, and necessary device or browser logs."
+        ]
+      },
+      {
+        "heading": "How information is used",
+        "items": [
+          "To support core functions such as sign-in, publishing, claiming, payments, uploads, acceptance, disputes, and backoffice review.",
+          "To display public marketplace content, public account summaries, project Virtual Share ledger records, and organization roles.",
+          "To debug issues, prevent abuse, evaluate permissions, audit activity, and run safety controls."
+        ]
+      },
+      {
+        "heading": "Public display",
+        "items": [
+          "Offers, requests, projects, and parts of your account profile may be displayed as marketplace content.",
+          "Orders, payments, uploads, and backoffice review data are shown only to relevant participants or accounts with permission.",
+          "If a backend capability is not available yet, the frontend hides the entry point or shows an unavailable state."
+        ]
+      },
+      {
+        "heading": "Your choices",
+        "items": [
+          "You can update your display name, bio, avatar URL, and display skin in Profile.",
+          "You can sign out and clear local session state in the current browser.",
+          "Full deletion of server-side data requires backend account and data deletion support."
+        ]
+      }
+    ],
+    "note": {
+      "title": "Pre-launch note",
+      "description": "This page is product information and not a formal privacy policy or legal advice. Before launch, the operating entity should add company information, contact details, data retention periods, cross-border transfer details, and compliance terms."
+    }
+  }
+}

@@ -1,0 +1,454 @@
+{
+  "Publish": {
+    "kind": {
+      "offer": "Offer",
+      "request": "Request"
+    },
+    "tabs": {
+      "offer": {
+        "label": "Offer",
+        "description": "List a service or asset that buyers can purchase"
+      },
+      "request": {
+        "label": "Request",
+        "description": "Post a task or budget that others can accept"
+      }
+    },
+    "trade": {
+      "createTitle": "Create listing",
+      "offer": {
+        "headerLabel": "Offer listing",
+        "headerTitle": "Publish an offer",
+        "headerDescription": "Add an offer title, description, and one or more purchasable items. Delivery opens after the buyer pays.",
+        "titlePlaceholder": "Enter a title",
+        "descriptionPlaceholder": "Describe what this service provides overall."
+      },
+      "request": {
+        "headerLabel": "Request listing",
+        "headerTitle": "Publish a request",
+        "headerDescription": "Add a request title, description, and one or more tasks. Delivery opens after someone accepts.",
+        "titlePlaceholder": "Enter a title",
+        "descriptionPlaceholder": "Describe what this request needs overall."
+      }
+    },
+    "project": {
+      "headerLabel": "Project launch",
+      "headerTitle": "Create a project",
+      "headerDescription": "Add the project name, initial goal, and tasks under that goal. After publishing, continue from the project progress page.",
+      "titlePlaceholder": "Enter the project name",
+      "goalPlaceholder": "Enter the first project goal to move forward",
+      "descriptionPlaceholder": "Optional: describe what this project does in one sentence. If blank, a short overview will be generated.",
+      "descriptionFallback": "{title} is an open collaboration project.",
+      "itemDescription": "Complete work related to “{taskName}”.",
+      "deliveryStandard": "Submit verifiable deliverables related to “{taskName}”."
+    },
+    "fields": {
+      "title": "Title",
+      "description": "Task brief",
+      "sellerWallet": "OKX / X Layer receiving address",
+      "paymentNetwork": "Payment network",
+      "companyGoal": "Project goal",
+      "initialGoal": "Initial goal",
+      "taskName": "Task name",
+      "taskDescription": "Task description",
+      "difficulty": "Difficulty",
+      "itemName": "Name",
+      "serviceItemName": "Offer item",
+      "price": "Price",
+      "budget": "Budget",
+      "inventory": "Purchasable quantity",
+      "requestSlots": "People needed",
+      "deliveryStandard": "What the buyer receives",
+      "acceptanceStandard": "Completion standard",
+      "projectDeliveryStandard": "Expected result",
+      "projectAcceptanceStandard": "Completion standard",
+      "companyTitle": "Project name",
+      "companyDescription": "Project description",
+      "paymentRecipient": "Receiving wallet",
+      "deadline": "Deadline",
+      "optional": "Optional"
+    },
+    "hints": {
+      "sellerWallet": "Use the X Layer EVM address from your OKX wallet.",
+      "walletValid": "Wallet address looks valid",
+      "paymentNetwork": "Currently uses OKX Direct Pay.",
+      "difficulty": "Higher difficulty estimates a larger Virtual Share release when the task is claimed.",
+      "moneyAmount": "{label} must be at least 0.01 with up to 2 decimal places",
+      "positiveIntegerQuantity": "Quantity must be a positive integer",
+      "lengthOk": "{label} meets the requirement",
+      "lengthMissing": "{label} needs at least {min} characters. Current: {current}; remaining: {remaining}"
+    },
+    "difficultyHelp": {
+      "title": "How difficulty works",
+      "description": "D1-D5 are quick presets backed by difficulty scores from 0.5 to 8. Higher scores mean more complex tasks and a larger estimated Virtual Share release when claimed.",
+      "levels": [
+        "D1 = 0.5: tiny cleanup, correction, or confirmation task",
+        "D2 = 1: regular small task",
+        "D3 = 2: medium task with a complete deliverable",
+        "D4 = 4: complex implementation, research, or collaboration task",
+        "D5 = 8: high-risk core task with high complexity"
+      ]
+    },
+    "paymentRule": {
+      "offer": "After the buyer pays, you can submit delivery in the order.",
+      "request": "Publish the request and wait for acceptance. The fulfiller enters a receiving wallet when accepting."
+    },
+    "deliveryMode": {
+      "label": "Delivery mode",
+      "reviewed": {
+        "label": "Manual delivery"
+      },
+      "stock": {
+        "label": "Inventory auto-delivery"
+      }
+    },
+    "digitalInventory": {
+      "fieldLabel": "Inventory content",
+      "currentCount": "{count} items",
+      "placeholder": "code-001\naccount----password\ndownload link + key",
+      "defaultDeliveryStandard": "After payment, the system automatically reveals one inventory item.",
+      "defaultAcceptanceCriteria": "The buyer receives content that matches the listing and can be accessed or used successfully."
+    },
+    "items": {
+      "listDescription": "Add multiple {unit}; each one can have its own amount and quantity.",
+      "sectionTitle": "{unit} {index}",
+      "offerSectionTitle": "Option",
+      "requestSectionTitle": "Task",
+      "quantityPlaceholder": "Enter quantity",
+      "offer": {
+        "listTitle": "Offer items",
+        "unit": "offer item",
+        "add": "Add option",
+        "defaultTitle": "Offer item",
+        "defaultDescription": "Inventory defaults to 1. Purchases enter the order delivery flow.",
+        "sectionDescription": "Buyers choose from these items, and each item has its own price.",
+        "taskPlaceholder": "Enter item name",
+        "amountPlaceholder": "Enter price",
+        "deliveryPlaceholder": "Example: Deliver one 1024x1024 PNG image with a download link.",
+        "acceptancePlaceholder": "Example: Complete when the image is clear, watermark-free, and matches the agreed size and style."
+      },
+      "request": {
+        "listTitle": "Tasks",
+        "unit": "task",
+        "add": "Add task",
+        "defaultTitle": "Task",
+        "defaultDescription": "Acceptance slots default to 1. Claimed tasks enter the order delivery flow.",
+        "sectionDescription": "Fulfillers choose from these tasks, and each task has its own budget.",
+        "taskPlaceholder": "Enter task name",
+        "amountPlaceholder": "Enter budget",
+        "deliveryPlaceholder": "Example: Submit a structured table covering 10 competitors with complete, reviewable fields.",
+        "acceptancePlaceholder": "Example: Complete when fields are complete, source links work, and there are no obvious duplicates or omissions."
+      },
+      "project": {
+        "listTitle": "Initial tasks under the goal",
+        "listDescription": "Add one or more tasks. Each task is attached to the initial goal above.",
+        "unit": "task",
+        "add": "Add task",
+        "defaultTitle": "First task",
+        "defaultDescription": "Create the first project task during publishing. Add more tasks on the project detail page later.",
+        "sectionDescription": "Tasks are attached to the initial goal. Difficulty estimates the Virtual Share release when claimed.",
+        "taskPlaceholder": "Enter task name",
+        "descriptionPlaceholder": "Optional: add background or scope for this task.",
+        "deliveryPlaceholder": "Describe what the claimant needs to deliver.",
+        "acceptancePlaceholder": "Describe what counts as done. Use one line per criterion if needed."
+      }
+    },
+    "preview": {
+      "title": "Preview",
+      "emptyTitle": "Waiting for a title",
+      "emptyAmount": "Waiting for an amount",
+      "emptyDescription": "After you add a description, the listing preview will appear here.",
+      "projectEmptyTitle": "Waiting for the project name",
+      "projectEmptyDescription": "After you add the initial goal, the project preview will appear here.",
+      "namedItems": "{completed}/{total} named",
+      "optionCount": "{count} options",
+      "taskCount": "{count} tasks",
+      "inventoryTotal": "{count} total",
+      "slotTotal": "{count} slots",
+      "difficultyRange": "{min}-{max}",
+      "repositoryManaged": "Managed",
+      "offerPayment": "OKX receiving wallet",
+      "requestPayment": "Receiving wallet entered on acceptance",
+      "projectShares": "Claimed tasks release Virtual Shares based on difficulty",
+      "ready": "Ready to publish.",
+      "remaining": "Still needed: {fields}",
+      "separator": ", ",
+      "items": {
+        "title": "Title",
+        "description": "Description",
+        "price": "Price",
+        "budget": "Budget",
+        "items": "Options",
+        "tasks": "Tasks",
+        "companyTitle": "Project name",
+        "companyGoal": "Project goal",
+        "initialGoal": "Initial goal",
+        "repository": "Repository",
+        "payment": "Payment",
+        "delivery": "Delivery"
+      }
+    },
+    "submit": {
+      "readyTitle": "Ready to publish",
+      "readyDescription": "After submission, you will land on the detail page. Later transactions are handled in orders.",
+      "offer": "Publish offer",
+      "request": "Publish request",
+      "project": "Publish company",
+      "publishing": "Publishing..."
+    },
+    "loginNotice": {
+      "text": "Publishing requires an account. This form will stay on the page after you sign in.",
+      "action": "Sign in"
+    },
+    "draft": {
+      "restored": "Restored your unpublished draft"
+    },
+    "actions": {
+      "delete": "Delete",
+      "deleteFilledConfirm": "This {unit} already has content. Delete it?",
+      "cancelDelete": "Cancel",
+      "confirmDelete": "Delete",
+      "paste": "Paste"
+    },
+    "errors": {
+      "loginRequired": "Please sign in before publishing. This form will stay on the page.",
+      "summaryTitle": "Resolve these issues first:",
+      "itemPrefix": "{unit} {index}: {message}",
+      "apiField": "{label}: {message}",
+      "maxItems": {
+        "item": "You can create up to {count} options while publishing.",
+        "task": "You can create up to {count} tasks while publishing."
+      },
+      "minCharsSimple": "{label} must be at least {min} characters",
+      "minCharsCurrent": "{label} must be at least {min} characters; currently {current}",
+      "remainingChars": "{label} needs {remaining} more characters",
+      "required": "Enter {label}",
+      "difficultyRange": "Difficulty must be between 0.5 and 8",
+      "positiveInteger": "{label} must be a positive integer",
+      "sellerWallet": "Enter a valid X Layer EVM receiving address",
+      "clipboardReadFailed": "Could not read the clipboard. Paste the address manually.",
+      "digitalInventoryRequired": "Inventory auto-delivery needs at least one inventory item.",
+      "inventoryUploadFailed": "The listing was published, but inventory upload failed. Add inventory from the detail page management panel before sending buyers to purchase."
+    }
+  },
+  "PostItems": {
+    "workspace": {
+      "title": "Items",
+      "projectTitle": "Project tasks",
+      "tradeTitle": "Tradable items",
+      "description": "The publisher breaks offers into sale options and requests or projects into tasks. Other users pick specific content to create an order.",
+      "ownerView": "Owner view",
+      "participantView": "Participant view"
+    },
+    "manage": {
+      "title": "Content management",
+      "description": "Owner-only maintenance for options and tasks. Buyers or fulfillers still choose from the detail page, so there is only one action entry."
+    },
+    "create": {
+      "offerTitle": "Add sale option",
+      "taskTitle": "Create task",
+      "offerDescription": "Clarify what the buyer receives after purchase and what counts as done.",
+      "taskDescription": "Clarify what the fulfiller delivers and how the publisher accepts it.",
+      "openOffer": "Add option",
+      "openTask": "Create task",
+      "hide": "Collapse",
+      "descriptionPlaceholder": "Optional: add background, scope, or notes.",
+      "deliveryStandardPlaceholder": "Describe what the other party receives, such as file format, quantity, link, or documentation.",
+      "acceptanceCriteriaPlaceholder": "Describe what counts as done. Use one line per criterion if needed.",
+      "agentInstructionPlaceholder": "Optional: tell the agent how to execute or package the delivery.",
+      "submitOffer": "Publish option",
+      "submitTask": "Publish task"
+    },
+    "fields": {
+      "taskName": "Task name",
+      "itemName": "Option name",
+      "description": "Description",
+      "taskDescription": "Task description",
+      "deliveryStandard": "Delivery requirements",
+      "acceptanceCriteria": "Completion standards",
+      "acceptanceStandard": "Completion standard",
+      "taskType": "Task type",
+      "difficultyScore": "Difficulty score",
+      "difficulty": "Difficulty",
+      "price": "Price",
+      "budget": "Budget",
+      "amount": "Amount",
+      "inventory": "Available sales",
+      "requestSlots": "Needed people",
+      "quantity": "Quantity",
+      "agentInstruction": "Agent instructions",
+      "optional": "Optional"
+    },
+    "taskTypes": {
+      "normal": "Normal task",
+      "bug": "Bug report",
+      "review": "Review",
+      "dispute": "Dispute"
+    },
+    "claim": {
+      "projectTitle": "Claim task",
+      "purchaseTitle": "Confirm purchase",
+      "buyTitle": "Confirm purchase",
+      "acceptTitle": "Confirm acceptance",
+      "noteLabel": "Notes",
+      "noteHint": "Add an execution plan, delivery preference, or anything that needs confirmation.",
+      "projectNotePlaceholder": "Add execution notes for this task.",
+      "notePlaceholder": "Add notes for the fulfiller.",
+      "project": "Claim task",
+      "payFirst": "Pay and buy",
+      "buy": "Buy",
+      "accept": "Accept",
+      "login": "Sign in to continue"
+    },
+    "actions": {
+      "manage": "Manage",
+      "cancel": "Cancel",
+      "showDetails": "View requirements",
+      "hideDetails": "Hide requirements",
+      "collapseEdit": "Collapse editor",
+      "editItem": "Edit content",
+      "closeItem": "Close task",
+      "saveItem": "Save task",
+      "closeConfirm": "Closing this task stops new claims. Existing orders continue.",
+      "cancelClose": "Keep open",
+      "confirmClose": "Close task"
+    },
+    "edit": {
+      "descriptionPlaceholder": "Optional: add background, scope, or notes.",
+      "acceptanceCriteriaPlaceholder": "Completion standards, one per line"
+    },
+    "defaults": {
+      "agentInstruction": "No agent instructions provided."
+    },
+    "orders": {
+      "continueMine": "Continue my order",
+      "view": "View order"
+    },
+    "settlement": {
+      "shares": "{count} Virtual Shares",
+      "pending": "Pending"
+    },
+    "status": {
+      "open": "Open",
+      "released": "Ready",
+      "locked": "In progress",
+      "in_progress": "In progress",
+      "in_review": "Awaiting acceptance",
+      "completed": "Completed",
+      "closed": "Closed",
+      "archived": "Archived"
+    },
+    "placeholders": {
+      "offerAmount": "Enter price",
+      "requestAmount": "Enter budget",
+      "offerQuantity": "Enter purchasable quantity",
+      "requestQuantity": "Enter people needed",
+      "difficultyScore": "Difficulty 0.5-8"
+    },
+    "validation": {
+      "name": "Enter a task name with at least 3 characters.",
+      "deliveryStandard": "Enter delivery requirements with at least 8 characters.",
+      "acceptanceCriteria": "Enter at least one completion standard.",
+      "difficultyScore": "Choose D1-D5 or enter a difficulty score between 0.5 and 8.",
+      "amount": "Enter an amount greater than 0.",
+      "quantity": "Enter a positive integer quantity."
+    },
+    "deliveryMode": {
+      "label": "Fulfillment mode",
+      "reviewed": {
+        "label": "Manual delivery",
+        "helper": "The seller enters delivery content in the order after payment"
+      },
+      "instant": {
+        "label": "Provider auto-fulfillment",
+        "helper": "A system provider fulfills after payment; no inventory upload needed"
+      },
+      "stock": {
+        "label": "Inventory auto-delivery",
+        "helper": "The platform locks one inventory item and delivers it after payment"
+      }
+    },
+    "directDelivery": {
+      "heading": "Provider auto-fulfillment",
+      "phonePlaceholder": "Phone number, e.g. 13800138000",
+      "slaFallback": "Delivered automatically after payment succeeds",
+      "failurePolicyFallback": "Retry available after failure",
+      "retryHint": "The order keeps a retry action after a failure."
+    },
+    "digitalInventory": {
+      "heading": "Auto-delivery inventory",
+      "fieldLabel": "Inventory content",
+      "createHint": "One automatically delivered item per line. The platform encrypts it, then delivers one item after buyer payment.",
+      "editHint": "Additional uploads append to the auto-delivery inventory.",
+      "currentCount": " Current count: {count}.",
+      "placeholder": "code-001\naccount----password\ndownload link + key",
+      "notice": "The platform locks one inventory item when the order is created, then delivers it to the buyer after payment succeeds.",
+      "badge": "{hasSummary, select, yes {Inventory auto-delivery · available {count}} other {Inventory auto-delivery}}",
+      "uploadAction": "Upload inventory",
+      "validation": {
+        "required": "Inventory auto-delivery needs at least one uploaded inventory item.",
+        "empty": "Enter inventory content before uploading."
+      },
+      "toast": {
+        "uploaded": "{count} inventory items uploaded"
+      },
+      "summary": {
+        "available": "Available",
+        "reserved": "Reserved",
+        "delivered": "Delivered",
+        "total": "Total",
+        "inventory": "Inventory",
+        "loading": "Loading"
+      }
+    },
+    "progressDue": "Next progress due: {date}",
+    "progressOverdue": "Progress overdue: {date}",
+    "capacity": "Capacity {active}/{total}",
+    "empty": {
+      "title": "No selectable content yet",
+      "ownerDescription": "Add an option or task first so others can buy or accept it from the detail page.",
+      "viewerDescription": "The publisher has not opened specific content yet. Check back later."
+    },
+    "toast": {
+      "itemCreated": "Option published",
+      "taskCreated": "Task published",
+      "itemSaved": "Changes saved",
+      "itemClosed": "Closed. New claims are now disabled."
+    }
+  },
+  "PostOwnerControls": {
+    "title": "Post management",
+    "labels": {
+      "project": "Projects stay open long term. You can update content and tasks only.",
+      "offer": "Offers can be updated, or closed to stop new purchases.",
+      "request": "Requests can be updated, or closed to stop new acceptances."
+    },
+    "actions": {
+      "collapse": "Collapse",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "manageItems": "Manage options",
+      "close": "Close",
+      "save": "Save changes"
+    },
+    "closeConfirm": {
+      "title": "Close this entry point?",
+      "offer": "Buyers will no longer be able to purchase this offer. Existing orders continue.",
+      "request": "Fulfillers will no longer be able to claim this request. Existing orders continue.",
+      "project": "Projects cannot be closed here.",
+      "cancel": "Keep open",
+      "confirm": "Close"
+    },
+    "fields": {
+      "title": "Title",
+      "description": "Public description",
+      "companyGoal": "Project goal"
+    },
+    "toast": {
+      "saved": "Changes saved",
+      "offerClosed": "Offer closed. New purchases are now disabled.",
+      "requestClosed": "Request closed. New claims are now disabled.",
+      "projectClosed": "Project status did not change"
+    }
+  }
+}

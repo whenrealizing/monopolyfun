@@ -1,0 +1,32 @@
+<svg width="432" height="432" viewBox="0 0 432 432" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">monopolyfun coin mark</title>
+  <desc id="desc">A gold coin mark with a raised M for monopolyfun.</desc>
+  <defs>
+    <linearGradient id="coin-face" x1="95" y1="74" x2="334" y2="350" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff176"/>
+      <stop offset="0.2" stop-color="#ffd43b"/>
+      <stop offset="0.56" stop-color="#ffb000"/>
+      <stop offset="1" stop-color="#d97900"/>
+    </linearGradient>
+    <linearGradient id="coin-rim" x1="64" y1="70" x2="356" y2="372" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff7a8"/>
+      <stop offset="0.42" stop-color="#ffd21f"/>
+      <stop offset="1" stop-color="#b85d00"/>
+    </linearGradient>
+    <linearGradient id="m-face" x1="140" y1="148" x2="276" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff8a8"/>
+      <stop offset="1" stop-color="#ffd33d"/>
+    </linearGradient>
+    <filter id="coin-shadow" x="28" y="48" width="376" height="348" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000000" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+  <g filter="url(#coin-shadow)" transform="rotate(-12 216 216)">
+    <ellipse cx="216" cy="218" rx="154" ry="128" fill="#a45a03"/>
+    <ellipse cx="216" cy="205" rx="154" ry="128" fill="url(#coin-rim)"/>
+    <ellipse cx="216" cy="205" rx="124" ry="100" fill="url(#coin-face)" stroke="#b75f00" stroke-width="10"/>
+    <ellipse cx="216" cy="205" rx="145" ry="119" stroke="#fff58a" stroke-width="14"/>
+    <path d="M128 268L165 143H207L220 224L283 143H324L287 268H246L265 202L214 268H186L176 202L157 268H128Z" fill="#b65b00" opacity="0.62"/>
+    <path d="M122 258L159 133H201L214 214L277 133H318L281 258H240L259 192L208 258H180L170 192L151 258H122Z" fill="url(#m-face)" stroke="#fff27d" stroke-width="7" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.12.1
+          run_install: false
+
+      - name: Install web dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Repository checks
+        run: pnpm check
+
+      - name: API unit tests
+        run: pnpm api:test:unit
+
+      - name: Build API
+        run: mvn -f apps/api/pom.xml package -DskipTests
+
+      - name: Build web
+        env:
+          NEXT_PUBLIC_API_BASE_URL: ""
+          API_BASE_URL: http://127.0.0.1:18080
+        run: pnpm --filter @monopolyfun/web build

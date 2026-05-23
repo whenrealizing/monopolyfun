@@ -1,0 +1,199 @@
+{
+  "ResetPassword": {
+    "page": {
+      "title": "Reset password",
+      "description": "Register a reset request first, then use the administrator-issued token to set a new password.",
+      "backToLogin": "Back to sign in"
+    },
+    "form": {
+      "requestStep": "1. Request reset credentials",
+      "confirmStep": "2. Set a new password with the administrator token",
+      "handle": "Username",
+      "handlePlaceholder": "Enter your username",
+      "requestSubmit": "Submit reset request",
+      "requestRegistered": "Reset request registered",
+      "resetToken": "Reset token",
+      "resetTokenPlaceholder": "Paste the administrator-issued token",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "At least 8 characters",
+      "confirmSubmit": "Reset and sign in",
+      "tokenPreset": "Administrator-issued token has been applied",
+      "requestedAt": "Requested at: {date}",
+      "errors": {
+        "handleRequired": "Enter a username.",
+        "handleLength": "Use at least 3 characters.",
+        "resetTokenRequired": "Enter the reset token.",
+        "resetTokenLength": "Check the reset token and try again.",
+        "newPasswordRequired": "Enter a new password.",
+        "newPasswordLength": "Use at least 8 characters."
+      }
+    }
+  },
+  "Shares": {
+    "heading": "Virtual Share ledger",
+    "description": "Review Virtual Share release records for an account or project. Use Profile for your own assets; this page is for checking a specific ledger trail.",
+    "placeholders": {
+      "accountId": "Account number",
+      "marketId": "Project or market number"
+    },
+    "search": "Search",
+    "amount": "{amount} Virtual Shares",
+    "holderRef": "Holder {ref}",
+    "entryMeta": "Account {account} · Market {market} · {date}",
+    "entryRef": "Ledger {ref}",
+    "reasons": {
+      "work_order": "Task settlement",
+      "review_order": "Review settlement",
+      "fallback": "Virtual Share change"
+    },
+    "approvals": {
+      "title": "Pending releases",
+      "description": "Virtual Share release requests assigned to the current account. Approved requests are written to the Virtual Share ledger.",
+      "refresh": "Refresh",
+      "approve": "Approve",
+      "approved": "Virtual Share release approved",
+      "amount": "{amount} Virtual Shares",
+      "meta": "Account {accountId} · Market {marketId} · {date}",
+      "roles": "Approved: {approved} · Required: {required}",
+      "none": "None",
+      "pendingDate": "Pending date",
+      "empty": "No pending Virtual Share releases.",
+      "error": "Pending releases failed to load. Sign in with an approver account.",
+      "tokens": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "cancelled": "Cancelled",
+        "system": "System",
+        "market": "Market",
+        "project": "Project",
+        "owner": "Owner",
+        "lead": "Lead",
+        "reviewer": "Reviewer",
+        "worker": "Worker",
+        "authority": "Handler",
+        "skipped": "Skipped",
+        "system_ceo": "Protocol maintainer",
+        "system_cto": "Technical maintainer",
+        "system_cfo": "Settlement maintainer"
+      }
+    },
+    "empty": {
+      "title": "Enter an account number or project number to query the live ledger",
+      "accountsLink": "Choose from accounts"
+    },
+    "error": {
+      "title": "Virtual Share ledger failed to load",
+      "description": "This query did not return correctly. Check the account or market ID and try again."
+    }
+  },
+  "Accounts": {
+    "heading": "Accounts",
+    "description": "Browse public account summaries and use profile pages to judge identity, bio, and recent posts.",
+    "emptySummary": "No public summary yet.",
+    "empty": {
+      "title": "No accounts to show",
+      "description": "Public summaries will appear here after accounts are registered or imported."
+    },
+    "error": {
+      "title": "Accounts failed to load",
+      "description": "The account directory did not return correctly. Refresh in a moment."
+    }
+  },
+  "Workbench": {
+    "heading": "Workbench",
+    "title": "Task queue",
+    "description": "Tasks that need your action.",
+    "pageDescription": "Review categorized tasks and open the relevant detail page to continue.",
+    "refresh": "Refresh",
+    "openToHandle": "Open details",
+    "fillToSubmit": "Fill to submit",
+    "viewDetails": "View details",
+    "count": "{count} items total",
+    "dismissible": "Dismissible",
+    "locked": "Locked",
+    "loadFailed": "Workbench failed to load",
+    "empty": "No tasks right now.",
+    "emptyDescription": "Order acceptance, delivery records, and dispute handling will appear here.",
+    "filteredEmptyDescription": "No tasks in this category right now.",
+    "reminder": "Reminder",
+    "required": "Required",
+    "laneLabel": "Role",
+    "urgencyLabel": "Priority",
+    "targetLabel": "Target",
+    "taskLabel": "Task",
+    "refreshSelected": "Refresh selected task",
+    "selectPrompt": "Select a task to open its detail page and continue with the available actions.",
+    "actionCompleted": "Task updated",
+    "errors": {
+      "loginRequired": "Sign in to view tasks.",
+      "forbidden": "This account cannot view these tasks.",
+      "loadFailed": "Tasks did not load correctly. Refresh in a moment.",
+      "actionFailed": "The task action did not complete. Try again later."
+    },
+    "filters": {
+      "all": "All",
+      "project": "Project",
+      "bought": "Buying",
+      "sold": "Selling",
+      "published": "Published",
+      "reviewing": "Reviewing",
+      "approving": "Approving"
+    },
+    "emptyActions": {
+      "market": "Open market",
+      "publish": "Publish",
+      "approvals": "Review approvals"
+    },
+    "facts": {
+      "target": "Target",
+      "itemTitle": "Item",
+      "amount": "Amount",
+      "orderNo": "Order",
+      "role": "My task",
+      "capability": "Capability",
+      "urgency": "Priority",
+      "projectNo": "Project",
+      "runId": "Run",
+      "prNumber": "PR",
+      "checkName": "Check"
+    },
+    "tokens": {
+      "payer": "Pay",
+      "fulfiller": "Deliver",
+      "authority": "Handler",
+      "worker": "Deliver",
+      "lead": "Lead",
+      "review": "Review",
+      "reviewer": "Reviewer",
+      "ecosystem": "Project",
+      "settlement": "Approval",
+      "attention": "Attention",
+      "urgent": "Urgent",
+      "normal": "Normal",
+      "order": "Order",
+      "offer": "Offer",
+      "request": "Request",
+      "project": "Project",
+      "market": "Market",
+      "governance": "Governance",
+      "work": "Task",
+      "pay": "Payment",
+      "deliver": "Delivery",
+      "review": "Review",
+      "approve": "Approval",
+      "invite": "Invite",
+      "maintain": "Maintenance",
+      "publish": "Publish",
+      "execute": "Action",
+      "submit_worker_proof": "Submit proof",
+      "auto_delivery_pending": "Auto delivery",
+      "complete_money_payment": "Payment due",
+      "delivery_result_due": "Delivery due",
+      "lead_accept_or_dispute": "Accept or dispute",
+      "expand_offer_supply": "Add offer supply",
+      "promote_request": "Promote request",
+      "promote_project": "Promote project",
+      "review_disputed_order": "Dispute review"
+    }
+  }
+}

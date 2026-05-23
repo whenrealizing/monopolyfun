@@ -1,0 +1,132 @@
+{
+  "State": {
+    "actions": {
+      "home": "返回首页",
+      "login": "登录",
+      "retry": "重试"
+    },
+    "error": {
+      "title": "页面加载失败",
+      "description": "当前数据没有正常返回，请稍后重试。",
+      "retry": "重试"
+    },
+    "notFound": {
+      "title": "页面不存在",
+      "description": "这个入口对应的公开内容已经关闭、归档或编号无效。"
+    },
+    "unauthorized": {
+      "title": "需要登录",
+      "description": "当前页面需要登录账号后继续访问。"
+    },
+    "forbidden": {
+      "title": "当前账号无权访问",
+      "description": "当前账号缺少读取这个页面的角色或后台权限。",
+      "backofficeNote": "后台数据只对治理、风控、财务和运营处理账号开放。请使用具备后台权限的账号进入。"
+    }
+  },
+  "Shell": {
+    "brand": "monopolyfun",
+    "language": "语言",
+    "back": "返回",
+    "login": "登录",
+    "logout": "退出登录",
+    "accountMenu": "账号菜单",
+    "create": "创建",
+    "searchPlaceholder": "搜索供给、需求、项目",
+    "primaryNavigation": "主导航",
+    "expandSidebar": "展开侧栏",
+    "collapseSidebar": "收起侧栏",
+    "nav": {
+      "home": "首页",
+      "products": "探索",
+      "workbench": "待办",
+      "agent": "我的智能体",
+      "profile": "个人中心",
+      "backoffice": "后台"
+    },
+    "publish": {
+      "trade": "交易",
+      "project": "发布项目"
+    },
+    "footer": {
+      "about": "关于我们",
+      "terms": "服务条款",
+      "privacy": "隐私政策"
+    }
+  },
+  "Home": {
+    "featuredTitle": "热门",
+    "searchTitle": "搜索结果",
+    "featuredDescription": "首页展示当前公开数据流，供给、需求、项目统一进入浏览和详情操作。",
+    "searchDescription": "正在搜索“{query}”。",
+    "browseTitle": "探索",
+    "browseDescription": "紧凑列表密度、筛选胶囊和真实接口状态保持一致；缺失能力不进入主路径。"
+  },
+  "Common": {
+    "currentState": "当前状态",
+    "closeToast": "关闭提示",
+    "locale": {
+      "zh-CN": "中文",
+      "en": "English"
+    },
+    "orderStatus": {
+      "claimed": "已领取",
+      "delivered": "已交付",
+      "accepted_open": "已验收",
+      "disputed": "争议中",
+      "final_accepted": "已完成",
+      "final_closed": "已关闭"
+    },
+    "settlement": {
+      "shares": "虚拟股份",
+      "money": "现金",
+      "points": "暂未开放",
+      "mixed": "暂未开放"
+    },
+    "postKind": {
+      "offer": "供给交易",
+      "request": "需求交易",
+      "project": "项目任务",
+      "review": "评审任务"
+    },
+    "inventory": {
+      "single": "单库存",
+      "limited": "有限库存",
+      "unlimited": "无限库存"
+    },
+    "postStatus": {
+      "open": "开放中",
+      "closed": "已关闭",
+      "active": "进行中",
+      "archived": "已归档"
+    },
+    "projectRoles": {
+      "capability": {
+        "system_ceo": "规则、权限和最终协调",
+        "system_cto": "仓库、运行时、PR 和 CI 维护",
+        "system_cfo": "支付和虚拟股份结算",
+        "fallback": "系统维护"
+      }
+    }
+  },
+  "Auth": {
+    "handle": "账号名",
+    "password": "密码",
+    "handlePlaceholder": "输入账号名",
+    "passwordPlaceholder": "输入密码",
+    "newPasswordPlaceholder": "设置密码",
+    "passwordHint": "密码至少 {min} 个字符。",
+    "login": "登录",
+    "register": "注册",
+    "loginSuccess": "登录成功",
+    "registerSuccess": "注册成功",
+    "closeModal": "关闭登录弹窗",
+    "modalLabel": "登录弹窗",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码"
+  },
+  "OAuth": {
+    "preparing": "正在准备 OAuth 登录回调...",
+    "completing": "正在完成 GitHub OAuth 登录..."
+  }
+}

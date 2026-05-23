@@ -1,0 +1,54 @@
+{
+  "private": true,
+  "name": "monopolyfun",
+  "license": "MIT",
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "dev": "bash scripts/dev.sh",
+    "web:dev": "pnpm --filter @monopolyfun/web dev",
+    "api:dev": "bash scripts/dev-api.sh",
+    "build": "pnpm --filter @monopolyfun/web build",
+    "docs:diagrams:build": "node scripts/docs/render-book-diagrams.mjs",
+    "docs:book:dev": "pnpm docs:diagrams:build && vitepress dev docs/book --host 127.0.0.1 --port 4178",
+    "docs:book:build": "pnpm docs:diagrams:build && vitepress build docs/book --outDir dist/docs-book",
+    "docs:book:check": "pnpm docs:book:build",
+    "lint": "pnpm --filter @monopolyfun/web lint",
+    "typecheck": "pnpm --filter @monopolyfun/web typecheck",
+    "qa": "node scripts/qa/run.mjs",
+    "qa:ci": "node scripts/qa/run.mjs --ci",
+    "qa:quick": "node scripts/qa/run.mjs --quick",
+    "qa:security": "node scripts/qa/run.mjs --security",
+    "qa:prod": "node scripts/qa/run.mjs --prod",
+    "check": "pnpm typecheck && pnpm check:contracts && pnpm check:flyway-migrations && pnpm check:open-source-readiness",
+    "check:contracts": "node scripts/check/contracts.mjs",
+    "check:flyway-migrations": "node scripts/check/flyway-migrations.mjs",
+    "check:open-source-readiness": "node scripts/check/open-source-readiness.mjs",
+    "web:api:generate": "pnpm --filter @monopolyfun/web api:generate",
+    "api:test": "pnpm api:test:unit && pnpm api:test:integration",
+    "api:test:unit": "mvn -f apps/api/pom.xml -DexcludedGroups=integration test",
+    "api:test:integration": "bash scripts/require-docker.sh && mvn -f apps/api/pom.xml -Dgroups=integration test",
+    "api:build": "mvn -f apps/api/pom.xml package",
+    "security:java": "mvn -f apps/api/pom.xml org.owasp:dependency-check-maven:check org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom",
+    "security:web": "pnpm audit",
+    "security:secrets": "gitleaks detect --source . --redact --config .gitleaks.toml",
+    "security:semgrep": "semgrep scan --config p/java --config p/typescript",
+    "security:pr-policy": "node scripts/security/check-pr-security-policy.mjs",
+    "security:proof-pr": "node scripts/security/check-proof-pr-status.mjs",
+    "db:backup": "bash scripts/db-backup.sh",
+    "db:restore": "bash scripts/db-restore.sh",
+    "db:seed": "bash scripts/db-seed-demo.sh"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "viem": "^2.48.8",
+    "vitepress": "1.6.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss": "^8.5.13",
+      "brace-expansion@^1.1.7": "^1.1.12",
+      "brace-expansion@^2.0.1": "^2.0.2",
+      "ws": "^8.20.1"
+    }
+  }
+}

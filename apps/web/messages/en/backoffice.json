@@ -1,0 +1,116 @@
+{
+  "Backoffice": {
+    "routes": {
+      "home": "Overview",
+      "risk": "Risk",
+      "payments": "Payments",
+      "assets": "Assets",
+      "audit": "Audit"
+    },
+    "enter": "Open",
+    "home": {
+      "title": "Backoffice",
+      "riskEvent": "Risk event",
+      "proofAsset": "Delivery asset",
+      "riskMeta": "Risk · {actor} · {date}",
+      "paymentMeta": "Payment · {status} · {date}",
+      "assetMeta": "Asset · order {order} · {date}",
+      "queue": "Recent attention",
+      "emptyQueue": "No recent backoffice records need attention.",
+      "open": "View"
+    },
+    "risk": {
+      "title": "Risk",
+      "description": "Review recent risk accounts and risk events.",
+      "accounts": "Account actions",
+      "accountMeta": "Frozen until: {frozenUntil} · {reason}",
+      "none": "None",
+      "noReason": "No action reason",
+      "emptyAccounts": "No recent accounts have a risk state.",
+      "events": "Risk events",
+      "eventMeta": "{actor} · subject {subject} · {date}",
+      "emptyEvents": "No recent risk events."
+    },
+    "riskDetail": {
+      "title": "Risk account detail",
+      "description": "Review this account's current action state and recent risk events.",
+      "profile": "Account state",
+      "riskState": "Risk state",
+      "riskMeta": "Frozen until: {frozenUntil} · Updated: {updatedAt} · {reason}",
+      "none": "None",
+      "noReason": "No action reason",
+      "events": "Recent risk events",
+      "eventMeta": "{actor} · subject {subject} · {date}",
+      "emptyEvents": "No recent risk events for this account."
+    },
+    "payments": {
+      "title": "Payments",
+      "description": "Review recent payment records by amount, status, order, and provider reference.",
+      "paymentIntents": "Payment sessions",
+      "paymentMeta": "Order {order} · provider ref {providerRef} · {date}",
+      "empty": "No recent payment records."
+    },
+    "assets": {
+      "title": "Assets",
+      "description": "Review recent delivery assets by status, order, storage location, and file size.",
+      "proofAssets": "Delivery assets",
+      "assetMeta": "Order {order} · {provider} · {size} · {date}",
+      "empty": "No recent delivery assets."
+    },
+    "audit": {
+      "title": "Audit",
+      "description": "Review recent key actions by actor, result, and time.",
+      "events": "Audit events",
+      "eventMeta": "Actor {actor} · {date}",
+      "empty": "No recent audit events.",
+      "labels": {
+        "authLogin": "Account sign-in",
+        "authLogout": "Account sign-out",
+        "authRegister": "Account registration",
+        "uploadComplete": "Upload completed",
+        "uploadPresign": "Upload presigned"
+      }
+    },
+    "security": {
+      "heading": "Security operations",
+      "description": "The current backend security writes live in risk account actions and admin password-reset tokens. The missing standalone security console is shown as a downgraded state.",
+      "title": "Run security actions from Backoffice Risk or the My Agent backoffice scene",
+      "body": "This page does not call legacy endpoints that the backend does not provide."
+    },
+    "viewEvidence": "Raw record",
+    "showEvidence": "Expand",
+    "hideEvidence": "Collapse",
+    "emptyValue": "Empty",
+    "values": {
+      "active": "Active",
+      "approved": "Approved",
+      "authorized": "Authorized",
+      "banned": "Banned",
+      "cancelled": "Cancelled",
+      "captured": "Captured",
+      "completed": "Completed",
+      "disputed": "In dispute",
+      "draft": "Draft",
+      "failed": "Failed",
+      "frozen": "Frozen",
+      "high": "High",
+      "local": "Local storage",
+      "low": "Low",
+      "medium": "Medium",
+      "normal": "Normal",
+      "okx_direct_pay": "OKX on-chain payment",
+      "pending": "Pending",
+      "quarantined": "Quarantined",
+      "refunded": "Refunded",
+      "review": "Needs review",
+      "success": "Success",
+      "uploaded": "Uploaded",
+      "verified": "Verified",
+      "application/json": "JSON file",
+      "application/pdf": "PDF file",
+      "image/jpeg": "JPEG image",
+      "image/png": "PNG image",
+      "text/plain": "Text file"
+    }
+  }
+}

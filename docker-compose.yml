@@ -1,0 +1,107 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: monopolyfun-postgres
+    restart: unless-stopped
+    # 中文注释：本地和测试环境默认开启慢查询统计，性能报告脚本可直接读取 pg_stat_statements。
+    command: ["postgres", "-c", "shared_preload_libraries=pg_stat_statements", "-c", "pg_stat_statements.track=all"]
+    environment:
+      POSTGRES_DB: monopolyfun
+      POSTGRES_USER: postgres
+      # 中文注释：Postgres 初始化密码与应用 DATABASE_PASSWORD 对齐，避免生产 smoke 轮换后本地 API 连接失效。
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-postgres}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d monopolyfun"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "${POSTGRES_HOST_PORT:-55432}:5432"
+    volumes:
+      - monopolyfun-postgres:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: monopolyfun-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-jdbc:postgresql://postgres:5432/monopolyfun}
+      DATABASE_USERNAME: ${DATABASE_USERNAME:-postgres}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-postgres}
+      APP_PRODUCTION: ${APP_PRODUCTION:-false}
+      SESSION_COOKIE_NAME: ${SESSION_COOKIE_NAME:-MONOPOLYFUN_SESSION}
+      SESSION_TTL: ${SESSION_TTL:-30d}
+      CSRF_COOKIE_NAME: ${CSRF_COOKIE_NAME:-MONOPOLYFUN_CSRF}
+      CSRF_HEADER_NAME: ${CSRF_HEADER_NAME:-X-CSRF-Token}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      COOKIE_SAME_SITE: ${COOKIE_SAME_SITE:-Lax}
+      WEB_ORIGIN: ${WEB_ORIGIN:-http://localhost:3000}
+      UPLOAD_PROVIDER: ${UPLOAD_PROVIDER:-fake}
+      UPLOAD_BUCKET: ${UPLOAD_BUCKET:-monopolyfun-proof-artifacts}
+      UPLOAD_ENDPOINT: ${UPLOAD_ENDPOINT:-}
+      UPLOAD_REGION: ${UPLOAD_REGION:-auto}
+      UPLOAD_ACCESS_KEY_ID: ${UPLOAD_ACCESS_KEY_ID:-}
+      UPLOAD_SECRET_ACCESS_KEY: ${UPLOAD_SECRET_ACCESS_KEY:-}
+      UPLOAD_BASE_URL: ${UPLOAD_BASE_URL:-https://r2.example/monopolyfun-proof-artifacts}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-https://r2.example/monopolyfun-proof-artifacts}
+      UPLOAD_PRESIGN_TTL: ${UPLOAD_PRESIGN_TTL:-15m}
+      UPLOAD_MAX_BYTES: ${UPLOAD_MAX_BYTES:-10485760}
+      PAYMENT_PROVIDER: ${PAYMENT_PROVIDER:-fake}
+      PAYMENT_CALLBACK_SECRET: ${PAYMENT_CALLBACK_SECRET:-monopolyfun-dev-secret}
+      DIGITAL_INVENTORY_ENCRYPTION_SECRET: ${DIGITAL_INVENTORY_ENCRYPTION_SECRET:-monopolyfun-digital-inventory-dev-secret}
+      PAYMENT_PUBLIC_BASE_URL: ${PAYMENT_PUBLIC_BASE_URL:-http://localhost:8080}
+      PAYMENT_CURRENCY: ${PAYMENT_CURRENCY:-USD}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:-}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:-}
+      GITHUB_AUTHORIZE_URL: ${GITHUB_AUTHORIZE_URL:-https://github.com/login/oauth/authorize}
+      GITHUB_TOKEN_URL: ${GITHUB_TOKEN_URL:-https://github.com/login/oauth/access_token}
+      GITHUB_USER_URL: ${GITHUB_USER_URL:-https://api.github.com/user}
+      GITHUB_REDIRECT_URI: ${GITHUB_REDIRECT_URI:-http://localhost:8080/api/v1/auth/oauth/github/callback}
+      GITHUB_VERIFICATION_REDIRECT_URI: ${GITHUB_VERIFICATION_REDIRECT_URI:-http://localhost:8080/api/v1/identity/oauth/github/callback}
+      GITHUB_WEB_CALLBACK_URL: ${GITHUB_WEB_CALLBACK_URL:-http://localhost:3000/oauth/callback}
+      MARKET_MATCHING_PROVIDER: ${MARKET_MATCHING_PROVIDER:-aliyun_qwen}
+      ALIYUN_QWEN_API_KEY: ${ALIYUN_QWEN_API_KEY:-}
+      ALIYUN_QWEN_BASE_URL: ${ALIYUN_QWEN_BASE_URL:-https://dashscope.aliyuncs.com/compatible-mode/v1}
+      MARKET_EMBEDDING_MODEL: ${MARKET_EMBEDDING_MODEL:-Qwen3-Embedding-0.6B}
+      MARKET_RERANK_MODEL: ${MARKET_RERANK_MODEL:-Qwen3-Reranker-0.6B}
+      MARKET_EMBEDDING_DIMENSIONS: ${MARKET_EMBEDDING_DIMENSIONS:-1024}
+      MARKET_RERANK_TOP_N: ${MARKET_RERANK_TOP_N:-30}
+      MARKET_VECTOR_CANDIDATE_LIMIT: ${MARKET_VECTOR_CANDIDATE_LIMIT:-80}
+      MARKET_TEXT_CANDIDATE_LIMIT: ${MARKET_TEXT_CANDIDATE_LIMIT:-80}
+      MARKET_MATCHED_THRESHOLD: ${MARKET_MATCHED_THRESHOLD:-0.75}
+      MARKET_REVIEW_THRESHOLD: ${MARKET_REVIEW_THRESHOLD:-0.45}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "${API_HOST_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8080}
+        API_BASE_URL: ${API_BASE_URL:-http://api:8080}
+    container_name: monopolyfun-web
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8080}
+      API_BASE_URL: ${API_BASE_URL:-http://api:8080}
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "${WEB_HOST_PORT:-3000}:3000"
+
+volumes:
+  monopolyfun-postgres:

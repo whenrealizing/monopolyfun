@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-labelledby="title desc">
+  <title id="title">Marketplace flow preview</title>
+  <desc id="desc">A visual overview of request, order, proof, review, and settlement states.</desc>
+  <rect width="1100" height="360" rx="18" fill="#f6f8fb"/>
+  <rect x="32" y="32" width="1036" height="296" rx="16" fill="#ffffff" stroke="#d8dee8"/>
+  <text x="64" y="82" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700" fill="#19212c">Marketplace Flow</text>
+  <text x="64" y="116" font-family="Inter, Arial, sans-serif" font-size="16" fill="#5f6b7a">Publish work, attach evidence, review delivery, and close settlement.</text>
+  <g font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700">
+    <rect x="64" y="166" width="170" height="86" rx="12" fill="#e8f3ff" stroke="#9ec9ff"/>
+    <text x="96" y="203" fill="#133b63">Request</text>
+    <text x="96" y="226" font-size="13" font-weight="500" fill="#47657f">Need or offer</text>
+    <rect x="282" y="166" width="170" height="86" rx="12" fill="#edf8f1" stroke="#9fdcb5"/>
+    <text x="319" y="203" fill="#19542f">Order</text>
+    <text x="319" y="226" font-size="13" font-weight="500" fill="#4e7159">Scope and terms</text>
+    <rect x="500" y="166" width="170" height="86" rx="12" fill="#fff5df" stroke="#f0cb78"/>
+    <text x="538" y="203" fill="#6c4a00">Proof</text>
+    <text x="538" y="226" font-size="13" font-weight="500" fill="#806b32">Delivery evidence</text>
+    <rect x="718" y="166" width="170" height="86" rx="12" fill="#f1edff" stroke="#c4b7ff"/>
+    <text x="756" y="203" fill="#3f2b79">Review</text>
+    <text x="756" y="226" font-size="13" font-weight="500" fill="#665a8f">Accept or dispute</text>
+    <rect x="936" y="166" width="96" height="86" rx="12" fill="#e9f7f5" stroke="#92d3ca"/>
+    <text x="958" y="203" fill="#18534f">Settle</text>
+    <text x="958" y="226" font-size="13" font-weight="500" fill="#52736f">Close</text>
+  </g>
+  <g stroke="#8b96a7" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M246 209h24"/>
+    <path d="M270 209l-8-6M270 209l-8 6"/>
+    <path d="M464 209h24"/>
+    <path d="M488 209l-8-6M488 209l-8 6"/>
+    <path d="M682 209h24"/>
+    <path d="M706 209l-8-6M706 209l-8 6"/>
+    <path d="M900 209h24"/>
+    <path d="M924 209l-8-6M924 209l-8 6"/>
+  </g>
+</svg>

@@ -1,0 +1,227 @@
+{
+  "Identity": {
+    "title": "我的主页",
+    "signedOut": "登录后可以管理你的资料、发布内容、订单、认证和虚拟股份。",
+    "loading": "正在加载你的主页资料、发布内容和虚拟股份。",
+    "unavailable": "现在暂时无法加载你的主页。",
+    "identityTabDescription": "这里决定别人看到你的样子：展示资料、认证身份和可公开的外部账号。",
+    "deadline": "截止",
+    "primary": {
+      "market": "我的活动",
+      "badges": "认证",
+      "assets": "虚拟股份",
+      "identity": "资料"
+    },
+    "marketTabs": {
+      "all": "全部",
+      "sell": "供给",
+      "buy": "需求",
+      "projects": "项目"
+    },
+    "badgeTabs": {
+      "overview": "总览",
+      "verification": "认证"
+    },
+    "assetTabs": {
+      "system": "系统项目虚拟股份",
+      "other": "其他项目虚拟股份"
+    },
+    "errors": {
+      "loadFailed": "我的主页加载失败。",
+      "verificationStartFailed": "发起认证失败。",
+      "verifyBeforeSkin": "请先完成 {provider} 认证，再把 @{handle} 设为展示皮肤。",
+      "skinUpdateFailed": "设置展示皮肤失败。"
+    },
+    "metrics": {
+      "verified": "认证",
+      "sell": "供给",
+      "buy": "需求",
+      "shares": "虚拟股份"
+    },
+    "profile": {
+      "edit": "编辑资料",
+      "displayName": "展示名",
+      "handle": "账号名",
+      "avatarUrl": "头像链接",
+      "bio": "简介",
+      "bioPlaceholder": "告诉别人你擅长什么、正在找什么合作，以及怎样与你协作",
+      "cancel": "取消",
+      "save": "保存资料",
+      "displayNameRequired": "展示名不能为空。",
+      "saveFailed": "资料保存失败。",
+      "currentDisplay": "当前展示",
+      "verifiedFacts": "认证记录",
+      "factCount": "{count} 条",
+      "externalAccounts": "外部账号",
+      "emptyExternalAccounts": "还没有连接外部账号。连接后，别人更容易确认你的身份。"
+    },
+    "skin": {
+      "default": "默认皮肤",
+      "providerSkin": "{provider} 皮肤",
+      "providerVerifiedSkin": "{provider} 已认证皮肤",
+      "providerPendingSkin": "{provider} 待认证皮肤",
+      "from": "来自 @{handle}",
+      "pendingFrom": "待认证 · 来自 @{handle}",
+      "switch": "切换",
+      "choose": "选择展示皮肤",
+      "processing": "处理中",
+      "verify": "去认证",
+      "current": "当前",
+      "displaySkins": "展示皮肤"
+    },
+    "verification": {
+      "connected": "已连接",
+      "pending": "待认证",
+      "verified": "已认证",
+      "challengeCreated": "{date} 已发起认证，请按页面提示完成授权。",
+      "reverify": "重新认证",
+      "start": "开始认证"
+    },
+    "assets": {
+      "released": "已释放",
+      "locked": "锁定中",
+      "frozen": "冻结中",
+      "emptySystemReleased": "你还没有可使用的系统项目虚拟股份。",
+      "emptyOtherReleased": "你还没有其他项目释放给你的虚拟股份。",
+      "lockedTitle": "锁定中的虚拟股份",
+      "frozenTitle": "冻结中的虚拟股份",
+      "emptyLocked": "现在没有等待验收或审批的锁定虚拟股份。",
+      "emptyFrozen": "现在没有因争议冻结的虚拟股份。",
+      "shareAmount": "{count} 虚拟股份",
+      "lockReason": {
+        "locked": "锁定中",
+        "acceptance_window": "验收争议窗口",
+        "disputed": "争议冻结",
+        "approval_pending": "发放审批中"
+      }
+    },
+    "market": {
+      "emptyOffers": "你还没有发布供给。",
+      "emptyOffersDescription": "发布供给后，别人可以从市场找到你并下单。",
+      "publishOffer": "发布供给",
+      "emptyRequests": "你还没有发布需求。",
+      "emptyRequestsDescription": "发布需求后，合适的人可以接单并交付结果。",
+      "publishRequest": "发布需求",
+      "emptyProjects": "你还没有创建项目。",
+      "emptyProjectsDescription": "创建项目后，可以用任务、席位和虚拟股份组织协作。",
+      "publishProject": "创建项目",
+      "stock": "库存 {stock}",
+      "filled": "已接单 {count}",
+      "seats": "席位 {stock}"
+    },
+    "activity": {
+      "empty": "你还没有公开发布任何供给、需求或项目。",
+      "emptyDescription": "先发布一个供给、需求或项目，让别人知道你能提供什么，或你正在寻找什么帮助。",
+      "publishFirst": "去发布",
+      "offerMeta": "供给 · {price} · 库存 {stock}",
+      "requestMeta": "需求 · {budget} · 已接单 {count}",
+      "projectMeta": "项目 · 席位 {stock}"
+    },
+    "postStatus": {
+      "draft": "草稿",
+      "active": "已发布",
+      "paused": "已暂停",
+      "archived": "已归档",
+      "closed": "已关闭",
+      "pending_review": "待审核",
+      "unknown": "状态待确认"
+    },
+    "orders": {
+      "emptyMarketOrders": "你还没有相关订单。",
+      "emptyMarketOrdersDescription": "发布供给、发布需求或参与市场内容后，订单会出现在这里。",
+      "browseMarket": "去市场看看",
+      "publishedTitle": "发布带来的订单",
+      "publishedDescription": "别人购买供给、响应需求或参与项目后会出现在这里",
+      "emptyPublished": "你的公开发布还没有产生订单。",
+      "publisherRole": "发布方",
+      "tradedTitle": "参与的订单",
+      "tradedDescription": "你作为买家、卖家、交付方、验收方或评审方参与的订单",
+      "emptyTraded": "你还没有参与任何订单。",
+      "count": "{count} 单",
+      "active": "进行中 {count}",
+      "delivered": "已交付 {count}",
+      "disputed": "争议中 {count}",
+      "done": "已完成 {count}",
+      "progress": "进度 {count} 次"
+    },
+    "orderStatus": {
+      "claimed": "进行中",
+      "delivered": "已交付",
+      "accepted_open": "已验收",
+      "disputed": "争议中",
+      "final_accepted": "已完成",
+      "final_closed": "已关闭"
+    },
+    "publicProfile": {
+      "verified": "已认证",
+      "emptyBio": "这个用户还没有填写公开简介。",
+      "professionVisible": "已填写公开简介",
+      "professionEmpty": "还没有公开说明",
+      "metrics": {
+        "posts": "公开发布",
+        "verifiedFacts": "认证记录",
+        "externalAccounts": "外部账号"
+      },
+      "kind": {
+        "offer": "供给",
+        "request": "需求",
+        "project": "项目"
+      },
+      "publicPosts": {
+        "title": "公开发布",
+        "empty": "这个用户还没有公开发布。",
+        "emptyDescription": "你可以先去市场看看其他正在进行的供给、需求和项目。",
+        "exploreMarket": "浏览市场",
+        "emptySummary": "还没有公开说明。"
+      },
+      "identity": {
+        "title": "公开身份",
+        "display": "展示名",
+        "summary": "公开简介",
+        "visibility": "可见范围",
+        "publicOnly": "公开只读"
+      },
+      "trust": {
+        "title": "信任线索",
+        "verifiedIdentity": "认证状态",
+        "notVerified": "还没有完成认证",
+        "verificationRecords": "认证记录",
+        "factCount": "{count} 条",
+        "externalAccounts": "外部账号",
+        "externalCount": "{count} 个",
+        "publicActivity": "公开活动",
+        "postCount": "{count} 条"
+      }
+    },
+    "orderStatusMissing": "状态缺失",
+    "orderKind": {
+      "offer": "供给订单",
+      "request": "需求订单",
+      "project": "项目订单",
+      "review": "评审订单"
+    },
+    "orderKindFallback": "订单",
+    "settlementType": {
+      "shares": "虚拟股份",
+      "money": "现金"
+    },
+    "workflowBadges": {
+      "open": "等待评审",
+      "reviewer_assigned": "评审已指派",
+      "review_submitted": "等待二审决定",
+      "appeal_open": "二审处理中",
+      "resolved": "争议已解决",
+      "settlementFrozen": "结算冻结",
+      "reviewInProgress": "争议处理中",
+      "disputeWindowOpen": "争议窗口开放中"
+    },
+    "badges": {
+      "verifiedDescription": "认证标识已点亮。",
+      "earnedDescription": "通过项目协作和信誉积累获得。",
+      "certifierLabel": "{name} 认证",
+      "completedDescription": "认证已完成。",
+      "pendingDescription": "认证流程处理中。",
+      "availableDescription": "点击进入认证页点亮这个标识。"
+    }
+  }
+}

@@ -1,0 +1,397 @@
+{
+  "MarketSurface": {
+    "filters": {
+      "label": "Category",
+      "allShort": "All",
+      "offerShort": "Supply",
+      "requestShort": "Demand",
+      "projectShort": "Projects",
+      "all": "All",
+      "offer": "Offers",
+      "request": "Requests",
+      "project": "Projects"
+    },
+    "amount": {
+      "pricePending": "Price pending",
+      "budgetPending": "Budget pending",
+      "projectSlots": "Project",
+      "projectSlot": "Project"
+    },
+    "inventory": {
+      "unlimited": "Unlimited",
+      "unlimitedSlots": "Unlimited slots",
+      "remaining": "{count} left",
+      "claimable": "{remaining}/{total} open",
+      "joined": "{joined}/{total} joined"
+    },
+    "stats": {
+      "all": "All listings",
+      "offers": "Seller offers",
+      "requests": "Buyer requests",
+      "projects": "Project slots",
+      "accounts": "Participating accounts"
+    },
+    "toolbar": {
+      "section": "Section",
+      "search": "Search",
+      "searchPlaceholder": "Search titles, descriptions, and project summaries",
+      "sort": "Sort",
+      "apply": "Apply filters",
+      "reset": "Reset"
+    },
+    "sort": {
+      "label": "Sort",
+      "recent": "Recently updated",
+      "oldest": "Oldest first",
+      "title": "Title"
+    },
+    "sortShort": {
+      "recent": "Latest",
+      "oldest": "Earliest",
+      "title": "Title"
+    },
+    "empty": {
+      "featuredTitle": "No featured listings yet.",
+      "featuredDescription": "Publish an offer, request, or project and it will appear here automatically.",
+      "filteredTitle": "No results for these filters.",
+      "filteredDescription": "Adjust the section, search term, or sort order to browse this batch again."
+    },
+    "card": {
+      "amount": "Amount",
+      "inventory": "Stock",
+      "updated": "Updated",
+      "price": "Price",
+      "budget": "Budget",
+      "unitPrice": "Item price",
+      "itemBudget": "Item budget",
+      "shares": "Virtual Share pool",
+      "projectQuota": "Project quota",
+      "stock": "Stock",
+      "claimable": "Claimable",
+      "availableStock": "Available",
+      "openSlots": "Slots",
+      "slots": "Slots",
+      "joined": "Joined",
+      "settlementLabel": "Payment method",
+      "noSummary": "The publisher has not added a summary yet.",
+      "settlement": {
+        "shares": "Virtual Shares",
+        "cash": "Cash",
+        "pending": "Pending"
+      },
+      "status": {
+        "open": "Open",
+        "active": "Active",
+        "claimable": "Claimable",
+        "draft": "Draft",
+        "paused": "Paused",
+        "closed": "Closed",
+        "archived": "Archived"
+      },
+      "owner": {
+        "githubVerified": "GitHub verified",
+        "coreProject": "Core project"
+      },
+      "actions": {
+        "offer": "View supply",
+        "request": "View demand",
+        "project": "Open project"
+      }
+    },
+    "actions": {
+      "enterMarket": "Browse home",
+      "publish": "Publish listing",
+      "backHome": "Back home"
+    }
+  },
+  "Market": {
+    "title": "Market",
+    "description": "Browse purchasable offers, claimable requests, and open collaboration projects, then continue from the detail page.",
+    "visibleCount": "Showing <strong>{count}</strong> results"
+  },
+  "MarketDetailShared": {
+    "publisherTitle": "Publisher",
+    "publisherDescription": "Confirm who owns delivery or acceptance."
+  },
+  "OfferDetail": {
+    "paymentMethods": {
+      "shares": "Virtual Share payment",
+      "okxDirectPay": "OKX Direct Pay",
+      "pending": "Payment method pending"
+    },
+    "pricePending": "Price pending",
+    "backToMarket": "Back home",
+    "sold": "Sold",
+    "itemCount": "{count} items",
+    "summary": {
+      "price": "Price",
+      "openItems": "Stock",
+      "totalItems": "{count} items total",
+      "publisher": "Publisher",
+      "payment": "Payment method"
+    },
+    "tabs": {
+      "items": "Items for sale",
+      "info": "Details"
+    },
+    "workspace": {
+      "payment": "Payment method",
+      "paymentHelper": "Shown per selected option",
+      "openItems": "Tradable items",
+      "updated": "Updated",
+      "updatedHelper": "Based on the latest listing change",
+      "itemCount": "{count} items",
+      "totalItems": "{count} items total"
+    },
+    "itemStatus": {
+      "open": "Available",
+      "claimed": "Ordered",
+      "locked": "Locked",
+      "inProgress": "In delivery",
+      "inReview": "Awaiting acceptance",
+      "acceptedWindowOpen": "Acceptance window",
+      "completed": "Completed",
+      "closed": "Closed",
+      "archived": "Archived",
+      "unavailable": "Unavailable"
+    },
+    "paymentStatus": {
+      "pending": "Pending payment",
+      "authorized": "Confirming",
+      "captured": "Paid",
+      "failed": "Payment failed",
+      "cancelled": "Cancelled",
+      "refunded": "Refunded",
+      "disputed": "In dispute"
+    },
+    "publisherBadges": {
+      "verified": "Verified"
+    },
+    "publisher": {
+      "title": "Publisher"
+    },
+    "closedNotice": "This item has been sold and is no longer shown in the market list. The buyer and seller can continue tracking delivery, payment, acceptance, and disputes in Orders.",
+    "detail": {
+      "title": "Delivery requirements",
+      "description": "Confirm what you will receive and how acceptance works before buying.",
+      "empty": "The publisher has not added overall delivery requirements yet. Review each item's delivery requirements and completion standard first."
+    },
+    "acceptancePrefix": "Acceptance: {acceptance}"
+  },
+  "RequestDetail": {
+    "paymentMethods": {
+      "shares": "Virtual Share payment",
+      "okxDirectPay": "OKX Direct Pay",
+      "pending": "Payment method pending"
+    },
+    "budgetPending": "Budget pending",
+    "backToMarket": "Back home",
+    "itemCount": "{count} items",
+    "ownerWorkspace": {
+      "title": "Publisher controls",
+      "description": "The publisher can maintain claimable tasks here."
+    },
+    "itemStatus": {
+      "open": "Open",
+      "released": "Open",
+      "locked": "Locked",
+      "inProgress": "In progress",
+      "inReview": "Awaiting acceptance",
+      "acceptedWindowOpen": "Acceptance window",
+      "completed": "Completed",
+      "closed": "Closed",
+      "archived": "Archived"
+    },
+    "paymentStatus": {
+      "authorized": "Payment confirming",
+      "failed": "Payment failed",
+      "cancelled": "Payment cancelled",
+      "refunded": "Payment refunded",
+      "disputed": "Payment in dispute"
+    },
+    "state": {
+      "payment": {
+        "title": "Waiting for publisher payment"
+      },
+      "acceptance": {
+        "title": "Waiting for publisher acceptance"
+      },
+      "working": {
+        "title": "Order in progress"
+      },
+      "waitingClaim": {
+        "title": "Waiting for claim"
+      },
+      "closed": {
+        "title": "Request ended"
+      },
+      "waitingItems": {
+        "title": "Waiting for claimable tasks"
+      }
+    },
+    "summary": {
+      "budget": "Budget",
+      "openItems": "Claimable tasks",
+      "totalItems": "{count} tasks total",
+      "publisher": "Publisher",
+      "payment": "Payment method"
+    },
+    "tabs": {
+      "tasks": "Claimable tasks",
+      "info": "Details"
+    },
+    "needSection": {
+      "heading": "Delivery requirements and completion standard",
+      "description": "Confirm what needs to be delivered and what counts as done before claiming.",
+      "empty": "The publisher has not added overall requirements yet. Review each task's delivery requirements and completion standard first."
+    },
+    "publisher": {
+      "title": "Publisher",
+      "badges": {
+        "publisher": "Request publisher",
+        "open": "Open",
+        "closed": "Ended"
+      }
+    }
+  },
+  "ProjectDetail": {
+    "backToMarket": "Back home",
+    "releaseCurve": "Virtual Shares",
+    "sharesAmount": "{count} Virtual Shares",
+    "taskClaimNotePlaceholder": "Optional. Add a note for the initiator, such as your execution plan, relevant experience, or prerequisites to confirm.",
+    "sharesUnavailableShort": "Unavailable",
+    "sharesUnavailable": "Virtual Share data unavailable",
+    "sharesUnavailableDescription": "Estimated Virtual Shares are hidden while the backend has no Virtual Share pool.",
+    "metrics": {
+      "openTasks": "Open tasks",
+      "claimedAccounts": "Claimed by",
+      "releasedShares": "Issued Virtual Shares",
+      "taskPoolRemaining": "Assignable Virtual Shares"
+    },
+    "taskStatus": {
+      "empty": "No open tasks",
+      "openCount": "{count} claimable tasks"
+    },
+    "itemStatus": {
+      "open": "Claimable",
+      "released": "Claimable",
+      "locked": "In progress",
+      "in_progress": "In progress",
+      "in_review": "Awaiting acceptance",
+      "completed": "Completed",
+      "closed": "Closed",
+      "archived": "Archived",
+      "unavailable": "Unavailable"
+    },
+    "actions": {
+      "joinProject": "Join project",
+      "viewTasks": "View tasks",
+      "status": "Status",
+      "openTaskDescription": "Claim tasks from the list below. Claimed tasks continue in orders.",
+      "noOpenTaskDescription": "No tasks are open"
+    },
+    "tabs": {
+      "tasks": "Task list",
+      "myTasks": "My tasks",
+      "members": "Contribution records",
+      "platformGrants": "Maintenance seats",
+      "governance": "Virtual Shares & contributions",
+      "memory": "Project memory",
+      "timeline": "Updates",
+      "info": "Details"
+    },
+    "validationMetrics": {
+      "activeTasks": "Tasks",
+      "pendingReviews": "To validate",
+      "acceptedProofs": "Confirmed",
+      "settledRewards": "Issued Virtual Shares"
+    },
+    "contributorMetrics": {
+      "tasks": "Work",
+      "results": "Results",
+      "rewards": "Virtual Shares",
+      "score": "Weight"
+    },
+    "publisher": {
+      "title": "Initiator",
+      "badges": {
+        "open": "Project open",
+        "verified": "Verified"
+      }
+    },
+    "governance": {
+      "title": "Virtual Share rules",
+      "description": "Projects show the Virtual Share pool, issued Virtual Shares, and contribution records."
+    },
+    "contributionRecords": {
+      "title": "Contribution records",
+      "description": "Contribution records are derived from work, results, reviews, and Virtual Shares."
+    },
+    "commercialization": {
+      "title": "Virtual Shares and contribution ledger",
+      "description": "Results, reviews, Virtual Shares, and contribution records come from the same Project Ledger.",
+      "status": {
+        "planned": "Planned",
+        "active": "Active",
+        "proving": "Proving",
+        "validated": "Validated",
+        "collecting": "Collecting",
+        "ready": "Ready"
+      },
+      "metrics": {
+        "tasks": "Work",
+        "results": "Results",
+        "accepted": "Accepted",
+        "virtualSharePool": "Virtual Share pool",
+        "claimed": "Claimed",
+        "virtualShares": "Virtual Shares"
+      }
+    },
+    "team": {
+      "title": "Maintenance seats",
+      "description": "Maintenance seats handle platform-level work. Ordinary project collaboration runs through the work pool, result review, and contribution records.",
+      "unassigned": "Vacant"
+    },
+    "more": {
+      "title": "More information"
+    },
+    "detail": {
+      "title": "Project details",
+      "description": "This page covers the project background, work pool, Virtual Shares, and execution rules."
+    },
+    "baseInfo": {
+      "projectNo": "Project ID",
+      "publishedAt": "Published",
+      "totalShares": "Total Virtual Shares",
+      "releasedShares": "Issued Virtual Shares",
+      "taskPoolRemaining": "Assignable Virtual Shares",
+      "reservePool": "Reserved Virtual Shares"
+    },
+    "info": {
+      "projectBrief": "Project brief",
+      "deliverables": "Deliverables",
+      "joinGuide": "How to join",
+      "ownerIntro": "Initiator note",
+      "referenceLinks": "Project Workspace",
+      "inventoryPolicy": "Inventory policy",
+      "visibility": "Visibility",
+      "empty": "No additional public project information yet."
+    },
+    "deliverablePrefix": "Deliverable: {deliverable}",
+    "acceptancePrefix": "Acceptance: {acceptance}",
+    "timeline": {
+      "title": "Project timeline",
+      "empty": "No project timeline events yet.",
+      "pendingDate": "Pending date",
+      "type": {
+        "project_published": "Project published",
+        "role_assigned": "Role assigned",
+        "owner_claimed": "Owner claimed",
+        "task_claimed": "Task claimed",
+        "task_completed": "Task completed",
+        "shares_released": "Virtual Shares released",
+        "order_closed": "Order closed"
+      }
+    }
+  }
+}

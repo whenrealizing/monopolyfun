@@ -1,0 +1,199 @@
+{
+  "ResetPassword": {
+    "page": {
+      "title": "重置密码",
+      "description": "先登记重置请求，再使用管理员发放的令牌设置新密码。",
+      "backToLogin": "返回登录"
+    },
+    "form": {
+      "requestStep": "1. 请求重置凭证",
+      "confirmStep": "2. 使用管理员发放的令牌设置新密码",
+      "handle": "账号名",
+      "handlePlaceholder": "输入账号名",
+      "requestSubmit": "提交重置请求",
+      "requestRegistered": "重置请求已登记",
+      "resetToken": "重置令牌",
+      "resetTokenPlaceholder": "粘贴管理员发放的令牌",
+      "newPassword": "新密码",
+      "newPasswordPlaceholder": "至少 8 位",
+      "confirmSubmit": "重置并登录",
+      "tokenPreset": "已带入管理员发放的令牌",
+      "requestedAt": "请求时间：{date}",
+      "errors": {
+        "handleRequired": "请输入账号名。",
+        "handleLength": "账号名至少 3 个字符。",
+        "resetTokenRequired": "请输入重置令牌。",
+        "resetTokenLength": "请检查重置令牌后重试。",
+        "newPasswordRequired": "请输入新密码。",
+        "newPasswordLength": "密码至少 8 个字符。"
+      }
+    }
+  },
+  "Shares": {
+    "heading": "虚拟股份流水",
+    "description": "查看账号或项目相关的虚拟股份发放记录。自己的资产优先在个人中心查看，这里用于核对具体流水。",
+    "placeholders": {
+      "accountId": "账号编号",
+      "marketId": "项目或市场编号"
+    },
+    "search": "查询",
+    "amount": "{amount} 虚拟股份",
+    "holderRef": "持有人 {ref}",
+    "entryMeta": "账号 {account} · 市场 {market} · {date}",
+    "entryRef": "流水 {ref}",
+    "reasons": {
+      "work_order": "任务结算",
+      "review_order": "评审结算",
+      "fallback": "虚拟股份变动"
+    },
+    "approvals": {
+      "title": "待审批发放",
+      "description": "当前账号需要处理的虚拟股份发放请求。审批通过后会进入虚拟股份流水。",
+      "refresh": "刷新",
+      "approve": "审批通过",
+      "approved": "虚拟股份发放已审批",
+      "amount": "{amount} 虚拟股份",
+      "meta": "账号 {accountId} · 市场 {marketId} · {date}",
+      "roles": "已审批：{approved} · 需要：{required}",
+      "none": "无",
+      "pendingDate": "等待时间",
+      "empty": "当前没有待审批发放。",
+      "error": "待审批发放加载失败，请确认已登录且有审批权限。",
+      "tokens": {
+        "pending": "待审批",
+        "approved": "已审批",
+        "cancelled": "已取消",
+        "system": "系统",
+        "market": "市场",
+        "project": "项目",
+        "owner": "所有者",
+        "lead": "负责人",
+        "reviewer": "评审",
+        "worker": "执行",
+        "authority": "处理方",
+        "skipped": "已跳过",
+        "system_ceo": "协议维护",
+        "system_cto": "技术维护",
+        "system_cfo": "结算维护"
+      }
+    },
+    "empty": {
+      "title": "输入账号编号或项目编号后查询真实流水",
+      "accountsLink": "从账号目录选择"
+    },
+    "error": {
+      "title": "虚拟股份流水加载失败",
+      "description": "当前查询没有正常返回，请检查账号或市场 ID 后重试。"
+    }
+  },
+  "Accounts": {
+    "heading": "账号目录",
+    "description": "浏览可公开访问的账号摘要，用公开主页判断身份、简介和近期发布。",
+    "emptySummary": "暂无公开简介。",
+    "empty": {
+      "title": "当前没有可展示账号",
+      "description": "注册或导入账号后，这里会显示公开摘要。"
+    },
+    "error": {
+      "title": "账号目录加载失败",
+      "description": "账号目录暂时没有正常返回，请稍后刷新。"
+    }
+  },
+  "Workbench": {
+    "heading": "待办",
+    "title": "待办队列",
+    "description": "需要你处理的事项。",
+    "pageDescription": "按分类查看需要处理的待办，并进入对应详情页继续处理。",
+    "refresh": "刷新",
+    "openToHandle": "打开详情处理",
+    "fillToSubmit": "填写后提交",
+    "viewDetails": "查看详情",
+    "count": "当前共 {count} 项",
+    "dismissible": "可隐藏",
+    "locked": "锁定",
+    "loadFailed": "待办加载失败",
+    "empty": "当前没有待办事项。",
+    "emptyDescription": "订单验收、交付证明和争议处理会出现在这里。",
+    "filteredEmptyDescription": "这个分类下暂时没有需要处理的事项。",
+    "reminder": "提醒",
+    "required": "必须处理",
+    "laneLabel": "处理角色",
+    "urgencyLabel": "优先级",
+    "targetLabel": "对象",
+    "taskLabel": "事项",
+    "refreshSelected": "刷新当前事项",
+    "selectPrompt": "选择一个待办后进入详情页查看原因和可用动作。",
+    "actionCompleted": "待办已更新",
+    "errors": {
+      "loginRequired": "请先登录后查看待办。",
+      "forbidden": "当前账号没有查看这些待办的权限。",
+      "loadFailed": "待办暂时没有正常返回，请稍后刷新。",
+      "actionFailed": "待办操作没有完成，请稍后重试。"
+    },
+    "filters": {
+      "all": "全部",
+      "project": "项目",
+      "bought": "我买的",
+      "sold": "我卖的",
+      "published": "我发布的",
+      "reviewing": "我评审的",
+      "approving": "我审批的"
+    },
+    "emptyActions": {
+      "market": "去市场",
+      "publish": "发布内容",
+      "approvals": "查看审批"
+    },
+    "facts": {
+      "target": "对象",
+      "itemTitle": "商品",
+      "amount": "金额",
+      "orderNo": "订单",
+      "role": "我的任务",
+      "capability": "能力",
+      "urgency": "优先级",
+      "projectNo": "项目",
+      "runId": "批次",
+      "prNumber": "PR",
+      "checkName": "检查"
+    },
+    "tokens": {
+      "payer": "付款",
+      "fulfiller": "交付",
+      "authority": "权限处理",
+      "worker": "交付",
+      "lead": "发布管理",
+      "review": "评审",
+      "reviewer": "评审处理",
+      "ecosystem": "项目管理",
+      "settlement": "审批处理",
+      "attention": "需留意",
+      "urgent": "紧急",
+      "normal": "普通",
+      "order": "订单",
+      "offer": "报价",
+      "request": "需求",
+      "project": "项目",
+      "market": "市场",
+      "governance": "治理",
+      "work": "任务",
+      "pay": "付款",
+      "deliver": "交付",
+      "review": "验收",
+      "approve": "审批",
+      "invite": "邀请",
+      "maintain": "维护",
+      "publish": "发布",
+      "execute": "处理",
+      "submit_worker_proof": "提交证明",
+      "auto_delivery_pending": "自动交付",
+      "complete_money_payment": "待付款",
+      "delivery_result_due": "待交付",
+      "lead_accept_or_dispute": "验收或争议",
+      "expand_offer_supply": "推进供给",
+      "promote_request": "推进需求",
+      "promote_project": "推进项目",
+      "review_disputed_order": "争议评审"
+    }
+  }
+}

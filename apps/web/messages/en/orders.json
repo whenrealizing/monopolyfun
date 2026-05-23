@@ -1,0 +1,838 @@
+{
+  "Orders": {
+    "list": {
+      "intro": {
+        "heading": "My orders",
+        "description": "Claims, purchases, delivery, acceptance, and disputes live here. The marketplace only keeps listings that are still tradable.",
+        "backToMarket": "Back home"
+      },
+      "badges": {
+        "order": "Order"
+      },
+      "filters": {
+        "all": "All"
+      },
+      "stages": {
+        "count": "{count} orders",
+        "payment": {
+          "heading": "Awaiting payment",
+          "description": "Payment comes first so the fulfiller can start."
+        },
+        "delivery": {
+          "heading": "Awaiting delivery",
+          "description": "The fulfiller is submitting the result or progress."
+        },
+        "acceptance": {
+          "heading": "Awaiting acceptance",
+          "description": "The result is in; the payer needs to accept or dispute it."
+        },
+        "dispute": {
+          "heading": "In dispute",
+          "description": "The original flow is paused until cancellation or final decision."
+        },
+        "complete": {
+          "heading": "Complete",
+          "description": "These orders are finalized and kept for reference."
+        }
+      },
+      "meta": {
+        "payer": "{role}: {name}",
+        "fulfiller": "{role}: {name}",
+        "parties": "{payer} / {fulfiller}",
+        "phase": "Phase: {phase}",
+        "payerShort": "Payer: {name}",
+        "fulfillerShort": "Fulfiller: {name}",
+        "counterparty": "Counterparty: {name}",
+        "partiesShort": "Payer: {payer} / Fulfiller: {fulfiller}",
+        "pendingCounterparty": "Pending",
+        "participantsPending": "Participants pending",
+        "unknownAccount": "Unknown account"
+      },
+      "roles": {
+        "buyer": "Buyer",
+        "seller": "Seller",
+        "initiator": "Initiator",
+        "executor": "Executor"
+      },
+      "amount": {
+        "label": "Settlement",
+        "money": "$",
+        "shares": "Virtual Shares"
+      },
+      "payment": {
+        "waitingForYou": "Waiting for your payment",
+        "waitingForPayer": "Waiting for payer payment",
+        "dueAt": "due {date}"
+      },
+      "empty": {
+        "title": "No orders for this account",
+        "description": "Orders will appear here after you buy or claim an item."
+      },
+      "error": {
+        "generic": {
+          "title": "Orders failed to load",
+          "description": "Order or account data did not return correctly. Try again in a moment."
+        },
+        "auth": {
+          "title": "Sign in again",
+          "description": "The current browser session cannot read orders. Sign in again to continue."
+        },
+        "forbidden": {
+          "title": "This account cannot view the order list",
+          "description": "The order list shows orders where this account is a participant or reviewer."
+        }
+      }
+    },
+    "detail": {
+      "intro": {
+        "description": "This page shows where the order stands, who owns the next step, and what happens next.",
+        "backToMarket": "Back home"
+      },
+      "accessDenied": {
+        "heading": "This account cannot view this order",
+        "description": "Order {orderNo} is visible only to the payer, fulfiller, reviewer, or project handler.",
+        "note": "Switch to an order participant account, or use a backoffice review entry with order access.",
+        "backToOrders": "Back to profile market"
+      },
+      "common": {
+        "none": "None",
+        "yes": "Yes",
+        "orderDetail": "Order detail",
+        "currentState": "Current state"
+      },
+      "account": {
+        "verifiedMeta": "{handle} · from @{source}",
+        "unknown": "Unknown account",
+        "pending": "Pending"
+      },
+      "amount": {
+        "moneyValue": "${amount}",
+        "moneyPending": "Amount pending",
+        "sharesValue": "{amount} Virtual Shares"
+      },
+      "flow": {
+        "claimed": {
+          "label": "Claimed",
+          "helper": "Order created"
+        },
+        "payment": {
+          "label": "Awaiting payment",
+          "helper": "Buyer completes payment"
+        },
+        "delivery": {
+          "label": "Awaiting delivery",
+          "helper": "Fulfiller submits the result"
+        },
+        "acceptance": {
+          "label": "Awaiting acceptance",
+          "helper": "Buyer reviews the result"
+        },
+        "accepted": {
+          "label": "Accepted",
+          "helper": "Dispute window is open"
+        },
+        "settled": {
+          "label": "Complete",
+          "helper": "Order closed"
+        },
+        "disputed": {
+          "label": "In dispute",
+          "helper": "Waiting for cancellation or decision"
+        },
+        "closed": {
+          "label": "Closed",
+          "helper": "Order was not completed"
+        },
+        "timeoutClosed": {
+          "label": "Payment timed out",
+          "helper": "Unpaid slot was released"
+        }
+      },
+      "proof": {
+        "heading": "Delivery record",
+        "description": "This record drives acceptance and dispute decisions.",
+        "deliveryResultHeading": "Delivery result",
+        "empty": "No delivery record has been submitted yet.",
+        "attachments": "Attachments",
+        "deliveryLink": "Delivery link",
+        "linkOnlyDescription": "The fulfiller did not add a delivery note.",
+        "noSummary": "The fulfiller did not add a delivery note.",
+        "reviewDecision": "Review decision",
+        "kind": {
+          "work_proof": "Work proof",
+          "review_proof": "Review proof"
+        }
+      },
+      "executionMode": {
+        "human": "Manual execution",
+        "agent": "My Agent execution",
+        "mixed": "Mixed execution"
+      },
+      "decision": {
+        "acceptOriginal": "Accept original delivery",
+        "closeOriginal": "Close original order"
+      },
+      "runtime": {
+        "codexLocalWorker": "Local worker",
+        "reviewAgent": "Review worker"
+      },
+      "delivery": {
+        "heading": "Delivery requirements",
+        "description": "These are the two facts users need first when judging the order result.",
+        "deliverable": "You will receive",
+        "acceptance": "Acceptance standard",
+        "sourceItem": "Source item",
+        "sourcePost": "Source listing"
+      },
+      "progress": {
+        "heading": "Execution progress",
+        "description": "Only progress updates submitted by the fulfiller are shown.",
+        "step": "Step {step}",
+        "update": "Progress update"
+      },
+      "parties": {
+        "heading": "Parties",
+        "description": "The payer, recipient, and payment amount for this order.",
+        "paymentAmount": "Payment amount"
+      },
+      "summary": {
+        "heading": "Order summary"
+      },
+      "currentState": {
+        "paymentDueAt": "Complete payment by {date}. If payment times out, the order will close and the item capacity will be released.",
+        "paymentPending": "Delivery will continue after payment is captured; unpaid orders may time out and release item capacity.",
+        "deliveryDueAt": "Payment is captured. The fulfiller should submit delivery or progress by {date}; missing this SLA will not block delivery, but the buyer may use it for follow-up or dispute.",
+        "disputeWindowEnds": "The window ends at {date}. You can still start a dispute before then; after it ends, the order will complete.",
+        "disputeWindowUnknown": "Delivery has been approved and the dispute window is still open. You can still start a dispute during this window."
+      },
+      "paymentCountdown": {
+        "remaining": "{time} left · due {date}",
+        "expired": "Payment deadline passed · due {date}"
+      },
+      "finalSummary": {
+        "closed": "The order is closed and settlement will not continue.",
+        "sharesPending": "The order is complete and Virtual Share release is waiting for approval.",
+        "sharesReady": "The order is complete and Virtual Shares will follow the settlement record.",
+        "moneyDone": "The order is complete and payment settlement is final."
+      },
+      "dispute": {
+        "heading": "Dispute in progress",
+        "resultHeading": "Dispute result",
+        "viewDetails": "View dispute details",
+        "openedBy": "Dispute opened by",
+        "reason": "Dispute reason",
+        "handler": "Handler",
+        "handlerPending": "Pending assignment",
+        "cancelled": "Dispute cancelled",
+        "reviewer": "Reviewer",
+        "dueAt": " · due {date}",
+        "backofficeHandling": "Backoffice handling",
+        "originalOrder": "Original order",
+        "reviewOrder": "Review order",
+        "openOriginalOrder": "Open original order",
+        "openReviewOrder": "Open review order",
+        "summary": {
+          "cancelled": "The dispute was cancelled and the order returned to its previous acceptance path.",
+          "accepted": "The dispute has a final decision: accept the original delivery.",
+          "closed": "The dispute has a final decision: close the original order.",
+          "active": "The dispute is active. Open the details page to review the source, evidence, cancellation entry, and final decision entry."
+        }
+      },
+      "settlement": {
+        "heading": "Settlement",
+        "description": "Shows where the money or Virtual Shares are now and who handles the next step.",
+        "method": "Settlement method",
+        "payableAmount": "Order amount",
+        "sharesAmount": "Virtual Share amount",
+        "counterparty": "Counterparty",
+        "shareReceiver": "Virtual Share receiver",
+        "recipient": "Recipient",
+        "disputeWindowEnds": "Dispute window ends",
+        "paymentStatus": "Payment status",
+        "windowPending": "Generated after acceptance",
+        "waitingApproval": "Waiting for Virtual Share release approval",
+        "waitingDisputeWindow": "Waiting for dispute window to end",
+        "waitingAcceptance": "Waiting for order acceptance",
+        "payer": "Payer: {payer}",
+        "nextOwner": "Next owner: {owner}",
+        "releaseReady": "Virtual Shares will be released after the order completes.",
+        "waitingFinalStatus": "Waiting for final status",
+        "lockReasonLine": "Release is paused: {reason}",
+        "approvalPending": "Virtual Share release is waiting for handler confirmation.",
+        "paymentIntent": {
+          "missing": "Not created",
+          "pending": "Pending payment",
+          "authorized": "Confirming",
+          "captured": "Paid",
+          "failed": "Payment failed",
+          "cancelled": "Cancelled",
+          "refunded": "Refunded",
+          "disputed": "In dispute"
+        },
+        "type": {
+          "money": "$ settlement",
+          "shares": "Virtual Share settlement"
+        },
+        "status": {
+          "locked": "Locked",
+          "released": "Released",
+          "cancelled": "Cancelled",
+          "pending": "Pending approval",
+          "approved": "Approved",
+          "skipped": "Skipped",
+          "fallback": "Waiting"
+        },
+        "lockReason": {
+          "acceptance_window": "Acceptance dispute window",
+          "disputed": "Dispute freeze",
+          "approval_pending": "Release approval pending",
+          "fallback": "Waiting for lock"
+        }
+      },
+      "events": {
+        "summary": "Order history",
+        "recent": "Recent activity",
+        "empty": "No events recorded.",
+        "hasMore": "Showing the latest 3 items. {hidden} older records are hidden."
+      },
+      "event": {
+        "listing_claimed": "Item claimed",
+        "progress_submitted": "Progress submitted",
+        "proof_submitted": "Delivery record submitted",
+        "order_accepted": "Order accepted",
+        "order_disputed": "Order moved into dispute",
+        "review_listing_opened": "Review item opened",
+        "review_order_claimed": "Review order claimed",
+        "review_proof_submitted": "Review proof submitted",
+        "reviewer_assigned": "Reviewer assigned",
+        "backoffice_override_applied": "Backoffice final decision applied",
+        "order_closed": "Order closed",
+        "timeout_release": "Item lock timed out and was released",
+        "shares_minted": "Virtual Shares released",
+        "unknown": "New order record"
+      }
+    },
+    "dispute": {
+      "intro": {
+        "heading": "Dispute details"
+      },
+      "common": {
+        "waitingRecord": "Waiting for record",
+        "none": "None",
+        "unknownAccount": "Unknown account"
+      },
+      "current": {
+        "heading": "Current handling",
+        "nextAction": "Next step",
+        "openedAt": "Opened at"
+      },
+      "source": {
+        "heading": "Opening details",
+        "order": "Order",
+        "openOrder": "View original order",
+        "openedBy": "Opened by",
+        "buyer": "Buyer",
+        "seller": "Seller",
+        "handler": "Handler",
+        "handlerPending": "Pending assignment",
+        "reason": "Dispute reason",
+        "cancelRecord": "Cancellation record"
+      },
+      "evidence": {
+        "heading": "Delivery record and basis",
+        "deliveryResult": "Delivery result",
+        "acceptance": "Acceptance basis",
+        "deliveryEvidence": "Delivery evidence",
+        "disputeEvidence": "Dispute evidence",
+        "emptyRefs": "No evidence attachments yet.",
+        "emptyDelivery": "No delivery attachments yet.",
+        "emptyDispute": "No dispute attachments yet.",
+        "download": "Download file",
+        "open": "Open link",
+        "copy": "Copy link",
+        "copied": "Copied",
+        "uploadPrefix": "Uploaded file",
+        "waitingDelivery": "No delivery note yet.",
+        "decision": " · decision: {decision}"
+      },
+      "timeline": {
+        "heading": "Dispute timeline",
+        "empty": "No dispute records yet."
+      },
+      "progress": {
+        "heading": "Handling progress",
+        "opened": "Dispute opened",
+        "assignment": "Waiting for platform assignment",
+        "materials": "Both sides add materials",
+        "ruling": "Platform decision",
+        "ended": "Dispute closed",
+        "cancelled": "Dispute cancelled",
+        "done": "Done",
+        "current": "Current step",
+        "pending": "Pending"
+      },
+      "management": {
+        "heading": "Dispute management",
+        "note": "The platform will decide after checking both sides' materials."
+      },
+      "notes": {
+        "heading": "Handling notes",
+        "description": "The platform will decide after checking both sides' materials. Acceptance, delivery, and settlement actions are frozen while the dispute is open."
+      },
+      "handling": {
+        "cancelled": {
+          "title": "Dispute cancelled",
+          "action": "Return to the order page and continue the original acceptance path."
+        },
+        "final": {
+          "title": "Dispute finalized",
+          "action": "The detail page keeps the source, evidence, and handling history."
+        },
+        "authority": {
+          "title": "Waiting for platform handling",
+          "action": ""
+        },
+        "opener": {
+          "title": "Dispute in progress",
+          "action": ""
+        },
+        "assign": {
+          "title": "Waiting for reviewer assignment",
+          "action": "Select a reviewer so the review flow can move toward a decision."
+        },
+        "appeal": {
+          "title": "Second review is available",
+          "action": "Explain what the first review missed and request another review."
+        },
+        "waiting": {
+          "title": "Dispute in progress",
+          "action": ""
+        }
+      },
+      "state": {
+        "cancelled": "Cancelled",
+        "active": "In progress",
+        "final": "Finalized"
+      },
+      "result": {
+        "acceptOriginal": "Accept original delivery",
+        "closeOriginal": "Close original order",
+        "cancelled": "Dispute cancelled",
+        "pending": "Pending"
+      },
+      "status": {
+        "claimed": "Claimed",
+        "delivered": "Awaiting acceptance",
+        "disputed": "In dispute",
+        "accepted_open": "Acceptance window open",
+        "final_accepted": "Complete",
+        "final_closed": "Closed"
+      },
+      "event": {
+        "post_item_claimed": "Item claimed",
+        "auto_delivery_completed": "Auto delivery completed",
+        "order_disputed": "Dispute opened",
+        "review_task_opened": "Review task opened",
+        "review_listing_opened": "Review entry opened",
+        "review_workbench_published": "Review task published",
+        "dispute_cancelled": "Dispute cancelled",
+        "backoffice_override_applied": "Backoffice final decision applied",
+        "order_closed": "Order closed",
+        "order_accepted": "Order accepted",
+        "unknown": "New dispute record"
+      },
+      "eventDetail": {
+        "reason": "Reason: {reason}",
+        "cancelled": "Cancellation reason: {reason}; the order returned to {status}.",
+        "override": "Final handling: {decision}",
+        "overrideWithReason": "Final handling: {decision}; reason: {reason}",
+        "reviewer": "Reviewer: {reviewer}"
+      }
+    },
+    "requestCurrentState": {
+      "viewerPayment": {
+        "title": "Waiting for your payment"
+      },
+      "publisherPayment": {
+        "title": "Waiting for publisher payment"
+      },
+      "openPaymentOrder": "Open order to pay"
+    },
+    "actionPanel": {
+      "heading": "Next step",
+      "description": "Actions are based on the order status: delivery record, payment, acceptance, dispute, and review.",
+      "currentPhase": "Current phase",
+      "nextProgressDue": "Next progress due: {date}",
+      "emptyActions": "There are no available actions for the current order status.",
+      "defaults": {
+        "overrideReason": "",
+        "appealReason": "The first review missed relevant context; requesting a second review.",
+        "cancelDisputeReason": "Both sides confirmed the delivery is valid and are cancelling this dispute.",
+        "openDisputeReason": "Opened dispute review from the order page."
+      },
+      "account": {
+        "verifiedSuffix": " · from @{handle}"
+      },
+      "errors": {
+        "missingPaymentRequirement": "OKX payment details are missing {key}",
+        "missingPaymentExtra": "OKX payment details are missing extension data.",
+        "missingPaymentExtraVersion": "OKX payment details are missing version data.",
+        "createPaymentFirst": "Create an OKX payment session first.",
+        "walletMissing": "No wallet extension was detected. Install or enable OKX Wallet / MetaMask and try again.",
+        "requirementsMissing": "OKX payment details have not been generated yet.",
+        "walletAccountMissing": "The wallet did not return an account.",
+        "walletRejected": "You cancelled the wallet action.",
+        "walletConnectFailed": "Wallet connection did not complete. Try again.",
+        "walletSwitchFailed": "X Layer was not selected, so payment cannot continue yet.",
+        "walletSignFailed": "Wallet signature did not complete. Try again.",
+        "walletRequestFailed": "Wallet action did not complete. Try again.",
+        "walletRequestTimeout": "Wallet response timed out. Start payment again.",
+        "invalidPaymentPayload": "The external wallet data format is invalid. Regenerate it and try again."
+      },
+      "progress": {
+        "heading": "Progress update (optional)",
+        "description": "This only records work-in-progress. To send the order for review, use Submit delivery result above.",
+        "titlePlaceholder": "Example: first page is accessible",
+        "summaryPlaceholder": "Describe what changed in this step and what comes next.",
+        "submit": "Record progress"
+      },
+      "proof": {
+        "summary": "Proof summary",
+        "summaryPlaceholder": "Describe the delivery, links, and execution source",
+        "reviewDecision": "Review decision",
+        "acceptanceCriteria": "Referenced completion standards",
+        "attachment": "Attachment",
+        "attachmentHint": "Supports PNG / JPG / WEBP / PDF. Add at least one attachment before submitting proof.",
+        "attachmentRequired": "Add a proof attachment first.",
+        "submit": "Submit proof",
+        "current": "Current proof"
+      },
+      "decision": {
+        "acceptOriginal": "Accept original delivery",
+        "closeOriginal": "Close original order"
+      },
+      "optional": "(optional)",
+      "autoDelivery": {
+        "heading": "Submit delivery result",
+        "description": "This is the final delivery action. After submission, the order moves to review.",
+        "summary": "Delivery note",
+        "summaryPlaceholder": "Describe what you delivered and how the {reviewer} should review or use it.",
+        "url": "Result link",
+        "urlPlaceholder": "Add a result link the {reviewer} can access",
+        "attachment": "Attachment",
+        "chooseAttachment": "Choose file",
+        "noAttachment": "No file added",
+        "attachmentCount": "{count} files added",
+        "removeAttachment": "Remove file",
+        "attachmentHint": "Supports PNG / JPG / WEBP / PDF. Links and attachments are saved to the order delivery record.",
+        "waitForPayment": "The {payer} needs to pay before you can submit the delivery.",
+        "submit": "Submit for {reviewer} review",
+        "deliveryLink": "Delivery link"
+      },
+      "instantDelivery": {
+        "heading": "Instant delivery",
+        "done": "Delivery result has been written to the order.",
+        "waiting": "The system will deliver automatically after payment succeeds.",
+        "status": "Delivery status",
+        "delivered": "Delivered",
+        "waitingReceipt": "Waiting for delivery result",
+        "retry": "Retry delivery"
+      },
+      "stockDelivery": {
+        "heading": "Delivery content",
+        "reveal": "View content",
+        "copy": "Copy",
+        "copySuccess": "Delivery content copied",
+        "copyFailed": "Copy failed. Select the content manually."
+      },
+      "actions": {
+        "accept": "Approve delivery",
+        "openDispute": "Start dispute"
+      },
+      "disputeOpen": {
+        "heading": "Open dispute",
+        "description": "The order pauses acceptance and enters dispute handling.",
+        "reason": "Dispute reason",
+        "reasonRequired": "Enter a dispute reason.",
+        "reasonPlaceholder": "Explain what missed the completion standard and what outcome you expect.",
+        "evidenceUrl": "Evidence link",
+        "evidenceUrlPlaceholder": "Screenshot, PR, ticket, or delivery record link",
+        "attachment": "Evidence attachment",
+        "chooseAttachment": "Choose file",
+        "noAttachment": "No file added",
+        "attachmentCount": "{count} files added",
+        "removeAttachment": "Remove file",
+        "attachmentHint": "Supports PNG / JPG / WEBP / PDF. Evidence is used only for this dispute.",
+        "review": "Start dispute",
+        "cancel": "Cancel",
+        "confirmTitle": "Confirm dispute",
+        "confirmDescription": "The order pauses acceptance and enters dispute handling.",
+        "cancelConfirm": "Back to edit",
+        "confirm": "Confirm dispute"
+      },
+      "disputeManagement": {
+        "heading": "Dispute management",
+        "cancelHint": "Cancelling returns the order to its pre-dispute status.",
+        "cancelReason": "Cancellation reason",
+        "cancelPlaceholder": "Explain why this dispute is being cancelled",
+        "cancel": "Cancel dispute",
+        "cancelConfirmTitle": "Confirm dispute cancellation",
+        "cancelConfirmDescription": "Cancelling closes this dispute and returns the order to the acceptance path from before the dispute.",
+        "backToEdit": "Back to edit",
+        "appealHint": "Add what the first review missed and request a second handling pass.",
+        "appealPlaceholder": "Explain why a second review is needed",
+        "appeal": "Request second review",
+        "waitingReviewer": "Waiting for the reviewer.",
+        "selectReviewer": "Select handler",
+        "assignReviewer": "Assign handler",
+        "chooseReviewerFirst": "Select a handler first.",
+        "noReviewers": "No reviewer candidates.",
+        "openOverride": "End dispute",
+        "overridePlaceholder": "Explain the handling reason",
+        "overrideAccept": "Approve delivery",
+        "overrideClose": "Close order",
+        "overrideAcceptConfirmTitle": "Confirm approving delivery",
+        "overrideCloseConfirmTitle": "Confirm closing order",
+        "overrideConfirmDescription": "The platform will give the result directly, and the order will move to a final status."
+      },
+      "final": {
+        "accepted": "Order finalized",
+        "closed": "Order closed",
+        "settlementPreview": "Settlement preview: {amount} Virtual Shares"
+      },
+      "result": {
+        "heading": "Action completed",
+        "description": "Order updated to: {status}",
+        "failed": "Action did not complete"
+      },
+      "payment": {
+        "heading": "Payment status",
+        "amountPending": "Pending generation",
+        "amount": "Amount",
+        "payableAmount": "Amount due",
+        "backendSessionHint": "The server creates the payment session; system records are the source of truth.",
+        "createSession": "Create payment session",
+        "refreshStatus": "Refresh payment status",
+        "paying": "Paying",
+        "abandon": "Abandon payment",
+        "abandonConfirmTitle": "Abandon payment?",
+        "abandonConfirmDescription": "The order will close and item capacity will be released.",
+        "abandonCancel": "Back",
+        "abandonConfirm": "Abandon",
+        "dueAt": "Payment due: {date}",
+        "synced": "Payment status synced",
+        "syncedDescription": "{status}, amount {amount}.",
+        "regenerateRequirements": "Regenerate payment requirements",
+        "generateRequirements": "Generate OKX payment requirements",
+        "wallet": "Wallet: {address}",
+        "payer": {
+          "buyer": "buyer",
+          "request": "publisher"
+        },
+        "failure": {
+          "insufficientBalance": "Insufficient balance: {message}"
+        },
+        "disabled": {
+          "settled": "This order has already been paid. Payment is closed.",
+          "buyerOnly": "This account can view payment status, but only the buyer can complete payment.",
+          "payerOnly": "This account can view payment status, but only the {payer} can complete payment."
+        },
+        "status": {
+          "authorized": {
+            "label": "Confirming",
+            "title": "Payment confirming",
+            "description": "Wallet authorization has been submitted, but on-chain capture is still pending. Delivery and acceptance stay locked until capture completes.",
+            "action": "Continue payment confirmation"
+          },
+          "paid": {
+            "label": "Paid",
+            "title": "Payment complete",
+            "description": "On-chain settlement is complete. Payment is closed; continue with delivery or acceptance.",
+            "action": "Payment complete"
+          },
+          "failed": {
+            "label": "Failed",
+            "title": "Last payment failed",
+            "description": "The last payment did not complete. Signing again reuses this order and refreshes the payment status.",
+            "action": "Sign and pay again"
+          },
+          "cancelled": {
+            "label": "Cancelled",
+            "title": "Payment cancelled",
+            "description": "This payment was cancelled. Signing again starts a new payment attempt.",
+            "action": "Sign and pay again"
+          },
+          "refunded": {
+            "label": "Refunded",
+            "title": "Payment refunded",
+            "description": "Funds have moved into the refund result. Payment is closed for this order.",
+            "action": "Refunded"
+          },
+          "disputed": {
+            "label": "In dispute",
+            "title": "Payment in dispute",
+            "description": "This payment needs manual handling. Complete the dispute or refund flow first.",
+            "action": "Dispute in progress"
+          },
+          "pending": {
+            "label": "Pending payment",
+            "title": "Waiting for wallet signature",
+            "description": "Sign with your wallet. The system will sync the payment result automatically.",
+            "action": "Pay with wallet"
+          },
+          "missing": {
+            "label": "Not created",
+            "title": "Waiting to create payment details",
+            "description": "Generate OKX payment details first, then pay with your wallet.",
+            "action": "Pay with wallet"
+          }
+        }
+      }
+    },
+    "marketSelection": {
+      "title": {
+        "offer": "Choose sale option",
+        "request": "Choose task to accept",
+        "project": "Claimable tasks"
+      },
+      "description": {
+        "offer": "Buyers choose a sale option. After payment, the order moves into delivery.",
+        "request": "Fulfillers choose a task to accept. After the publisher pays, delivery begins.",
+        "project": ""
+      },
+      "action": {
+        "viewOrder": "View order",
+        "disabled": "Not selectable",
+        "payToBuy": "Pay to buy",
+        "buy": "Buy now",
+        "claimTask": "Claim task",
+        "joinProject": "Join project",
+        "claimRequest": "Claim now"
+      },
+      "createItem": "Add content",
+      "createProjectTask": "Add task",
+      "selected": "Current selection",
+      "selectPlaceholder": "Select one",
+      "projectNotePlaceholder": "Add execution notes for this task.",
+      "buyerNotePlaceholder": "Add a note for the fulfiller: account info, style, or delivery preferences.",
+      "loginPrompt": "After login, you will return here to complete this action.",
+      "notes": {
+        "title": "Purchase notes",
+        "quantity": "Quantity",
+        "quantityValue": "Purchases are currently one item at a time"
+      },
+      "order": {
+        "title": "Order confirmation",
+        "selected": "Selected item",
+        "unitPrice": "Unit price",
+        "quantity": "Quantity",
+        "total": "Total",
+        "decreaseQuantity": "Decrease quantity",
+        "increaseQuantity": "Increase quantity"
+      },
+      "instantDelivery": {
+        "heading": "Instant delivery",
+        "phonePlaceholder": "Phone number, e.g. 13800138000",
+        "phoneError": "Enter a valid 11-digit phone number.",
+        "slaFallback": "Delivered automatically after payment succeeds.",
+        "provider": "Provider: {provider}"
+      },
+      "stockDelivery": {
+        "heading": "Platform-held inventory",
+        "description": "The platform locks inventory and delivers automatically after payment succeeds.",
+        "confirmValue": "One held inventory item is delivered after payment"
+      },
+      "payment": {
+        "okxDirectPay": "OKX Direct Pay",
+        "okxDescription": "Only OKX Wallet payment is currently supported.",
+        "sharesDescription": "This transaction settles in shares. The order page shows the settlement progress."
+      },
+      "confirm": {
+        "deliverable": "Delivery requirements",
+        "deliverableFallback": "Deliver according to the content description",
+        "acceptance": "Completion standard",
+        "acceptanceFallback": "Confirm against order proof and completion standards",
+        "paymentMethod": "Payment method",
+        "shares": "Virtual Shares",
+        "dispute": "Dispute entry",
+        "disputeValue": "A dispute can be opened from the order page after delivery",
+        "refund": "Refund rule",
+        "refundValue": "After order close or final dispute close, settlement records determine handling"
+      },
+      "errors": {
+        "orderMissing": "The order was submitted, but no order number was returned. Refresh and check the order status."
+      }
+    },
+    "requestItemPicker": {
+      "empty": "This request has no open tasks to accept yet.",
+      "emptyDescription": "Acceptance options will appear here after the publisher opens specific tasks.",
+      "heading": "Claimable tasks",
+      "description": "Choose a task and review the delivery requirements and completion standards. Delivery starts after funds are in place.",
+      "ownerView": "Publisher view",
+      "selected": "Selected",
+      "priority": "Priority: {priority}",
+      "hasOrder": "Order exists",
+      "buyerNotePlaceholder": "Add delivery preferences, reference links, or account information.",
+      "claim": "Claim now",
+      "loginToClaim": "Log in to claim",
+      "viewOrder": "View order",
+      "loginPrompt": "After login, you will return here and continue claiming this item.",
+      "waitingState": "This task cannot be accepted right now. View the existing order or wait for a status update.",
+      "instantDelivery": {
+        "phoneLabel": "Instant delivery phone",
+        "slaFallback": "Delivered automatically after payment succeeds."
+      },
+      "stockDelivery": {
+        "heading": "Platform-held inventory",
+        "description": "The platform locks inventory and delivers automatically after payment succeeds.",
+        "confirmValue": "One held inventory item is delivered after payment"
+      },
+      "errors": {
+        "invalidRecipient": "Enter a valid receiving wallet address.",
+        "clipboardReadFailed": "Could not read the clipboard. Paste the wallet address manually."
+      },
+      "status": {
+        "open": "Claimable",
+        "released": "Claimable",
+        "locked": "Locked",
+        "in_progress": "In delivery",
+        "in_review": "Awaiting acceptance",
+        "accepted_window_open": "Acceptance window",
+        "completed": "Completed",
+        "closed": "Closed",
+        "archived": "Archived",
+        "unavailable": "Unavailable"
+      },
+      "paymentStatus": {
+        "pending": "Payment pending",
+        "missing_payment_intent": "Payment not created",
+        "authorized": "Authorizing",
+        "captured": "Paid",
+        "failed": "Payment failed",
+        "cancelled": "Payment cancelled",
+        "refunded": "Refunded",
+        "disputed": "Payment disputed"
+      },
+      "details": {
+        "deliverable": "Delivery requirements",
+        "acceptance": "Completion standard"
+      },
+      "recipient": {
+        "label": "Receiving wallet address",
+        "hint": "Enter the executor's OKX / X Layer USDC receiving address. The publisher pays this address after accepting your claim.",
+        "paste": "Paste",
+        "valid": "Wallet address looks valid"
+      },
+      "confirm": {
+        "deliverable": "Delivery requirements",
+        "acceptance": "Completion standard",
+        "paymentMethod": "Payment method",
+        "shares": "Virtual Shares",
+        "dispute": "Dispute entry",
+        "disputeValue": "Open a dispute from the order page after delivery",
+        "refund": "Refund rule",
+        "refundValue": "After order close or final dispute close, settlement records determine handling"
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "Backoffice": {
+    "routes": {
+      "home": "总览",
+      "risk": "风控",
+      "payments": "支付",
+      "assets": "附件",
+      "audit": "审计"
+    },
+    "enter": "进入",
+    "home": {
+      "title": "后台",
+      "riskEvent": "风险事件",
+      "proofAsset": "交付附件",
+      "riskMeta": "风控 · {actor} · {date}",
+      "paymentMeta": "支付 · {status} · {date}",
+      "assetMeta": "附件 · 订单 {order} · {date}",
+      "queue": "近期关注",
+      "emptyQueue": "近期没有需要特别关注的后台记录。",
+      "open": "查看"
+    },
+    "risk": {
+      "title": "风控",
+      "description": "查看近期风险账号和风险事件。",
+      "accounts": "账号处置",
+      "accountMeta": "冻结到期：{frozenUntil} · {reason}",
+      "none": "无",
+      "noReason": "无处置原因",
+      "emptyAccounts": "近期没有带风险状态的账号。",
+      "events": "风险事件",
+      "eventMeta": "{actor} · 对象 {subject} · {date}",
+      "emptyEvents": "近期没有风险事件。"
+    },
+    "riskDetail": {
+      "title": "风控账号详情",
+      "description": "查看单个账号当前处置状态和最近风险事件。",
+      "profile": "账号状态",
+      "riskState": "风控状态",
+      "riskMeta": "冻结到期：{frozenUntil} · 更新时间：{updatedAt} · {reason}",
+      "none": "无",
+      "noReason": "无处置原因",
+      "events": "最近风险事件",
+      "eventMeta": "{actor} · 对象 {subject} · {date}",
+      "emptyEvents": "这个账号近期没有风险事件。"
+    },
+    "payments": {
+      "title": "支付",
+      "description": "查看近期支付记录的金额、状态、订单和服务商流水。",
+      "paymentIntents": "支付单",
+      "paymentMeta": "订单 {order} · 流水 {providerRef} · {date}",
+      "empty": "近期没有支付记录。"
+    },
+    "assets": {
+      "title": "附件",
+      "description": "查看近期交付附件的状态、订单、存储位置和文件大小。",
+      "proofAssets": "交付附件",
+      "assetMeta": "订单 {order} · {provider} · {size} · {date}",
+      "empty": "近期没有交付附件。"
+    },
+    "audit": {
+      "title": "审计",
+      "description": "查看近期关键动作的操作人、结果和发生时间。",
+      "events": "审计事件",
+      "eventMeta": "操作人 {actor} · {date}",
+      "empty": "近期没有审计事件。",
+      "labels": {
+        "authLogin": "账号登录",
+        "authLogout": "账号退出",
+        "authRegister": "账号注册",
+        "uploadComplete": "上传完成",
+        "uploadPresign": "上传签发"
+      }
+    },
+    "security": {
+      "heading": "安全操作",
+      "description": "后端当前安全写操作集中在风控账号处置和后台密码重置令牌；缺失的独立安全控制台先做降级展示。",
+      "title": "请从后台风控或我的智能体后台场景执行安全动作",
+      "body": "此页不调用不存在的旧接口，避免触发必然失败请求。"
+    },
+    "viewEvidence": "原始记录",
+    "showEvidence": "展开",
+    "hideEvidence": "收起",
+    "emptyValue": "空",
+    "values": {
+      "active": "正常",
+      "approved": "已通过",
+      "authorized": "已授权",
+      "banned": "已封禁",
+      "cancelled": "已取消",
+      "captured": "已入账",
+      "completed": "已完成",
+      "disputed": "争议中",
+      "draft": "草稿",
+      "failed": "失败",
+      "frozen": "已冻结",
+      "high": "高",
+      "local": "本地存储",
+      "low": "低",
+      "medium": "中",
+      "normal": "正常",
+      "okx_direct_pay": "OKX 链上支付",
+      "pending": "待处理",
+      "quarantined": "已隔离",
+      "refunded": "已退款",
+      "review": "待复核",
+      "success": "成功",
+      "uploaded": "已上传",
+      "verified": "已验证",
+      "application/json": "JSON 文件",
+      "application/pdf": "PDF 文件",
+      "image/jpeg": "JPEG 图片",
+      "image/png": "PNG 图片",
+      "text/plain": "文本文件"
+    }
+  }
+}

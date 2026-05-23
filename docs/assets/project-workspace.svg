@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-labelledby="title desc">
+  <title id="title">Project workspace preview</title>
+  <desc id="desc">A visual overview of project goal, scoped work, candidate results, review, and contribution history.</desc>
+  <rect width="1100" height="360" rx="18" fill="#f7f7f2"/>
+  <rect x="32" y="32" width="1036" height="296" rx="16" fill="#ffffff" stroke="#dedbd0"/>
+  <text x="64" y="82" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700" fill="#202124">Project Workspace</text>
+  <text x="64" y="116" font-family="Inter, Arial, sans-serif" font-size="16" fill="#686a60">Turn a founder goal into scoped work, evidence, review, and durable contribution history.</text>
+  <rect x="64" y="152" width="300" height="132" rx="14" fill="#f4fbff" stroke="#aacfe2"/>
+  <text x="92" y="190" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#17394d">Founder Goal</text>
+  <text x="92" y="218" font-family="Inter, Arial, sans-serif" font-size="14" fill="#526877">Scope, roles, acceptance rules</text>
+  <text x="92" y="244" font-family="Inter, Arial, sans-serif" font-size="14" fill="#526877">and expected business result</text>
+  <rect x="400" y="152" width="300" height="132" rx="14" fill="#f8f4ff" stroke="#cbb9ee"/>
+  <text x="428" y="190" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#3a2a66">Candidate Result</text>
+  <text x="428" y="218" font-family="Inter, Arial, sans-serif" font-size="14" fill="#675d82">Delivery evidence, validation state,</text>
+  <text x="428" y="244" font-family="Inter, Arial, sans-serif" font-size="14" fill="#675d82">review notes, and merge decision</text>
+  <rect x="736" y="152" width="296" height="132" rx="14" fill="#effaf5" stroke="#a9d7bd"/>
+  <text x="764" y="190" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1b5134">Contribution Ledger</text>
+  <text x="764" y="218" font-family="Inter, Arial, sans-serif" font-size="14" fill="#557064">Accepted work, proof location,</text>
+  <text x="764" y="244" font-family="Inter, Arial, sans-serif" font-size="14" fill="#557064">share release, and memory</text>
+  <g stroke="#8b8f99" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M376 218h12"/>
+    <path d="M388 218l-7-5M388 218l-7 5"/>
+    <path d="M712 218h12"/>
+    <path d="M724 218l-7-5M724 218l-7 5"/>
+  </g>
+</svg>

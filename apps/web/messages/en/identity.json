@@ -1,0 +1,227 @@
+{
+  "Identity": {
+    "title": "My profile",
+    "signedOut": "Sign in to manage your profile, posts, orders, verification, and Virtual Shares.",
+    "loading": "Loading your profile, posts, and Virtual Shares.",
+    "unavailable": "Your profile is unavailable right now.",
+    "identityTabDescription": "This controls how other people see you: display details, verified identity, and public external accounts.",
+    "deadline": "Deadline",
+    "primary": {
+      "market": "Activity",
+      "badges": "Verification",
+      "assets": "Virtual Shares",
+      "identity": "Profile"
+    },
+    "marketTabs": {
+      "all": "All",
+      "sell": "Offers",
+      "buy": "Requests",
+      "projects": "Projects"
+    },
+    "badgeTabs": {
+      "overview": "Overview",
+      "verification": "Verification"
+    },
+    "assetTabs": {
+      "system": "System project Virtual Shares",
+      "other": "Other project Virtual Shares"
+    },
+    "errors": {
+      "loadFailed": "Could not load your profile.",
+      "verificationStartFailed": "Could not start verification.",
+      "verifyBeforeSkin": "Complete {provider} verification before using @{handle} as your display skin.",
+      "skinUpdateFailed": "Could not update display skin."
+    },
+    "metrics": {
+      "verified": "Verified",
+      "sell": "Offers",
+      "buy": "Requests",
+      "shares": "Virtual Shares"
+    },
+    "profile": {
+      "edit": "Edit profile",
+      "displayName": "Display name",
+      "handle": "Username",
+      "avatarUrl": "Avatar URL",
+      "bio": "Bio",
+      "bioPlaceholder": "Tell people what you are good at, what help you need, and how to work with you",
+      "cancel": "Cancel",
+      "save": "Save profile",
+      "displayNameRequired": "Display name is required.",
+      "saveFailed": "Could not save your profile.",
+      "currentDisplay": "Current display",
+      "verifiedFacts": "Verification records",
+      "factCount": "{count} records",
+      "externalAccounts": "External accounts",
+      "emptyExternalAccounts": "No external accounts connected yet. Connect one so other people can confirm who you are."
+    },
+    "skin": {
+      "default": "Default skin",
+      "providerSkin": "{provider} skin",
+      "providerVerifiedSkin": "Verified {provider} skin",
+      "providerPendingSkin": "Pending {provider} skin",
+      "from": "From @{handle}",
+      "pendingFrom": "Pending verification · from @{handle}",
+      "switch": "Switch",
+      "choose": "Choose display skin",
+      "processing": "Processing",
+      "verify": "Verify",
+      "current": "Current",
+      "displaySkins": "Display skins"
+    },
+    "verification": {
+      "connected": "Connected",
+      "pending": "Pending verification",
+      "verified": "Verified",
+      "challengeCreated": "Verification started on {date}. Follow the authorization page to finish.",
+      "reverify": "Verify again",
+      "start": "Start verification"
+    },
+    "assets": {
+      "released": "Released",
+      "locked": "Locked",
+      "frozen": "Frozen",
+      "emptySystemReleased": "You do not have usable system project Virtual Shares yet.",
+      "emptyOtherReleased": "No other project has released Virtual Shares to you yet.",
+      "lockedTitle": "Locked Virtual Shares",
+      "frozenTitle": "Frozen Virtual Shares",
+      "emptyLocked": "No Virtual Shares are waiting for acceptance or approval right now.",
+      "emptyFrozen": "No Virtual Shares are frozen by a dispute right now.",
+      "shareAmount": "{count} Virtual Shares",
+      "lockReason": {
+        "locked": "Locked",
+        "acceptance_window": "Acceptance dispute window",
+        "disputed": "Dispute freeze",
+        "approval_pending": "Release approval pending"
+      }
+    },
+    "market": {
+      "emptyOffers": "You have not posted an offer yet.",
+      "emptyOffersDescription": "After you publish an offer, people can find it in the market and place orders.",
+      "publishOffer": "Publish offer",
+      "emptyRequests": "You have not posted a request yet.",
+      "emptyRequestsDescription": "After you publish a request, the right person can take it and deliver the result.",
+      "publishRequest": "Publish request",
+      "emptyProjects": "You have not created a project yet.",
+      "emptyProjectsDescription": "Create a project to organize work with tasks, seats, and Virtual Shares.",
+      "publishProject": "Create a project",
+      "stock": "Stock {stock}",
+      "filled": "Filled {count}",
+      "seats": "Seats {stock}"
+    },
+    "activity": {
+      "empty": "You have not published any offers, requests, or projects yet.",
+      "emptyDescription": "Publish an offer, request, or project first so other people know what you can provide or what help you need.",
+      "publishFirst": "Publish",
+      "offerMeta": "Offer · {price} · stock {stock}",
+      "requestMeta": "Request · {budget} · filled {count}",
+      "projectMeta": "Project · seats {stock}"
+    },
+    "postStatus": {
+      "draft": "Draft",
+      "active": "Published",
+      "paused": "Paused",
+      "archived": "Archived",
+      "closed": "Closed",
+      "pending_review": "Pending review",
+      "unknown": "Status unavailable"
+    },
+    "orders": {
+      "emptyMarketOrders": "You do not have related orders yet.",
+      "emptyMarketOrdersDescription": "Orders appear here after you publish an offer, publish a request, or join something in the market.",
+      "browseMarket": "Browse the market",
+      "publishedTitle": "Orders from my posts",
+      "publishedDescription": "Appears when someone buys your offer, answers your request, or joins your project",
+      "emptyPublished": "Your public posts have not generated orders yet.",
+      "publisherRole": "Publisher",
+      "tradedTitle": "Orders I joined",
+      "tradedDescription": "Orders where you are the buyer, seller, fulfiller, accepter, or reviewer",
+      "emptyTraded": "You are not participating in any orders yet.",
+      "count": "{count} orders",
+      "active": "Active {count}",
+      "delivered": "Delivered {count}",
+      "disputed": "In dispute {count}",
+      "done": "Completed {count}",
+      "progress": "{count} progress updates"
+    },
+    "orderStatus": {
+      "claimed": "Active",
+      "delivered": "Delivered",
+      "accepted_open": "Accepted",
+      "disputed": "In dispute",
+      "final_accepted": "Completed",
+      "final_closed": "Closed"
+    },
+    "publicProfile": {
+      "verified": "Verified",
+      "emptyBio": "This user has not added a public bio yet.",
+      "professionVisible": "Public bio available",
+      "professionEmpty": "No public summary yet",
+      "metrics": {
+        "posts": "Public posts",
+        "verifiedFacts": "Verification records",
+        "externalAccounts": "External accounts"
+      },
+      "kind": {
+        "offer": "Offer",
+        "request": "Request",
+        "project": "Project"
+      },
+      "publicPosts": {
+        "title": "Public posts",
+        "empty": "This user has not published anything yet.",
+        "emptyDescription": "You can browse the market to find other active offers, requests, and projects.",
+        "exploreMarket": "Browse market",
+        "emptySummary": "No public summary yet."
+      },
+      "identity": {
+        "title": "Public identity",
+        "display": "Display name",
+        "summary": "Public summary",
+        "visibility": "Visibility",
+        "publicOnly": "Public read-only"
+      },
+      "trust": {
+        "title": "Trust signals",
+        "verifiedIdentity": "Verification status",
+        "notVerified": "Not verified yet",
+        "verificationRecords": "Verification records",
+        "factCount": "{count} records",
+        "externalAccounts": "External accounts",
+        "externalCount": "{count} accounts",
+        "publicActivity": "Public activity",
+        "postCount": "{count} posts"
+      }
+    },
+    "orderStatusMissing": "Missing status",
+    "orderKind": {
+      "offer": "Offer order",
+      "request": "Request order",
+      "project": "Project order",
+      "review": "Review order"
+    },
+    "orderKindFallback": "Order",
+    "settlementType": {
+      "shares": "Virtual Shares",
+      "money": "cash"
+    },
+    "workflowBadges": {
+      "open": "Waiting for review",
+      "reviewer_assigned": "Reviewer assigned",
+      "review_submitted": "Waiting for second review",
+      "appeal_open": "Appeal in progress",
+      "resolved": "Dispute resolved",
+      "settlementFrozen": "Settlement frozen",
+      "reviewInProgress": "Dispute in progress",
+      "disputeWindowOpen": "Dispute window open"
+    },
+    "badges": {
+      "verifiedDescription": "Verification badge is active.",
+      "earnedDescription": "Earned through project collaboration and reputation.",
+      "certifierLabel": "{name} verification",
+      "completedDescription": "Verification completed.",
+      "pendingDescription": "Verification is in progress.",
+      "availableDescription": "Open verification to activate this badge."
+    }
+  }
+}

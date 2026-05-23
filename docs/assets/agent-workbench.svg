@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-labelledby="title desc">
+  <title id="title">Agent workbench preview</title>
+  <desc id="desc">A visual overview of agent state inspection, intent routing, structured action, and readback.</desc>
+  <rect width="1100" height="360" rx="18" fill="#f5f7fa"/>
+  <rect x="32" y="32" width="1036" height="296" rx="16" fill="#ffffff" stroke="#d9e0ea"/>
+  <text x="64" y="82" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700" fill="#1d2430">Agent Workbench</text>
+  <text x="64" y="116" font-family="Inter, Arial, sans-serif" font-size="16" fill="#647184">Expose structured actions that agents can inspect, execute, and read back.</text>
+  <rect x="64" y="152" width="220" height="132" rx="14" fill="#eef6ff" stroke="#b6d6f8"/>
+  <text x="92" y="190" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#173b63">Inspect State</text>
+  <text x="92" y="218" font-family="Inter, Arial, sans-serif" font-size="14" fill="#526b82">Project, order, account,</text>
+  <text x="92" y="244" font-family="Inter, Arial, sans-serif" font-size="14" fill="#526b82">and market context</text>
+  <rect x="320" y="152" width="220" height="132" rx="14" fill="#fff7e8" stroke="#efd39a"/>
+  <text x="348" y="190" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#704d09">Route Intent</text>
+  <text x="348" y="218" font-family="Inter, Arial, sans-serif" font-size="14" fill="#7d6a43">Resolve the user goal</text>
+  <text x="348" y="244" font-family="Inter, Arial, sans-serif" font-size="14" fill="#7d6a43">into a safe action</text>
+  <rect x="576" y="152" width="220" height="132" rx="14" fill="#effaf4" stroke="#a8dabc"/>
+  <text x="604" y="190" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1d5736">Execute Action</text>
+  <text x="604" y="218" font-family="Inter, Arial, sans-serif" font-size="14" fill="#587461">Call a typed contract</text>
+  <text x="604" y="244" font-family="Inter, Arial, sans-serif" font-size="14" fill="#587461">with validated input</text>
+  <rect x="832" y="152" width="200" height="132" rx="14" fill="#f4f0ff" stroke="#cabcf0"/>
+  <text x="860" y="190" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#3b2a70">Read Back</text>
+  <text x="860" y="218" font-family="Inter, Arial, sans-serif" font-size="14" fill="#665a88">Return state, result,</text>
+  <text x="860" y="244" font-family="Inter, Arial, sans-serif" font-size="14" fill="#665a88">and next action</text>
+  <g stroke="#8b96a7" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M296 218h12"/>
+    <path d="M308 218l-7-5M308 218l-7 5"/>
+    <path d="M552 218h12"/>
+    <path d="M564 218l-7-5M564 218l-7 5"/>
+    <path d="M808 218h12"/>
+    <path d="M820 218l-7-5M820 218l-7 5"/>
+  </g>
+</svg>

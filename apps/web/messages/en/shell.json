@@ -1,0 +1,132 @@
+{
+  "State": {
+    "actions": {
+      "home": "Back home",
+      "login": "Sign in",
+      "retry": "Retry"
+    },
+    "error": {
+      "title": "Page failed to load",
+      "description": "The data did not return correctly. Try again in a moment.",
+      "retry": "Retry"
+    },
+    "notFound": {
+      "title": "Page not found",
+      "description": "This entry is closed, archived, or uses an invalid identifier."
+    },
+    "unauthorized": {
+      "title": "Sign in required",
+      "description": "Sign in before continuing to this page."
+    },
+    "forbidden": {
+      "title": "Access denied",
+      "description": "This account does not have the required role or backoffice permission for this page.",
+      "backofficeNote": "Backoffice data is available to governance, risk, finance, and operations accounts."
+    }
+  },
+  "Shell": {
+    "brand": "monopolyfun",
+    "language": "Language",
+    "back": "Back",
+    "login": "Sign in",
+    "logout": "Sign out",
+    "accountMenu": "Account menu",
+    "create": "Create",
+    "searchPlaceholder": "Search offers, requests, projects",
+    "primaryNavigation": "Primary navigation",
+    "expandSidebar": "Expand sidebar",
+    "collapseSidebar": "Collapse sidebar",
+    "nav": {
+      "home": "Home",
+      "products": "Explore",
+      "workbench": "Tasks",
+      "agent": "My Agent",
+      "profile": "Profile",
+      "backoffice": "Backoffice"
+    },
+    "publish": {
+      "trade": "Listing",
+      "project": "Publish project"
+    },
+    "footer": {
+      "about": "About",
+      "terms": "Terms",
+      "privacy": "Privacy"
+    }
+  },
+  "Home": {
+    "featuredTitle": "Featured",
+    "searchTitle": "Search results",
+    "featuredDescription": "Browse live offers, requests, and projects from the current marketplace data.",
+    "searchDescription": "Searching for “{query}”.",
+    "browseTitle": "Explore",
+    "browseDescription": "Compact lists, filters, and real API state stay aligned; unavailable legacy features stay out of the main flow."
+  },
+  "Common": {
+    "currentState": "Current state",
+    "closeToast": "Close notification",
+    "locale": {
+      "zh-CN": "中文",
+      "en": "English"
+    },
+    "orderStatus": {
+      "claimed": "Claimed",
+      "delivered": "Delivered",
+      "accepted_open": "Accepted",
+      "disputed": "In dispute",
+      "final_accepted": "Completed",
+      "final_closed": "Closed"
+    },
+    "settlement": {
+      "shares": "Virtual Shares",
+      "money": "Cash",
+      "points": "Not available",
+      "mixed": "Not available"
+    },
+    "postKind": {
+      "offer": "Offer",
+      "request": "Request",
+      "project": "Project",
+      "review": "Review task"
+    },
+    "inventory": {
+      "single": "Single item",
+      "limited": "Limited stock",
+      "unlimited": "Unlimited"
+    },
+    "postStatus": {
+      "open": "Open",
+      "closed": "Closed",
+      "active": "Active",
+      "archived": "Archived"
+    },
+    "projectRoles": {
+      "capability": {
+        "system_ceo": "Rules, permissions, and final coordination",
+        "system_cto": "Repository, runtime, PR, and CI maintenance",
+        "system_cfo": "Payment and Virtual Share settlement",
+        "fallback": "System maintenance"
+      }
+    }
+  },
+  "Auth": {
+    "handle": "Username",
+    "password": "Password",
+    "handlePlaceholder": "Enter your username",
+    "passwordPlaceholder": "Enter your password",
+    "newPasswordPlaceholder": "Create a password",
+    "passwordHint": "Use at least {min} characters.",
+    "login": "Sign in",
+    "register": "Create account",
+    "loginSuccess": "Signed in",
+    "registerSuccess": "Account created",
+    "closeModal": "Close sign-in modal",
+    "modalLabel": "Sign-in modal",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
+  },
+  "OAuth": {
+    "preparing": "Preparing OAuth callback...",
+    "completing": "Completing GitHub OAuth sign-in..."
+  }
+}
