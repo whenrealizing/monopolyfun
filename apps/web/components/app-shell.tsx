@@ -5,6 +5,7 @@ import {useSearchParams} from "next/navigation";
 import {
     Boxes,
     ChevronLeft,
+    Github,
     Handshake,
     Home,
     ListChecks,
@@ -57,11 +58,14 @@ import {cn} from "@/lib/utils";
 const navItems = [
   { href: "/", labelKey: "nav.home", icon: Home, authRequired: false },
   { href: "/workbench", labelKey: "nav.workbench", icon: ListChecks, authRequired: true },
-  { href: "/market", labelKey: "nav.products", icon: Boxes, authRequired: false },
   { href: "/profile/me", labelKey: "nav.profile", icon: UserRound, authRequired: true },
 ];
 
-const mobileNavItems = navItems.filter((item) => ["/", "/market", "/workbench", "/profile/me"].includes(item.href));
+const mobileNavItems = [
+  { href: "/", labelKey: "nav.home", icon: Home, authRequired: false },
+  { href: "/workbench", labelKey: "nav.workbench", icon: ListChecks, authRequired: true },
+  { href: "/profile/me", labelKey: "nav.profile", icon: UserRound, authRequired: true },
+];
 const backofficeNavItem = { href: "/backoffice", labelKey: "nav.backoffice", icon: ShieldCheck, authRequired: true };
 
 const publishItems = [
@@ -599,6 +603,16 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </div>
               </div>
               <div className="flex items-center gap-2">
+                <a
+                  href="https://github.com/whenrealizing/monopolyfun"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={t("github")}
+                  title={t("github")}
+                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] text-[var(--muted-foreground)] transition hover:bg-[var(--surface-hover)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+                >
+                  <Github className="h-5 w-5" aria-hidden="true" />
+                </a>
                 <LocaleSwitcher />
                 {session ? (
                   <UserMenu displayName={session.displayName} handle={session.handle} t={t} />

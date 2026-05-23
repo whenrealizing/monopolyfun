@@ -4,28 +4,77 @@
   },
   "About": {
     "title": "About monopolyfun",
-    "description": "monopolyfun puts publishing, claiming, delivery, acceptance, payments, and Virtual Share incentives into one collaboration workspace.",
-    "nav": {
-      "version": "Current version",
-      "direction": "Product direction"
+    "hero": {
+      "title": "Turn one idea into a project people can join",
+      "primaryCta": "Publish project",
+      "githubCta": "View GitHub"
     },
-    "capabilities": [
-      "Marketplace: discover offers, requests, projects, and trustworthy public profiles.",
-      "Publishing: create offers, requests, projects, and claimable project tasks.",
-      "Order fulfillment: move delivery through claiming, progress, proof, acceptance, disputes, and closure.",
-      "Profile: maintain display details, verification entry points, verification marks, Virtual Share ledger, and locked records.",
-      "Backoffice: scan audit, risk, payments, and uploaded assets, then drill into exceptions."
-    ],
-    "version": {
-      "title": "Current version",
-      "description": "The current version prioritizes browsing, publishing, claiming, delivering, accepting, and backoffice review around real server state. Legacy capabilities that are not connected yet are hidden, disabled, or explained as unavailable."
+    "flow": {
+      "cardTitle": "Project collaboration loop",
+      "steps": [
+        {
+          "title": "Idea",
+          "description": "Publish the direction in one sentence"
+        },
+        {
+          "title": "Tasks",
+          "description": "Split work into claimable units"
+        },
+        {
+          "title": "Proof",
+          "description": "Attach code, screenshots, or delivery records"
+        },
+        {
+          "title": "Review",
+          "description": "Accept results and handle disputes"
+        },
+        {
+          "title": "Settlement",
+          "description": "Record payment or project rights"
+        }
+      ]
     },
-    "direction": {
-      "title": "Product direction",
-      "description": "Transactions, projects, profile data, and organization permissions sit in one compact workspace so publishers, workers, reviewers, and operators collaborate around the same state.",
-      "badge": "Collaboration workspace",
-      "marketCta": "Browse home",
-      "publishCta": "Create listing"
+    "pain": {
+      "title": "Turn loose collaboration into a traceable flow",
+      "items": [
+        "No one knows where to start: the idea exists, but the work is not split into clear tasks.",
+        "Contribution is hard to prove: delivery, acceptance, and disputes disappear into chat history.",
+        "Settlement is vague: early contribution and future revenue do not share one reliable ledger."
+      ]
+    },
+    "mechanism": {
+      "title": "How projects move forward",
+      "items": [
+        "Projects can be published publicly, tasks can be claimed, and delivery must enter review with proof.",
+        "Order status, payment status, delivery proof, disputes, and closure are driven by server-side records.",
+        "Virtual Shares are used in the product as a project rights ledger for tracking contribution allocation. They are not legal equity or a securities promise.",
+        "The agent workbench reads the same state, so people and agents can continue from one shared project context."
+      ]
+    },
+    "team": {
+      "title": "Started and maintained by",
+      "members": [
+        {
+          "name": "mini",
+          "role": "Former Binance & OKX | Developer & Researcher in AI and Crypto"
+        },
+        {
+          "name": "AaHaa",
+          "role": "Meituan Software Engineer"
+        },
+        {
+          "name": "FengZheng-x",
+          "role": "Binance Big Data Engineer"
+        }
+      ]
+    },
+    "openSource": {
+      "title": "Why we choose open source",
+      "items": [
+        "Code and docs are public so contributors can inspect task, permission, proof, acceptance, and settlement rules.",
+        "Project rights records should be reviewable, not explained only by the platform.",
+        "We prioritize shipping a working marketplace, projects, orders, payments, Virtual Shares, and agent workbench for the community to inspect."
+      ]
     }
   },
   "Terms": {
