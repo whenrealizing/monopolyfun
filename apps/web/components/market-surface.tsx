@@ -249,7 +249,7 @@ export async function SurfaceFilterChips({
           }))}
         />
       </div>
-      <div className="hidden min-w-0 flex-1 overflow-x-auto md:flex [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+      <div className="hidden min-w-0 shrink-0 overflow-x-auto md:flex [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         <div className="flex gap-2">
           {KIND_FILTERS.map((filter) => (
             <Link

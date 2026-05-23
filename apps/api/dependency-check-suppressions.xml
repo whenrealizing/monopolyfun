@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <suppress until="2026-07-01Z">
+        <notes><![CDATA[
+        中文注释：Spring Boot 3.5.14 当前管理的 Tomcat 10.1.54 是 Maven Central 上 10.1.x 最新线；
+        在 10.1.x 补丁发布前临时压制 embedded Tomcat 报告，保留固定到具体包版本和 CVE 的最小范围。
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat-embed-core@10\.1\.54$</packageUrl>
+        <cve>CVE-2026-41284</cve>
+        <cve>CVE-2026-41293</cve>
+        <cve>CVE-2026-42498</cve>
+        <cve>CVE-2026-43512</cve>
+        <cve>CVE-2026-43513</cve>
+        <cve>CVE-2026-43514</cve>
+        <cve>CVE-2026-43515</cve>
+    </suppress>
+    <suppress until="2026-07-01Z">
+        <notes><![CDATA[
+        中文注释：与 tomcat-embed-core 同一 Spring Boot 管理版本，等待 10.1.x 补丁后一起移除。
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat-embed-websocket@10\.1\.54$</packageUrl>
+        <cve>CVE-2026-41284</cve>
+        <cve>CVE-2026-41293</cve>
+        <cve>CVE-2026-42498</cve>
+        <cve>CVE-2026-43512</cve>
+        <cve>CVE-2026-43513</cve>
+        <cve>CVE-2026-43514</cve>
+        <cve>CVE-2026-43515</cve>
+    </suppress>
+    <suppress until="2026-07-01Z">
+        <notes><![CDATA[
+        中文注释：Log4j 已提升到 Maven Central 最新 2.25.3，dependency-check 仍将低于阈值的 6.9 项放入失败列表，先按包和 CVE 精确压制。
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.logging\.log4j/log4j-api@2\.25\.3$</packageUrl>
+        <cve>CVE-2026-34477</cve>
+        <cve>CVE-2026-34479</cve>
+    </suppress>
+</suppressions>

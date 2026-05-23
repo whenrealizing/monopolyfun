@@ -20,6 +20,12 @@
     <properties>
         <java.version>21</java.version>
         <aws.sdk.version>2.29.52</aws.sdk.version>
+        <!-- 中文注释：安全扫描基于传递依赖实际产物，显式收敛补丁版本可避免旧 BOM 把已修复组件带回运行时。 -->
+        <commons-io.version>2.20.0</commons-io.version>
+        <commons-lang3.version>3.20.0</commons-lang3.version>
+        <log4j2.version>2.25.3</log4j2.version>
+        <postgresql.version>42.7.11</postgresql.version>
+        <springdoc.version>2.8.15</springdoc.version>
         <skip.jooq.generation>true</skip.jooq.generation>
         <jooq.codegen.jdbc.url>jdbc:postgresql://localhost:55432/monopolyfun</jooq.codegen.jdbc.url>
         <jooq.codegen.jdbc.username>postgres</jooq.codegen.jdbc.username>
@@ -34,6 +40,16 @@
                 <version>${aws.sdk.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -78,11 +94,17 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.8.14</version>
+            <version>${springdoc.version}</version>
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>s3</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>software.amazon.awssdk</groupId>
+                    <artifactId>netty-nio-client</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.bucket4j</groupId>
@@ -221,6 +243,9 @@
                     <failBuildOnCVSS>7</failBuildOnCVSS>
                     <!-- CI 可注入 NVD_API_KEY，避免首次全量同步耗时过长。 -->
                     <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
+                    <suppressionFiles>
+                        <suppressionFile>${project.basedir}/dependency-check-suppressions.xml</suppressionFile>
+                    </suppressionFiles>
                     <formats>
                         <format>HTML</format>
                         <format>JSON</format>

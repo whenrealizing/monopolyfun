@@ -3,8 +3,8 @@
 import {useLocale, useTranslations} from "next-intl";
 import {useSearchParams} from "next/navigation";
 import {
-    Boxes,
     ChevronLeft,
+    Github,
     Handshake,
     Home,
     ListChecks,
@@ -57,11 +57,14 @@ import {cn} from "@/lib/utils";
 const navItems = [
   { href: "/", labelKey: "nav.home", icon: Home, authRequired: false },
   { href: "/workbench", labelKey: "nav.workbench", icon: ListChecks, authRequired: true },
-  { href: "/market", labelKey: "nav.products", icon: Boxes, authRequired: false },
   { href: "/profile/me", labelKey: "nav.profile", icon: UserRound, authRequired: true },
 ];
 
-const mobileNavItems = navItems.filter((item) => ["/", "/market", "/workbench", "/profile/me"].includes(item.href));
+const mobileNavItems = [
+  { href: "/", labelKey: "nav.home", icon: Home, authRequired: false },
+  { href: "/workbench", labelKey: "nav.workbench", icon: ListChecks, authRequired: true },
+  { href: "/profile/me", labelKey: "nav.profile", icon: UserRound, authRequired: true },
+];
 const backofficeNavItem = { href: "/backoffice", labelKey: "nav.backoffice", icon: ShieldCheck, authRequired: true };
 
 const publishItems = [
@@ -318,7 +321,7 @@ function PublishMenu({
             "absolute z-30 w-[168px]",
             closing ? "animate-popover-out" : "animate-popover-in",
             floating
-              ? "bottom-[calc(100%+10px)] left-1/2 -ml-[84px]"
+              ? menuAlign === "right" ? "bottom-[calc(100%+10px)] right-0" : "bottom-[calc(100%+10px)] left-1/2 -ml-[84px]"
               : collapsed
               ? menuAlign === "right" ? "right-0 top-[calc(100%+8px)]" : "left-[calc(100%+8px)] top-0"
               : menuAlign === "center" ? "left-1/2 top-[calc(100%+8px)] -translate-x-1/2"
@@ -599,6 +602,16 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </div>
               </div>
               <div className="flex items-center gap-2">
+                <a
+                  href="https://github.com/whenrealizing/monopolyfun"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={t("github")}
+                  title={t("github")}
+                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] text-[var(--muted-foreground)] transition hover:bg-[var(--surface-hover)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+                >
+                  <Github className="h-5 w-5" aria-hidden="true" />
+                </a>
                 <LocaleSwitcher />
                 {session ? (
                   <UserMenu displayName={session.displayName} handle={session.handle} t={t} />
@@ -621,8 +634,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           </main>
         </div>
 
-        <nav className="fixed inset-x-0 bottom-0 z-40 grid h-[calc(64px+env(safe-area-inset-bottom))] grid-cols-5 grid-rows-[64px] border-t border-[var(--border)] bg-[rgba(17,17,19,0.96)] px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden">
-          {mobileNavItems.slice(0, 2).map((item) => {
+        {/* 中文注释：移动端底栏固定为三项导航加右侧发布入口，避免删除市场入口后留下空列。 */}
+        <nav className="fixed inset-x-0 bottom-0 z-40 grid h-[calc(64px+env(safe-area-inset-bottom))] grid-cols-4 grid-rows-[64px] border-t border-[var(--border)] bg-[rgba(17,17,19,0.96)] px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden">
+          {mobileNavItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(pathname, item.href);
             return (
@@ -635,20 +649,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           })}
           <div className="relative flex items-center justify-center">
             <div className="absolute bottom-3">
-              <PublishMenu collapsed floating menuAlign="center" t={t} />
+              <PublishMenu collapsed floating menuAlign="right" t={t} />
             </div>
           </div>
-          {mobileNavItems.slice(2).map((item) => {
-            const Icon = item.icon;
-            const active = isActive(pathname, item.href);
-            return (
-              <NavLink key={item.href} href={item.href} authRequired={item.authRequired} className="flex min-w-0 items-center justify-center" ariaLabel={t(item.labelKey)}>
-                <span className={cn("flex h-8 w-10 items-center justify-center rounded-[12px]", active ? "border border-[var(--primary-border)] bg-[var(--primary-soft)] text-[var(--primary)]" : "text-[var(--muted-foreground)]")}>
-                  <Icon className="h-5 w-5" />
-                </span>
-              </NavLink>
-            );
-          })}
         </nav>
       </div>
       <AuthModal
