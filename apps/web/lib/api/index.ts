@@ -789,6 +789,124 @@ export type BackofficeProofAsset = Override<Contract<Gen.ProofAssetView>, {
     status: string;
 }>;
 
+export type WorkResult = {
+    id: string;
+    resultNo: string;
+    workThreadId: string;
+    actorAccountId: string;
+    summary: string;
+    prUrl: string;
+    testSummary: string;
+    changedFiles: string[];
+    evidenceRefs: string[];
+    runtime: string;
+    status: string;
+    createdAt: string;
+};
+
+export type WorkThread = {
+    id: string;
+    threadNo: string;
+    projectId: string;
+    createdByAccountId: string;
+    assigneeAccountId: string | null;
+    reviewerAccountId: string | null;
+    issueUrl: string | null;
+    repoRef: string | null;
+    title: string;
+    goal: string;
+    deliverables: string[];
+    acceptanceCriteria: string[];
+    taskValue: number;
+    bountyAmountMinor: number;
+    bountyToken: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+    submittedAt: string | null;
+    settledAt: string | null;
+    latestResult: WorkResult | null;
+};
+
+export type ProjectRevenueAddress = {
+    id: string;
+    projectId: string;
+    chainId: string;
+    contractAddress: string;
+    tokenAddress: string;
+    status: string;
+};
+
+export type ContributionReward = {
+    totalShares: number;
+    bountyAmountMinor: number;
+    bountyToken: string;
+    claimableAmountMinor: number;
+    claimableToken: string;
+};
+
+export type ContributionLedgerEntry = {
+    id: string;
+    projectId: string;
+    workThreadId: string;
+    resultId: string;
+    accountId: string;
+    taskValue: number;
+    shares: number;
+    bountyAmountMinor: number;
+    bountyToken: string;
+    status: string;
+    createdAt: string;
+};
+
+export type ContributionMember = {
+    accountId: string;
+    totalShares: number;
+    totalTaskValue: number;
+    settledCount: number;
+    bountyAmountMinor: number;
+    bountyToken: string;
+};
+
+export type DistributionBatch = {
+    id: string;
+    projectId: string;
+    period: string;
+    totalRevenueMinor: number;
+    totalSnapshotShares: number;
+    merkleRoot: string;
+    myClaimableAmountMinor: number;
+    token: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type DistributionClaim = {
+    batchId: string;
+    projectId: string;
+    period: string;
+    accountId: string;
+    walletAddress: string;
+    amountMinor: number;
+    token: string;
+    proof: string[];
+    txHash: string | null;
+    status: string;
+};
+
+export type WorkThreadOverview = {
+    projectId: string;
+    projectNo: string;
+    owner: boolean;
+    revenueAddress: ProjectRevenueAddress | null;
+    myRewards: ContributionReward;
+    workThreads: WorkThread[];
+    ledger: ContributionLedgerEntry[];
+    contributors: ContributionMember[];
+    distributions: DistributionBatch[];
+};
+
 export type WorkbenchItem = Override<Contract<Gen.WorkbenchItemView>, {
     actions: Array<{
         id: "open" | "dismiss" | string;
@@ -1400,6 +1518,115 @@ function dashboardSection<T>(value: DashboardSection<T> | T | null | undefined, 
 
 export async function listProjectValidationLaunches(projectId: string): Promise<ValidationLaunch[]> {
     return contractList(await monopolyfunFetch<ValidationLaunch[]>(`/api/v1/projects/${encodeURIComponent(projectId)}/launches`)) as ValidationLaunch[];
+}
+
+export async function getProjectWorkroom(projectId: string, requestOptions?: RequestInit): Promise<WorkThreadOverview> {
+    return contract(await monopolyfunFetch<WorkThreadOverview>(`/api/v1/projects/${encodeURIComponent(projectId)}/workroom`, requestOptions)) as WorkThreadOverview;
+}
+
+export async function createWorkThread(projectId: string, input: {
+    title: string;
+    goal: string;
+    deliverables: string[];
+    acceptanceCriteria: string[];
+    taskValue: number;
+    bountyAmountMinor?: number;
+    bountyToken?: string;
+    repoRef?: string;
+    issueUrl?: string;
+    reviewerAccountId?: string;
+}): Promise<WorkThread> {
+    const session = requireClientSession();
+    return contract(await monopolyfunFetch<WorkThread>(`/api/v1/projects/${encodeURIComponent(projectId)}/work-threads`, {
+        method: "POST",
+        body: JSON.stringify({...input, actorAccountId: session.accountId}),
+    })) as WorkThread;
+}
+
+export async function claimWorkThread(threadId: string): Promise<CommandReceipt> {
+    const session = requireClientSession();
+    return contract(await monopolyfunFetch<CommandReceipt>(`/api/v1/work-threads/${encodeURIComponent(threadId)}/claim`, {
+        method: "POST",
+        body: JSON.stringify({actorAccountId: session.accountId, runtime: "openclaw"}),
+    })) as CommandReceipt;
+}
+
+export async function submitWorkThreadResult(threadId: string, input: {
+    summary: string;
+    prUrl: string;
+    testSummary: string;
+    changedFiles: string[];
+    evidenceRefs?: string[];
+}): Promise<WorkResult> {
+    const session = requireClientSession();
+    const resultMarkdown = [
+        "---",
+        "packetType: work_result",
+        `workThreadId: ${threadId}`,
+        "---",
+        "# Result",
+        "",
+        "## Summary",
+        input.summary,
+        "",
+        "## Evidence",
+        `- PR: ${input.prUrl}`,
+        `- Test: ${input.testSummary}`,
+        ...(input.evidenceRefs ?? []).map((ref) => `- ${ref}`),
+        "",
+        "## Changed Files",
+        ...input.changedFiles.map((file) => `- ${file}`),
+        "",
+    ].join("\n");
+    return contract(await monopolyfunFetch<WorkResult>(`/api/v1/work-threads/${encodeURIComponent(threadId)}/result`, {
+        method: "POST",
+        body: JSON.stringify({...input, resultMarkdown, actorAccountId: session.accountId, runtime: "openclaw"}),
+    })) as WorkResult;
+}
+
+export async function reviewWorkThread(threadId: string, input: {
+    decision: "accept" | "resubmit" | "reject";
+    reason: string;
+}): Promise<CommandReceipt> {
+    const session = requireClientSession();
+    return contract(await monopolyfunFetch<CommandReceipt>(`/api/v1/work-threads/${encodeURIComponent(threadId)}/review`, {
+        method: "POST",
+        body: JSON.stringify({...input, reviewerAccountId: session.accountId}),
+    })) as CommandReceipt;
+}
+
+export async function upsertProjectRevenueAddress(projectId: string, input: {
+    chainId: string;
+    contractAddress: string;
+    tokenAddress: string;
+}): Promise<ProjectRevenueAddress> {
+    const session = requireClientSession();
+    return contract(await monopolyfunFetch<ProjectRevenueAddress>(`/api/v1/projects/${encodeURIComponent(projectId)}/revenue-address`, {
+        method: "POST",
+        body: JSON.stringify({...input, actorAccountId: session.accountId}),
+    })) as ProjectRevenueAddress;
+}
+
+export async function createDistributionBatch(projectId: string, input: {
+    period: string;
+    totalRevenueMinor: number;
+}): Promise<DistributionBatch> {
+    const session = requireClientSession();
+    return contract(await monopolyfunFetch<DistributionBatch>(`/api/v1/projects/${encodeURIComponent(projectId)}/distributions`, {
+        method: "POST",
+        body: JSON.stringify({...input, actorAccountId: session.accountId}),
+    })) as DistributionBatch;
+}
+
+export async function claimDistribution(projectId: string, period: string, input: {
+    walletAddress: string;
+    txHash?: string;
+}): Promise<DistributionClaim> {
+    const session = requireClientSession();
+    return contract(await monopolyfunFetch<DistributionClaim>(`/api/v1/projects/${encodeURIComponent(projectId)}/distributions/${encodeURIComponent(period)}/claim`, {
+        method: "POST",
+        body: JSON.stringify({...input, actorAccountId: session.accountId}),
+    })) as DistributionClaim;
 }
 
 export async function createProjectValidationLaunch(projectId: string, input: {

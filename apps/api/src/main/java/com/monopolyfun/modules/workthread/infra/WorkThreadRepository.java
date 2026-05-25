@@ -9,12 +9,15 @@ import com.monopolyfun.modules.workthread.domain.WorkThreadEntity;
 import com.monopolyfun.modules.workthread.domain.WorkThreadReviewEntity;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 public interface WorkThreadRepository {
     WorkThreadEntity saveThread(WorkThreadEntity thread);
 
     Optional<WorkThreadEntity> findThread(String idOrNo);
+
+    List<WorkThreadEntity> listThreadsByProject(String projectId);
 
     WorkThreadEntity updateThreadState(WorkThreadEntity thread);
 
@@ -25,6 +28,8 @@ public interface WorkThreadRepository {
     WorkThreadReviewEntity saveReview(WorkThreadReviewEntity review);
 
     ContributionEntryEntity saveContribution(ContributionEntryEntity contribution);
+
+    List<ContributionEntryEntity> listContributionsByProject(String projectId);
 
     void saveSharesLedgerEntry(ContributionEntryEntity contribution, int curveSlot);
 
@@ -43,6 +48,8 @@ public interface WorkThreadRepository {
     DistributionBatchEntity saveDistributionBatch(DistributionBatchEntity batch);
 
     Optional<DistributionBatchEntity> findDistributionBatch(String projectId, String period);
+
+    List<DistributionBatchEntity> listDistributionBatches(String projectId);
 
     DistributionClaimEntity saveDistributionClaim(DistributionClaimEntity claim);
 

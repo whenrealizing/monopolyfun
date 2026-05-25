@@ -98,6 +98,20 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
     }
 
     @Override
+    public List<WorkThreadEntity> listThreadsByProject(String projectId) {
+        return dsl.resultQuery("""
+                        select id, thread_no, project_id, created_by_account_id, assignee_account_id, reviewer_account_id,
+                               issue_url, repo_ref, title, goal, deliverables, acceptance_criteria,
+                               task_value, bounty_amount_minor, bounty_token, status,
+                               created_at, updated_at, submitted_at, accepted_at, settled_at
+                        from work_threads
+                        where project_id = ?
+                        order by created_at desc
+                        """, projectId)
+                .fetch(this::mapThread);
+    }
+
+    @Override
     public WorkThreadEntity updateThreadState(WorkThreadEntity thread) {
         return saveThread(thread);
     }
@@ -190,6 +204,18 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
                 PostgresJson.offsetDateTime(contribution.createdAt()))
                 .execute();
         return contribution;
+    }
+
+    @Override
+    public List<ContributionEntryEntity> listContributionsByProject(String projectId) {
+        return dsl.resultQuery("""
+                        select id, project_id, work_thread_id, result_id, account_id, task_value, shares,
+                               bounty_amount_minor, bounty_token, status, created_at
+                        from contribution_ledger
+                        where project_id = ?
+                        order by created_at desc
+                        """, projectId)
+                .fetch(this::mapContribution);
     }
 
     @Override
@@ -316,6 +342,17 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
     }
 
     @Override
+    public List<DistributionBatchEntity> listDistributionBatches(String projectId) {
+        return dsl.resultQuery("""
+                        select id, project_id, period, total_revenue_minor, total_snapshot_shares, merkle_root, status, created_at, updated_at
+                        from distribution_batches
+                        where project_id = ?
+                        order by period desc, created_at desc
+                        """, projectId)
+                .fetch(this::mapDistributionBatch);
+    }
+
+    @Override
     public DistributionClaimEntity saveDistributionClaim(DistributionClaimEntity claim) {
         dsl.query("""
                         insert into distribution_claims (
@@ -397,6 +434,21 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
                 PostgresJson.jsonbValue(record.get("changed_files", JSONB.class), STRING_LIST, List.of()),
                 PostgresJson.jsonbValue(record.get("evidence_refs", JSONB.class), STRING_LIST, List.of()),
                 record.get("runtime", String.class),
+                record.get("status", String.class),
+                PostgresJson.instant(record.get("created_at", OffsetDateTime.class)));
+    }
+
+    private ContributionEntryEntity mapContribution(Record record) {
+        return new ContributionEntryEntity(
+                record.get("id", String.class),
+                record.get("project_id", String.class),
+                record.get("work_thread_id", String.class),
+                record.get("result_id", String.class),
+                record.get("account_id", String.class),
+                record.get("task_value", Integer.class),
+                record.get("shares", Integer.class),
+                record.get("bounty_amount_minor", Integer.class),
+                record.get("bounty_token", String.class),
                 record.get("status", String.class),
                 PostgresJson.instant(record.get("created_at", OffsetDateTime.class)));
     }

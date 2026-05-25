@@ -6,6 +6,7 @@ public record WorkThreadView(
         String id,
         String threadNo,
         String projectId,
+        String createdByAccountId,
         String assigneeAccountId,
         String reviewerAccountId,
         String issueUrl,
@@ -18,6 +19,10 @@ public record WorkThreadView(
         int bountyAmountMinor,
         String bountyToken,
         String status,
-        String updatedAt
+        String createdAt,
+        String updatedAt,
+        String submittedAt,
+        String settledAt,
+        WorkResultView latestResult
 ) {
 }

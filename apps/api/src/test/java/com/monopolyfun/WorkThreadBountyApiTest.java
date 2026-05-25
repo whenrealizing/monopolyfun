@@ -112,6 +112,24 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalSnapshotShares").value(5000));
 
+        mockMvc.perform(get("/api/v1/projects/proj-1/workroom")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.owner").value(false))
+                .andExpect(jsonPath("$.workThreads[0].status").value("settled"))
+                .andExpect(jsonPath("$.workThreads[0].latestResult.prUrl").value("https://github.com/org/app/pull/1842"))
+                .andExpect(jsonPath("$.contributors[0].accountId").value("acct-dev"))
+                .andExpect(jsonPath("$.contributors[0].totalShares").value(5000))
+                .andExpect(jsonPath("$.distributions[0].myClaimableAmountMinor").value(100000));
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-owner","period":"2026-05","totalRevenueMinor":100000}
+                                """))
+                .andExpect(status().isConflict());
+
         mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-05/claim")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
                         .contentType(MediaType.APPLICATION_JSON)

@@ -6,6 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 public record CreateDistributionBatchRequest(
         @NotBlank String actorAccountId,
         @NotBlank String period,
-        @Min(0) int totalRevenueMinor
+        @Min(1) int totalRevenueMinor
 ) {
 }

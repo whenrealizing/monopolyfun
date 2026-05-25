@@ -15,6 +15,7 @@ import com.monopolyfun.modules.workthread.service.view.ContributionRewardView;
 import com.monopolyfun.modules.workthread.service.view.DistributionClaimView;
 import com.monopolyfun.modules.workthread.service.view.ProjectRevenueAddressView;
 import com.monopolyfun.modules.workthread.service.view.WorkResultView;
+import com.monopolyfun.modules.workthread.service.view.WorkThreadOverviewView;
 import com.monopolyfun.modules.workthread.service.view.WorkThreadPacketView;
 import com.monopolyfun.modules.workthread.service.view.WorkThreadView;
 import com.monopolyfun.shared.command.CommandReceipt;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -46,6 +49,16 @@ public class WorkThreadController {
     @PostMapping("/projects/{projectId}/work-threads")
     public WorkThreadView createWorkThread(@PathVariable String projectId, @Valid @RequestBody CreateWorkThreadRequest request) {
         return workThreadService.create(projectId, request);
+    }
+
+    @GetMapping("/projects/{projectId}/work-threads")
+    public List<WorkThreadView> listWorkThreads(@PathVariable String projectId) {
+        return workThreadService.list(projectId);
+    }
+
+    @GetMapping("/projects/{projectId}/workroom")
+    public WorkThreadOverviewView getWorkroom(@PathVariable String projectId) {
+        return workThreadService.overview(projectId);
     }
 
     @GetMapping("/work-threads/{threadId}/packet")

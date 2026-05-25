@@ -2,6 +2,9 @@ package com.monopolyfun.modules.workthread.service;
 
 import com.monopolyfun.modules.project.domain.ProjectEntity;
 import com.monopolyfun.modules.project.infra.ProjectRepository;
+import com.monopolyfun.modules.workthread.domain.ContributionEntryEntity;
+import com.monopolyfun.modules.workthread.domain.DistributionBatchEntity;
+import com.monopolyfun.modules.workthread.domain.ProjectRevenueAddressEntity;
 import com.monopolyfun.modules.workthread.api.request.ClaimWorkThreadRequest;
 import com.monopolyfun.modules.workthread.api.request.CreateWorkThreadRequest;
 import com.monopolyfun.modules.workthread.api.request.ReviewWorkThreadRequest;
@@ -11,6 +14,12 @@ import com.monopolyfun.modules.workthread.domain.WorkThreadEntity;
 import com.monopolyfun.modules.workthread.domain.WorkThreadReviewEntity;
 import com.monopolyfun.modules.workthread.infra.WorkThreadRepository;
 import com.monopolyfun.modules.workthread.service.view.WorkResultView;
+import com.monopolyfun.modules.workthread.service.view.ContributionLedgerEntryView;
+import com.monopolyfun.modules.workthread.service.view.ContributionMemberView;
+import com.monopolyfun.modules.workthread.service.view.ContributionRewardView;
+import com.monopolyfun.modules.workthread.service.view.DistributionBatchView;
+import com.monopolyfun.modules.workthread.service.view.ProjectRevenueAddressView;
+import com.monopolyfun.modules.workthread.service.view.WorkThreadOverviewView;
 import com.monopolyfun.modules.workthread.service.view.WorkThreadPacketView;
 import com.monopolyfun.modules.workthread.service.view.WorkThreadView;
 import com.monopolyfun.shared.command.CommandReceipt;
@@ -26,6 +35,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -78,6 +89,41 @@ public class WorkThreadService {
                 null,
                 null));
         return toView(thread);
+    }
+
+    public List<WorkThreadView> list(String projectIdOrNo) {
+        ProjectEntity project = requireProject(projectIdOrNo);
+        // 中文注释：列表视图附带最新 Result，让前端可以直接展示提交和验收状态。
+        return repository.listThreadsByProject(project.id()).stream()
+                .map(thread -> toView(thread, repository.findLatestResult(thread.id()).map(this::toView).orElse(null)))
+                .toList();
+    }
+
+    public WorkThreadOverviewView overview(String projectIdOrNo) {
+        ProjectEntity project = requireProject(projectIdOrNo);
+        String currentAccountId = currentAccountAccess.current().map(account -> account.accountId()).orElse(null);
+        List<WorkThreadView> workThreads = list(project.id());
+        List<ContributionEntryEntity> contributions = repository.listContributionsByProject(project.id());
+        int myShares = currentAccountId == null ? 0 : repository.sumSharesByProjectAndAccount(project.id(), currentAccountId);
+        int myBounty = currentAccountId == null ? 0 : repository.sumBountyByProjectAndAccount(project.id(), currentAccountId);
+        List<DistributionBatchView> distributions = repository.listDistributionBatches(project.id()).stream()
+                .map(batch -> toView(batch, claimable(batch, myShares)))
+                .toList();
+        int currentClaimable = distributions.stream()
+                .filter(batch -> "published".equals(batch.status()))
+                .findFirst()
+                .map(DistributionBatchView::myClaimableAmountMinor)
+                .orElse(0);
+        return new WorkThreadOverviewView(
+                project.id(),
+                project.projectNo(),
+                currentAccountId != null && currentAccountId.equals(project.ownerAccountId()),
+                repository.findActiveRevenueAddress(project.id()).map(this::toView).orElse(null),
+                new ContributionRewardView(myShares, myBounty, "USDC", currentClaimable, "USDC"),
+                workThreads,
+                contributions.stream().map(this::toView).toList(),
+                contributionMembers(contributions),
+                distributions);
     }
 
     public WorkThreadPacketView packet(String idOrNo) {
@@ -261,16 +307,65 @@ public class WorkThreadService {
     }
 
     private WorkThreadView toView(WorkThreadEntity thread) {
+        return toView(thread, null);
+    }
+
+    private WorkThreadView toView(WorkThreadEntity thread, WorkResultView latestResult) {
         return new WorkThreadView(
-                thread.id(), thread.threadNo(), thread.projectId(), thread.assigneeAccountId(), thread.reviewerAccountId(),
+                thread.id(), thread.threadNo(), thread.projectId(), thread.createdByAccountId(), thread.assigneeAccountId(), thread.reviewerAccountId(),
                 thread.issueUrl(), thread.repoRef(), thread.title(), thread.goal(), thread.deliverables(), thread.acceptanceCriteria(),
-                thread.taskValue(), thread.bountyAmountMinor(), thread.bountyToken(), thread.status(), thread.updatedAt().toString());
+                thread.taskValue(), thread.bountyAmountMinor(), thread.bountyToken(), thread.status(),
+                iso(thread.createdAt()), iso(thread.updatedAt()), iso(thread.submittedAt()), iso(thread.settledAt()), latestResult);
     }
 
     private WorkResultView toView(WorkResultEntity result) {
         return new WorkResultView(
                 result.id(), result.resultNo(), result.workThreadId(), result.actorAccountId(), result.summary(), result.prUrl(),
                 result.testSummary(), result.changedFiles(), result.evidenceRefs(), result.runtime(), result.status(), result.createdAt().toString());
+    }
+
+    private ContributionLedgerEntryView toView(ContributionEntryEntity contribution) {
+        return new ContributionLedgerEntryView(
+                contribution.id(), contribution.projectId(), contribution.workThreadId(), contribution.resultId(), contribution.accountId(),
+                contribution.taskValue(), contribution.shares(), contribution.bountyAmountMinor(), contribution.bountyToken(), contribution.status(),
+                iso(contribution.createdAt()));
+    }
+
+    private ProjectRevenueAddressView toView(ProjectRevenueAddressEntity address) {
+        return new ProjectRevenueAddressView(address.id(), address.projectId(), address.chainId(), address.contractAddress(), address.tokenAddress(), address.status());
+    }
+
+    private DistributionBatchView toView(DistributionBatchEntity batch, int claimableAmountMinor) {
+        return new DistributionBatchView(
+                batch.id(), batch.projectId(), batch.period(), batch.totalRevenueMinor(), batch.totalSnapshotShares(),
+                batch.merkleRoot(), claimableAmountMinor, "USDC", batch.status(), iso(batch.createdAt()), iso(batch.updatedAt()));
+    }
+
+    private List<ContributionMemberView> contributionMembers(List<ContributionEntryEntity> contributions) {
+        Map<String, List<ContributionEntryEntity>> byAccount = contributions.stream()
+                .filter(contribution -> "settled".equals(contribution.status()))
+                .collect(Collectors.groupingBy(ContributionEntryEntity::accountId));
+        return byAccount.entrySet().stream()
+                .map(entry -> new ContributionMemberView(
+                        entry.getKey(),
+                        entry.getValue().stream().mapToInt(ContributionEntryEntity::shares).sum(),
+                        entry.getValue().stream().mapToInt(ContributionEntryEntity::taskValue).sum(),
+                        entry.getValue().size(),
+                        entry.getValue().stream().mapToInt(ContributionEntryEntity::bountyAmountMinor).sum(),
+                        entry.getValue().stream().map(ContributionEntryEntity::bountyToken).findFirst().orElse("USDC")))
+                .sorted(Comparator.comparingInt(ContributionMemberView::totalShares).reversed())
+                .toList();
+    }
+
+    private int claimable(DistributionBatchEntity batch, int memberShares) {
+        if (batch.totalRevenueMinor() <= 0 || batch.totalSnapshotShares() <= 0 || memberShares <= 0) {
+            return 0;
+        }
+        return (int) Math.floor((double) batch.totalRevenueMinor() * memberShares / batch.totalSnapshotShares());
+    }
+
+    private static String iso(Instant instant) {
+        return instant == null ? null : instant.toString();
     }
 
     private CommandReceipt receipt(String type, String subjectId, String status, String actorAccountId, Map<String, Object> payload) {
