@@ -1,0 +1,12 @@
+{
+  "actions": ["accept-invite", "claim-task", "submit-proof", "review-proof"],
+  "required": ["projectNo"],
+  "api": {
+    "method": "POST",
+    "path": "/api/v1/agent/turn"
+  },
+  "readback": [
+    "GET /api/v1/workbench",
+    "GET /api/v1/work/items/{itemId}"
+  ]
+}

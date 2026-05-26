@@ -1,0 +1,25 @@
+{
+  "skill_name": "monopolyfun-agent",
+  "evals": [
+    {
+      "id": "create_project_short",
+      "prompt": "使用 monopolyfun 创建一个项目，项目名称是 QA 验收流。",
+      "expected_action": "create-project"
+    },
+    {
+      "id": "invite_dev_short",
+      "prompt": "让 dev 加入这个项目负责技术交付。",
+      "expected_action": "invite-role"
+    },
+    {
+      "id": "workbench_notice",
+      "prompt": "检查 MonopolyFun workbench，有新的待办请告知我。",
+      "expected_action": "workbench-current"
+    },
+    {
+      "id": "submit_real_proof",
+      "prompt": "任务完成了，proof 是 https://github.com/whenrealizing/monopolyfun/blob/main/qa-artifacts/example/proof.md。",
+      "expected_action": "submit-proof"
+    }
+  ]
+}

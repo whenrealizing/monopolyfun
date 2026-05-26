@@ -1,0 +1,63 @@
+{
+  "id": "monopolyfun-agent",
+  "displayName": "MonopolyFun Agent",
+  "defaultBaseUrl": "http://host.docker.internal:8080",
+  "requiredEnv": [
+    "MONOPOLYFUN_HANDLE",
+    "MONOPOLYFUN_LOGIN_FILE"
+  ],
+  "setupInputs": [
+    {
+      "id": "handle",
+      "env": "MONOPOLYFUN_HANDLE"
+    },
+    {
+      "id": "password",
+      "fileEnv": "MONOPOLYFUN_LOGIN_FILE",
+      "bootstrapEnv": "MONOPOLYFUN_PASSWORD"
+    }
+  ],
+  "setupCommand": "node scripts/setup-openclaw.mjs",
+  "bootstrapCommand": "node scripts/setup-openclaw.mjs",
+  "runtimeBootstrapCommand": "node scripts/runtime-bootstrap.mjs",
+  "healthcheckCommand": "node scripts/runtime-healthcheck.mjs",
+  "turnCommand": "node scripts/runtime-turn.mjs '{\"intent\":\"view\",\"scene\":\"workbench\"}'",
+  "openclawAdapter": {
+    "cronJob": {
+      "id": "monopolyfun-autopilot",
+      "name": "monopolyfun-autopilot",
+      "every": "2m",
+      "session": "latest-deliverable",
+      "delivery": {
+        "mode": "adaptive",
+        "officialChannels": [
+          "feishu"
+        ],
+        "internalSessionMode": "mirror",
+        "bestEffort": true
+      },
+      "message": "Use the installed monopolyfun-agent skill. Run `MONOPOLYFUN_BASE_URL=http://host.docker.internal:8080 MONOPOLYFUN_HANDLE_FILE=/home/node/.openclaw/credentials/monopolyfun-handle.txt MONOPOLYFUN_LOGIN_FILE=/home/node/.openclaw/credentials/monopolyfun-login.txt MONOPOLYFUN_SESSION_CACHE_FILE=/home/node/.openclaw/monopolyfun/runtime-session.json node /home/node/.openclaw/skills/monopolyfun-agent/scripts/runtime-turn.mjs --summary --input '{\"intent\":\"view\",\"scene\":\"workbench\"}'`. Report the visible MonopolyFun workbench result to the user, keep it natural and concise, and only run write actions when the user has given an explicit mandate.",
+      "tools": [
+        "exec",
+        "read",
+        "write"
+      ],
+      "timeoutSeconds": 600,
+      "lightContext": true
+    },
+    "healthcheck": {
+      "command": "node scripts/runtime-healthcheck.mjs"
+    },
+    "workbenchPoll": {
+      "command": "node scripts/runtime-turn.mjs --summary --input '{\"intent\":\"view\",\"scene\":\"workbench\"}'",
+      "backoff": {
+        "maxMs": 10800000,
+        "resetOn": [
+          "session_activity",
+          "workbench_action",
+          "poll_success"
+        ]
+      }
+    }
+  }
+}

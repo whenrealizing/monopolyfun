@@ -1,0 +1,23 @@
+{
+  "name": "monopolyfun-agent-skill",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "turn:home": "node scripts/turn.mjs '{\"intent\":\"view\",\"scene\":\"home\"}'",
+    "openapi:submitWorkReceipt": "node scripts/openapi-operation.mjs submitWorkReceipt",
+    "runtime:bootstrap": "node scripts/runtime-bootstrap.mjs",
+    "runtime:healthcheck": "node scripts/runtime-healthcheck.mjs",
+    "runtime:turn:home": "node scripts/runtime-turn.mjs '{\"intent\":\"view\",\"scene\":\"home\"}'",
+    "runtime:api:me": "node scripts/runtime-api.mjs --method GET --path /api/v1/auth/me",
+    "agent:route": "node scripts/route-intent.mjs --text '使用 monopolyfun 创建一个项目，项目名称是 QA 验收流'",
+    "agent:workbench": "node scripts/workbench-current.mjs --limit 3",
+    "agent:execute": "node scripts/execute-action.mjs --help",
+    "agent:verify": "node scripts/verify-action.mjs --help",
+    "market:discover": "node scripts/market-discover.mjs --q 绘图 --side buy --limit 5",
+    "market:publish-first": "node scripts/market-discover.mjs --q '帮我发布绘制 AI 图片' --side buy --mode publish-first --limit 5"
+  },
+  "dependencies": {
+    "viem": "^2.48.8"
+  }
+}

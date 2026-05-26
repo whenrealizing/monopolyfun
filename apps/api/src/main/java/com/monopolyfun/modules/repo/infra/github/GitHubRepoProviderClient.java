@@ -228,7 +228,8 @@ public class GitHubRepoProviderClient implements RepoProviderClient {
         String payload = base64Url(objectMapper.writeValueAsString(Map.of(
                 "iat", now.minusSeconds(30).getEpochSecond(),
                 "exp", now.plusSeconds(540).getEpochSecond(),
-                "iss", config.getAppId())));
+                // 中文注释：GitHub 推荐使用 Client ID 作为 JWT issuer；保留 App ID 作为未配置 Client ID 时的兜底。
+                "iss", jwtIssuer())));
         String signingInput = header + "." + payload;
         Signature signature = Signature.getInstance("SHA256withRSA");
         signature.initSign(readPrivateKey(config.getPrivateKey()));
@@ -359,6 +360,10 @@ public class GitHubRepoProviderClient implements RepoProviderClient {
         if (!config.isEnabled()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Platform GitHub repository service is not configured");
         }
+    }
+
+    private String jwtIssuer() {
+        return firstNonBlank(config.getClientId(), config.getAppId());
     }
 
     private PullRequestRef parsePullRequestUrl(String value) {

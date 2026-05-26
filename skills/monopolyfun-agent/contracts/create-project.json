@@ -1,0 +1,13 @@
+{
+  "action": "create-project",
+  "required": ["title"],
+  "optional": ["taskName", "description", "goal", "ownerIntro", "items"],
+  "api": {
+    "method": "POST",
+    "path": "/api/v1/projects?includeAgent=true"
+  },
+  "readback": [
+    "GET /api/v1/projects/{projectNo}",
+    "GET /api/v1/projects/{projectNo}/ledger"
+  ]
+}

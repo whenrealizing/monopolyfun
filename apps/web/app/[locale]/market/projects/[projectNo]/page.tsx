@@ -12,11 +12,13 @@ import {ProjectContributionLedgerPanel} from "@/components/project-commercializa
 import {ProjectMemoryPanel} from "@/components/project-memory-panel";
 import {ProjectAgentProtocolPanel} from "@/components/project-agent-protocol-panel";
 import {ProjectValidationPanel} from "@/components/project-validation-panel";
+import {ProjectWorkroomPanel} from "@/components/project-workroom-panel";
 import {PostKindBadge, PostStatusBadge} from "@/components/status-badge";
 import {EmptyState, PageContainer} from "@/components/ui/page-layout";
 import {
     getProjectAgentInbox,
     getProjectDashboard,
+    getProjectWorkroom,
     listProjectValidationLaunches,
     listProjectValidationProofs,
     listProjectValidationRewards,
@@ -68,6 +70,9 @@ export default async function ProjectDetailPage({params}: { params: Promise<{ pr
     const validationTasks = validationTaskGroups.flat();
     const validationProofs = validationProofGroups.flat();
     const agentInbox = await getProjectAgentInbox(project.projectNo, await serverRequestOptions()).catch(() => null);
+    const workroomResult = await getProjectWorkroom(project.projectNo, await serverRequestOptions())
+        .then((data) => ({data, failed: false}))
+        .catch(() => ({data: null, failed: true}));
     const contributors = buildProjectContributors({
         ownerAccountId: project.ownerHandle,
         launches: validationLaunches,
@@ -233,6 +238,9 @@ export default async function ProjectDetailPage({params}: { params: Promise<{ pr
             <ProjectValidationPanel projectNo={project.projectNo}/>
         </div>
     );
+    const workroomTab = (
+        <ProjectWorkroomPanel projectNo={project.projectNo} initialOverview={workroomResult.data} initialLoadFailed={workroomResult.failed}/>
+    );
     const virtualSharesTab = (
         <div className="space-y-4">
             <div className="rounded-[12px] bg-[var(--surface-2)] px-4 py-3">
@@ -319,6 +327,7 @@ export default async function ProjectDetailPage({params}: { params: Promise<{ pr
         </div>
     );
     const tabs = [
+        {id: "workroom", label: "Workroom", content: workroomTab},
         {id: "tasks", label: t("tabs.tasks"), content: taskTab},
         {id: "myTasks", label: t("tabs.myTasks"), content: myTasksTab},
         {id: "governance", label: t("tabs.governance"), content: virtualSharesTab},
