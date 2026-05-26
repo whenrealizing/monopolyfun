@@ -10,6 +10,7 @@ import com.monopolyfun.modules.workthread.domain.DistributionClaimEntity;
 import com.monopolyfun.modules.workthread.domain.DistributionEntitlementEntity;
 import com.monopolyfun.modules.workthread.domain.ProjectRevenueAddressEntity;
 import com.monopolyfun.modules.workthread.infra.WorkThreadRepository;
+import com.monopolyfun.modules.workthread.infra.chain.DistributionChainReceiptVerifier;
 import com.monopolyfun.modules.workthread.service.view.ContributionRewardView;
 import com.monopolyfun.modules.workthread.service.view.DistributionBatchView;
 import com.monopolyfun.modules.workthread.service.view.DistributionClaimView;
@@ -25,6 +26,7 @@ import java.security.MessageDigest;
 import java.time.Instant;
 import java.time.YearMonth;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HexFormat;
 import java.util.LinkedHashMap;
@@ -40,10 +42,15 @@ public class RevenueDistributionService {
 
     private final WorkThreadRepository repository;
     private final CurrentAccountAccess currentAccountAccess;
+    private final DistributionChainReceiptVerifier chainReceiptVerifier;
 
-    public RevenueDistributionService(WorkThreadRepository repository, CurrentAccountAccess currentAccountAccess) {
+    public RevenueDistributionService(
+            WorkThreadRepository repository,
+            CurrentAccountAccess currentAccountAccess,
+            DistributionChainReceiptVerifier chainReceiptVerifier) {
         this.repository = repository;
         this.currentAccountAccess = currentAccountAccess;
+        this.chainReceiptVerifier = chainReceiptVerifier;
     }
 
     public ProjectRevenueAddressView upsertAddress(ProjectEntity project, UpsertProjectRevenueAddressRequest request) {
@@ -95,7 +102,7 @@ public class RevenueDistributionService {
                 request.period().trim(),
                 request.totalRevenueMinor(),
                 totalShares,
-                root(project.id(), request.period(), request.totalRevenueMinor(), entitlements),
+                root(request.period(), entitlements),
                 "published",
                 now,
                 now));
@@ -144,13 +151,16 @@ public class RevenueDistributionService {
             if (!requestedWallet.isBlank() && !existing.walletAddress().equals(requestedWallet)) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution claim wallet already exists");
             }
-            DistributionClaimEntity updated = submitClaimTxIfPresent(existing, request.txHash(), request.txConfirmed(), now);
+            DistributionClaimEntity updated = submitClaimTxIfPresent(project, batch, existing, request.txHash(), request.txConfirmed(), now);
             return new DistributionClaimView(batch.id(), batch.projectId(), batch.period(), updated.accountId(), updated.walletAddress(), updated.amountMinor(), CLAIM_TOKEN, updated.proof(), updated.txHash(), updated.status());
         }
         requireWalletAddress(request.walletAddress(), "walletAddress");
         List<String> proof = proof(batch, request.actorAccountId(), request.walletAddress(), amount);
         String normalizedTxHash = request.txHash() == null || request.txHash().isBlank() ? null : request.txHash().trim();
-        String status = normalizedTxHash == null ? "claimable" : Boolean.TRUE.equals(request.txConfirmed()) ? "claimed" : "submitted";
+        if (normalizedTxHash != null) {
+            requireTxHash(normalizedTxHash);
+        }
+        String status = normalizedTxHash == null ? "claimable" : "submitted";
         // 中文注释：首次 claim 冻结钱包、金额和 proof，后续请求只能补充同一 claim 的链上 txHash。
         DistributionClaimEntity saved = repository.saveDistributionClaim(new DistributionClaimEntity(
                 "dc-" + UUID.randomUUID(),
@@ -163,12 +173,18 @@ public class RevenueDistributionService {
                 status,
                 now,
                 now));
+        if (Boolean.TRUE.equals(request.txConfirmed())) {
+            saved = verifyAndConfirm(project, batch, saved, normalizedTxHash, now);
+        }
         return new DistributionClaimView(batch.id(), batch.projectId(), batch.period(), saved.accountId(), saved.walletAddress(), saved.amountMinor(), CLAIM_TOKEN, saved.proof(), saved.txHash(), saved.status());
     }
 
-    private DistributionClaimEntity submitClaimTxIfPresent(DistributionClaimEntity existing, String txHash, Boolean txConfirmed, Instant now) {
+    private DistributionClaimEntity submitClaimTxIfPresent(ProjectEntity project, DistributionBatchEntity batch, DistributionClaimEntity existing, String txHash, Boolean txConfirmed, Instant now) {
         boolean confirmed = Boolean.TRUE.equals(txConfirmed);
         String normalizedTxHash = txHash == null || txHash.isBlank() ? existing.txHash() : txHash.trim();
+        if (normalizedTxHash != null && !normalizedTxHash.isBlank()) {
+            requireTxHash(normalizedTxHash);
+        }
         if ((normalizedTxHash == null || normalizedTxHash.isBlank()) && !confirmed) {
             return existing;
         }
@@ -183,17 +199,26 @@ public class RevenueDistributionService {
                 return existing;
             }
             if (existing.txHash().equals(normalizedTxHash)) {
-                // 中文注释：链上 receipt 和事件校验通过后，系统把已提交 txHash 推进为已领取状态。
-                return repository.confirmDistributionClaimTx(existing.batchId(), existing.accountId(), normalizedTxHash, now);
+                return confirmed ? verifyAndConfirm(project, batch, existing, normalizedTxHash, now) : existing;
             }
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution claim txHash already exists");
         }
         if (confirmed) {
-            // 中文注释：允许系统在同一次回填中提交 txHash 并写入链上已确认状态。
-            return repository.confirmDistributionClaimTx(existing.batchId(), existing.accountId(), normalizedTxHash, now);
+            return verifyAndConfirm(project, batch, existing, normalizedTxHash, now);
         }
         // 中文注释：已创建的 claim 固定收款地址、金额和 proof，txHash 只推进链上提交状态。
         return repository.submitDistributionClaimTx(existing.batchId(), existing.accountId(), normalizedTxHash, now);
+    }
+
+    private DistributionClaimEntity verifyAndConfirm(ProjectEntity project, DistributionBatchEntity batch, DistributionClaimEntity claim, String txHash, Instant now) {
+        if (txHash == null || txHash.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Distribution claim txHash is required before confirmation");
+        }
+        ProjectRevenueAddressEntity revenueAddress = repository.findActiveRevenueAddress(project.id())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.CONFLICT, "Project revenue address required before claim confirmation"));
+        // 中文注释：claimed 状态只由链上 receipt、Claimed 事件和 Transfer 事件共同推进，避免客户端字段伪造到账事实。
+        chainReceiptVerifier.verifyClaim(revenueAddress, batch, claim, txHash);
+        return repository.confirmDistributionClaimTx(claim.batchId(), claim.accountId(), txHash, now);
     }
 
     private void requireProjectOwner(ProjectEntity project, String actorAccountId) {
@@ -211,6 +236,12 @@ public class RevenueDistributionService {
     private void requireWalletAddress(String walletAddress, String field) {
         if (walletAddress == null || !walletAddress.trim().matches("0x[a-fA-F0-9]{40}")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, field + " must be an EVM address");
+        }
+    }
+
+    private void requireTxHash(String txHash) {
+        if (txHash == null || !txHash.trim().matches("0x[a-fA-F0-9]{64}")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "txHash must be an EVM transaction hash");
         }
     }
 
@@ -235,26 +266,115 @@ public class RevenueDistributionService {
                 .toList();
     }
 
-    private static String root(String projectId, String period, int revenue, List<DistributionEntitlementEntity> entitlements) {
-        String entitlementPayload = entitlements.stream()
+    private static String root(String period, List<DistributionEntitlementEntity> entitlements) {
+        List<byte[]> leaves = entitlements.stream()
                 .sorted(Comparator.comparing(DistributionEntitlementEntity::accountId))
-                .map(entitlement -> entitlement.accountId() + ":" + entitlement.snapshotShares() + ":" + entitlement.amountMinor())
-                .collect(Collectors.joining(","));
-        return "sha256:" + sha256(projectId + "|" + period + "|" + revenue + "|" + entitlementPayload);
+                .map(entitlement -> leaf(period, entitlement.accountId(), entitlement.amountMinor()))
+                .toList();
+        return hex(merkleRoot(leaves));
     }
 
-    private static List<String> proof(DistributionBatchEntity batch, String accountId, String wallet, int amount) {
-        String leaf = sha256(batch.projectId() + "|" + batch.period() + "|" + accountId + "|" + wallet + "|" + amount + "|" + batch.merkleRoot());
-        return List.of("leaf:" + leaf, "root:" + batch.merkleRoot());
+    private List<String> proof(DistributionBatchEntity batch, String accountId, String wallet, int amount) {
+        List<DistributionEntitlementEntity> entitlements = repository.listDistributionEntitlements(batch.id()).stream()
+                .sorted(Comparator.comparing(DistributionEntitlementEntity::accountId))
+                .toList();
+        List<byte[]> leaves = entitlements.stream()
+                .map(entitlement -> leaf(batch.period(), entitlement.accountId(), entitlement.amountMinor()))
+                .toList();
+        int index = -1;
+        for (int current = 0; current < entitlements.size(); current++) {
+            DistributionEntitlementEntity entitlement = entitlements.get(current);
+            if (entitlement.accountId().equals(accountId) && entitlement.amountMinor() == amount) {
+                index = current;
+                break;
+            }
+        }
+        if (index < 0) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution entitlement proof not found");
+        }
+        // 中文注释：proof 绑定 period、MonopolyFun accountId 和金额；钱包只影响链上收款地址。
+        return merkleProof(leaves, index).stream().map(RevenueDistributionService::hex).toList();
     }
 
-    private static String sha256(String value) {
+    private static byte[] leaf(String period, String accountId, int amount) {
+        return sha256(bytes(period), bytes(accountId), uint256(amount));
+    }
+
+    private static byte[] merkleRoot(List<byte[]> leaves) {
+        if (leaves.isEmpty()) {
+            throw new IllegalArgumentException("Distribution entitlements are required");
+        }
+        List<byte[]> level = leaves;
+        while (level.size() > 1) {
+            level = nextLevel(level);
+        }
+        return level.getFirst();
+    }
+
+    private static List<byte[]> merkleProof(List<byte[]> leaves, int index) {
+        List<byte[]> proof = new ArrayList<>();
+        List<byte[]> level = leaves;
+        int currentIndex = index;
+        while (level.size() > 1) {
+            int siblingIndex = currentIndex % 2 == 0 ? currentIndex + 1 : currentIndex - 1;
+            if (siblingIndex < level.size()) {
+                proof.add(level.get(siblingIndex));
+            }
+            currentIndex = currentIndex / 2;
+            level = nextLevel(level);
+        }
+        return proof;
+    }
+
+    private static List<byte[]> nextLevel(List<byte[]> level) {
+        List<byte[]> next = new ArrayList<>();
+        for (int index = 0; index < level.size(); index += 2) {
+            if (index + 1 >= level.size()) {
+                next.add(level.get(index));
+                continue;
+            }
+            byte[] left = level.get(index);
+            byte[] right = level.get(index + 1);
+            next.add(compareUnsigned(left, right) <= 0 ? sha256(left, right) : sha256(right, left));
+        }
+        return next;
+    }
+
+    private static int compareUnsigned(byte[] left, byte[] right) {
+        for (int index = 0; index < Math.min(left.length, right.length); index++) {
+            int comparison = Integer.compare(Byte.toUnsignedInt(left[index]), Byte.toUnsignedInt(right[index]));
+            if (comparison != 0) {
+                return comparison;
+            }
+        }
+        return Integer.compare(left.length, right.length);
+    }
+
+    private static byte[] bytes(String value) {
+        return value.getBytes(StandardCharsets.UTF_8);
+    }
+
+    private static byte[] uint256(int value) {
+        byte[] output = new byte[32];
+        byte[] source = java.math.BigInteger.valueOf(value).toByteArray();
+        System.arraycopy(source, 0, output, output.length - source.length, source.length);
+        return output;
+    }
+
+    private static byte[] sha256(byte[]... chunks) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            return HexFormat.of().formatHex(digest.digest(value.getBytes(StandardCharsets.UTF_8)));
+            for (byte[] chunk : chunks) {
+                digest.update(chunk);
+            }
+            return digest.digest();
         } catch (Exception exception) {
             throw new IllegalStateException("Failed to generate claim proof", exception);
         }
+    }
+
+    private static String hex(byte[] value) {
+        return "0x" + HexFormat.of().formatHex(value);
     }
 
     private record AccountShareSnapshot(String accountId, int shares) {

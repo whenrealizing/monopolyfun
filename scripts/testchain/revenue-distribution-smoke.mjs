@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { createWriteStream, readFileSync } from "node:fs";
+import { createWriteStream, readFileSync, statSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -10,8 +10,6 @@ import {
   createWalletClient,
   http,
   getAddress,
-  encodePacked,
-  keccak256,
   parseEventLogs,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
@@ -92,7 +90,7 @@ try {
     walletAddress: chain.member,
   });
 
-  const chainClaim = await executeClaim(chain, initialClaim);
+  const chainClaim = await executeClaim(chain, batch, initialClaim);
   const submittedClaim = await api.as(worker).post(`/api/v1/projects/proj-test/distributions/${period}/claim`, {
     actorAccountId: worker.account.id,
     walletAddress: chain.member,
@@ -184,6 +182,7 @@ async function startApi() {
     PAYMENT_PROVIDER: "fake",
     UPLOAD_PROVIDER: "fake",
     MONOPOLYFUN_SCHEDULER_ENABLED: "false",
+    MONOPOLYFUN_REVENUE_RPC_EIP155_31337: `http://127.0.0.1:${anvilPort}`,
   };
   const child = spawn("mvn", ["-f", "apps/api/pom.xml", "spring-boot:run", `-Dspring-boot.run.arguments=--server.port=${apiPort}`], {
     cwd: repoRoot,
@@ -300,15 +299,14 @@ async function deployChain(rpcUrl, privateKeys) {
   };
 }
 
-async function executeClaim(chain, claim) {
+async function executeClaim(chain, batch, claim) {
   const amount = BigInt(claim.amountMinor);
-  const root = keccak256(encodePacked(["string", "address", "uint256"], [period, chain.member, amount]));
   await chain.publicClient.waitForTransactionReceipt({
     hash: await chain.deployerClient.writeContract({
       address: chain.distributor,
       abi: chain.distributorAbi,
       functionName: "setDistributionRoot",
-      args: [period, root, totalRevenueMinor],
+      args: [period, batch.merkleRoot, totalRevenueMinor],
     }),
   });
   const balanceBefore = await chain.publicClient.readContract({
@@ -318,10 +316,10 @@ async function executeClaim(chain, claim) {
     args: [chain.member],
   });
   const txHash = await chain.memberClient.writeContract({
-    address: chain.distributor,
-    abi: chain.distributorAbi,
-    functionName: "claim",
-    args: [period, chain.member, amount, []],
+      address: chain.distributor,
+      abi: chain.distributorAbi,
+      functionName: "claim",
+      args: [period, claim.accountId, chain.member, amount, claim.proof],
   });
   const receipt = await chain.publicClient.waitForTransactionReceipt({ hash: txHash });
   const balanceAfter = await chain.publicClient.readContract({
@@ -342,7 +340,8 @@ async function executeClaim(chain, claim) {
   });
   const claimEventMatched = claimEvents.some((event) => {
     return event.args?.period === period
-      && getAddress(event.args?.account) === getAddress(chain.member)
+      && event.args?.accountId === claim.accountId
+      && getAddress(event.args?.recipient) === getAddress(chain.member)
       && event.args?.amount === amount;
   });
   const transferEventMatched = transferEvents.some((event) => {
@@ -477,9 +476,14 @@ function buildContractsIfNeeded() {
     resolve(repoRoot, "out", "MockUsdc.sol", "MockUsdc.json"),
     resolve(repoRoot, "out", "RevenueDistributor.sol", "RevenueDistributor.json"),
   ];
+  const contractSources = [
+    resolve(repoRoot, "contracts", "src", "testchain", "MockUsdc.sol"),
+    resolve(repoRoot, "contracts", "src", "testchain", "RevenueDistributor.sol"),
+  ];
+  const newestSourceTime = Math.max(...contractSources.map((path) => statSync(path).mtimeMs));
   if (!forceForgeBuild && requiredArtifacts.every((path) => {
     try {
-      return Boolean(readFileSync(path, "utf8"));
+      return Boolean(readFileSync(path, "utf8")) && statSync(path).mtimeMs >= newestSourceTime;
     } catch {
       return false;
     }

@@ -15,7 +15,7 @@ contract RevenueDistributor {
 
     event RevenuePaid(address indexed payer, uint256 amount);
     event DistributionRootSet(string period, bytes32 root, uint256 totalAmount);
-    event Claimed(string period, address indexed account, uint256 amount);
+    event Claimed(string period, string accountId, address indexed recipient, uint256 amount);
 
     modifier onlyOwner() {
         _onlyOwner();
@@ -44,31 +44,32 @@ contract RevenueDistributor {
         emit DistributionRootSet(period, root, totalAmount);
     }
 
-    function claim(string calldata period, address account, uint256 amount, bytes32[] calldata proof) external {
-        // 钱包领取时校验叶子和重复领取状态，确保同一收益份额只能提现一次。
-        require(account != address(0), "RevenueDistributor: account required");
+    function claim(string calldata period, string calldata accountId, address recipient, uint256 amount, bytes32[] calldata proof) external {
+        // 钱包领取时校验后端分配快照和重复领取状态，确保同一账号份额只能提现一次。
+        require(bytes(accountId).length > 0, "RevenueDistributor: account required");
+        require(recipient != address(0), "RevenueDistributor: recipient required");
         require(amount > 0, "RevenueDistributor: amount required");
-        bytes32 key = claimKey(period, account);
+        bytes32 key = claimKey(period, accountId);
         require(!claimed[key], "RevenueDistributor: already claimed");
         bytes32 root = distributionRoots[periodKey(period)];
         require(root != bytes32(0), "RevenueDistributor: missing root");
-        require(verify(root, leaf(period, account, amount), proof), "RevenueDistributor: invalid proof");
+        require(verify(root, leaf(period, accountId, amount), proof), "RevenueDistributor: invalid proof");
 
         claimed[key] = true;
-        require(TOKEN.transfer(account, amount), "RevenueDistributor: transfer failed");
-        emit Claimed(period, account, amount);
+        require(TOKEN.transfer(recipient, amount), "RevenueDistributor: transfer failed");
+        emit Claimed(period, accountId, recipient, amount);
     }
 
     function periodKey(string memory period) public pure returns (bytes32) {
         return keccak256(bytes(period));
     }
 
-    function claimKey(string memory period, address account) public pure returns (bytes32) {
-        return keccak256(abi.encodePacked(period, account));
+    function claimKey(string memory period, string memory accountId) public pure returns (bytes32) {
+        return sha256(abi.encodePacked(period, accountId));
     }
 
-    function leaf(string memory period, address account, uint256 amount) public pure returns (bytes32) {
-        return keccak256(abi.encodePacked(period, account, amount));
+    function leaf(string memory period, string memory accountId, uint256 amount) public pure returns (bytes32) {
+        return sha256(abi.encodePacked(period, accountId, amount));
     }
 
     function verify(bytes32 root, bytes32 value, bytes32[] calldata proof) public pure returns (bool) {
@@ -77,8 +78,8 @@ contract RevenueDistributor {
         for (uint256 index = 0; index < proof.length; index++) {
             bytes32 sibling = proof[index];
             computed = computed <= sibling
-                ? keccak256(abi.encodePacked(computed, sibling))
-                : keccak256(abi.encodePacked(sibling, computed));
+                ? sha256(abi.encodePacked(computed, sibling))
+                : sha256(abi.encodePacked(sibling, computed));
         }
         return computed == root;
     }

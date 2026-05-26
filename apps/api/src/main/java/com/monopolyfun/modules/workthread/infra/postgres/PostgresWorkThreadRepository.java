@@ -437,6 +437,17 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
     }
 
     @Override
+    public List<DistributionEntitlementEntity> listDistributionEntitlements(String batchId) {
+        return dsl.resultQuery("""
+                        select id, batch_id, account_id, snapshot_shares, amount_minor, status, created_at
+                        from distribution_entitlements
+                        where batch_id = ?
+                        order by account_id asc
+                        """, batchId)
+                .fetch(this::mapDistributionEntitlement);
+    }
+
+    @Override
     public Optional<DistributionEntitlementEntity> findDistributionEntitlement(String batchId, String accountId) {
         return dsl.resultQuery("""
                         select id, batch_id, account_id, snapshot_shares, amount_minor, status, created_at

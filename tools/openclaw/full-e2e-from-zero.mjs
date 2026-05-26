@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { createWriteStream, readFileSync, writeFileSync } from "node:fs";
+import { createWriteStream, readFileSync, statSync, writeFileSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,10 +8,8 @@ import { spawn, spawnSync } from "node:child_process";
 import {
   createPublicClient,
   createWalletClient,
-  encodePacked,
   getAddress,
   http,
-  keccak256,
   parseEventLogs,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
@@ -178,14 +176,13 @@ async function main() {
       state: { wallet: chain.member },
       fallback: `我现在能领钱了吗？我的钱包是 ${chain.member}。`,
     }), dev));
-    const initialClaimAction = requireOpenClawAction(turns.at(-1), "claim-revenue");
-    const initialClaim = {
-      status: "claimable",
-      amountMinor: extractClaimAmount(initialClaimAction),
-      token: SYSTEM_REVENUE_TRACK.asset,
-      walletAddress: chain.member,
-    };
-    const chainClaim = await executeClaim(chain, initialClaim);
+    requireOpenClawAction(turns.at(-1), "claim-revenue");
+    const initialClaim = await containerApi(devContainer, dev.account.handle, password, "POST",
+      `/api/v1/projects/${projectId}/distributions/${period}/claim`, {
+        actorAccountId: dev.account.id,
+        walletAddress: chain.member,
+      });
+    const chainClaim = await executeClaim(chain, batch, initialClaim);
 
     turns.push(await openclawTurn(devContainer, "dev-04", await llmUtterance(llmUtterances, {
       actor: "dev",
@@ -324,6 +321,7 @@ async function startApi() {
     PAYMENT_PROVIDER: "fake",
     UPLOAD_PROVIDER: "fake",
     MONOPOLYFUN_SCHEDULER_ENABLED: "false",
+    MONOPOLYFUN_REVENUE_RPC_EIP155_31337: `http://127.0.0.1:${anvilPort}`,
   };
   const child = spawn("mvn", ["-f", "apps/api/pom.xml", "spring-boot:run", `-Dspring-boot.run.arguments=--server.port=${apiPort}`], {
     cwd: repoRoot,
@@ -443,9 +441,9 @@ async function deployChain(rpcUrl, privateKeys) {
 async function initializeDefaultRevenueTrack(container, owner, projectId, chain) {
   const body = {
     actorAccountId: owner.account.id,
-    chainId: SYSTEM_REVENUE_TRACK.chainId,
+    chainId: "eip155:31337",
     contractAddress: chain.distributor,
-    tokenAddress: SYSTEM_REVENUE_TRACK.tokenAddress,
+    tokenAddress: chain.token,
   };
   // 中文注释：收益轨道由系统初始化，用户对话只保留业务目标，链和资产细节进入 systemSetup 证据。
   const revenueAddress = await containerApi(container, owner.account.handle, password, "POST",
@@ -456,6 +454,9 @@ async function initializeDefaultRevenueTrack(container, owner, projectId, chain)
     userPromptRequired: false,
     revenueTrack: {
       ...SYSTEM_REVENUE_TRACK,
+      chainId: "eip155:31337",
+      chainName: "Anvil",
+      tokenAddress: chain.token,
       revenueRouterAddress: chain.distributor,
     },
     smokeExecution: {
@@ -483,15 +484,14 @@ async function initializeComputedDistribution(container, owner, projectId) {
   };
 }
 
-async function executeClaim(chain, claim) {
+async function executeClaim(chain, batch, claim) {
   const amount = BigInt(claim.amountMinor);
-  const root = keccak256(encodePacked(["string", "address", "uint256"], [period, chain.member, amount]));
   await chain.publicClient.waitForTransactionReceipt({
     hash: await chain.deployerClient.writeContract({
       address: chain.distributor,
       abi: chain.distributorAbi,
       functionName: "setDistributionRoot",
-      args: [period, root, totalRevenueMinor],
+      args: [period, batch.merkleRoot, totalRevenueMinor],
     }),
   });
   const balanceBefore = await chain.publicClient.readContract({
@@ -501,10 +501,10 @@ async function executeClaim(chain, claim) {
     args: [chain.member],
   });
   const txHash = await chain.memberClient.writeContract({
-    address: chain.distributor,
-    abi: chain.distributorAbi,
-    functionName: "claim",
-    args: [period, chain.member, amount, []],
+      address: chain.distributor,
+      abi: chain.distributorAbi,
+      functionName: "claim",
+      args: [period, claim.accountId, chain.member, amount, claim.proof],
   });
   const receipt = await chain.publicClient.waitForTransactionReceipt({ hash: txHash });
   const balanceAfter = await chain.publicClient.readContract({
@@ -525,7 +525,8 @@ async function executeClaim(chain, claim) {
   });
   const claimEventMatched = claimEvents.some((event) => {
     return event.args?.period === period
-      && getAddress(event.args?.account) === getAddress(chain.member)
+      && event.args?.accountId === claim.accountId
+      && getAddress(event.args?.recipient) === getAddress(chain.member)
       && event.args?.amount === amount;
   });
   const transferEventMatched = transferEvents.some((event) => {
@@ -1465,9 +1466,14 @@ function buildContractsIfNeeded() {
     resolve(repoRoot, "out", "MockUsdc.sol", "MockUsdc.json"),
     resolve(repoRoot, "out", "RevenueDistributor.sol", "RevenueDistributor.json"),
   ];
+  const contractSources = [
+    resolve(repoRoot, "contracts", "src", "testchain", "MockUsdc.sol"),
+    resolve(repoRoot, "contracts", "src", "testchain", "RevenueDistributor.sol"),
+  ];
+  const newestSourceTime = Math.max(...contractSources.map((path) => statSync(path).mtimeMs));
   if (!forceForgeBuild && requiredArtifacts.every((path) => {
     try {
-      return Boolean(readFileSync(path, "utf8"));
+      return Boolean(readFileSync(path, "utf8")) && statSync(path).mtimeMs >= newestSourceTime;
     } catch {
       return false;
     }

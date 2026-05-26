@@ -1,5 +1,6 @@
 package com.monopolyfun;
 
+import com.monopolyfun.modules.workthread.infra.chain.DistributionChainReceiptVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.sql.Timestamp;
@@ -22,11 +24,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Testcontainers
 class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
+    private static final String CLAIM_TX_HASH = "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    private static final String OTHER_TX_HASH = "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @MockitoBean
+    private DistributionChainReceiptVerifier distributionChainReceiptVerifier;
 
     @BeforeEach
     void resetSchema() {
@@ -125,6 +133,14 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.workThreads[0].latestResult.status").value("accepted"));
 
+        mockMvc.perform(post("/api/v1/projects/proj-1/revenue-address")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-owner","chainId":"eip155:31337","contractAddress":"0x9999999999999999999999999999999999999999","tokenAddress":"0x8888888888888888888888888888888888888888"}
+                                """))
+                .andExpect(status().isOk());
+
         mockMvc.perform(post("/api/v1/projects/proj-1/distributions")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -161,7 +177,7 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.amountMinor").value(100000))
                 .andExpect(jsonPath("$.walletAddress").value("0x1111111111111111111111111111111111111111"))
-                .andExpect(jsonPath("$.proof.length()").value(2));
+                .andExpect(jsonPath("$.proof.length()").value(0));
 
         mockMvc.perform(get("/api/v1/projects/proj-1/workroom")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev")))
@@ -191,30 +207,30 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"actorAccountId":"acct-dev","txHash":"0xabc"}
-                                """))
+                                {"actorAccountId":"acct-dev","txHash":"%s"}
+                                """.formatted(CLAIM_TX_HASH)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.walletAddress").value("0x1111111111111111111111111111111111111111"))
-                .andExpect(jsonPath("$.txHash").value("0xabc"))
+                .andExpect(jsonPath("$.txHash").value(CLAIM_TX_HASH))
                 .andExpect(jsonPath("$.status").value("submitted"));
 
         mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-05/claim")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"actorAccountId":"acct-dev","txHash":"0xabc","txConfirmed":true}
-                                """))
+                                {"actorAccountId":"acct-dev","txHash":"%s","txConfirmed":true}
+                                """.formatted(CLAIM_TX_HASH)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.walletAddress").value("0x1111111111111111111111111111111111111111"))
-                .andExpect(jsonPath("$.txHash").value("0xabc"))
+                .andExpect(jsonPath("$.txHash").value(CLAIM_TX_HASH))
                 .andExpect(jsonPath("$.status").value("claimed"));
 
         mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-05/claim")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"actorAccountId":"acct-dev","walletAddress":"0x1111111111111111111111111111111111111111","txHash":"0xdef"}
-                                """))
+                                {"actorAccountId":"acct-dev","walletAddress":"0x1111111111111111111111111111111111111111","txHash":"%s"}
+                                """.formatted(OTHER_TX_HASH)))
                 .andExpect(status().isConflict());
 
         String lateThreadId = createThread("Add late metrics", 5000);

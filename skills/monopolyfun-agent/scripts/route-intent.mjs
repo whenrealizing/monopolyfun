@@ -208,12 +208,14 @@ function routeIntent(rawText, state) {
     });
   }
   if (isClaimRevenueText(value)) {
+    const txHash = extractTxHash(rawText);
     return routed("claim-revenue", 0.88, {
       projectNo,
       projectQuery,
       period: extractPeriod(rawText),
       walletAddress: extractEthereumAddress(rawText, 0),
-      txHash: extractTxHash(rawText),
+      txHash,
+      txConfirmed: Boolean(txHash),
     });
   }
   if (isCreateDistributionText(value)) {

@@ -56,6 +56,8 @@ public interface WorkThreadRepository {
 
     List<DistributionBatchEntity> listDistributionBatches(String projectId);
 
+    List<DistributionEntitlementEntity> listDistributionEntitlements(String batchId);
+
     Optional<DistributionEntitlementEntity> findDistributionEntitlement(String batchId, String accountId);
 
     DistributionClaimEntity saveDistributionClaim(DistributionClaimEntity claim);
