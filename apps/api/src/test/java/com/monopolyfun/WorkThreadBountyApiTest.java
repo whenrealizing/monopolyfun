@@ -38,6 +38,7 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
 
     @BeforeEach
     void resetSchema() {
+        org.mockito.Mockito.reset(distributionChainReceiptVerifier);
         jdbcTemplate.execute("""
                 truncate table distribution_claims, distribution_entitlements, distribution_batches, project_revenue_addresses,
                   contribution_ledger, work_thread_reviews, work_results, work_threads,
@@ -45,6 +46,7 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                 """);
         insertAccount("acct-owner", "@owner", "Owner");
         insertAccount("acct-dev", "@dev", "Dev");
+        insertAccount("acct-dev2", "@dev2", "Dev Two");
         insertAccount("acct-late", "@late", "Late Dev");
         insertRootProject();
         insertProject();
@@ -306,6 +308,109 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                                 {"reviewerAccountId":"acct-owner","decision":"%s","reason":"Checked"}
                 """.formatted(decision)))
                 .andExpect(status().isOk());
+    }
+
+    private void upsertRevenueAddress(String chainId) throws Exception {
+        mockMvc.perform(post("/api/v1/projects/proj-1/revenue-address")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-owner","chainId":"%s","contractAddress":"0x9999999999999999999999999999999999999999","tokenAddress":"0x8888888888888888888888888888888888888888"}
+                                """.formatted(chainId)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void distributionSnapshotsSplitMultipleDevelopersAndRejectUnverifiedConfirmation() throws Exception {
+        String firstThreadId = createThread("Ship revenue wallet", 5000);
+        claimThread(firstThreadId, "acct-dev");
+        submitResult(firstThreadId, "acct-dev", "2001");
+        reviewThread(firstThreadId, "accept");
+
+        String secondThreadId = createThread("Ship claim status", 5000);
+        claimThread(secondThreadId, "acct-dev2");
+        submitResult(secondThreadId, "acct-dev2", "2002");
+        reviewThread(secondThreadId, "accept");
+
+        upsertRevenueAddress("eip155:56");
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-owner","period":"2026-06","totalRevenueMinor":98000}
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalSnapshotShares").value(9800));
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-06/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-dev","walletAddress":"0x1111111111111111111111111111111111111111"}
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.amountMinor").value(50000))
+                .andExpect(jsonPath("$.status").value("claimable"));
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-06/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev2"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-dev2","walletAddress":"0x2222222222222222222222222222222222222222"}
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.amountMinor").value(48000))
+                .andExpect(jsonPath("$.status").value("claimable"));
+
+        org.mockito.Mockito.doThrow(new org.springframework.web.server.ResponseStatusException(
+                        org.springframework.http.HttpStatus.CONFLICT,
+                        "Revenue chain RPC is not configured for eip155:56"))
+                .when(distributionChainReceiptVerifier).verifyClaim(
+                        org.mockito.ArgumentMatchers.any(),
+                        org.mockito.ArgumentMatchers.any(),
+                        org.mockito.ArgumentMatchers.any(),
+                        org.mockito.ArgumentMatchers.eq(CLAIM_TX_HASH));
+
+        // 中文注释：用户回填 txHash 只能进入 submitted；claimed 需要链上 verifier 明确放行。
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-06/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-dev","txHash":"%s"}
+                                """.formatted(CLAIM_TX_HASH)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("submitted"));
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-06/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-dev","txHash":"%s","txConfirmed":true}
+                                """.formatted(CLAIM_TX_HASH)))
+                .andExpect(status().isConflict());
+
+        String lateThreadId = createThread("Late period work", 5000);
+        claimThread(lateThreadId, "acct-late");
+        submitResult(lateThreadId, "acct-late", "2003");
+        reviewThread(lateThreadId, "accept");
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-owner","period":"2026-07","totalRevenueMinor":144000}
+                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalSnapshotShares").value(14405));
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-07/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-late"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-late","walletAddress":"0x3333333333333333333333333333333333333333"}
+                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.amountMinor").value(46034));
     }
 
     @Test

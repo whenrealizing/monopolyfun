@@ -15,11 +15,11 @@ API behavior:
 - With wallet only, return amount and proof.
 - With wallet plus txHash, record submitted claim.
 - With txHash only after an earlier wallet claim, record submitted claim by reusing the saved wallet from MonopolyFun state.
-- After the system verifies the chain receipt and transfer event, call the same API with `txConfirmed=true` to mark the claim as claimed.
+- User text containing a txHash only means “record this transaction”. After an authorized system verifier checks the receipt and transfer event, call the same API with `txConfirmed=true` to mark the claim as claimed.
 
 Safety:
 
-- The default skill action records backend claim state.
+- The default skill action records backend claim state and leaves chain confirmation to the verifier.
 - Chain signing needs an explicit approved wallet flow.
 - Do not ask the user to repeat wallet address when txHash is the only missing post-claim field.
 
