@@ -1,0 +1,10 @@
+{
+  "action": "invite-role",
+  "required": ["projectNo", "account", "roleCode"],
+  "roleCodes": ["system_cto", "system_coo"],
+  "api": {
+    "method": "POST",
+    "path": "/api/v1/projects/{projectNo}/roles/{roleCode}/invite"
+  },
+  "readback": ["GET /api/v1/projects/{projectNo}/roles"]
+}

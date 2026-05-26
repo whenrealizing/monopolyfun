@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.monopolyfun.modules.workthread.domain.ContributionEntryEntity;
 import com.monopolyfun.modules.workthread.domain.DistributionBatchEntity;
 import com.monopolyfun.modules.workthread.domain.DistributionClaimEntity;
+import com.monopolyfun.modules.workthread.domain.DistributionEntitlementEntity;
 import com.monopolyfun.modules.workthread.domain.ProjectRevenueAddressEntity;
 import com.monopolyfun.modules.workthread.domain.WorkResultEntity;
 import com.monopolyfun.modules.workthread.domain.WorkThreadEntity;
@@ -13,7 +14,10 @@ import com.monopolyfun.shared.persistence.postgres.PostgresJson;
 import org.jooq.DSLContext;
 import org.jooq.JSONB;
 import org.jooq.Record;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
@@ -112,8 +116,50 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
     }
 
     @Override
-    public WorkThreadEntity updateThreadState(WorkThreadEntity thread) {
-        return saveThread(thread);
+    public WorkThreadEntity updateThreadState(WorkThreadEntity thread, String expectedStatus) {
+        int updated = dsl.query("""
+                        update work_threads
+                        set assignee_account_id = ?,
+                            reviewer_account_id = ?,
+                            issue_url = ?,
+                            repo_ref = ?,
+                            title = ?,
+                            goal = ?,
+                            deliverables = ?::jsonb,
+                            acceptance_criteria = ?::jsonb,
+                            task_value = ?,
+                            bounty_amount_minor = ?,
+                            bounty_token = ?,
+                            status = ?,
+                            updated_at = ?::timestamptz,
+                            submitted_at = ?::timestamptz,
+                            accepted_at = ?::timestamptz,
+                            settled_at = ?::timestamptz
+                        where id = ? and status = ?
+                        """,
+                thread.assigneeAccountId(),
+                thread.reviewerAccountId(),
+                thread.issueUrl(),
+                thread.repoRef(),
+                thread.title(),
+                thread.goal(),
+                PostgresJson.jsonb(thread.deliverables()).data(),
+                PostgresJson.jsonb(thread.acceptanceCriteria()).data(),
+                thread.taskValue(),
+                thread.bountyAmountMinor(),
+                thread.bountyToken(),
+                thread.status(),
+                PostgresJson.offsetDateTime(thread.updatedAt()),
+                PostgresJson.offsetDateTime(thread.submittedAt()),
+                PostgresJson.offsetDateTime(thread.acceptedAt()),
+                PostgresJson.offsetDateTime(thread.settledAt()),
+                thread.id(),
+                expectedStatus)
+                .execute();
+        if (updated == 0) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Work thread status changed");
+        }
+        return findThread(thread.id()).orElse(thread);
     }
 
     @Override
@@ -153,6 +199,26 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
                         limit 1
                         """, workThreadId)
                 .fetchOptional(this::mapResult);
+    }
+
+    @Override
+    public WorkResultEntity updateResultStatus(String resultId, String status) {
+        dsl.query("""
+                        update work_results
+                        set status = ?
+                        where id = ?
+                        """,
+                status,
+                resultId)
+                .execute();
+        return dsl.resultQuery("""
+                        select id, result_no, work_thread_id, actor_account_id, result_markdown, summary, pr_url,
+                               test_summary, changed_files, evidence_refs, runtime, status, created_at
+                        from work_results
+                        where id = ?
+                        """, resultId)
+                .fetchOptional(this::mapResult)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Work result not found"));
     }
 
     @Override
@@ -306,29 +372,47 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
 
     @Override
     public DistributionBatchEntity saveDistributionBatch(DistributionBatchEntity batch) {
-        dsl.query("""
-                        insert into distribution_batches (
-                          id, project_id, period, total_revenue_minor, total_snapshot_shares, merkle_root, status, created_at, updated_at
-                        )
-                        values (?, ?, ?, ?, ?, ?, ?, ?::timestamptz, ?::timestamptz)
-                        on conflict (project_id, period) do update
-                        set total_revenue_minor = excluded.total_revenue_minor,
-                            total_snapshot_shares = excluded.total_snapshot_shares,
-                            merkle_root = excluded.merkle_root,
-                            status = excluded.status,
-                            updated_at = excluded.updated_at
-                        """,
-                batch.id(),
-                batch.projectId(),
-                batch.period(),
-                batch.totalRevenueMinor(),
-                batch.totalSnapshotShares(),
-                batch.merkleRoot(),
-                batch.status(),
-                PostgresJson.offsetDateTime(batch.createdAt()),
-                PostgresJson.offsetDateTime(batch.updatedAt()))
-                .execute();
+        try {
+            dsl.query("""
+                            insert into distribution_batches (
+                              id, project_id, period, total_revenue_minor, total_snapshot_shares, merkle_root, status, created_at, updated_at
+                            )
+                            values (?, ?, ?, ?, ?, ?, ?, ?::timestamptz, ?::timestamptz)
+                            """,
+                    batch.id(),
+                    batch.projectId(),
+                    batch.period(),
+                    batch.totalRevenueMinor(),
+                    batch.totalSnapshotShares(),
+                    batch.merkleRoot(),
+                    batch.status(),
+                    PostgresJson.offsetDateTime(batch.createdAt()),
+                    PostgresJson.offsetDateTime(batch.updatedAt()))
+                    .execute();
+        } catch (DuplicateKeyException exception) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution period already exists", exception);
+        }
         return findDistributionBatch(batch.projectId(), batch.period()).orElse(batch);
+    }
+
+    @Override
+    public void saveDistributionEntitlements(List<DistributionEntitlementEntity> entitlements) {
+        for (DistributionEntitlementEntity entitlement : entitlements) {
+            dsl.query("""
+                            insert into distribution_entitlements (
+                              id, batch_id, account_id, snapshot_shares, amount_minor, status, created_at
+                            )
+                            values (?, ?, ?, ?, ?, ?, ?::timestamptz)
+                            """,
+                    entitlement.id(),
+                    entitlement.batchId(),
+                    entitlement.accountId(),
+                    entitlement.snapshotShares(),
+                    entitlement.amountMinor(),
+                    entitlement.status(),
+                    PostgresJson.offsetDateTime(entitlement.createdAt()))
+                    .execute();
+        }
     }
 
     @Override
@@ -353,32 +437,84 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
     }
 
     @Override
+    public Optional<DistributionEntitlementEntity> findDistributionEntitlement(String batchId, String accountId) {
+        return dsl.resultQuery("""
+                        select id, batch_id, account_id, snapshot_shares, amount_minor, status, created_at
+                        from distribution_entitlements
+                        where batch_id = ? and account_id = ?
+                        """, batchId, accountId)
+                .fetchOptional(this::mapDistributionEntitlement);
+    }
+
+    @Override
     public DistributionClaimEntity saveDistributionClaim(DistributionClaimEntity claim) {
-        dsl.query("""
-                        insert into distribution_claims (
-                          id, batch_id, account_id, wallet_address, amount_minor, proof, tx_hash, status, created_at, updated_at
-                        )
-                        values (?, ?, ?, ?, ?, ?::jsonb, ?, ?, ?::timestamptz, ?::timestamptz)
-                        on conflict (batch_id, account_id) do update
-                        set wallet_address = excluded.wallet_address,
-                            amount_minor = excluded.amount_minor,
-                            proof = excluded.proof,
-                            tx_hash = coalesce(excluded.tx_hash, distribution_claims.tx_hash),
-                            status = excluded.status,
-                            updated_at = excluded.updated_at
-                        """,
-                claim.id(),
-                claim.batchId(),
-                claim.accountId(),
-                claim.walletAddress(),
-                claim.amountMinor(),
-                PostgresJson.jsonb(claim.proof()).data(),
-                claim.txHash(),
-                claim.status(),
-                PostgresJson.offsetDateTime(claim.createdAt()),
-                PostgresJson.offsetDateTime(claim.updatedAt()))
-                .execute();
+        try {
+            dsl.query("""
+                            insert into distribution_claims (
+                              id, batch_id, account_id, wallet_address, amount_minor, proof, tx_hash, status, created_at, updated_at
+                            )
+                            values (?, ?, ?, ?, ?, ?::jsonb, ?, ?, ?::timestamptz, ?::timestamptz)
+                            """,
+                    claim.id(),
+                    claim.batchId(),
+                    claim.accountId(),
+                    claim.walletAddress(),
+                    claim.amountMinor(),
+                    PostgresJson.jsonb(claim.proof()).data(),
+                    claim.txHash(),
+                    claim.status(),
+                    PostgresJson.offsetDateTime(claim.createdAt()),
+                    PostgresJson.offsetDateTime(claim.updatedAt()))
+                    .execute();
+        } catch (DuplicateKeyException exception) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution claim already exists", exception);
+        }
         return findDistributionClaim(claim.batchId(), claim.accountId()).orElse(claim);
+    }
+
+    @Override
+    public DistributionClaimEntity submitDistributionClaimTx(String batchId, String accountId, String txHash, Instant now) {
+        int updated = dsl.query("""
+                        update distribution_claims
+                        set tx_hash = ?,
+                            status = 'submitted',
+                            updated_at = ?::timestamptz
+                        where batch_id = ? and account_id = ? and tx_hash is null
+                        """,
+                txHash,
+                PostgresJson.offsetDateTime(now),
+                batchId,
+                accountId)
+                .execute();
+        DistributionClaimEntity claim = findDistributionClaim(batchId, accountId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Distribution claim not found"));
+        if (updated == 0 && (claim.txHash() == null || !claim.txHash().equals(txHash))) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution claim txHash already exists");
+        }
+        return claim;
+    }
+
+    @Override
+    public DistributionClaimEntity confirmDistributionClaimTx(String batchId, String accountId, String txHash, Instant now) {
+        int updated = dsl.query("""
+                        update distribution_claims
+                        set tx_hash = ?,
+                            status = 'claimed',
+                            updated_at = ?::timestamptz
+                        where batch_id = ? and account_id = ? and (tx_hash is null or tx_hash = ?)
+                        """,
+                txHash,
+                PostgresJson.offsetDateTime(now),
+                batchId,
+                accountId,
+                txHash)
+                .execute();
+        DistributionClaimEntity claim = findDistributionClaim(batchId, accountId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Distribution claim not found"));
+        if (updated == 0 && (claim.txHash() == null || !claim.txHash().equals(txHash))) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution claim txHash already exists");
+        }
+        return claim;
     }
 
     @Override
@@ -389,6 +525,17 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
                         where batch_id = ? and account_id = ?
                         """, batchId, accountId)
                 .fetchOptional(this::mapDistributionClaim);
+    }
+
+    @Override
+    public boolean hasDistributionClaim(String batchId, String accountId) {
+        Integer value = dsl.resultQuery("""
+                        select count(*)::int as total
+                        from distribution_claims
+                        where batch_id = ? and account_id = ?
+                        """, batchId, accountId)
+                .fetchOne("total", Integer.class);
+        return value != null && value > 0;
     }
 
     @Override
@@ -476,6 +623,17 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
                 record.get("status", String.class),
                 PostgresJson.instant(record.get("created_at", OffsetDateTime.class)),
                 PostgresJson.instant(record.get("updated_at", OffsetDateTime.class)));
+    }
+
+    private DistributionEntitlementEntity mapDistributionEntitlement(Record record) {
+        return new DistributionEntitlementEntity(
+                record.get("id", String.class),
+                record.get("batch_id", String.class),
+                record.get("account_id", String.class),
+                record.get("snapshot_shares", Integer.class),
+                record.get("amount_minor", Integer.class),
+                record.get("status", String.class),
+                PostgresJson.instant(record.get("created_at", OffsetDateTime.class)));
     }
 
     private DistributionClaimEntity mapDistributionClaim(Record record) {

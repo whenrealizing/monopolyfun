@@ -43,6 +43,8 @@ management:
       enabled: true
 
 monopolyfun:
+  scheduler:
+    enabled: ${MONOPOLYFUN_SCHEDULER_ENABLED:${APP_PRODUCTION:false}}
   security:
     production: ${APP_PRODUCTION:false}
     csrf-cookie-name: ${CSRF_COOKIE_NAME:MONOPOLYFUN_CSRF}

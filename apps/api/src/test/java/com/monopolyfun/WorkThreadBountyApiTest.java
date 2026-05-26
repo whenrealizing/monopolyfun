@@ -31,12 +31,13 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
     @BeforeEach
     void resetSchema() {
         jdbcTemplate.execute("""
-                truncate table distribution_claims, distribution_batches, project_revenue_addresses,
+                truncate table distribution_claims, distribution_entitlements, distribution_batches, project_revenue_addresses,
                   contribution_ledger, work_thread_reviews, work_results, work_threads,
                   shares_ledger, project_share_pools, projects, accounts cascade
                 """);
         insertAccount("acct-owner", "@owner", "Owner");
         insertAccount("acct-dev", "@dev", "Dev");
+        insertAccount("acct-late", "@late", "Late Dev");
         insertRootProject();
         insertProject();
     }
@@ -64,6 +65,14 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                 .andExpect(jsonPath("$.status").value("open"))
                 .andReturn().getResponse().getContentAsString();
         String threadId = JsonTestValue.extract(createResponse, "id");
+
+        mockMvc.perform(post("/api/v1/work-threads/" + threadId + "/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-owner","runtime":"openclaw"}
+                                """))
+                .andExpect(status().isForbidden());
 
         mockMvc.perform(post("/api/v1/work-threads/" + threadId + "/claim")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
@@ -103,6 +112,19 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("settled"));
 
+        mockMvc.perform(post("/api/v1/work-threads/" + threadId + "/review")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"reviewerAccountId":"acct-owner","decision":"reject","reason":"Late stale review"}
+                                """))
+                .andExpect(status().isConflict());
+
+        mockMvc.perform(get("/api/v1/projects/proj-1/workroom")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.workThreads[0].latestResult.status").value("accepted"));
+
         mockMvc.perform(post("/api/v1/projects/proj-1/distributions")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -135,10 +157,158 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"actorAccountId":"acct-dev","walletAddress":"0x1111111111111111111111111111111111111111"}
-                                """))
+	                                """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.amountMinor").value(100000))
+                .andExpect(jsonPath("$.walletAddress").value("0x1111111111111111111111111111111111111111"))
                 .andExpect(jsonPath("$.proof.length()").value(2));
+
+        mockMvc.perform(get("/api/v1/projects/proj-1/workroom")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.myRewards.claimableAmountMinor").value(0))
+                .andExpect(jsonPath("$.distributions[0].myClaimableAmountMinor").value(0));
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-05/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-dev","walletAddress":"0x1111111111111111111111111111111111111111"}
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.walletAddress").value("0x1111111111111111111111111111111111111111"))
+                .andExpect(jsonPath("$.status").value("claimable"));
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-05/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-dev","walletAddress":"0x2222222222222222222222222222222222222222"}
+                                """))
+                .andExpect(status().isConflict());
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-05/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-dev","txHash":"0xabc"}
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.walletAddress").value("0x1111111111111111111111111111111111111111"))
+                .andExpect(jsonPath("$.txHash").value("0xabc"))
+                .andExpect(jsonPath("$.status").value("submitted"));
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-05/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-dev","txHash":"0xabc","txConfirmed":true}
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.walletAddress").value("0x1111111111111111111111111111111111111111"))
+                .andExpect(jsonPath("$.txHash").value("0xabc"))
+                .andExpect(jsonPath("$.status").value("claimed"));
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-05/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-dev","walletAddress":"0x1111111111111111111111111111111111111111","txHash":"0xdef"}
+                                """))
+                .andExpect(status().isConflict());
+
+        String lateThreadId = createThread("Add late metrics", 5000);
+        claimThread(lateThreadId, "acct-late");
+        submitResult(lateThreadId, "acct-late", "1843");
+        reviewThread(lateThreadId, "accept");
+
+        mockMvc.perform(get("/api/v1/projects/proj-1/workroom")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-late")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.myRewards.totalShares").value(4800))
+                .andExpect(jsonPath("$.distributions[0].myClaimableAmountMinor").value(0));
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions/2026-05/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-late"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-late","walletAddress":"0x3333333333333333333333333333333333333333"}
+                                """))
+                .andExpect(status().isConflict());
+    }
+
+    private String createThread(String title, int taskValue) throws Exception {
+        String createResponse = mockMvc.perform(post("/api/v1/projects/proj-1/work-threads")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "actorAccountId": "acct-owner",
+                                  "title": "%s",
+                                  "goal": "Ship %s",
+                                  "deliverables": ["PR link", "Test summary", "Changed files"],
+                                  "acceptanceCriteria": ["PR ready for review", "Tests pass"],
+                                  "taskValue": %d,
+                                  "bountyAmountMinor": 0,
+                                  "bountyToken": "USDC"
+                                }
+                                """.formatted(title, title, taskValue)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        return JsonTestValue.extract(createResponse, "id");
+    }
+
+    private void claimThread(String threadId, String accountId) throws Exception {
+        mockMvc.perform(post("/api/v1/work-threads/" + threadId + "/claim")
+                        .with(SecurityTestSupport.session(jdbcTemplate, accountId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"%s","runtime":"openclaw"}
+                                """.formatted(accountId)))
+                .andExpect(status().isOk());
+    }
+
+    private void submitResult(String threadId, String accountId, String prNumber) throws Exception {
+        mockMvc.perform(post("/api/v1/work-threads/" + threadId + "/result")
+                        .with(SecurityTestSupport.session(jdbcTemplate, accountId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "actorAccountId": "%s",
+                                  "resultMarkdown": "---\\npacketType: work_result\\nworkThreadId: %s\\n---\\n# Result\\n\\n## Summary\\nImplemented requested change.\\n\\n## Evidence\\n- PR: https://github.com/org/app/pull/%s\\n- Test: pnpm test passed\\n\\n## Changed Files\\n- apps/web/page.tsx\\n",
+                                  "runtime": "openclaw"
+                                }
+                                """.formatted(accountId, threadId, prNumber)))
+                .andExpect(status().isOk());
+    }
+
+    private void reviewThread(String threadId, String decision) throws Exception {
+        mockMvc.perform(post("/api/v1/work-threads/" + threadId + "/review")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"reviewerAccountId":"acct-owner","decision":"%s","reason":"Checked"}
+                """.formatted(decision)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void rejectsInvalidBountyAmount() throws Exception {
+        mockMvc.perform(post("/api/v1/projects/proj-1/work-threads")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "actorAccountId": "acct-owner",
+                                  "title": "Invalid bounty",
+                                  "goal": "Reject negative bounty",
+                                  "deliverables": ["PR link"],
+                                  "acceptanceCriteria": ["Tests pass"],
+                                  "taskValue": 1000,
+                                  "bountyAmountMinor": -1
+                                }
+                                """))
+                .andExpect(status().isBadRequest());
     }
 
     private void insertAccount(String id, String handle, String displayName) {

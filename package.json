@@ -36,7 +36,8 @@
     "security:proof-pr": "node scripts/security/check-proof-pr-status.mjs",
     "db:backup": "bash scripts/db-backup.sh",
     "db:restore": "bash scripts/db-restore.sh",
-    "db:seed": "bash scripts/db-seed-demo.sh"
+    "db:seed": "bash scripts/db-seed-demo.sh",
+    "testchain:revenue": "node scripts/testchain/revenue-distribution-smoke.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",

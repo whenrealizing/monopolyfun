@@ -70,7 +70,9 @@ export default async function ProjectDetailPage({params}: { params: Promise<{ pr
     const validationTasks = validationTaskGroups.flat();
     const validationProofs = validationProofGroups.flat();
     const agentInbox = await getProjectAgentInbox(project.projectNo, await serverRequestOptions()).catch(() => null);
-    const workroomOverview = await getProjectWorkroom(project.projectNo, await serverRequestOptions()).catch(() => null);
+    const workroomResult = await getProjectWorkroom(project.projectNo, await serverRequestOptions())
+        .then((data) => ({data, failed: false}))
+        .catch(() => ({data: null, failed: true}));
     const contributors = buildProjectContributors({
         ownerAccountId: project.ownerHandle,
         launches: validationLaunches,
@@ -237,7 +239,7 @@ export default async function ProjectDetailPage({params}: { params: Promise<{ pr
         </div>
     );
     const workroomTab = (
-        <ProjectWorkroomPanel projectNo={project.projectNo} initialOverview={workroomOverview}/>
+        <ProjectWorkroomPanel projectNo={project.projectNo} initialOverview={workroomResult.data} initialLoadFailed={workroomResult.failed}/>
     );
     const virtualSharesTab = (
         <div className="space-y-4">

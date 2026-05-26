@@ -66,6 +66,9 @@ require_not_value DATABASE_PASSWORD postgres
 require_present UPLOAD_BUCKET
 require_present UPLOAD_BASE_URL
 require_present DATABASE_URL
+require_present GITHUB_APP_ID
+require_present GITHUB_APP_PRIVATE_KEY
+require_present GITHUB_APP_ORGANIZATION
 
 payment_callback_secret="${PAYMENT_CALLBACK_SECRET:-}"
 digital_inventory_secret="${DIGITAL_INVENTORY_ENCRYPTION_SECRET:-}"

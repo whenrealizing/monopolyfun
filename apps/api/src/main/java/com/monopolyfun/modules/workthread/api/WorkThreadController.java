@@ -8,10 +8,10 @@ import com.monopolyfun.modules.workthread.api.request.CreateWorkThreadRequest;
 import com.monopolyfun.modules.workthread.api.request.ReviewWorkThreadRequest;
 import com.monopolyfun.modules.workthread.api.request.SubmitWorkThreadResultRequest;
 import com.monopolyfun.modules.workthread.api.request.UpsertProjectRevenueAddressRequest;
-import com.monopolyfun.modules.workthread.domain.DistributionBatchEntity;
 import com.monopolyfun.modules.workthread.service.RevenueDistributionService;
 import com.monopolyfun.modules.workthread.service.WorkThreadService;
 import com.monopolyfun.modules.workthread.service.view.ContributionRewardView;
+import com.monopolyfun.modules.workthread.service.view.DistributionBatchView;
 import com.monopolyfun.modules.workthread.service.view.DistributionClaimView;
 import com.monopolyfun.modules.workthread.service.view.ProjectRevenueAddressView;
 import com.monopolyfun.modules.workthread.service.view.WorkResultView;
@@ -88,7 +88,7 @@ public class WorkThreadController {
     }
 
     @PostMapping("/projects/{projectId}/distributions")
-    public DistributionBatchEntity createDistribution(@PathVariable String projectId, @Valid @RequestBody CreateDistributionBatchRequest request) {
+    public DistributionBatchView createDistribution(@PathVariable String projectId, @Valid @RequestBody CreateDistributionBatchRequest request) {
         ProjectEntity project = workThreadService.requireProject(projectId);
         return revenueDistributionService.createBatch(project, request);
     }

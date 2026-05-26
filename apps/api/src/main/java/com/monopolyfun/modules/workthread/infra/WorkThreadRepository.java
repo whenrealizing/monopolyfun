@@ -3,6 +3,7 @@ package com.monopolyfun.modules.workthread.infra;
 import com.monopolyfun.modules.workthread.domain.ContributionEntryEntity;
 import com.monopolyfun.modules.workthread.domain.DistributionBatchEntity;
 import com.monopolyfun.modules.workthread.domain.DistributionClaimEntity;
+import com.monopolyfun.modules.workthread.domain.DistributionEntitlementEntity;
 import com.monopolyfun.modules.workthread.domain.ProjectRevenueAddressEntity;
 import com.monopolyfun.modules.workthread.domain.WorkResultEntity;
 import com.monopolyfun.modules.workthread.domain.WorkThreadEntity;
@@ -19,11 +20,13 @@ public interface WorkThreadRepository {
 
     List<WorkThreadEntity> listThreadsByProject(String projectId);
 
-    WorkThreadEntity updateThreadState(WorkThreadEntity thread);
+    WorkThreadEntity updateThreadState(WorkThreadEntity thread, String expectedStatus);
 
     WorkResultEntity saveResult(WorkResultEntity result);
 
     Optional<WorkResultEntity> findLatestResult(String workThreadId);
+
+    WorkResultEntity updateResultStatus(String resultId, String status);
 
     WorkThreadReviewEntity saveReview(WorkThreadReviewEntity review);
 
@@ -47,13 +50,23 @@ public interface WorkThreadRepository {
 
     DistributionBatchEntity saveDistributionBatch(DistributionBatchEntity batch);
 
+    void saveDistributionEntitlements(List<DistributionEntitlementEntity> entitlements);
+
     Optional<DistributionBatchEntity> findDistributionBatch(String projectId, String period);
 
     List<DistributionBatchEntity> listDistributionBatches(String projectId);
 
+    Optional<DistributionEntitlementEntity> findDistributionEntitlement(String batchId, String accountId);
+
     DistributionClaimEntity saveDistributionClaim(DistributionClaimEntity claim);
 
+    DistributionClaimEntity submitDistributionClaimTx(String batchId, String accountId, String txHash, Instant now);
+
+    DistributionClaimEntity confirmDistributionClaimTx(String batchId, String accountId, String txHash, Instant now);
+
     Optional<DistributionClaimEntity> findDistributionClaim(String batchId, String accountId);
+
+    boolean hasDistributionClaim(String batchId, String accountId);
 
     Instant now();
 }

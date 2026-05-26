@@ -1,6 +1,6 @@
 "use client";
 
-import {useMemo, useState, useSyncExternalStore, useTransition, type ReactNode} from "react";
+import {useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, useTransition, type ReactNode} from "react";
 import {Banknote, CheckCircle2, ClipboardList, GitPullRequest, Hand, RefreshCcw, Send, WalletCards, XCircle} from "lucide-react";
 
 import {Button} from "@/components/ui/button";
@@ -30,11 +30,17 @@ const statusLabels: Record<string, string> = {
   rejected: "已拒绝",
 };
 
-export function ProjectWorkroomPanel({projectNo, initialOverview}: { projectNo: string; initialOverview: WorkThreadOverview | null }) {
+export function ProjectWorkroomPanel({projectNo, initialOverview, initialLoadFailed = false}: {
+  projectNo: string;
+  initialOverview: WorkThreadOverview | null;
+  initialLoadFailed?: boolean;
+}) {
   const toast = useToast();
   const session = useSyncExternalStore(subscribeSession, readStoredSession, () => null);
   const [isPending, startTransition] = useTransition();
   const [overview, setOverview] = useState(initialOverview);
+  const [loadFailed, setLoadFailed] = useState(initialLoadFailed);
+  const didClientLoadRef = useRef(Boolean(initialOverview));
   const [createDraft, setCreateDraft] = useState({
     title: "",
     goal: "",
@@ -62,20 +68,35 @@ export function ProjectWorkroomPanel({projectNo, initialOverview}: { projectNo: 
     };
   }, [overview?.workThreads]);
 
-  function load() {
+  const load = useCallback(() => {
     startTransition(async () => {
       try {
         setOverview(await getProjectWorkroom(projectNo));
+        setLoadFailed(false);
       } catch (error) {
+        setLoadFailed(true);
         toast.notifyError(error, "ui.agent.action.failed");
       }
     });
-  }
+  }, [projectNo, startTransition, toast]);
+
+  useEffect(() => {
+    if (!session || didClientLoadRef.current) {
+      return;
+    }
+    didClientLoadRef.current = true;
+    load();
+  }, [load, session]);
 
   function createThread() {
     const taskValue = Number(createDraft.taskValue);
+    const bountyAmountMinor = createDraft.bountyAmountMinor.trim() ? Number(createDraft.bountyAmountMinor) : 0;
     if (!createDraft.title.trim() || !createDraft.goal.trim() || !Number.isFinite(taskValue) || taskValue < 1 || taskValue > 10000) {
       toast.notify({tone: "error", title: "请填写标题、目标和 1-10000 的任务价值。"});
+      return;
+    }
+    if (!Number.isInteger(bountyAmountMinor) || bountyAmountMinor < 0) {
+      toast.notify({tone: "error", title: "Bounty Minor 需要填写非负整数。"});
       return;
     }
     startTransition(async () => {
@@ -86,7 +107,7 @@ export function ProjectWorkroomPanel({projectNo, initialOverview}: { projectNo: 
           deliverables: lines(createDraft.deliverables),
           acceptanceCriteria: lines(createDraft.acceptanceCriteria),
           taskValue,
-          bountyAmountMinor: Number(createDraft.bountyAmountMinor || 0),
+          bountyAmountMinor,
           bountyToken: createDraft.bountyToken.trim() || "USDC",
           repoRef: createDraft.repoRef.trim() || undefined,
           issueUrl: createDraft.issueUrl.trim() || undefined,
@@ -227,6 +248,12 @@ export function ProjectWorkroomPanel({projectNo, initialOverview}: { projectNo: 
         </Button>
       </div>
 
+      {loadFailed ? (
+        <div className="rounded-[8px] border border-[var(--border)] bg-[var(--surface-control)] p-3 text-sm text-[var(--muted-foreground)]">
+          Workroom 加载失败，请刷新后重试。
+        </div>
+      ) : null}
+
       {owner ? (
         <Panel title="发布 GitHub Bounty" icon={<ClipboardList className="h-4 w-4" />}>
           <div className="grid gap-3 lg:grid-cols-2">
@@ -267,7 +294,7 @@ export function ProjectWorkroomPanel({projectNo, initialOverview}: { projectNo: 
               onResultDraft={(patch) => setResultDrafts((current) => ({...current, [thread.id]: {...(current[thread.id] ?? {}), ...patch}}))}
               onReviewDraft={(patch) => setReviewDrafts((current) => ({...current, [thread.id]: {...(current[thread.id] ?? {}), ...patch}}))}
             />
-          )) : (
+          )) : loadFailed ? null : (
             <div className="rounded-[8px] bg-[var(--surface-control)] p-3 text-sm text-[var(--muted-foreground)]">当前项目暂无 WorkThread。</div>
           )}
         </div>
@@ -312,9 +339,12 @@ export function ProjectWorkroomPanel({projectNo, initialOverview}: { projectNo: 
                     收入 {formatMinor(batch.totalRevenueMinor, batch.token)} · 快照 {batch.totalSnapshotShares.toLocaleString()} shares · 可领 {formatMinor(batch.myClaimableAmountMinor, batch.token)}
                   </div>
                 </div>
-                <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
+                <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
                   <Field label="钱包" value={walletDrafts[batch.period]?.walletAddress ?? ""} onChange={(value) => setWalletDrafts((current) => ({...current, [batch.period]: {...(current[batch.period] ?? {}), walletAddress: value}}))} />
-                  <Button size="sm" onClick={() => claimRevenue(batch.period)} loading={isPending} disabled={batch.myClaimableAmountMinor <= 0}>Claim</Button>
+                  <Field label="Tx Hash" value={walletDrafts[batch.period]?.txHash ?? ""} onChange={(value) => setWalletDrafts((current) => ({...current, [batch.period]: {...(current[batch.period] ?? {}), txHash: value}}))} />
+                  <Button size="sm" onClick={() => claimRevenue(batch.period)} loading={isPending} disabled={batch.myClaimableAmountMinor <= 0 && !walletDrafts[batch.period]?.txHash?.trim()}>
+                    {batch.myClaimableAmountMinor > 0 ? "Claim" : "补 Tx"}
+                  </Button>
                 </div>
               </div>
             ))}
@@ -366,6 +396,7 @@ function ThreadRow({
   onReviewDraft: (patch: Record<string, string>) => void;
 }) {
   const assignee = thread.assigneeAccountId === currentAccountId;
+  const reviewer = owner || thread.reviewerAccountId === currentAccountId;
   return (
     <div className="rounded-[8px] bg-[var(--surface-control)] p-3">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -390,6 +421,11 @@ function ThreadRow({
 
       <p className="mt-3 whitespace-pre-line text-sm leading-6 text-[var(--muted-foreground)]">{thread.goal}</p>
 
+      <div className="mt-3 grid gap-2 text-xs text-[var(--muted-foreground)] md:grid-cols-2">
+        <Checklist title="交付物" items={thread.deliverables} />
+        <Checklist title="验收标准" items={thread.acceptanceCriteria} />
+      </div>
+
       {thread.latestResult ? (
         <a href={thread.latestResult.prUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-[var(--accent-blue)] hover:underline">
           <GitPullRequest className="h-3.5 w-3.5" />
@@ -412,7 +448,7 @@ function ThreadRow({
         </div>
       ) : null}
 
-      {thread.status === "submitted" && owner ? (
+      {thread.status === "submitted" && reviewer ? (
         <div className="mt-3 grid gap-2">
           <TextField label="验收说明" value={reviewDraft.reason ?? ""} onChange={(value) => onReviewDraft({reason: value})} />
           <div className="flex flex-wrap justify-end gap-2">
@@ -431,6 +467,19 @@ function ThreadRow({
           </div>
         </div>
       ) : null}
+    </div>
+  );
+}
+
+function Checklist({title, items}: { title: string; items: string[] }) {
+  return (
+    <div className="rounded-[8px] bg-[var(--background)] p-2">
+      <div className="font-semibold text-[var(--foreground)]">{title}</div>
+      <ul className="mt-1 grid gap-1">
+        {items.map((item) => (
+          <li key={item} className="break-words">- {item}</li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -1,0 +1,10 @@
+{
+  "actions": ["bind-channel", "archive-discussion", "create-appeal", "resolve-appeal"],
+  "required": ["projectNo"],
+  "apis": {
+    "bind-channel": "POST /api/v1/projects/{projectNo}/channel-bindings",
+    "archive-discussion": "POST /api/v1/projects/{projectNo}/channel-events",
+    "create-appeal": "POST /api/v1/projects/{projectNo}/appeals",
+    "resolve-appeal": "POST /api/v1/projects/{projectNo}/appeals/{appealId}/resolve"
+  }
+}

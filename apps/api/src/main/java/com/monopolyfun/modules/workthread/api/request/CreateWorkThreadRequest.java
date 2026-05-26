@@ -13,7 +13,7 @@ public record CreateWorkThreadRequest(
         List<String> deliverables,
         List<String> acceptanceCriteria,
         @Min(0) @Max(10000) int taskValue,
-        Integer bountyAmountMinor,
+        @Min(0) Integer bountyAmountMinor,
         String bountyToken,
         String repoRef,
         String issueUrl,

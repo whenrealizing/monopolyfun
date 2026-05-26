@@ -14,6 +14,7 @@ Production configuration must provide rotated values for:
 - OAuth callback URLs
 - Upload credentials
 - API base URLs
+- GitHub App repository provisioning credentials
 
 Set `APP_PRODUCTION=true` and `COOKIE_SECURE=true` for shared or public deployments. Local fixture values in `.env.example` and `docker-compose.yml` are only for disposable development environments.
 
@@ -21,6 +22,7 @@ Set `APP_PRODUCTION=true` and `COOKIE_SECURE=true` for shared or public deployme
 
 - Authentication, authorization, session, CSRF, and account-risk boundaries.
 - Payment callback, proof, order, Project, workbench, and share-release state transitions.
+- GitHub App repository provisioning and scoped installation-token issuance.
 - Agent action routing, prompt-injection handling, and cross-account write protection.
 - Secret exposure in source, docs, workflow files, generated clients, and committed artifacts.
 
@@ -33,4 +35,3 @@ pnpm security:pr-policy
 ```
 
 Run `pnpm qa:security` when preparing a release candidate.
-

@@ -4,16 +4,20 @@ import com.monopolyfun.modules.project.domain.ProjectEntity;
 import com.monopolyfun.modules.workthread.api.request.ClaimDistributionRequest;
 import com.monopolyfun.modules.workthread.api.request.CreateDistributionBatchRequest;
 import com.monopolyfun.modules.workthread.api.request.UpsertProjectRevenueAddressRequest;
+import com.monopolyfun.modules.workthread.domain.ContributionEntryEntity;
 import com.monopolyfun.modules.workthread.domain.DistributionBatchEntity;
 import com.monopolyfun.modules.workthread.domain.DistributionClaimEntity;
+import com.monopolyfun.modules.workthread.domain.DistributionEntitlementEntity;
 import com.monopolyfun.modules.workthread.domain.ProjectRevenueAddressEntity;
 import com.monopolyfun.modules.workthread.infra.WorkThreadRepository;
 import com.monopolyfun.modules.workthread.service.view.ContributionRewardView;
+import com.monopolyfun.modules.workthread.service.view.DistributionBatchView;
 import com.monopolyfun.modules.workthread.service.view.DistributionClaimView;
 import com.monopolyfun.modules.workthread.service.view.ProjectRevenueAddressView;
 import com.monopolyfun.shared.security.CurrentAccountAccess;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.charset.StandardCharsets;
@@ -21,13 +25,18 @@ import java.security.MessageDigest;
 import java.time.Instant;
 import java.time.YearMonth;
 import java.time.ZoneOffset;
+import java.util.Comparator;
 import java.util.HexFormat;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class RevenueDistributionService {
-    private static final String CLAIM_TOKEN = "USDC";
+    private static final String CLAIM_TOKEN = "BNB";
 
     private final WorkThreadRepository repository;
     private final CurrentAccountAccess currentAccountAccess;
@@ -55,29 +64,54 @@ public class RevenueDistributionService {
         return new ProjectRevenueAddressView(saved.id(), saved.projectId(), saved.chainId(), saved.contractAddress(), saved.tokenAddress(), saved.status());
     }
 
-    public DistributionBatchEntity createBatch(ProjectEntity project, CreateDistributionBatchRequest request) {
+    public DistributionBatchView createBatch(ProjectEntity project, CreateDistributionBatchRequest request) {
         currentAccountAccess.requireSameAccount(request.actorAccountId());
         requireProjectOwner(project, request.actorAccountId());
         requirePeriod(request.period());
         if (repository.findDistributionBatch(project.id(), request.period().trim()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution period already exists");
         }
-        int totalShares = repository.sumSharesByProject(project.id());
+        List<AccountShareSnapshot> snapshots = accountShareSnapshots(project.id());
+        int totalShares = snapshots.stream().mapToInt(AccountShareSnapshot::shares).sum();
         if (totalShares <= 0) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Settled shares required before distribution");
         }
         Instant now = repository.now();
-        // 中文注释：distribution batch 冻结本周期收入和总 shares，claim 只按该快照计算，避免事后贡献追溯瓜分历史收入。
-        return repository.saveDistributionBatch(new DistributionBatchEntity(
-                "db-" + UUID.randomUUID(),
+        String batchId = "db-" + UUID.randomUUID();
+        // 中文注释：批次创建时冻结每个账号的 shares 和金额，后续新增贡献只能参与之后周期。
+        List<DistributionEntitlementEntity> entitlements = snapshots.stream()
+                .map(snapshot -> new DistributionEntitlementEntity(
+                        "de-" + UUID.randomUUID(),
+                        batchId,
+                        snapshot.accountId(),
+                        snapshot.shares(),
+                        claimable(request.totalRevenueMinor(), snapshot.shares(), totalShares),
+                        "claimable",
+                        now))
+                .toList();
+        DistributionBatchEntity batch = repository.saveDistributionBatch(new DistributionBatchEntity(
+                batchId,
                 project.id(),
                 request.period().trim(),
                 request.totalRevenueMinor(),
                 totalShares,
-                root(project.id(), request.period(), request.totalRevenueMinor(), totalShares),
+                root(project.id(), request.period(), request.totalRevenueMinor(), entitlements),
                 "published",
                 now,
                 now));
+        repository.saveDistributionEntitlements(entitlements);
+        return new DistributionBatchView(
+                batch.id(),
+                batch.projectId(),
+                batch.period(),
+                batch.totalRevenueMinor(),
+                batch.totalSnapshotShares(),
+                batch.merkleRoot(),
+                0,
+                CLAIM_TOKEN,
+                batch.status(),
+                batch.createdAt().toString(),
+                batch.updatedAt().toString());
     }
 
     public ContributionRewardView rewards(ProjectEntity project, String accountId) {
@@ -85,7 +119,8 @@ public class RevenueDistributionService {
         int shares = repository.sumSharesByProjectAndAccount(project.id(), accountId);
         int bounty = repository.sumBountyByProjectAndAccount(project.id(), accountId);
         int claimable = repository.findDistributionBatch(project.id(), currentPeriod)
-                .map(batch -> claimable(batch, shares))
+                .flatMap(batch -> repository.findDistributionEntitlement(batch.id(), accountId))
+                .map(entitlement -> "claimable".equals(entitlement.status()) && !repository.hasDistributionClaim(entitlement.batchId(), accountId) ? entitlement.amountMinor() : 0)
                 .orElse(0);
         return new ContributionRewardView(shares, bounty, CLAIM_TOKEN, claimable, CLAIM_TOKEN);
     }
@@ -93,26 +128,72 @@ public class RevenueDistributionService {
     public DistributionClaimView claim(ProjectEntity project, String period, ClaimDistributionRequest request) {
         currentAccountAccess.requireSameAccount(request.actorAccountId());
         requirePeriod(period);
-        requireWalletAddress(request.walletAddress(), "walletAddress");
         DistributionBatchEntity batch = repository.findDistributionBatch(project.id(), period)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Distribution batch not found"));
-        int memberShares = repository.sumSharesByProjectAndAccount(project.id(), request.actorAccountId());
-        int amount = claimable(batch, memberShares);
-        List<String> proof = proof(batch, request.actorAccountId(), request.walletAddress(), amount);
+        DistributionEntitlementEntity entitlement = repository.findDistributionEntitlement(batch.id(), request.actorAccountId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.CONFLICT, "Distribution entitlement not found"));
+        if (!"claimable".equals(entitlement.status()) || entitlement.amountMinor() <= 0) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution entitlement is not claimable");
+        }
+        int amount = entitlement.amountMinor();
         Instant now = repository.now();
         DistributionClaimEntity existing = repository.findDistributionClaim(batch.id(), request.actorAccountId()).orElse(null);
+        if (existing != null) {
+            String requestedWallet = request.walletAddress() == null ? "" : request.walletAddress().trim();
+            // 中文注释：用户回填 txHash 时可省略钱包地址，系统沿用首次 claim 固定的钱包，降低领取摩擦。
+            if (!requestedWallet.isBlank() && !existing.walletAddress().equals(requestedWallet)) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution claim wallet already exists");
+            }
+            DistributionClaimEntity updated = submitClaimTxIfPresent(existing, request.txHash(), request.txConfirmed(), now);
+            return new DistributionClaimView(batch.id(), batch.projectId(), batch.period(), updated.accountId(), updated.walletAddress(), updated.amountMinor(), CLAIM_TOKEN, updated.proof(), updated.txHash(), updated.status());
+        }
+        requireWalletAddress(request.walletAddress(), "walletAddress");
+        List<String> proof = proof(batch, request.actorAccountId(), request.walletAddress(), amount);
+        String normalizedTxHash = request.txHash() == null || request.txHash().isBlank() ? null : request.txHash().trim();
+        String status = normalizedTxHash == null ? "claimable" : Boolean.TRUE.equals(request.txConfirmed()) ? "claimed" : "submitted";
+        // 中文注释：首次 claim 冻结钱包、金额和 proof，后续请求只能补充同一 claim 的链上 txHash。
         DistributionClaimEntity saved = repository.saveDistributionClaim(new DistributionClaimEntity(
-                existing == null ? "dc-" + UUID.randomUUID() : existing.id(),
+                "dc-" + UUID.randomUUID(),
                 batch.id(),
                 request.actorAccountId(),
                 request.walletAddress().trim(),
                 amount,
                 proof,
-                request.txHash(),
-                request.txHash() == null || request.txHash().isBlank() ? "claimable" : "submitted",
-                existing == null ? now : existing.createdAt(),
+                normalizedTxHash,
+                status,
+                now,
                 now));
         return new DistributionClaimView(batch.id(), batch.projectId(), batch.period(), saved.accountId(), saved.walletAddress(), saved.amountMinor(), CLAIM_TOKEN, saved.proof(), saved.txHash(), saved.status());
+    }
+
+    private DistributionClaimEntity submitClaimTxIfPresent(DistributionClaimEntity existing, String txHash, Boolean txConfirmed, Instant now) {
+        boolean confirmed = Boolean.TRUE.equals(txConfirmed);
+        String normalizedTxHash = txHash == null || txHash.isBlank() ? existing.txHash() : txHash.trim();
+        if ((normalizedTxHash == null || normalizedTxHash.isBlank()) && !confirmed) {
+            return existing;
+        }
+        if (normalizedTxHash == null || normalizedTxHash.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Distribution claim txHash is required before confirmation");
+        }
+        if (existing.txHash() != null && !existing.txHash().isBlank()) {
+            if (existing.txHash().equals(normalizedTxHash) && !confirmed) {
+                return existing;
+            }
+            if (existing.txHash().equals(normalizedTxHash) && "claimed".equals(existing.status())) {
+                return existing;
+            }
+            if (existing.txHash().equals(normalizedTxHash)) {
+                // 中文注释：链上 receipt 和事件校验通过后，系统把已提交 txHash 推进为已领取状态。
+                return repository.confirmDistributionClaimTx(existing.batchId(), existing.accountId(), normalizedTxHash, now);
+            }
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution claim txHash already exists");
+        }
+        if (confirmed) {
+            // 中文注释：允许系统在同一次回填中提交 txHash 并写入链上已确认状态。
+            return repository.confirmDistributionClaimTx(existing.batchId(), existing.accountId(), normalizedTxHash, now);
+        }
+        // 中文注释：已创建的 claim 固定收款地址、金额和 proof，txHash 只推进链上提交状态。
+        return repository.submitDistributionClaimTx(existing.batchId(), existing.accountId(), normalizedTxHash, now);
     }
 
     private void requireProjectOwner(ProjectEntity project, String actorAccountId) {
@@ -133,15 +214,33 @@ public class RevenueDistributionService {
         }
     }
 
-    private int claimable(DistributionBatchEntity batch, int memberShares) {
-        if (batch.totalRevenueMinor() <= 0 || batch.totalSnapshotShares() <= 0 || memberShares <= 0) {
+    private int claimable(int totalRevenueMinor, int memberShares, int totalShares) {
+        if (totalRevenueMinor <= 0 || totalShares <= 0 || memberShares <= 0) {
             return 0;
         }
-        return (int) Math.floor((double) batch.totalRevenueMinor() * memberShares / batch.totalSnapshotShares());
+        return (int) Math.floor((double) totalRevenueMinor * memberShares / totalShares);
     }
 
-    private static String root(String projectId, String period, int revenue, int shares) {
-        return "sha256:" + sha256(projectId + "|" + period + "|" + revenue + "|" + shares);
+    private List<AccountShareSnapshot> accountShareSnapshots(String projectId) {
+        Map<String, Integer> sharesByAccount = repository.listContributionsByProject(projectId).stream()
+                .filter(contribution -> "settled".equals(contribution.status()))
+                .collect(Collectors.toMap(
+                        ContributionEntryEntity::accountId,
+                        ContributionEntryEntity::shares,
+                        Integer::sum,
+                        LinkedHashMap::new));
+        return sharesByAccount.entrySet().stream()
+                .map(entry -> new AccountShareSnapshot(entry.getKey(), entry.getValue()))
+                .sorted(Comparator.comparing(AccountShareSnapshot::accountId))
+                .toList();
+    }
+
+    private static String root(String projectId, String period, int revenue, List<DistributionEntitlementEntity> entitlements) {
+        String entitlementPayload = entitlements.stream()
+                .sorted(Comparator.comparing(DistributionEntitlementEntity::accountId))
+                .map(entitlement -> entitlement.accountId() + ":" + entitlement.snapshotShares() + ":" + entitlement.amountMinor())
+                .collect(Collectors.joining(","));
+        return "sha256:" + sha256(projectId + "|" + period + "|" + revenue + "|" + entitlementPayload);
     }
 
     private static List<String> proof(DistributionBatchEntity batch, String accountId, String wallet, int amount) {
@@ -156,5 +255,8 @@ public class RevenueDistributionService {
         } catch (Exception exception) {
             throw new IllegalStateException("Failed to generate claim proof", exception);
         }
+    }
+
+    private record AccountShareSnapshot(String accountId, int shares) {
     }
 }

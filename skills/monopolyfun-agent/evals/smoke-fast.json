@@ -1,0 +1,14 @@
+{
+  "skill_name": "monopolyfun-agent",
+  "latency_targets": {
+    "route_intent_ms": 500,
+    "workbench_current_ms": 3000,
+    "single_action_ms": 10000
+  },
+  "assertions": [
+    "SKILL.md stays below 120 lines",
+    "OpenClaw loads one action runbook per user turn",
+    "Workbench output contains at most 3 current project items",
+    "Proof URLs use github.com or raw.githubusercontent.com for project smoke"
+  ]
+}

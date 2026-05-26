@@ -41,6 +41,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class WorkThreadService {
+    private static final String DEFAULT_REVENUE_TOKEN = "BNB";
     private final WorkThreadRepository repository;
     private final ProjectRepository projectRepository;
     private final CurrentAccountAccess currentAccountAccess;
@@ -68,7 +69,7 @@ public class WorkThreadService {
         Instant now = repository.now();
         WorkThreadEntity thread = repository.saveThread(new WorkThreadEntity(
                 "wt-" + UUID.randomUUID(),
-                "wt-" + now.toEpochMilli(),
+                "wt-" + shortId(),
                 project.id(),
                 request.actorAccountId(),
                 null,
@@ -81,7 +82,8 @@ public class WorkThreadService {
                 cleaned(request.acceptanceCriteria()),
                 request.taskValue(),
                 request.bountyAmountMinor() == null ? 0 : request.bountyAmountMinor(),
-                request.bountyToken() == null || request.bountyToken().isBlank() ? "USDC" : request.bountyToken().trim(),
+                // 中文注释：系统默认收益轨道使用 BSC native BNB，未显式指定时沿用同一资产口径。
+                request.bountyToken() == null || request.bountyToken().isBlank() ? DEFAULT_REVENUE_TOKEN : request.bountyToken().trim(),
                 "open",
                 now,
                 now,
@@ -107,19 +109,18 @@ public class WorkThreadService {
         int myShares = currentAccountId == null ? 0 : repository.sumSharesByProjectAndAccount(project.id(), currentAccountId);
         int myBounty = currentAccountId == null ? 0 : repository.sumBountyByProjectAndAccount(project.id(), currentAccountId);
         List<DistributionBatchView> distributions = repository.listDistributionBatches(project.id()).stream()
-                .map(batch -> toView(batch, claimable(batch, myShares)))
+                .map(batch -> toView(batch, distributionClaimable(batch, currentAccountId)))
                 .toList();
         int currentClaimable = distributions.stream()
                 .filter(batch -> "published".equals(batch.status()))
-                .findFirst()
-                .map(DistributionBatchView::myClaimableAmountMinor)
-                .orElse(0);
+                .mapToInt(DistributionBatchView::myClaimableAmountMinor)
+                .sum();
         return new WorkThreadOverviewView(
                 project.id(),
                 project.projectNo(),
                 currentAccountId != null && currentAccountId.equals(project.ownerAccountId()),
                 repository.findActiveRevenueAddress(project.id()).map(this::toView).orElse(null),
-                new ContributionRewardView(myShares, myBounty, "USDC", currentClaimable, "USDC"),
+                new ContributionRewardView(myShares, myBounty, DEFAULT_REVENUE_TOKEN, currentClaimable, DEFAULT_REVENUE_TOKEN),
                 workThreads,
                 contributions.stream().map(this::toView).toList(),
                 contributionMembers(contributions),
@@ -138,12 +139,17 @@ public class WorkThreadService {
         if (!"open".equals(thread.status())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Work thread cannot be claimed from status " + thread.status());
         }
+        ProjectEntity project = requireProject(thread.projectId());
+        if (request.actorAccountId().equals(project.ownerAccountId()) || request.actorAccountId().equals(thread.reviewerAccountId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Reviewer cannot claim this work thread");
+        }
         Instant now = repository.now();
+        // 中文注释：领取通过数据库条件更新锁定 open 状态，避免并发请求覆盖 assignee。
         WorkThreadEntity claimed = repository.updateThreadState(new WorkThreadEntity(
                 thread.id(), thread.threadNo(), thread.projectId(), thread.createdByAccountId(), request.actorAccountId(),
                 thread.reviewerAccountId(), thread.issueUrl(), thread.repoRef(), thread.title(), thread.goal(),
                 thread.deliverables(), thread.acceptanceCriteria(), thread.taskValue(), thread.bountyAmountMinor(),
-                thread.bountyToken(), "running", thread.createdAt(), now, null, null, null));
+                thread.bountyToken(), "running", thread.createdAt(), now, null, null, null), "open");
         return receipt("work_thread", claimed.id(), "running", request.actorAccountId(), Map.of("threadNo", claimed.threadNo()));
     }
 
@@ -160,7 +166,7 @@ public class WorkThreadService {
         Instant now = repository.now();
         WorkResultEntity result = repository.saveResult(new WorkResultEntity(
                 "wtr-" + UUID.randomUUID(),
-                "wtr-" + now.toEpochMilli(),
+                "wtr-" + shortId(),
                 thread.id(),
                 request.actorAccountId(),
                 request.resultMarkdown(),
@@ -172,11 +178,12 @@ public class WorkThreadService {
                 request.runtime() == null || request.runtime().isBlank() ? "openclaw" : request.runtime().trim(),
                 "submitted",
                 now));
+        // 中文注释：提交结果只允许 running 状态推进，防止旧提交覆盖已经进入验收或结算的任务。
         repository.updateThreadState(new WorkThreadEntity(
                 thread.id(), thread.threadNo(), thread.projectId(), thread.createdByAccountId(), thread.assigneeAccountId(),
                 thread.reviewerAccountId(), thread.issueUrl(), thread.repoRef(), thread.title(), thread.goal(),
                 thread.deliverables(), thread.acceptanceCriteria(), thread.taskValue(), thread.bountyAmountMinor(),
-                thread.bountyToken(), "submitted", thread.createdAt(), now, now, null, null));
+                thread.bountyToken(), "submitted", thread.createdAt(), now, now, null, null), "running");
         return toView(result);
     }
 
@@ -188,34 +195,40 @@ public class WorkThreadService {
         if (!"submitted".equals(thread.status())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Work thread is not submitted");
         }
+        if (request.reviewerAccountId().equals(thread.assigneeAccountId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Reviewer cannot review own work thread");
+        }
         String decision = normalizeDecision(request.decision());
         WorkResultEntity result = repository.findLatestResult(thread.id())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.CONFLICT, "Result required before review"));
         Instant now = repository.now();
-        WorkThreadReviewEntity review = repository.saveReview(new WorkThreadReviewEntity(
-                "wtrv-" + UUID.randomUUID(),
-                "wtrv-" + now.toEpochMilli(),
-                thread.id(),
-                result.id(),
-                request.reviewerAccountId(),
-                decision,
-                request.reason().trim(),
-                now));
         String nextStatus = switch (decision) {
             case "accept" -> "settled";
             case "resubmit" -> "running";
             case "reject" -> "rejected";
             default -> "submitted";
         };
-        if ("accept".equals(decision)) {
-            contributionSettlementService.settle(thread, result, now);
-        }
+        // 中文注释：验收先用 submitted 条件推进主状态，再写 review/result/ledger，保证一次任务只有一个最终决策生效。
         repository.updateThreadState(new WorkThreadEntity(
                 thread.id(), thread.threadNo(), thread.projectId(), thread.createdByAccountId(), thread.assigneeAccountId(),
                 thread.reviewerAccountId(), thread.issueUrl(), thread.repoRef(), thread.title(), thread.goal(),
                 thread.deliverables(), thread.acceptanceCriteria(), thread.taskValue(), thread.bountyAmountMinor(),
                 thread.bountyToken(), nextStatus, thread.createdAt(), now, thread.submittedAt(),
-                "accept".equals(decision) ? now : null, "accept".equals(decision) ? now : null));
+                "accept".equals(decision) ? now : null, "accept".equals(decision) ? now : null), "submitted");
+        WorkThreadReviewEntity review = repository.saveReview(new WorkThreadReviewEntity(
+                "wtrv-" + UUID.randomUUID(),
+                "wtrv-" + shortId(),
+                thread.id(),
+                result.id(),
+                request.reviewerAccountId(),
+                decision,
+                request.reason().trim(),
+                now));
+        // 中文注释：review 决策同步写回 Result，后续列表和审计可以直接读取成果状态。
+        repository.updateResultStatus(result.id(), resultStatus(decision));
+        if ("accept".equals(decision)) {
+            contributionSettlementService.settle(thread, result, now);
+        }
         return receipt("work_review", review.reviewNo(), nextStatus, request.reviewerAccountId(), Map.of("decision", decision, "threadNo", thread.threadNo()));
     }
 
@@ -257,6 +270,9 @@ public class WorkThreadService {
         if (request.taskValue() <= 0 || request.taskValue() > 10000) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "taskValue must be 1-10000");
         }
+        if (request.bountyAmountMinor() != null && request.bountyAmountMinor() < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bountyAmountMinor must be non-negative");
+        }
     }
 
     private ParsedSubmission parseSubmission(WorkThreadEntity thread, SubmitWorkThreadResultRequest request) {
@@ -288,6 +304,14 @@ public class WorkThreadService {
             case "resubmit", "revision_requested" -> "resubmit";
             case "reject", "rejected" -> "reject";
             default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "decision must be accept, resubmit, or reject");
+        };
+    }
+
+    private static String resultStatus(String decision) {
+        return switch (decision) {
+            case "accept" -> "accepted";
+            case "reject" -> "rejected";
+            default -> "submitted";
         };
     }
 
@@ -338,7 +362,7 @@ public class WorkThreadService {
     private DistributionBatchView toView(DistributionBatchEntity batch, int claimableAmountMinor) {
         return new DistributionBatchView(
                 batch.id(), batch.projectId(), batch.period(), batch.totalRevenueMinor(), batch.totalSnapshotShares(),
-                batch.merkleRoot(), claimableAmountMinor, "USDC", batch.status(), iso(batch.createdAt()), iso(batch.updatedAt()));
+                batch.merkleRoot(), claimableAmountMinor, DEFAULT_REVENUE_TOKEN, batch.status(), iso(batch.createdAt()), iso(batch.updatedAt()));
     }
 
     private List<ContributionMemberView> contributionMembers(List<ContributionEntryEntity> contributions) {
@@ -352,16 +376,19 @@ public class WorkThreadService {
                         entry.getValue().stream().mapToInt(ContributionEntryEntity::taskValue).sum(),
                         entry.getValue().size(),
                         entry.getValue().stream().mapToInt(ContributionEntryEntity::bountyAmountMinor).sum(),
-                        entry.getValue().stream().map(ContributionEntryEntity::bountyToken).findFirst().orElse("USDC")))
+                        entry.getValue().stream().map(ContributionEntryEntity::bountyToken).findFirst().orElse(DEFAULT_REVENUE_TOKEN)))
                 .sorted(Comparator.comparingInt(ContributionMemberView::totalShares).reversed())
                 .toList();
     }
 
-    private int claimable(DistributionBatchEntity batch, int memberShares) {
-        if (batch.totalRevenueMinor() <= 0 || batch.totalSnapshotShares() <= 0 || memberShares <= 0) {
+    private int distributionClaimable(DistributionBatchEntity batch, String currentAccountId) {
+        if (currentAccountId == null || currentAccountId.isBlank()) {
             return 0;
         }
-        return (int) Math.floor((double) batch.totalRevenueMinor() * memberShares / batch.totalSnapshotShares());
+        // 中文注释：Workroom 展示读取分红快照，避免页面把后来新增的 shares 算进历史周期。
+        return repository.findDistributionEntitlement(batch.id(), currentAccountId)
+                .map(entitlement -> "claimable".equals(entitlement.status()) && !repository.hasDistributionClaim(batch.id(), currentAccountId) ? entitlement.amountMinor() : 0)
+                .orElse(0);
     }
 
     private static String iso(Instant instant) {
@@ -370,6 +397,10 @@ public class WorkThreadService {
 
     private CommandReceipt receipt(String type, String subjectId, String status, String actorAccountId, Map<String, Object> payload) {
         return new CommandReceipt("cr-" + UUID.randomUUID(), type, subjectId, status, new LinkedHashMap<>(payload), actorAccountId, null, null, repository.now());
+    }
+
+    private static String shortId() {
+        return UUID.randomUUID().toString().substring(0, 12);
     }
 
     private record ParsedSubmission(String summary, String prUrl, String testSummary, List<String> changedFiles) {
