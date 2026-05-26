@@ -391,7 +391,9 @@ async function createWorkThread(params, client) {
     goal: params.goal || params.summary || "完成可复核交付，并进入贡献收益分配。",
     deliverables: normalizeList(params.deliverables, ["PR 或执行报告", "测试摘要", "收益领取证据"]),
     acceptanceCriteria: normalizeList(params.acceptanceCriteria, ["结果可以复核", "收益领取证据可以读回"]),
-    taskValue: Number.isFinite(Number(params.taskValue)) ? Number(params.taskValue) : 5000,
+    taskValue: Number.isFinite(Number(params.taskValue)) ? Number(params.taskValue) : 0,
+    difficulty: params.difficulty || "medium",
+    creativity: params.creativity || "standard",
     bountyAmountMinor: Number.isFinite(Number(params.bountyAmountMinor)) ? Number(params.bountyAmountMinor) : 0,
     bountyToken: params.bountyToken || "BNB",
     repoRef: params.repoRef || "",
@@ -466,12 +468,16 @@ async function createDistribution(params, client) {
   const projectNo = await resolveProjectNo(params, client);
   const projectId = await resolveProjectId({ ...params, projectNo }, client);
   const period = params.period || currentPeriod();
+  const body = {
+    actorAccountId: client.account.id,
+    period,
+  };
+  if (params.totalRevenueMinor !== undefined && params.totalRevenueMinor !== null && String(params.totalRevenueMinor).trim() !== "") {
+    body.totalRevenueMinor = Number(params.totalRevenueMinor);
+  }
+  // 中文注释：收益金额默认交给后端曲线估算，OpenClaw 对话只保留业务周期。
   const distribution = await apiJson(client.session, client.baseUrl, "POST",
-    `/api/v1/projects/${encodeURIComponent(projectId)}/distributions`, {
-      actorAccountId: client.account.id,
-      period,
-      totalRevenueMinor: Number(required(params.totalRevenueMinor, "totalRevenueMinor")),
-    });
+    `/api/v1/projects/${encodeURIComponent(projectId)}/distributions`, body);
   const workroom = await readWorkroom(client, projectId);
   return { projectNo, projectId, period, distribution, workroom: summarizeWorkroom(workroom) };
 }
@@ -482,13 +488,16 @@ async function claimRevenue(params, client) {
   const period = params.period || await latestDistributionPeriod(client, projectId) || currentPeriod();
   // 中文注释：txHash 回填阶段允许省略钱包地址，后端会沿用首次 claim 固定的钱包。
   const walletAddress = String(params.walletAddress || "").trim();
+  const body = {
+    actorAccountId: client.account.id,
+    txHash: params.txHash || "",
+    txConfirmed: params.txConfirmed === true,
+  };
+  if (walletAddress) {
+    body.walletAddress = walletAddress;
+  }
   const claim = await apiJson(client.session, client.baseUrl, "POST",
-    `/api/v1/projects/${encodeURIComponent(projectId)}/distributions/${encodeURIComponent(period)}/claim`, {
-      actorAccountId: client.account.id,
-      walletAddress,
-      txHash: params.txHash || "",
-      txConfirmed: params.txConfirmed === true,
-    });
+    `/api/v1/projects/${encodeURIComponent(projectId)}/distributions/${encodeURIComponent(period)}/claim`, body);
   // 中文注释：这里只记录后端 claim/txHash，链上签名仍由用户或被授权的钱包流程完成。
   return { projectNo, projectId, period, walletAddress, claim };
 }

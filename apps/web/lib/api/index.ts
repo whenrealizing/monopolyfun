@@ -895,11 +895,24 @@ export type DistributionClaim = {
     status: string;
 };
 
+export type RevenueAutomation = {
+    chainId: string;
+    chainName: string;
+    asset: string;
+    tokenType: string;
+    tokenAddress: string;
+    configured: boolean;
+    userPromptRequired: boolean;
+    nextDistributionRevenueMinor: number;
+    pricingModel: string;
+};
+
 export type WorkThreadOverview = {
     projectId: string;
     projectNo: string;
     owner: boolean;
     revenueAddress: ProjectRevenueAddress | null;
+    revenueAutomation: RevenueAutomation;
     myRewards: ContributionReward;
     workThreads: WorkThread[];
     ledger: ContributionLedgerEntry[];
@@ -1530,6 +1543,8 @@ export async function createWorkThread(projectId: string, input: {
     deliverables: string[];
     acceptanceCriteria: string[];
     taskValue: number;
+    difficulty?: string;
+    creativity?: string;
     bountyAmountMinor?: number;
     bountyToken?: string;
     repoRef?: string;
@@ -1609,7 +1624,7 @@ export async function upsertProjectRevenueAddress(projectId: string, input: {
 
 export async function createDistributionBatch(projectId: string, input: {
     period: string;
-    totalRevenueMinor: number;
+    totalRevenueMinor?: number;
 }): Promise<DistributionBatch> {
     const session = requireClientSession();
     return contract(await monopolyfunFetch<DistributionBatch>(`/api/v1/projects/${encodeURIComponent(projectId)}/distributions`, {
@@ -1619,7 +1634,7 @@ export async function createDistributionBatch(projectId: string, input: {
 }
 
 export async function claimDistribution(projectId: string, period: string, input: {
-    walletAddress: string;
+    walletAddress?: string;
     txHash?: string;
 }): Promise<DistributionClaim> {
     const session = requireClientSession();

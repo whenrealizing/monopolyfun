@@ -7,6 +7,7 @@ public record WorkThreadOverviewView(
         String projectNo,
         boolean owner,
         ProjectRevenueAddressView revenueAddress,
+        RevenueAutomationView revenueAutomation,
         ContributionRewardView myRewards,
         List<WorkThreadView> workThreads,
         List<ContributionLedgerEntryView> ledger,

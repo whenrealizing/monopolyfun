@@ -45,6 +45,7 @@ import com.monopolyfun.modules.risk.service.RiskAction;
 import com.monopolyfun.modules.share.domain.SettlementType;
 import com.monopolyfun.modules.share.service.ProjectSharePoolService;
 import com.monopolyfun.modules.work.infra.WorkRepository;
+import com.monopolyfun.modules.workthread.service.RevenueAutomationService;
 import com.monopolyfun.platform.agent.openapi.AgentCapabilityResolver;
 import com.monopolyfun.platform.agent.openapi.AgentResourceKeyFactory;
 import com.monopolyfun.platform.command.CommandContext;
@@ -115,6 +116,7 @@ public class PostCommandService {
     private final AgentCapabilityResolver agentCapabilityResolver;
     private final AgentResourceKeyFactory agentResourceKeyFactory;
     private final InitiativeService initiativeService;
+    private final RevenueAutomationService revenueAutomationService;
 
     public PostCommandService(
             AccountRepository accountRepository,
@@ -136,7 +138,8 @@ public class PostCommandService {
             WorkRepository workRepository,
             AgentCapabilityResolver agentCapabilityResolver,
             AgentResourceKeyFactory agentResourceKeyFactory,
-            InitiativeService initiativeService) {
+            InitiativeService initiativeService,
+            RevenueAutomationService revenueAutomationService) {
         this.accountRepository = accountRepository;
         this.offerRepository = offerRepository;
         this.requestPostRepository = requestPostRepository;
@@ -157,6 +160,7 @@ public class PostCommandService {
         this.agentCapabilityResolver = agentCapabilityResolver;
         this.agentResourceKeyFactory = agentResourceKeyFactory;
         this.initiativeService = initiativeService;
+        this.revenueAutomationService = revenueAutomationService;
     }
 
     public OfferCreateResponse createOffer(PublishOfferRequest request) {
@@ -345,6 +349,8 @@ public class PostCommandService {
                 now);
         commandKernel.execute(new CommandMetadata("publish_project", "project", project.projectNo()), context -> {
             projectRepository.save(project);
+            // 中文注释：项目创建时绑定系统默认收益轨道，真实用户无需理解链、合约和 token 字段。
+            revenueAutomationService.ensureSystemRevenueTrack(project, context.startedAt());
             String marketGoal = metadata.get("goal") == null ? project.summary() : String.valueOf(metadata.get("goal")).trim();
             // 中文注释：project 创建后立刻生成 1:1 market，并初始化 1000 万总份额与 curve 参数，后续 item 直接挂到这个市场里。
             MarketEntity market = new MarketEntity(

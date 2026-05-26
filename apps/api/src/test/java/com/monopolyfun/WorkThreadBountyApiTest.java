@@ -20,7 +20,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(properties = {
+        "monopolyfun.revenue.chain-id=eip155:31337",
+        "monopolyfun.revenue.chain-name=BSC",
+        "monopolyfun.revenue.asset=BNB",
+        "monopolyfun.revenue.token-address=0x8888888888888888888888888888888888888888",
+        "monopolyfun.revenue.router-address=0x9999999999999999999999999999999999999999",
+        "monopolyfun.revenue.min-distribution-minor=100000",
+        "monopolyfun.revenue.minor-per-share=20"
+})
 @AutoConfigureMockMvc
 @Testcontainers
 class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
@@ -253,6 +261,57 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                                 {"actorAccountId":"acct-late","walletAddress":"0x3333333333333333333333333333333333333333"}
                                 """))
                 .andExpect(status().isConflict());
+    }
+
+    @Test
+    void autoPricesWorkThreadAndInitializesRevenueDistribution() throws Exception {
+        String createResponse = mockMvc.perform(post("/api/v1/projects/proj-1/work-threads")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "actorAccountId": "acct-owner",
+                                  "title": "Run revenue claim end to end",
+                                  "goal": "Complete a hard creative claim flow",
+                                  "deliverables": ["Report", "Balance evidence"],
+                                  "acceptanceCriteria": ["Claim can be verified"],
+                                  "taskValue": 0,
+                                  "difficulty": "hard",
+                                  "creativity": "creative",
+                                  "bountyAmountMinor": 0
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.taskValue").value(6250))
+                .andReturn().getResponse().getContentAsString();
+        String threadId = JsonTestValue.extract(createResponse, "id");
+
+        claimThread(threadId, "acct-dev");
+        submitResult(threadId, "acct-dev", "3001");
+        reviewThread(threadId, "accept");
+
+        mockMvc.perform(get("/api/v1/projects/proj-1/workroom")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.revenueAutomation.configured").value(true))
+                .andExpect(jsonPath("$.revenueAutomation.chainId").value("eip155:31337"))
+                .andExpect(jsonPath("$.revenueAutomation.nextDistributionRevenueMinor").value(125000));
+
+        mockMvc.perform(post("/api/v1/projects/proj-1/distributions")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"actorAccountId":"acct-owner","period":"2026-08"}
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalRevenueMinor").value(125000))
+                .andExpect(jsonPath("$.totalSnapshotShares").value(6250));
+
+        mockMvc.perform(get("/api/v1/projects/proj-1/workroom")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.revenueAddress.chainId").value("eip155:31337"))
+                .andExpect(jsonPath("$.revenueAddress.contractAddress").value("0x9999999999999999999999999999999999999999"));
     }
 
     private String createThread(String title, int taskValue) throws Exception {

@@ -47,18 +47,21 @@ public class WorkThreadService {
     private final CurrentAccountAccess currentAccountAccess;
     private final WorkThreadMarkdown markdown;
     private final ContributionSettlementService contributionSettlementService;
+    private final RevenueAutomationService revenueAutomationService;
 
     public WorkThreadService(
             WorkThreadRepository repository,
             ProjectRepository projectRepository,
             CurrentAccountAccess currentAccountAccess,
             WorkThreadMarkdown markdown,
-            ContributionSettlementService contributionSettlementService) {
+            ContributionSettlementService contributionSettlementService,
+            RevenueAutomationService revenueAutomationService) {
         this.repository = repository;
         this.projectRepository = projectRepository;
         this.currentAccountAccess = currentAccountAccess;
         this.markdown = markdown;
         this.contributionSettlementService = contributionSettlementService;
+        this.revenueAutomationService = revenueAutomationService;
     }
 
     public WorkThreadView create(String projectIdOrNo, CreateWorkThreadRequest request) {
@@ -67,6 +70,12 @@ public class WorkThreadService {
         requireProjectOwner(project, request.actorAccountId());
         validateCreate(request);
         Instant now = repository.now();
+        int taskValue = revenueAutomationService.estimateTaskValue(
+                request.taskValue(),
+                request.difficulty(),
+                request.creativity(),
+                request.title(),
+                request.goal());
         WorkThreadEntity thread = repository.saveThread(new WorkThreadEntity(
                 "wt-" + UUID.randomUUID(),
                 "wt-" + shortId(),
@@ -80,7 +89,7 @@ public class WorkThreadService {
                 request.goal().trim(),
                 cleaned(request.deliverables()),
                 cleaned(request.acceptanceCriteria()),
-                request.taskValue(),
+                taskValue,
                 request.bountyAmountMinor() == null ? 0 : request.bountyAmountMinor(),
                 // 中文注释：系统默认收益轨道使用 BSC native BNB，未显式指定时沿用同一资产口径。
                 request.bountyToken() == null || request.bountyToken().isBlank() ? DEFAULT_REVENUE_TOKEN : request.bountyToken().trim(),
@@ -120,6 +129,7 @@ public class WorkThreadService {
                 project.projectNo(),
                 currentAccountId != null && currentAccountId.equals(project.ownerAccountId()),
                 repository.findActiveRevenueAddress(project.id()).map(this::toView).orElse(null),
+                revenueAutomationService.view(project, repository.sumSharesByProject(project.id())),
                 new ContributionRewardView(myShares, myBounty, DEFAULT_REVENUE_TOKEN, currentClaimable, DEFAULT_REVENUE_TOKEN),
                 workThreads,
                 contributions.stream().map(this::toView).toList(),
@@ -267,8 +277,8 @@ public class WorkThreadService {
         if (cleaned(request.deliverables()).isEmpty() || cleaned(request.acceptanceCriteria()).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "deliverables and acceptanceCriteria are required");
         }
-        if (request.taskValue() <= 0 || request.taskValue() > 10000) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "taskValue must be 1-10000");
+        if (request.taskValue() < 0 || request.taskValue() > 10000) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "taskValue must be 0-10000");
         }
         if (request.bountyAmountMinor() != null && request.bountyAmountMinor() < 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bountyAmountMinor must be non-negative");

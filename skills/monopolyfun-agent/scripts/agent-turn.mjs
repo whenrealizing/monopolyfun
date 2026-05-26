@@ -177,7 +177,7 @@ async function runGuidedProjectCreation(text) {
         description: firstTask,
         deliveryStandard: "提交可复核的结果、证据和结论。",
         acceptanceCriteria: ["结果可以复核", "证据可以读回", "负责人可以验收"],
-        difficultyScore: 5,
+        difficultyScore: inferGuidedDifficultyScore(`${draft.goal || ""} ${firstTask}`),
       }],
     };
     const executed = runJson("execute-action.mjs", [
@@ -233,6 +233,20 @@ function cleanupGuidedAnswer(value) {
   return String(value ?? "")
     .replace(/^(公司名|项目名|名字|目标|任务)\s*(是|叫|为|:|：)?\s*/i, "")
     .trim();
+}
+
+function inferGuidedDifficultyScore(value) {
+  const text = String(value ?? "").toLowerCase();
+  if (["极难", "专家", "expert", "d5"].some((term) => text.includes(term))) {
+    return 5;
+  }
+  if (["困难", "复杂", "完整", "跑通", "hard", "d4"].some((term) => text.includes(term))) {
+    return 4;
+  }
+  if (["简单", "容易", "easy", "d1"].some((term) => text.includes(term))) {
+    return 1;
+  }
+  return 3;
 }
 
 async function readJsonFile(filePath) {
@@ -500,6 +514,7 @@ function summarizeExecution(executed) {
     period: result.period ?? result.distribution?.period ?? result.claim?.period ?? "",
     revenueClaimStatus: result.claim?.status ?? "",
     txHash: result.claim?.txHash ?? "",
+    claim: result.claim ?? null,
     phase: result.phase ?? "",
     repoDelivery: result.repoDelivery ?? null,
     repoWorker: result.repoWorker ?? null,
