@@ -450,7 +450,7 @@ function formatClaimRevenueReply(projectNo, result) {
     if (claim.status === "claimed") {
       return `项目 ${projectNo} 的收益领取已确认：${claim.txHash}。`;
     }
-    return `项目 ${projectNo} 的收益领取 txHash 已记录：${claim.txHash}，状态 ${claim.status ?? ""}。`;
+    return `项目 ${projectNo} 的收益领取 txHash 已记录：${claim.txHash}，当前状态 ${claim.status ?? ""}，我会等系统完成链上核验。`;
   }
   return [
     `项目 ${projectNo} 的收益可领取：${claim.amountMinor ?? 0} ${claim.token ?? ""}。`,

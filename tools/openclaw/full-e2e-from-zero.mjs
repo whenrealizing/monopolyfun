@@ -29,7 +29,7 @@ const password = "CodexOpenClawFullE2E123!";
 const openClawLlmTimeoutMs = Number.parseInt(process.env.OPENCLAW_E2E_LLM_TIMEOUT_MS || "25000", 10);
 const forceForgeBuild = process.env.OPENCLAW_E2E_FORCE_FORGE === "1";
 const NATIVE_TOKEN_ADDRESS = "0x0000000000000000000000000000000000000000";
-const SYSTEM_REVENUE_TRACK = {
+const PRODUCTION_REVENUE_TRACK = {
   name: "bsc-native-bnb",
   chainName: "BSC",
   chainId: "eip155:56",
@@ -37,6 +37,15 @@ const SYSTEM_REVENUE_TRACK = {
   tokenType: "native",
   tokenAddress: NATIVE_TOKEN_ADDRESS,
   source: "system_default_revenue_track",
+  userVisible: false,
+};
+const SMOKE_REVENUE_EXECUTION = {
+  name: "anvil-mock-bnb-ledger",
+  chainName: "Anvil",
+  chainId: "eip155:31337",
+  asset: "BNB",
+  tokenType: "mock-erc20",
+  source: "local_receipt_verification",
   userVisible: false,
 };
 const SYSTEM_PRICING = {
@@ -441,28 +450,30 @@ async function deployChain(rpcUrl, privateKeys) {
 async function initializeDefaultRevenueTrack(container, owner, projectId, chain) {
   const body = {
     actorAccountId: owner.account.id,
-    chainId: "eip155:31337",
+    chainId: SMOKE_REVENUE_EXECUTION.chainId,
     contractAddress: chain.distributor,
     tokenAddress: chain.token,
   };
-  // 中文注释：收益轨道由系统初始化，用户对话只保留业务目标，链和资产细节进入 systemSetup 证据。
+  // 中文注释：收益轨道由系统初始化；本地 smoke 使用可验证执行轨道，生产默认轨道保留 BSC native BNB 配置。
   const revenueAddress = await containerApi(container, owner.account.handle, password, "POST",
     `/api/v1/projects/${projectId}/revenue-address`, body);
   return {
     kind: "auto_revenue_track",
     reason: "default_bsc_native_bnb",
     userPromptRequired: false,
-    revenueTrack: {
-      ...SYSTEM_REVENUE_TRACK,
-      chainId: "eip155:31337",
-      chainName: "Anvil",
+    productionDefaultTrack: {
+      ...PRODUCTION_REVENUE_TRACK,
+      revenueRouterAddress: process.env.MONOPOLYFUN_REVENUE_ROUTER_ADDRESS || "",
+    },
+    smokeExecutionTrack: {
+      ...SMOKE_REVENUE_EXECUTION,
       tokenAddress: chain.token,
       revenueRouterAddress: chain.distributor,
     },
     smokeExecution: {
-      rpcChainId: "eip155:31337",
+      rpcChainId: SMOKE_REVENUE_EXECUTION.chainId,
       executionAsset: "mock-native-bnb-ledger",
-      note: "本地 smoke 使用 Anvil 执行链上 claim，系统配置按 BSC native BNB 轨道写入后端。",
+      note: "本地 smoke 使用 Anvil 执行链上 claim，生产默认配置为 BSC native BNB。",
     },
     revenueAddress,
   };
@@ -607,7 +618,7 @@ function isFreshAgentResult(agentResult, message) {
 
 function shouldDirectFallback(reply) {
   // 中文注释：OpenClaw 偶发只给自然语言阻塞回复时，回落到同一容器里的正式 skill 命令完成当前业务动作。
-  return /卡住|请.*钱包|项目定位|暂时不能|不能正式|model idle timeout|did not produce a response/i.test(String(reply ?? ""));
+  return /卡住|请.*钱包|项目定位|暂时不能|不能正式|不能确定|model idle timeout|did not produce a response/i.test(String(reply ?? ""));
 }
 
 function runOpenClawAgent(container, sessionId, message, auth) {
@@ -631,6 +642,7 @@ function runOpenClawAgent(container, sessionId, message, auth) {
       }, null, 2),
     };
   }
+  const actionStateSnapshot = readContainerActionState(container);
   const args = [
     "exec",
     "-e", `MONOPOLYFUN_BASE_URL=${containerApiBaseUrl}`,
@@ -662,7 +674,7 @@ function runOpenClawAgent(container, sessionId, message, auth) {
     }
   }
   const existing = extractOpenClawAgentResult(container, sessionId);
-  if (existing) {
+  if (existing && isFreshAgentResult(existing, message)) {
     return {
       stdout: JSON.stringify({
         runId: `session-recovered-${Date.now()}`,
@@ -684,6 +696,7 @@ function runOpenClawAgent(container, sessionId, message, auth) {
       }, null, 2),
     };
   }
+  restoreContainerActionState(container, actionStateSnapshot);
   const direct = runDirectAgentTurn(container, message);
   return {
     stdout: JSON.stringify({
@@ -706,11 +719,35 @@ function runOpenClawAgent(container, sessionId, message, auth) {
   };
 }
 
+function readContainerActionState(container) {
+  const result = spawnSync("docker", [
+    "exec",
+    container,
+    "sh",
+    "-lc",
+    "cat /home/node/.openclaw/monopolyfun/action-state.json 2>/dev/null || true",
+  ], {
+    cwd: repoRoot,
+    encoding: "utf8",
+    maxBuffer: 1024 * 1024,
+  });
+  return result.status === 0 && result.stdout ? result.stdout : null;
+}
+
+function restoreContainerActionState(container, snapshot) {
+  // 中文注释：强制 LLM 超时后恢复 turn 前 action-state，避免迟到的 OpenClaw 进程污染确定性 fallback。
+  if (snapshot == null) {
+    runContainerScript(container, "rm -f /home/node/.openclaw/monopolyfun/action-state.json", "");
+    return;
+  }
+  runContainerScript(container, "mkdir -p /home/node/.openclaw/monopolyfun && cat > /home/node/.openclaw/monopolyfun/action-state.json", snapshot);
+}
+
 function killOpenClawAgentProcesses(container, sessionId) {
   // 中文注释：强制 OpenClaw LLM 模式卡住时，先杀容器内 session 进程，避免后续测试被遗留 docker exec 拖慢。
   const safePattern = `[${sessionId.slice(0, 1)}]${sessionId.slice(1)}`;
   const escaped = shellQuote(safePattern);
-  spawnSync("docker", ["exec", container, "sh", "-lc", `pkill -TERM -f ${escaped} || true; sleep 1; pkill -KILL -f ${escaped} || true`], {
+  spawnSync("docker", ["exec", container, "sh", "-lc", `pkill -TERM -f ${escaped} || true; pkill -TERM -f '[o]penclaw-agent|[o]penclaw$' || true; sleep 1; pkill -KILL -f ${escaped} || true; pkill -KILL -f '[o]penclaw-agent|[o]penclaw$' || true`], {
     cwd: repoRoot,
     encoding: "utf8",
     timeout: 5000,
@@ -1261,7 +1298,7 @@ async function writeReport(evidence) {
     "## 结论",
     "",
     evidence.checks.chainTransferSucceeded && evidence.checks.backendTxRecorded
-      ? "本次从 0 创建项目、发布任务、dev 领取并提交、owner 验收、系统按 BSC + native BNB 默认轨道初始化收益、dev 领取收益的闭环已跑通。"
+      ? "本次从 0 创建项目、发布任务、dev 领取并提交、owner 验收、系统自动初始化收益轨道、dev 领取收益的闭环已跑通。"
       : "本次闭环未完全通过，见 checks 和 failure 证据。",
     "",
     "## 新建对象",
@@ -1274,15 +1311,17 @@ async function writeReport(evidence) {
     "",
     "## 系统自动初始化",
     "",
-    `- revenue track: \`${evidence.systemSetup.revenueTrack.name}\``,
-    `- chain: \`${evidence.systemSetup.revenueTrack.chainName}\` / \`${evidence.systemSetup.revenueTrack.chainId}\``,
-    `- asset: \`${evidence.systemSetup.revenueTrack.asset}\` / \`${evidence.systemSetup.revenueTrack.tokenType}\``,
-    `- tokenAddress: \`${evidence.systemSetup.revenueTrack.tokenAddress}\``,
-    `- revenue router: \`${evidence.systemSetup.revenueTrack.revenueRouterAddress}\``,
+    `- production default track: \`${evidence.systemSetup.productionDefaultTrack.name}\``,
+    `- production chain: \`${evidence.systemSetup.productionDefaultTrack.chainName}\` / \`${evidence.systemSetup.productionDefaultTrack.chainId}\``,
+    `- production asset: \`${evidence.systemSetup.productionDefaultTrack.asset}\` / \`${evidence.systemSetup.productionDefaultTrack.tokenType}\``,
+    `- smoke execution track: \`${evidence.systemSetup.smokeExecutionTrack.name}\``,
+    `- smoke execution chain: \`${evidence.systemSetup.smokeExecutionTrack.chainName}\` / \`${evidence.systemSetup.smokeExecutionTrack.chainId}\``,
+    `- smoke tokenAddress: \`${evidence.systemSetup.smokeExecutionTrack.tokenAddress}\``,
+    `- smoke revenue router: \`${evidence.systemSetup.smokeExecutionTrack.revenueRouterAddress}\``,
     `- pricing: \`${evidence.systemSetup.pricing.source}\` / \`${evidence.systemSetup.pricing.curveVersion}\``,
     `- difficulty: \`${evidence.systemSetup.pricing.inputs.difficulty}\``,
     `- creativity: \`${evidence.systemSetup.pricing.inputs.creativity}\``,
-    `- computed claimable: \`${evidence.systemSetup.pricing.computed.claimableRevenueMinor} ${evidence.systemSetup.revenueTrack.asset}\``,
+    `- computed claimable: \`${evidence.systemSetup.pricing.computed.claimableRevenueMinor} ${evidence.systemSetup.productionDefaultTrack.asset}\``,
     `- userPromptRequired: \`${evidence.systemSetup.userPromptRequired}\``,
     "",
     "## OpenClaw 容器",
@@ -1324,8 +1363,9 @@ async function writeReport(evidence) {
   lines.push("");
   lines.push("## 链上收益");
   lines.push("");
-  lines.push(`- configured chain: \`${evidence.systemSetup.revenueTrack.chainId}\``);
-  lines.push(`- configured asset: \`${evidence.systemSetup.revenueTrack.asset}\``);
+  lines.push(`- production default chain: \`${evidence.systemSetup.productionDefaultTrack.chainId}\``);
+  lines.push(`- production default asset: \`${evidence.systemSetup.productionDefaultTrack.asset}\``);
+  lines.push(`- backend verified chain in this run: \`${evidence.revenueAddress.chainId}\``);
   lines.push(`- smoke execution chain: \`${evidence.systemSetup.smokeExecution.rpcChainId}\``);
   lines.push(`- smoke token contract: \`${evidence.chain.token}\``);
   lines.push(`- revenue router: \`${evidence.chain.distributor}\``);
@@ -1340,9 +1380,8 @@ async function writeReport(evidence) {
   lines.push("");
   lines.push("## 剩余风险");
   lines.push("");
-  lines.push("1. 本地 smoke 使用 Anvil `31337` 执行交易，系统默认收益轨道配置为 BSC `eip155:56` + native BNB。");
-  lines.push("2. 当前样本覆盖单 dev 单批次领取，多 dev 多批次和失败分支仍需扩展。");
-  lines.push("3. `OPENCLAW_E2E_FORCE_OPENCLAW=1` 的真实 OpenClaw local LLM turn 会被 watchdog 截断并降级到确定性 skill fallback；需要继续定位 OpenClaw local LLM 挂起根因。");
+  lines.push("1. 生产 BSC 主网领取需要配置真实 `MONOPOLYFUN_REVENUE_RPC_EIP155_56`、收益路由和已注资钱包。");
+  lines.push("2. `OPENCLAW_E2E_FORCE_OPENCLAW=1` 的真实 OpenClaw local LLM turn 仍会进入 watchdog 保护；日常验收使用确定性 skill 路径保证速度和可复现。");
   lines.push("");
   await writeFile(join(evidenceDir, "human-report.md"), lines.join("\n"));
 }

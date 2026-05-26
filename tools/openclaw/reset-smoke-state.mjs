@@ -36,6 +36,7 @@ async function main() {
     const before = inspect(container);
     reset(container);
     killOpenClawAgents(container);
+    reset(container);
     const after = inspect(container);
     results.push({ container, before, after });
   }
@@ -72,7 +73,10 @@ function inspect(container) {
   const script = resetTargets
     .map((target) => {
       const escaped = shellQuote(target);
-      return `if [ -e ${escaped} ]; then printf '%s\\t%s\\n' ${escaped} "$(find ${escaped} -mindepth 1 | wc -l | tr -d ' ')"; else printf '%s\\t0\\n' ${escaped}; fi`;
+      const findArgs = target.endsWith("/tasks")
+        ? `${escaped} -mindepth 1 ! -name 'runs.sqlite' ! -name 'runs.sqlite-shm' ! -name 'runs.sqlite-wal'`
+        : `${escaped} -mindepth 1`;
+      return `if [ -e ${escaped} ]; then printf '%s\\t%s\\n' ${escaped} "$(find ${findArgs} | wc -l | tr -d ' ')"; else printf '%s\\t0\\n' ${escaped}; fi`;
     })
     .join("\n");
   const output = dockerExec(container, script);
@@ -101,7 +105,7 @@ function reset(container) {
 
 function killOpenClawAgents(container) {
   // 清理强制 LLM 模式遗留的 OpenClaw turn 进程，避免 reset 后进程继续回写 session 文件。
-  dockerExec(container, "pkill -TERM -f '[o]penclaw.mjs agent --local' || true; sleep 1; pkill -KILL -f '[o]penclaw.mjs agent --local' || true");
+  dockerExec(container, "pkill -TERM -f '[o]penclaw.mjs agent|[o]penclaw-agent|[o]penclaw$' || true; sleep 1; pkill -KILL -f '[o]penclaw.mjs agent|[o]penclaw-agent|[o]penclaw$' || true");
 }
 
 function dockerExec(container, script) {

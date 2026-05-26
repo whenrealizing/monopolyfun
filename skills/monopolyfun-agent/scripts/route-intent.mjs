@@ -215,7 +215,8 @@ function routeIntent(rawText, state) {
       period: extractPeriod(rawText),
       walletAddress: extractEthereumAddress(rawText, 0),
       txHash,
-      txConfirmed: Boolean(txHash),
+      // 中文注释：自然用户只是在回填交易号，claimed 必须由链上 receipt 校验流程单独推进。
+      txConfirmed: false,
     });
   }
   if (isCreateDistributionText(value)) {
