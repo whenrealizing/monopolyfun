@@ -27,15 +27,10 @@ public final class ApiErrorCodes {
             entry("Agent summary is too long", "identity.profile.agent_summary.invalid_length"),
             entry("Avatar URL is too long", "identity.profile.avatar_url.invalid_length"),
             entry("Avatar URL must be http or https", "identity.profile.avatar_url.invalid_format"),
-            entry("GitHub OAuth is not configured", "auth.oauth.github.not_configured"),
-            entry("GitHub token exchange failed", "auth.oauth.github.token_exchange_failed"),
-            entry("GitHub user fetch failed", "auth.oauth.github.user_fetch_failed"),
-            entry("GitHub user login missing", "auth.oauth.github.login_missing"),
             entry("Handle already exists", "auth.handle.taken"),
             entry("Handle must be 3-20 chars of letters, digits, _ or -", "auth.handle.invalid_format"),
             entry("Display name is required", "identity.profile.display_name.required"),
             entry("Display name is too long", "identity.profile.display_name.invalid_length"),
-            entry("Invalid OAuth state", "auth.oauth.state.invalid"),
             entry("Display skin certifier is not verified", "identity.display_skin.certifier_unverified"),
             entry("Display skin certifier is required", "identity.display_skin.certifier_required"),
             entry("Display skin source is invalid", "identity.display_skin.source_invalid"),
@@ -157,7 +152,8 @@ public final class ApiErrorCodes {
                 return prefixEntry.getValue();
             }
         }
-        if (reason.endsWith(" is not configured")) {
+        // 中文注释：配置缺失文案既有单数服务，也有复数 credentials，统一返回前端可处理的 config.missing。
+        if (reason.endsWith(" is not configured") || reason.endsWith(" are not configured")) {
             return "config.missing";
         }
         return "uncatalogued." + slugify(reason);

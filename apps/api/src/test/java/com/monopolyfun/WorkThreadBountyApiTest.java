@@ -15,6 +15,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.sql.Timestamp;
 import java.time.Instant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -75,8 +76,8 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                                   "taskValue": 5000,
                                   "bountyAmountMinor": 8000,
                                   "bountyToken": "USDC",
-                                  "repoRef": "github.com/org/app",
-                                  "issueUrl": "https://github.com/org/app/issues/1842"
+                                  "repoRef": "localhost:3001/org/app",
+                                  "issueUrl": "http://localhost:3001/org/app/issues/1842"
                                 }
                                 """))
                 .andExpect(status().isOk())
@@ -113,22 +114,38 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                         .content("""
                                 {
                                   "actorAccountId": "acct-dev",
-                                  "resultMarkdown": "---\\npacketType: work_result\\nworkThreadId: %s\\n---\\n# Result\\n\\n## Summary\\nFixed login error copy.\\n\\n## Evidence\\n- PR: https://github.com/org/app/pull/1842\\n- Test: pnpm test passed\\n\\n## Changed Files\\n- apps/web/login/page.tsx\\n- tests/login.spec.ts\\n",
+                                  "resultMarkdown": "---\\npacketType: work_result\\nworkThreadId: %s\\n---\\n# Result\\n\\n## Summary\\nFixed login error copy.\\n\\n## Evidence\\n- PR: http://localhost:3001/org/app/pulls/1842\\n- Test: pnpm test passed\\n\\n## Changed Files\\n- apps/web/login/page.tsx\\n- tests/login.spec.ts\\n",
                                   "runtime": "openclaw"
                                 }
                                 """.formatted(threadId)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("submitted"))
-                .andExpect(jsonPath("$.prUrl").value("https://github.com/org/app/pull/1842"));
+                .andExpect(jsonPath("$.prUrl").value("http://localhost:3001/org/app/pulls/1842"));
 
         mockMvc.perform(post("/api/v1/work-threads/" + threadId + "/review")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"reviewerAccountId":"acct-owner","decision":"accept","reason":"PR matches acceptance criteria"}
-                                """))
+                """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("settled"));
+        assertThat(jdbcTemplate.queryForObject("""
+                select count(*)
+                from contribution_ledger
+                where project_id = 'proj-1'
+                  and account_id = 'acct-dev'
+                  and source_type = 'work_thread'
+                  and contribution_role = 'assignee'
+                """, Integer.class)).isEqualTo(1);
+        assertThat(jdbcTemplate.queryForObject("""
+                select count(*)
+                from shares_ledger
+                where project_id = 'proj-1'
+                  and account_id = 'acct-dev'
+                  and source_type = 'work_thread'
+                  and reason::text = 'work_thread'
+                """, Integer.class)).isEqualTo(1);
 
         mockMvc.perform(post("/api/v1/work-threads/" + threadId + "/review")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
@@ -142,6 +159,14 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.workThreads[0].latestResult.status").value("accepted"));
+
+        mockMvc.perform(get("/api/v1/projects/MF260525PRJ000001X/commercialization")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-dev")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.contributionLedger[0].sourceType").value("work_thread"))
+                .andExpect(jsonPath("$.contributors[0].accountId").value("acct-dev"))
+                .andExpect(jsonPath("$.contributors[0].totalShares").value(5000))
+                .andExpect(jsonPath("$.currentDistribution.eligibleShareMinted").value(5000));
 
         mockMvc.perform(post("/api/v1/projects/proj-1/revenue-address")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-owner"))
@@ -165,7 +190,7 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.owner").value(false))
                 .andExpect(jsonPath("$.workThreads[0].status").value("settled"))
-                .andExpect(jsonPath("$.workThreads[0].latestResult.prUrl").value("https://github.com/org/app/pull/1842"))
+                .andExpect(jsonPath("$.workThreads[0].latestResult.prUrl").value("http://localhost:3001/org/app/pulls/1842"))
                 .andExpect(jsonPath("$.contributors[0].accountId").value("acct-dev"))
                 .andExpect(jsonPath("$.contributors[0].totalShares").value(5000))
                 .andExpect(jsonPath("$.distributions[0].myClaimableAmountMinor").value(100000));
@@ -352,7 +377,7 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                         .content("""
                                 {
                                   "actorAccountId": "%s",
-                                  "resultMarkdown": "---\\npacketType: work_result\\nworkThreadId: %s\\n---\\n# Result\\n\\n## Summary\\nImplemented requested change.\\n\\n## Evidence\\n- PR: https://github.com/org/app/pull/%s\\n- Test: pnpm test passed\\n\\n## Changed Files\\n- apps/web/page.tsx\\n",
+                                  "resultMarkdown": "---\\npacketType: work_result\\nworkThreadId: %s\\n---\\n# Result\\n\\n## Summary\\nImplemented requested change.\\n\\n## Evidence\\n- PR: http://localhost:3001/org/app/pulls/%s\\n- Test: pnpm test passed\\n\\n## Changed Files\\n- apps/web/page.tsx\\n",
                                   "runtime": "openclaw"
                                 }
                                 """.formatted(accountId, threadId, prNumber)))

@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 @Component
 public class WorkThreadMarkdown {
-    private static final Pattern GITHUB_PR = Pattern.compile("https://github\\.com/[^\\s)]+/pull/\\d+");
+    private static final Pattern GIT_PULL_REQUEST = Pattern.compile("https?://[^\\s)]+/(?:pull|pulls)/\\d+");
 
     public WorkThreadPacketView packet(ProjectEntity project, WorkThreadEntity thread) {
         String markdown = markdown(project, thread);
@@ -41,7 +41,7 @@ public class WorkThreadMarkdown {
         Map<String, String> frontmatter = frontmatter(value);
         String summary = section(value, "Summary");
         String evidence = section(value, "Evidence");
-        String prUrl = firstGithubPr(evidence);
+        String prUrl = firstGitPullRequest(evidence);
         String testSummary = firstPrefixedLine(evidence, "Test:");
         List<String> changedFiles = bulletSection(value, "Changed Files");
         return new ParsedResult(frontmatter, summary, prUrl, testSummary, changedFiles);
@@ -141,8 +141,8 @@ public class WorkThreadMarkdown {
         return List.copyOf(values);
     }
 
-    private static String firstGithubPr(String value) {
-        Matcher matcher = GITHUB_PR.matcher(value == null ? "" : value);
+    private static String firstGitPullRequest(String value) {
+        Matcher matcher = GIT_PULL_REQUEST.matcher(value == null ? "" : value);
         return matcher.find() ? matcher.group() : "";
     }
 

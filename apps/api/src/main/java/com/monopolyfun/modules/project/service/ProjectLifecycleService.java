@@ -171,16 +171,12 @@ public class ProjectLifecycleService {
                 .forEach(stats -> holders.merge(stats.accountId(), stats, HolderStats::merge));
         Instant activeAfter = now.minus(HOLDER_ACTIVE_WINDOW);
         return holders.values().stream()
-                .filter(stats -> accountRepository.findById(stats.accountId())
-                        .filter(account -> isActiveHolder(account, stats, activeAfter))
-                        .isPresent())
+                // 中文注释：owner 接力只认项目内真实贡献时间，避免账号资料更新把非贡献活跃误判为项目活跃。
+                .filter(stats -> accountRepository.findById(stats.accountId()).isPresent())
+                .filter(stats -> isAfterOrEqual(stats.lastShareAt(), activeAfter))
                 .sorted(Comparator.comparingInt(HolderStats::amount).reversed().thenComparing(HolderStats::lastShareAt, Comparator.reverseOrder()))
                 .map(HolderStats::accountId)
                 .findFirst();
-    }
-
-    private boolean isActiveHolder(AccountEntity account, HolderStats stats, Instant activeAfter) {
-        return isAfterOrEqual(account.updatedAt(), activeAfter) || isAfterOrEqual(stats.lastShareAt(), activeAfter);
     }
 
     private boolean isAfterOrEqual(Instant value, Instant floor) {

@@ -277,7 +277,7 @@ class ProjectPostItemWorkflowApiTest extends AbstractPostgresIntegrationTest {
                 .andExpect(jsonPath("$.project.repoProvider").value("github"))
                 .andExpect(jsonPath("$.project.repoOwner").value("whenrealizing"))
                 .andExpect(jsonPath("$.project.repoName").value("monopolyfun"))
-                .andExpect(jsonPath("$.project.defaultMaintenanceCommands[0]").value("gh repo view"))
+                .andExpect(jsonPath("$.project.defaultMaintenanceCommands[0]").value("git remote -v"))
                 .andExpect(jsonPath("$.project.maintenancePlaybook.taskTypes[0]").value("backlog_triage"))
                 .andExpect(jsonPath("$.project.projectNo").isNotEmpty())
                 .andExpect(jsonPath("$.project.resourceKey").doesNotExist())

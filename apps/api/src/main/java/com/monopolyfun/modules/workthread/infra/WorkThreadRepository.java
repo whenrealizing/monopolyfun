@@ -34,8 +34,6 @@ public interface WorkThreadRepository {
 
     List<ContributionEntryEntity> listContributionsByProject(String projectId);
 
-    void saveSharesLedgerEntry(ContributionEntryEntity contribution, int curveSlot);
-
     int countSettledContributionsByProject(String projectId);
 
     int sumSharesByProject(String projectId);

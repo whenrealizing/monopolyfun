@@ -22,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -246,16 +247,22 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
         dsl.query("""
                         insert into contribution_ledger (
                           id, project_id, work_thread_id, result_id, account_id, task_value, shares,
-                          bounty_amount_minor, bounty_token, status, created_at
+                          bounty_amount_minor, bounty_token, status, created_at,
+                          source_type, source_id, contribution_role, contribution_weight, metadata
                         )
-                        values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::timestamptz)
+                        values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::timestamptz, 'work_thread', ?, 'assignee', ?, ?::jsonb)
                         on conflict (work_thread_id, account_id) do update
                         set result_id = excluded.result_id,
                             task_value = excluded.task_value,
                             shares = excluded.shares,
                             bounty_amount_minor = excluded.bounty_amount_minor,
                             bounty_token = excluded.bounty_token,
-                            status = excluded.status
+                            status = excluded.status,
+                            source_type = excluded.source_type,
+                            source_id = excluded.source_id,
+                            contribution_role = excluded.contribution_role,
+                            contribution_weight = excluded.contribution_weight,
+                            metadata = excluded.metadata
                         """,
                 contribution.id(),
                 contribution.projectId(),
@@ -267,7 +274,10 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
                 contribution.bountyAmountMinor(),
                 contribution.bountyToken(),
                 contribution.status(),
-                PostgresJson.offsetDateTime(contribution.createdAt()))
+                PostgresJson.offsetDateTime(contribution.createdAt()),
+                contribution.workThreadId(),
+                contribution.taskValue(),
+                PostgresJson.jsonb(Map.of()).data())
                 .execute();
         return contribution;
     }
@@ -282,28 +292,6 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
                         order by created_at desc
                         """, projectId)
                 .fetch(this::mapContribution);
-    }
-
-    @Override
-    public void saveSharesLedgerEntry(ContributionEntryEntity contribution, int curveSlot) {
-        dsl.query("""
-                        insert into shares_ledger (
-                          id, source_type, source_id, issuer_type, issuer_id, market_id, order_id, proof_id,
-                          share_release_request_id, project_id, item_id, account_id, amount, curve_slot,
-                          reason, settlement_type_snapshot, created_at
-                        )
-                        values (?, 'work_thread', ?, 'project'::share_issuer_type, ?, null, null, null, null, ?, null, ?, ?, ?, 'work_order'::ledger_reason, 'shares'::settlement_type, ?::timestamptz)
-                        on conflict (source_type, source_id, account_id, reason) do nothing
-                        """,
-                "sl-work-thread-" + contribution.id(),
-                contribution.workThreadId(),
-                contribution.projectId(),
-                contribution.projectId(),
-                contribution.accountId(),
-                contribution.shares(),
-                curveSlot,
-                PostgresJson.offsetDateTime(contribution.createdAt()))
-                .execute();
     }
 
     @Override

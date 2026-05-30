@@ -512,6 +512,36 @@ export type ProjectCommercialization = {
         eligibleShareMinted: number;
         acceptedTaskCount: number;
     };
+    contributionLedger: ProjectContributionLedgerEntry[];
+    contributors: ProjectContributionMember[];
+};
+
+export type ProjectContributionLedgerEntry = {
+    id: string;
+    projectId: string;
+    sourceType: "order" | "work_thread" | "validation_reward" | string;
+    sourceId: string;
+    contributionRole: string;
+    accountId: string;
+    taskValue: number;
+    shares: number;
+    bountyAmountMinor: number;
+    bountyToken: string;
+    status: string;
+    contributionWeight: number;
+    metadata: JsonRecord;
+    createdAt?: string | null;
+};
+
+export type ProjectContributionMember = {
+    accountId: string;
+    totalShares: number;
+    totalTaskValue: number;
+    settledCount: number;
+    bountyAmountMinor: number;
+    bountyToken: string;
+    totalContributionWeight: number;
+    sourceCounts: Record<string, number>;
 };
 
 export type ProjectMemoryRoot = {

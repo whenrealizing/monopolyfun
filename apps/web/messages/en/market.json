@@ -89,7 +89,7 @@
         "archived": "Archived"
       },
       "owner": {
-        "githubVerified": "GitHub verified",
+        "verified": "Identity verified",
         "coreProject": "Core project"
       },
       "actions": {
@@ -330,6 +330,9 @@
     "commercialization": {
       "title": "Virtual Shares and contribution ledger",
       "description": "Results, reviews, Virtual Shares, and contribution records come from the same Project Ledger.",
+      "ledgerTitle": "Ledger entries",
+      "contributorsTitle": "Contributors",
+      "empty": "No settled contribution records yet.",
       "status": {
         "planned": "Planned",
         "active": "Active",
@@ -344,7 +347,21 @@
         "accepted": "Accepted",
         "virtualSharePool": "Virtual Share pool",
         "claimed": "Claimed",
-        "virtualShares": "Virtual Shares"
+        "virtualShares": "Virtual Shares",
+        "contributors": "contributors",
+        "ledgerEntries": "entries",
+        "weight": "Weight"
+      },
+      "sourceTypes": {
+        "order": "Accepted order",
+        "workThread": "Work Thread",
+        "validationReward": "Validation reward"
+      },
+      "roles": {
+        "assignee": "Assignee",
+        "proofSubmitter": "Proof submitter",
+        "proofValidator": "Proof validator",
+        "orderAssignee": "Order assignee"
       }
     },
     "team": {

@@ -18,17 +18,16 @@ import com.monopolyfun.modules.share.domain.ShareIssuerType;
 import com.monopolyfun.modules.share.domain.ShareReleaseRequestEntity;
 import com.monopolyfun.modules.share.domain.ShareReleaseRequestStatus;
 import com.monopolyfun.modules.share.domain.ShareSettlementHoldEntity;
-import com.monopolyfun.modules.share.domain.SharesLedgerEntryEntity;
 import com.monopolyfun.modules.share.infra.ShareReleaseApprovalRepository;
 import com.monopolyfun.modules.share.infra.ShareReleaseRequestRepository;
 import com.monopolyfun.modules.share.infra.ShareSettlementHoldRepository;
-import com.monopolyfun.modules.share.infra.SharesLedgerRepository;
 import com.monopolyfun.modules.work.service.ProjectWorkItemPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.EnumSet;
 import java.util.LinkedHashMap;
@@ -48,7 +47,7 @@ public class ShareReleaseService {
     private final ShareReleaseRequestRepository releaseRequestRepository;
     private final ShareReleaseApprovalRepository releaseApprovalRepository;
     private final ShareSettlementHoldRepository shareSettlementHoldRepository;
-    private final SharesLedgerRepository sharesLedgerRepository;
+    private final ProjectContributionSettlementService contributionSettlementService;
     private final MarketRepository marketRepository;
     private final OrderRepository orderRepository;
     private final OrderEventRepository orderEventRepository;
@@ -61,7 +60,7 @@ public class ShareReleaseService {
             ShareReleaseRequestRepository releaseRequestRepository,
             ShareReleaseApprovalRepository releaseApprovalRepository,
             ShareSettlementHoldRepository shareSettlementHoldRepository,
-            SharesLedgerRepository sharesLedgerRepository,
+            ProjectContributionSettlementService contributionSettlementService,
             MarketRepository marketRepository,
             OrderRepository orderRepository,
             OrderEventRepository orderEventRepository,
@@ -72,7 +71,7 @@ public class ShareReleaseService {
         this.releaseRequestRepository = releaseRequestRepository;
         this.releaseApprovalRepository = releaseApprovalRepository;
         this.shareSettlementHoldRepository = shareSettlementHoldRepository;
-        this.sharesLedgerRepository = sharesLedgerRepository;
+        this.contributionSettlementService = contributionSettlementService;
         this.marketRepository = marketRepository;
         this.orderRepository = orderRepository;
         this.orderEventRepository = orderEventRepository;
@@ -333,25 +332,33 @@ public class ShareReleaseService {
         if (!canMintResolvedRequest(order)) {
             return;
         }
-        SharesLedgerEntryEntity entry = new SharesLedgerEntryEntity(
-                "share-" + UUID.randomUUID(),
+        // 中文注释：Order 释放的份额同时沉淀为项目贡献事实，贡献榜和 owner 接力共用同一账本。
+        ProjectContributionSettlementService.ContributionSettlementResult settlement = contributionSettlementService.settle(new ProjectContributionSettlementService.ContributionCommand(
+                request.projectId(),
                 "order",
                 order.id(),
+                order.proofId(),
+                request.accountId(),
+                order.kind() == ListingKind.REVIEW ? "review_order" : "work_order",
+                Math.min(10000, Math.max(0, request.amount())),
+                request.amount(),
+                0,
+                "USDC",
+                order.kind() == ListingKind.REVIEW ? LedgerReason.REVIEW_ORDER : LedgerReason.WORK_ORDER,
+                order.settlementType(),
                 request.issuerType(),
                 request.issuerId(),
                 request.marketId(),
                 request.orderId(),
                 request.proofId(),
                 request.id(),
-                request.projectId(),
                 PostItemSupport.itemId(order.metadata(), order.listingId()),
-                request.accountId(),
-                request.amount(),
                 request.curveSlot(),
-                order.kind() == ListingKind.REVIEW ? LedgerReason.REVIEW_ORDER : LedgerReason.WORK_ORDER,
-                order.settlementType(),
-                Instant.now());
-        if (!sharesLedgerRepository.saveIfAbsent(entry)) {
+                BigDecimal.valueOf(request.amount()),
+                Map.of("orderNo", order.orderNo(), "shareReleaseRequestId", request.id()),
+                false,
+                Instant.now()));
+        if (!settlement.shareInserted()) {
             return;
         }
         shareSettlementHoldRepository.findByOrderId(order.id())
@@ -361,8 +368,8 @@ public class ShareReleaseService {
                 "shareReleaseRequestId", request.id(),
                 "issuerType", request.issuerType().code(),
                 "issuerId", request.issuerId(),
-                "amount", entry.amount(),
-                "curveSlot", entry.curveSlot()));
+                "amount", settlement.shareEntry().amount(),
+                "curveSlot", settlement.shareEntry().curveSlot()));
         advanceMarketCurve(order, request);
     }
 
