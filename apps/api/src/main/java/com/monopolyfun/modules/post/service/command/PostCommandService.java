@@ -1018,13 +1018,23 @@ public class PostCommandService {
             String host = uri.getHost() == null ? "" : uri.getHost().toLowerCase(Locale.ROOT);
             String[] parts = uri.getPath() == null ? new String[0] : uri.getPath().replaceFirst("^/+", "").split("/");
             if (parts.length >= 2 && !parts[0].isBlank() && !parts[1].isBlank()) {
-                // 中文注释：仓库维护事实源统一落到轻量 Git provider，项目交付链路只依赖通用仓库事实。
-                return new RepoReference("forgejo", parts[0], parts[1].replaceFirst("\\.git$", ""));
+                // 中文注释：仓库事实按 URL host 推导 provider，保证 GitHub 与轻量 Git 仓库都能进入统一项目维护元数据。
+                return new RepoReference(repositoryProvider(host), parts[0], parts[1].replaceFirst("\\.git$", ""));
             }
             return new RepoReference(host.isBlank() ? "external_git" : host, "", "");
         } catch (URISyntaxException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "referenceLinks must be valid URLs");
         }
+    }
+
+    private String repositoryProvider(String host) {
+        if (host == null || host.isBlank()) {
+            return "external_git";
+        }
+        if ("github.com".equals(host) || "www.github.com".equals(host)) {
+            return "github";
+        }
+        return "forgejo";
     }
 
     private void validateReferenceLink(String value) {

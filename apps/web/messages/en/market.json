@@ -361,7 +361,9 @@
         "assignee": "Assignee",
         "proofSubmitter": "Proof submitter",
         "proofValidator": "Proof validator",
-        "orderAssignee": "Order assignee"
+        "orderAssignee": "Order assignee",
+        "workOrder": "Work order",
+        "reviewOrder": "Review order"
       }
     },
     "team": {
