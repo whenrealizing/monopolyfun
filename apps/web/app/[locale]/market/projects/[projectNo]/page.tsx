@@ -290,6 +290,8 @@ export default async function ProjectDetailPage({params}: { params: Promise<{ pr
                         proof_submitter: t("commercialization.roles.proofSubmitter"),
                         proof_validator: t("commercialization.roles.proofValidator"),
                         order_assignee: t("commercialization.roles.orderAssignee"),
+                        work_order: t("commercialization.roles.workOrder"),
+                        review_order: t("commercialization.roles.reviewOrder"),
                     },
                 }}
             />

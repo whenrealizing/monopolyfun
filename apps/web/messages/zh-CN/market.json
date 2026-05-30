@@ -361,7 +361,9 @@
         "assignee": "执行者",
         "proofSubmitter": "证明提交者",
         "proofValidator": "证明验证者",
-        "orderAssignee": "订单执行者"
+        "orderAssignee": "订单执行者",
+        "workOrder": "工作订单",
+        "reviewOrder": "评审订单"
       }
     },
     "team": {
