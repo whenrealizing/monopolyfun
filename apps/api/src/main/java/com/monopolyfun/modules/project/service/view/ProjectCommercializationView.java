@@ -2,7 +2,10 @@ package com.monopolyfun.modules.project.service.view;
 
 import com.monopolyfun.modules.share.service.view.ProjectSharesView;
 
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 public record ProjectCommercializationView(
         String projectNo,
@@ -13,7 +16,9 @@ public record ProjectCommercializationView(
         ProofStatsView proofStats,
         ProjectSharesView sharePool,
         RevenuePoolView revenuePool,
-        DistributionEpochView currentDistribution
+        DistributionEpochView currentDistribution,
+        List<ContributionLedgerEntryView> contributionLedger,
+        List<ContributionMemberView> contributors
 ) {
     public record DirectionCardView(
             String directionId,
@@ -56,6 +61,36 @@ public record ProjectCommercializationView(
             int totalRevenueMinor,
             int eligibleShareMinted,
             int acceptedTaskCount
+    ) {
+    }
+
+    public record ContributionLedgerEntryView(
+            String id,
+            String projectId,
+            String sourceType,
+            String sourceId,
+            String contributionRole,
+            String accountId,
+            int taskValue,
+            int shares,
+            int bountyAmountMinor,
+            String bountyToken,
+            String status,
+            BigDecimal contributionWeight,
+            Map<String, Object> metadata,
+            Instant createdAt
+    ) {
+    }
+
+    public record ContributionMemberView(
+            String accountId,
+            int totalShares,
+            int totalTaskValue,
+            int settledCount,
+            int bountyAmountMinor,
+            String bountyToken,
+            BigDecimal totalContributionWeight,
+            Map<String, Integer> sourceCounts
     ) {
     }
 }

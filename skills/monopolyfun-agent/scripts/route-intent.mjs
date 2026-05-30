@@ -180,7 +180,9 @@ function routeIntent(rawText, state) {
       goal: extractGoal(rawText) || rawText,
       deliverables: extractListAfter(rawText, ["交付物", "deliverables"]) || ["PR 或执行报告", "测试摘要", "收益领取证据"],
       acceptanceCriteria: extractListAfter(rawText, ["验收标准", "acceptance"]) || ["结果可以复核", "收益领取证据可以读回"],
-      taskValue: extractIntegerAfter(rawText, ["taskValue", "价值", "权重"]) ?? 5000,
+      taskValue: extractIntegerAfter(rawText, ["taskValue", "价值", "权重"]) ?? 0,
+      difficulty: inferDifficulty(rawText),
+      creativity: inferCreativity(rawText),
       bountyAmountMinor: extractIntegerAfter(rawText, ["bountyAmountMinor", "赏金", "bounty"]) ?? 0,
       bountyToken: extractToken(rawText) || "BNB",
       repoRef: extractRepoRef(rawText),
@@ -224,7 +226,7 @@ function routeIntent(rawText, state) {
       projectNo,
       projectQuery,
       period: extractPeriod(rawText),
-      totalRevenueMinor: extractIntegerAfter(rawText, ["totalRevenueMinor", "收入", "收益", "revenue", "amount"]) ?? extractFirstInteger(rawText),
+      totalRevenueMinor: extractIntegerAfter(rawText, ["totalRevenueMinor", "收入", "收益", "revenue", "amount"]) ?? undefined,
     });
   }
   if (matchAny(value, ["开始", "领取", "开工", "claim", "接任务", "接一个", "想接", "分给我"])) {
@@ -563,6 +565,28 @@ function inferWorkThreadDecision(value) {
     return "reject";
   }
   return "accept";
+}
+
+function inferDifficulty(text) {
+  const value = String(text ?? "").toLowerCase();
+  if (matchAny(value, ["专家", "极难", "非常难", "expert", "d5"])) {
+    return "expert";
+  }
+  if (matchAny(value, ["困难", "复杂", "高难", "hard", "d4", "跑通", "完整"])) {
+    return "hard";
+  }
+  if (matchAny(value, ["简单", "容易", "easy", "d1"])) {
+    return "easy";
+  }
+  return "medium";
+}
+
+function inferCreativity(text) {
+  const value = String(text ?? "").toLowerCase();
+  if (matchAny(value, ["创新", "创意", "探索", "新方案", "creative", "exploratory"])) {
+    return "creative";
+  }
+  return "standard";
 }
 
 function extractAccount(text) {

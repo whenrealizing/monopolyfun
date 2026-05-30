@@ -13,7 +13,6 @@ import {
   getProjectWorkroom,
   reviewWorkThread,
   submitWorkThreadResult,
-  upsertProjectRevenueAddress,
   type WorkThread,
   type WorkThreadOverview,
 } from "@/lib/api";
@@ -46,7 +45,9 @@ export function ProjectWorkroomPanel({projectNo, initialOverview, initialLoadFai
     goal: "",
     deliverables: "PR link\nTest summary\nChanged files",
     acceptanceCriteria: "PR merged or ready for review\nTests pass\nScope matches task",
-    taskValue: "3000",
+    difficulty: "hard",
+    creativity: "creative",
+    taskValue: "",
     bountyAmountMinor: "0",
     bountyToken: "USDC",
     repoRef: "",
@@ -54,7 +55,6 @@ export function ProjectWorkroomPanel({projectNo, initialOverview, initialLoadFai
   });
   const [resultDrafts, setResultDrafts] = useState<DraftMap>({});
   const [reviewDrafts, setReviewDrafts] = useState<DraftMap>({});
-  const [revenueDraft, setRevenueDraft] = useState({chainId: "8453", contractAddress: "", tokenAddress: ""});
   const [distributionDraft, setDistributionDraft] = useState({period: currentPeriod(), totalRevenueMinor: ""});
   const [walletDrafts, setWalletDrafts] = useState<DraftMap>({});
 
@@ -89,10 +89,10 @@ export function ProjectWorkroomPanel({projectNo, initialOverview, initialLoadFai
   }, [load, session]);
 
   function createThread() {
-    const taskValue = Number(createDraft.taskValue);
+    const taskValue = createDraft.taskValue.trim() ? Number(createDraft.taskValue) : 0;
     const bountyAmountMinor = createDraft.bountyAmountMinor.trim() ? Number(createDraft.bountyAmountMinor) : 0;
-    if (!createDraft.title.trim() || !createDraft.goal.trim() || !Number.isFinite(taskValue) || taskValue < 1 || taskValue > 10000) {
-      toast.notify({tone: "error", title: "请填写标题、目标和 1-10000 的任务价值。"});
+    if (!createDraft.title.trim() || !createDraft.goal.trim() || !Number.isFinite(taskValue) || taskValue < 0 || taskValue > 10000) {
+      toast.notify({tone: "error", title: "请填写标题、目标，系统估值上限为 10000。"});
       return;
     }
     if (!Number.isInteger(bountyAmountMinor) || bountyAmountMinor < 0) {
@@ -107,6 +107,8 @@ export function ProjectWorkroomPanel({projectNo, initialOverview, initialLoadFai
           deliverables: lines(createDraft.deliverables),
           acceptanceCriteria: lines(createDraft.acceptanceCriteria),
           taskValue,
+          difficulty: createDraft.difficulty,
+          creativity: createDraft.creativity,
           bountyAmountMinor,
           bountyToken: createDraft.bountyToken.trim() || "USDC",
           repoRef: createDraft.repoRef.trim() || undefined,
@@ -173,22 +175,10 @@ export function ProjectWorkroomPanel({projectNo, initialOverview, initialLoadFai
     });
   }
 
-  function saveRevenueAddress() {
-    startTransition(async () => {
-      try {
-        await upsertProjectRevenueAddress(projectNo, revenueDraft);
-        await load();
-        toast.notify({tone: "success", title: "收款地址已保存"});
-      } catch (error) {
-        toast.notifyError(error, "ui.agent.action.failed");
-      }
-    });
-  }
-
   function createDistribution() {
-    const amount = Number(distributionDraft.totalRevenueMinor);
-    if (!distributionDraft.period.trim() || !Number.isFinite(amount) || amount <= 0) {
-      toast.notify({tone: "error", title: "请填写周期和收入金额。"});
+    const amount = distributionDraft.totalRevenueMinor.trim() ? Number(distributionDraft.totalRevenueMinor) : undefined;
+    if (!distributionDraft.period.trim() || (amount !== undefined && (!Number.isFinite(amount) || amount <= 0))) {
+      toast.notify({tone: "error", title: "请填写周期，覆盖金额需为正数。"});
       return;
     }
     startTransition(async () => {
@@ -205,13 +195,15 @@ export function ProjectWorkroomPanel({projectNo, initialOverview, initialLoadFai
 
   function claimRevenue(period: string) {
     const draft = walletDrafts[period] ?? {};
-    if (!draft.walletAddress?.trim()) {
-      toast.notify({tone: "error", title: "请填写领取钱包。"});
+    const walletAddress = draft.walletAddress?.trim();
+    const txHash = draft.txHash?.trim();
+    if (!walletAddress && !txHash) {
+      toast.notify({tone: "error", title: "请填写领取钱包或 Tx Hash。"});
       return;
     }
     startTransition(async () => {
       try {
-        await claimDistribution(projectNo, period, {walletAddress: draft.walletAddress.trim(), txHash: draft.txHash?.trim() || undefined});
+        await claimDistribution(projectNo, period, {walletAddress: walletAddress || undefined, txHash: txHash || undefined});
         await load();
         toast.notify({tone: "success", title: "Claim 已生成"});
       } catch (error) {
@@ -230,6 +222,7 @@ export function ProjectWorkroomPanel({projectNo, initialOverview, initialLoadFai
 
   const threads = overview?.workThreads ?? [];
   const owner = Boolean(overview?.owner);
+  const revenueAutomation = overview?.revenueAutomation;
 
   return (
     <section className="space-y-4">
@@ -255,16 +248,39 @@ export function ProjectWorkroomPanel({projectNo, initialOverview, initialLoadFai
       ) : null}
 
       {owner ? (
-        <Panel title="发布 GitHub Bounty" icon={<ClipboardList className="h-4 w-4" />}>
+        <Panel title="发布任务" icon={<ClipboardList className="h-4 w-4" />}>
           <div className="grid gap-3 lg:grid-cols-2">
             <Field label="任务标题" value={createDraft.title} onChange={(value) => setCreateDraft((current) => ({...current, title: value}))} />
-            <Field label="Task Value 1-10000" value={createDraft.taskValue} onChange={(value) => setCreateDraft((current) => ({...current, taskValue: value}))} />
+            <div className="grid gap-3 sm:grid-cols-2">
+              <SelectField
+                label="任务难度"
+                value={createDraft.difficulty}
+                options={[
+                  ["medium", "中等"],
+                  ["hard", "困难"],
+                  ["expert", "专家"],
+                  ["easy", "简单"],
+                ]}
+                onChange={(value) => setCreateDraft((current) => ({...current, difficulty: value}))}
+              />
+              <SelectField
+                label="创意度"
+                value={createDraft.creativity}
+                options={[
+                  ["standard", "常规"],
+                  ["creative", "有创意"],
+                  ["exploratory", "探索型"],
+                ]}
+                onChange={(value) => setCreateDraft((current) => ({...current, creativity: value}))}
+              />
+            </div>
             <TextField label="目标" value={createDraft.goal} onChange={(value) => setCreateDraft((current) => ({...current, goal: value}))} />
             <TextField label="交付物" value={createDraft.deliverables} onChange={(value) => setCreateDraft((current) => ({...current, deliverables: value}))} />
             <TextField label="验收标准" value={createDraft.acceptanceCriteria} onChange={(value) => setCreateDraft((current) => ({...current, acceptanceCriteria: value}))} />
             <div className="grid gap-3">
               <Field label="Repo Ref" value={createDraft.repoRef} onChange={(value) => setCreateDraft((current) => ({...current, repoRef: value}))} />
               <Field label="Issue URL" value={createDraft.issueUrl} onChange={(value) => setCreateDraft((current) => ({...current, issueUrl: value}))} />
+              <Field label="估值覆盖 1-10000" value={createDraft.taskValue} onChange={(value) => setCreateDraft((current) => ({...current, taskValue: value}))} />
               <Field label="Bounty Minor" value={createDraft.bountyAmountMinor} onChange={(value) => setCreateDraft((current) => ({...current, bountyAmountMinor: value}))} />
             </div>
           </div>
@@ -305,25 +321,25 @@ export function ProjectWorkroomPanel({projectNo, initialOverview, initialLoadFai
           <div className="grid gap-2 md:grid-cols-3">
             <Metric label="Claimable" value={formatMinor(overview?.myRewards.claimableAmountMinor ?? 0, overview?.myRewards.claimableToken ?? "USDC")} />
             <Metric label="Bounty" value={formatMinor(overview?.myRewards.bountyAmountMinor ?? 0, overview?.myRewards.bountyToken ?? "USDC")} />
-            <Metric label="收款地址" value={overview?.revenueAddress?.contractAddress ? shortAddress(overview.revenueAddress.contractAddress) : "待设置"} />
+            <Metric label="收益轨道" value={revenueAutomation?.configured ? `${revenueAutomation.chainName} ${revenueAutomation.asset}` : "平台配置中"} />
           </div>
 
           {owner ? (
             <div className="mt-4 grid gap-3 lg:grid-cols-2">
               <div className="rounded-[8px] bg-[var(--surface-control)] p-3">
-                <div className="text-xs font-semibold text-[var(--foreground)]">项目收款地址</div>
-                <div className="mt-3 grid gap-2">
-                  <Field label="Chain ID" value={revenueDraft.chainId} onChange={(value) => setRevenueDraft((current) => ({...current, chainId: value}))} />
-                  <Field label="收款地址" value={revenueDraft.contractAddress} onChange={(value) => setRevenueDraft((current) => ({...current, contractAddress: value}))} />
-                  <Field label="Token Address" value={revenueDraft.tokenAddress} onChange={(value) => setRevenueDraft((current) => ({...current, tokenAddress: value}))} />
-                  <Button size="sm" onClick={saveRevenueAddress} loading={isPending}>保存地址</Button>
+                <div className="text-xs font-semibold text-[var(--foreground)]">系统收益轨道</div>
+                <div className="mt-3 grid gap-2 text-xs text-[var(--muted-foreground)]">
+                  <span>{revenueAutomation ? `${revenueAutomation.chainName} · ${revenueAutomation.chainId}` : "读取中"}</span>
+                  <span>资产 {revenueAutomation?.asset ?? "BNB"} · {revenueAutomation?.tokenType ?? "native"}</span>
+                  <span>收款 {overview?.revenueAddress?.contractAddress ? shortAddress(overview.revenueAddress.contractAddress) : "系统自动初始化"}</span>
+                  <span>下个周期预估 {formatMinor(revenueAutomation?.nextDistributionRevenueMinor ?? 0, revenueAutomation?.asset ?? "BNB")}</span>
                 </div>
               </div>
               <div className="rounded-[8px] bg-[var(--surface-control)] p-3">
                 <div className="text-xs font-semibold text-[var(--foreground)]">发布分红批次</div>
                 <div className="mt-3 grid gap-2">
                   <Field label="Period" value={distributionDraft.period} onChange={(value) => setDistributionDraft((current) => ({...current, period: value}))} />
-                  <Field label="Revenue Minor" value={distributionDraft.totalRevenueMinor} onChange={(value) => setDistributionDraft((current) => ({...current, totalRevenueMinor: value}))} />
+                  <Field label="金额覆盖" value={distributionDraft.totalRevenueMinor} onChange={(value) => setDistributionDraft((current) => ({...current, totalRevenueMinor: value}))} />
                   <Button size="sm" onClick={createDistribution} loading={isPending}>发布分红</Button>
                 </div>
               </div>
@@ -517,6 +533,28 @@ function Field({label, value, onChange}: { label: string; value: string; onChang
         onChange={(event) => onChange(event.target.value)}
         className="h-10 rounded-[8px] border border-[var(--border)] bg-[var(--background)] px-3 text-sm font-normal text-[var(--foreground)] outline-none focus:ring-2 focus:ring-[var(--ring)]"
       />
+    </label>
+  );
+}
+
+function SelectField({label, value, options, onChange}: {
+  label: string;
+  value: string;
+  options: Array<[string, string]>;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="grid gap-1 text-xs font-semibold text-[var(--muted-foreground)]">
+      {label}
+      <select
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="h-10 rounded-[8px] border border-[var(--border)] bg-[var(--background)] px-3 text-sm font-normal text-[var(--foreground)] outline-none focus:ring-2 focus:ring-[var(--ring)]"
+      >
+        {options.map(([optionValue, labelText]) => (
+          <option key={optionValue} value={optionValue}>{labelText}</option>
+        ))}
+      </select>
     </label>
   );
 }

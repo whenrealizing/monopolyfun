@@ -31,5 +31,7 @@ abstract class AbstractPostgresIntegrationTest {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
+        // 中文注释：数字库存测试需要稳定加密密钥，避免本地环境变量缺失导致集成测试初始化失败。
+        registry.add("monopolyfun.digital-inventory.encryption-secret", () -> "monopolyfun-test-digital-inventory-secret");
     }
 }

@@ -45,6 +45,7 @@ import com.monopolyfun.modules.risk.service.RiskAction;
 import com.monopolyfun.modules.share.domain.SettlementType;
 import com.monopolyfun.modules.share.service.ProjectSharePoolService;
 import com.monopolyfun.modules.work.infra.WorkRepository;
+import com.monopolyfun.modules.workthread.service.RevenueAutomationService;
 import com.monopolyfun.platform.agent.openapi.AgentCapabilityResolver;
 import com.monopolyfun.platform.agent.openapi.AgentResourceKeyFactory;
 import com.monopolyfun.platform.command.CommandContext;
@@ -83,10 +84,10 @@ public class PostCommandService {
     private static final int MAX_PROJECT_REFERENCE_LINKS = 5;
     private static final String PROJECT_MAINTENANCE_MODE_REPO_FIRST = "repo_first";
     private static final List<String> PROJECT_REPO_MAINTENANCE_COMMANDS = List.of(
-            "gh repo view",
-            "gh issue list",
-            "gh pr list",
-            "gh workflow list");
+            "git remote -v",
+            "git branch --show-current",
+            "git log --oneline -5",
+            "git status --short");
     private static final Map<String, Object> PROJECT_REPO_MAINTENANCE_PLAYBOOK = Map.of(
             "taskTypes", List.of("backlog_triage", "pr_review", "workflow_health", "release_sync"),
             "evidenceTypes", List.of("issue_url", "pr_url", "commit_url", "workflow_run_url", "release_url"));
@@ -115,6 +116,7 @@ public class PostCommandService {
     private final AgentCapabilityResolver agentCapabilityResolver;
     private final AgentResourceKeyFactory agentResourceKeyFactory;
     private final InitiativeService initiativeService;
+    private final RevenueAutomationService revenueAutomationService;
 
     public PostCommandService(
             AccountRepository accountRepository,
@@ -136,7 +138,8 @@ public class PostCommandService {
             WorkRepository workRepository,
             AgentCapabilityResolver agentCapabilityResolver,
             AgentResourceKeyFactory agentResourceKeyFactory,
-            InitiativeService initiativeService) {
+            InitiativeService initiativeService,
+            RevenueAutomationService revenueAutomationService) {
         this.accountRepository = accountRepository;
         this.offerRepository = offerRepository;
         this.requestPostRepository = requestPostRepository;
@@ -157,6 +160,7 @@ public class PostCommandService {
         this.agentCapabilityResolver = agentCapabilityResolver;
         this.agentResourceKeyFactory = agentResourceKeyFactory;
         this.initiativeService = initiativeService;
+        this.revenueAutomationService = revenueAutomationService;
     }
 
     public OfferCreateResponse createOffer(PublishOfferRequest request) {
@@ -345,6 +349,8 @@ public class PostCommandService {
                 now);
         commandKernel.execute(new CommandMetadata("publish_project", "project", project.projectNo()), context -> {
             projectRepository.save(project);
+            // 中文注释：项目创建时绑定系统默认收益轨道，真实用户无需理解链、合约和 token 字段。
+            revenueAutomationService.ensureSystemRevenueTrack(project, context.startedAt());
             String marketGoal = metadata.get("goal") == null ? project.summary() : String.valueOf(metadata.get("goal")).trim();
             // 中文注释：project 创建后立刻生成 1:1 market，并初始化 1000 万总份额与 curve 参数，后续 item 直接挂到这个市场里。
             MarketEntity market = new MarketEntity(
@@ -372,8 +378,6 @@ public class PostCommandService {
             initiativeService.generateProjectRecommendations(project.projectNo());
             return new CommandResult(project.projectNo(), "project_created", Map.of("projectNo", project.projectNo()), List.of());
         });
-        // 中文注释：Project 创建完成后立即生成 owner 下一步推荐，保证 agent 与 workbench 都有可执行入口。
-        initiativeService.generateProjectRecommendations(project.projectNo());
         ProjectView view = com.monopolyfun.modules.project.service.mapper.ProjectViewMapper.project(project, List.of());
         if (includeAgent) {
             // 中文注释：普通 Project 创建后开放市场任务能力，角色任命集中到 Root Project。
@@ -1013,13 +1017,24 @@ public class PostCommandService {
             URI uri = new URI(value);
             String host = uri.getHost() == null ? "" : uri.getHost().toLowerCase(Locale.ROOT);
             String[] parts = uri.getPath() == null ? new String[0] : uri.getPath().replaceFirst("^/+", "").split("/");
-            if (host.equals("github.com") && parts.length >= 2 && !parts[0].isBlank() && !parts[1].isBlank()) {
-                return new RepoReference("github", parts[0], parts[1].replaceFirst("\\.git$", ""));
+            if (parts.length >= 2 && !parts[0].isBlank() && !parts[1].isBlank()) {
+                // 中文注释：仓库事实按 URL host 推导 provider，保证 GitHub 与轻量 Git 仓库都能进入统一项目维护元数据。
+                return new RepoReference(repositoryProvider(host), parts[0], parts[1].replaceFirst("\\.git$", ""));
             }
             return new RepoReference(host.isBlank() ? "external_git" : host, "", "");
         } catch (URISyntaxException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "referenceLinks must be valid URLs");
         }
+    }
+
+    private String repositoryProvider(String host) {
+        if (host == null || host.isBlank()) {
+            return "external_git";
+        }
+        if ("github.com".equals(host) || "www.github.com".equals(host)) {
+            return "github";
+        }
+        return "forgejo";
     }
 
     private void validateReferenceLink(String value) {

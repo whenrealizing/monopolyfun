@@ -97,7 +97,6 @@ public class ProjectMemoryService {
 
     public ProjectMemoryRootView syncRepo(String projectNo, ProjectMemoryRepoSyncRequest request, String actorAccountId) {
         String projectId = requireProjectId(projectNo);
-        requireRootProjectMaintenance(projectId);
         authorityService.requireProjectCapability(actorAccountId, projectId, ProjectCapability.PROJECT_MANAGE);
         ProjectRepoBindingEntity binding = resolveBinding(projectId, request.repoBindingId());
         String commitSha = blank(request.commitSha()) ? "manual-" + Instant.now().toEpochMilli() : normalizeText(request.commitSha(), "commitSha", 80);
@@ -123,7 +122,6 @@ public class ProjectMemoryService {
 
     public ProjectMemorySourceView createSource(String projectNo, ProjectMemorySourceRequest request, String actorAccountId) {
         String projectId = requireProjectId(projectNo);
-        requireRootProjectMaintenance(projectId);
         requireProjectAccess(projectId, actorAccountId);
         ProjectMemorySourceEntity source = saveSource(projectId, null, request, actorAccountId, "manual_source");
         ProjectMemorySyncEventEntity event = memoryRepository.saveEvent(projectId, null, "source_review_ready", "pending", "New project memory source requires team review", Map.of(
@@ -161,7 +159,6 @@ public class ProjectMemoryService {
 
     public ProjectMemoryEntryView createEntry(String projectNo, ProjectMemoryEntryRequest request, String actorAccountId) {
         String projectId = requireProjectId(projectNo);
-        requireRootProjectMaintenance(projectId);
         requireProjectAccess(projectId, actorAccountId);
         ProjectMemoryEntryEntity entry = buildEntry(projectId, null, request, "proposed", actorAccountId, null, null);
         ProjectMemoryEntryEntity saved = memoryRepository.saveEntry(entry);
@@ -270,7 +267,7 @@ public class ProjectMemoryService {
     private Map<String, Object> toolContractsPayload(ProjectEntity project) {
         return Map.of(
                 "entryModes", List.of("ui", "api"),
-                "proofTypes", List.of("github_pr", "deployment_url", "doc", "sheet", "metric_snapshot", "url"),
+                "proofTypes", List.of("git_pr", "deployment_url", "doc", "sheet", "metric_snapshot", "url"),
                 "validationLaunchesUrl", "/api/v1/projects/" + project.projectNo() + "/launches",
                 "validationFeedbackUrl", "/api/v1/projects/" + project.projectNo() + "/validation-feedback",
                 "sourceContractUrl", "/api/v1/projects/" + project.projectNo() + "/memory/source-contract",
@@ -403,20 +400,10 @@ public class ProjectMemoryService {
     }
 
     private void requireMemoryApproval(String projectId, String actorAccountId) {
-        requireRootProjectMaintenance(projectId);
         boolean allowed = authorityService.hasProjectCapability(actorAccountId, projectId, ProjectCapability.PROJECT_MANAGE)
                 || authorityService.hasProjectCapability(actorAccountId, projectId, ProjectCapability.PROOF_TECH_REVIEW);
         if (!allowed) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Project memory approval requires project manage or proof review authority");
-        }
-    }
-
-    private void requireRootProjectMaintenance(String projectId) {
-        ProjectEntity project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
-        if (!com.monopolyfun.modules.project.service.RootProjectService.ROOT_PROJECT_ID.equals(project.id())
-                && !com.monopolyfun.modules.project.service.RootProjectService.ROOT_PROJECT_NO.equals(project.projectNo())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Project memory maintenance is a Root Project operation");
         }
     }
 

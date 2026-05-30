@@ -83,9 +83,9 @@ async function main() {
 
     buildContractsIfNeeded();
     await startPostgres();
-    await startApi();
     const anvil = await startAnvil();
     const chain = await deployChain(anvil.rpcUrl, anvil.privateKeys);
+    await startApi(chain);
 
     const api = new ApiClient(apiBaseUrl);
     const suffixValue = suffix();
@@ -137,7 +137,7 @@ async function main() {
     const projectId = projectAction.executed?.state?.projectId || projectAction.executed?.projectId || await readProjectIdFromDashboard(ownerContainer, owner.account.handle, projectNo);
     const project = await containerApi(ownerContainer, owner.account.handle, password, "GET", `/api/v1/projects/${projectNo}`, {});
 
-    const systemSetup = await initializeDefaultRevenueTrack(ownerContainer, owner, projectId, chain);
+    const systemSetup = await readSystemRevenueTrack(ownerContainer, owner, projectId, chain);
     const revenueAddress = systemSetup.revenueAddress;
 
     turns.push(await openclawTurn(ownerContainer, "owner-05", await llmUtterance(llmUtterances, {
@@ -185,12 +185,11 @@ async function main() {
       state: { wallet: chain.member },
       fallback: `我现在能领钱了吗？我的钱包是 ${chain.member}。`,
     }), dev));
-    requireOpenClawAction(turns.at(-1), "claim-revenue");
-    const initialClaim = await containerApi(devContainer, dev.account.handle, password, "POST",
-      `/api/v1/projects/${projectId}/distributions/${period}/claim`, {
-        actorAccountId: dev.account.id,
-        walletAddress: chain.member,
-      });
+    const claimRevenueAction = requireOpenClawAction(turns.at(-1), "claim-revenue");
+    const initialClaim = claimRevenueAction.executed?.claim;
+    if (!initialClaim?.proof || initialClaim.amountMinor <= 0) {
+      throw new Error(`OpenClaw claim-revenue did not return claim proof: ${JSON.stringify(claimRevenueAction.executed)}`);
+    }
     const chainClaim = await executeClaim(chain, batch, initialClaim);
 
     turns.push(await openclawTurn(devContainer, "dev-04", await llmUtterance(llmUtterances, {
@@ -320,7 +319,7 @@ async function startPostgres() {
   }, "postgres ready");
 }
 
-async function startApi() {
+async function startApi(chain) {
   const log = createWriteStream(join(evidenceDir, "api.log"), { flags: "a" });
   const env = {
     ...process.env,
@@ -330,6 +329,12 @@ async function startApi() {
     PAYMENT_PROVIDER: "fake",
     UPLOAD_PROVIDER: "fake",
     MONOPOLYFUN_SCHEDULER_ENABLED: "false",
+    MONOPOLYFUN_REVENUE_CHAIN_ID: SMOKE_REVENUE_EXECUTION.chainId,
+    MONOPOLYFUN_REVENUE_CHAIN_NAME: SMOKE_REVENUE_EXECUTION.chainName,
+    MONOPOLYFUN_REVENUE_ASSET: SMOKE_REVENUE_EXECUTION.asset,
+    MONOPOLYFUN_REVENUE_TOKEN_TYPE: SMOKE_REVENUE_EXECUTION.tokenType,
+    MONOPOLYFUN_REVENUE_TOKEN_ADDRESS: chain.token,
+    MONOPOLYFUN_REVENUE_ROUTER_ADDRESS: chain.distributor,
     MONOPOLYFUN_REVENUE_RPC_EIP155_31337: `http://127.0.0.1:${anvilPort}`,
   };
   const child = spawn("mvn", ["-f", "apps/api/pom.xml", "spring-boot:run", `-Dspring-boot.run.arguments=--server.port=${apiPort}`], {
@@ -447,16 +452,14 @@ async function deployChain(rpcUrl, privateKeys) {
   };
 }
 
-async function initializeDefaultRevenueTrack(container, owner, projectId, chain) {
-  const body = {
-    actorAccountId: owner.account.id,
-    chainId: SMOKE_REVENUE_EXECUTION.chainId,
-    contractAddress: chain.distributor,
-    tokenAddress: chain.token,
-  };
-  // 中文注释：收益轨道由系统初始化；本地 smoke 使用可验证执行轨道，生产默认轨道保留 BSC native BNB 配置。
-  const revenueAddress = await containerApi(container, owner.account.handle, password, "POST",
-    `/api/v1/projects/${projectId}/revenue-address`, body);
+async function readSystemRevenueTrack(container, owner, projectId, chain) {
+  // 中文注释：收益轨道由 API 启动配置自动写入，smoke 只读回验证用户流程里没有手动链配置步骤。
+  const workroom = await containerApi(container, owner.account.handle, password, "GET",
+    `/api/v1/projects/${projectId}/workroom`, {});
+  const revenueAddress = workroom.revenueAddress;
+  if (revenueAddress?.chainId !== SMOKE_REVENUE_EXECUTION.chainId || revenueAddress?.contractAddress !== chain.distributor || revenueAddress?.tokenAddress !== chain.token) {
+    throw new Error(`system revenue track was not initialized from runtime config: ${JSON.stringify(revenueAddress)}`);
+  }
   return {
     kind: "auto_revenue_track",
     reason: "default_bsc_native_bnb",
@@ -476,6 +479,7 @@ async function initializeDefaultRevenueTrack(container, owner, projectId, chain)
       note: "本地 smoke 使用 Anvil 执行链上 claim，生产默认配置为 BSC native BNB。",
     },
     revenueAddress,
+    revenueAutomation: workroom.revenueAutomation,
   };
 }
 
@@ -485,7 +489,6 @@ async function initializeComputedDistribution(container, owner, projectId) {
     `/api/v1/projects/${projectId}/distributions`, {
       actorAccountId: owner.account.id,
       period,
-      totalRevenueMinor: SYSTEM_PRICING.computed.claimableRevenueMinor,
     });
   return {
     kind: "auto_distribution",
@@ -497,12 +500,13 @@ async function initializeComputedDistribution(container, owner, projectId) {
 
 async function executeClaim(chain, batch, claim) {
   const amount = BigInt(claim.amountMinor);
+  const distributionTotal = BigInt(batch.totalRevenueMinor);
   await chain.publicClient.waitForTransactionReceipt({
     hash: await chain.deployerClient.writeContract({
       address: chain.distributor,
       abi: chain.distributorAbi,
       functionName: "setDistributionRoot",
-      args: [period, batch.merkleRoot, totalRevenueMinor],
+      args: [period, batch.merkleRoot, distributionTotal],
     }),
   });
   const balanceBefore = await chain.publicClient.readContract({

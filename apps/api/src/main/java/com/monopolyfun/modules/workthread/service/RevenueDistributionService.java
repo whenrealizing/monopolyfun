@@ -43,14 +43,17 @@ public class RevenueDistributionService {
     private final WorkThreadRepository repository;
     private final CurrentAccountAccess currentAccountAccess;
     private final DistributionChainReceiptVerifier chainReceiptVerifier;
+    private final RevenueAutomationService revenueAutomationService;
 
     public RevenueDistributionService(
             WorkThreadRepository repository,
             CurrentAccountAccess currentAccountAccess,
-            DistributionChainReceiptVerifier chainReceiptVerifier) {
+            DistributionChainReceiptVerifier chainReceiptVerifier,
+            RevenueAutomationService revenueAutomationService) {
         this.repository = repository;
         this.currentAccountAccess = currentAccountAccess;
         this.chainReceiptVerifier = chainReceiptVerifier;
+        this.revenueAutomationService = revenueAutomationService;
     }
 
     public ProjectRevenueAddressView upsertAddress(ProjectEntity project, UpsertProjectRevenueAddressRequest request) {
@@ -84,6 +87,11 @@ public class RevenueDistributionService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Settled shares required before distribution");
         }
         Instant now = repository.now();
+        revenueAutomationService.ensureSystemRevenueTrack(project, now);
+        // 中文注释：收益批次默认按系统曲线估算金额，owner 只需要选择周期即可发布。
+        int totalRevenueMinor = request.totalRevenueMinor() == null
+                ? revenueAutomationService.estimateDistributionRevenueMinor(totalShares)
+                : request.totalRevenueMinor();
         String batchId = "db-" + UUID.randomUUID();
         // 中文注释：批次创建时冻结每个账号的 shares 和金额，后续新增贡献只能参与之后周期。
         List<DistributionEntitlementEntity> entitlements = snapshots.stream()
@@ -92,7 +100,7 @@ public class RevenueDistributionService {
                         batchId,
                         snapshot.accountId(),
                         snapshot.shares(),
-                        claimable(request.totalRevenueMinor(), snapshot.shares(), totalShares),
+                        claimable(totalRevenueMinor, snapshot.shares(), totalShares),
                         "claimable",
                         now))
                 .toList();
@@ -100,7 +108,7 @@ public class RevenueDistributionService {
                 batchId,
                 project.id(),
                 request.period().trim(),
-                request.totalRevenueMinor(),
+                totalRevenueMinor,
                 totalShares,
                 root(request.period(), entitlements),
                 "published",
