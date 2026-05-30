@@ -75,8 +75,8 @@ apps/api/src/main/java/com/monopolyfun/modules/post/service/command/PostCommandS
 apps/api/src/main/java/com/monopolyfun/modules/project/protocol/ProjectValidationProtocolService.java
 apps/api/src/main/java/com/monopolyfun/modules/share/service/ProjectSharePoolService.java
 apps/api/src/main/java/com/monopolyfun/modules/workbench/service/agent/WorkbenchAgentSceneOwner.java
-apps/web/app/[locale]/projects/[projectNo]/page.tsx
-apps/web/components/project/project-validation-panel.tsx
+apps/web/app/[locale]/market/projects/[projectNo]/page.tsx
+apps/web/components/project-validation-panel.tsx
 ```
 
 ## Maintenance Rule

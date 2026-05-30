@@ -1,19 +1,26 @@
 package com.monopolyfun.modules.project.service;
 
 import com.monopolyfun.modules.project.domain.ProjectEntity;
+import com.monopolyfun.modules.project.domain.ProjectSharePoolEntity;
 import com.monopolyfun.modules.project.infra.ProjectRepository;
+import com.monopolyfun.modules.project.infra.ProjectSharePoolRepository;
 import com.monopolyfun.modules.project.protocol.ProjectValidationProtocolDtos.TaskView;
 import com.monopolyfun.modules.project.protocol.ProjectValidationProtocolService;
 import com.monopolyfun.modules.project.service.view.ProjectCommercializationView;
 import com.monopolyfun.modules.settlement.domain.SettlementEventEntity;
 import com.monopolyfun.modules.settlement.infra.SettlementEventRepository;
-import com.monopolyfun.modules.share.service.ProjectSharePoolService;
 import com.monopolyfun.modules.share.service.view.ProjectSharesView;
+import com.monopolyfun.shared.persistence.postgres.PostgresJson;
+import org.jooq.DSLContext;
+import org.jooq.JSONB;
+import org.jooq.Record;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -29,30 +36,35 @@ public class ProjectCommercializationService {
 
     private final ProjectRepository projectRepository;
     private final ProjectValidationProtocolService validationProtocolService;
-    private final ProjectSharePoolService projectSharePoolService;
+    private final ProjectSharePoolRepository projectSharePoolRepository;
     private final SettlementEventRepository settlementEventRepository;
+    private final DSLContext dsl;
 
     public ProjectCommercializationService(
             ProjectRepository projectRepository,
             ProjectValidationProtocolService validationProtocolService,
-            ProjectSharePoolService projectSharePoolService,
-            SettlementEventRepository settlementEventRepository) {
+            ProjectSharePoolRepository projectSharePoolRepository,
+            SettlementEventRepository settlementEventRepository,
+            DSLContext dsl) {
         this.projectRepository = projectRepository;
         this.validationProtocolService = validationProtocolService;
-        this.projectSharePoolService = projectSharePoolService;
+        this.projectSharePoolRepository = projectSharePoolRepository;
         this.settlementEventRepository = settlementEventRepository;
+        this.dsl = dsl;
     }
 
     public ProjectCommercializationView getCommercialization(String projectNo) {
         ProjectEntity project = requireProject(projectNo);
         List<TaskView> tasks = validationProtocolService.listProjectTasks(project.projectNo());
-        ProjectSharesView shares = projectSharePoolService.viewByProjectId(project.id());
+        ProjectSharesView shares = sharePool(project.id());
         ProjectCommercializationView.RevenuePoolView revenue = revenuePool(settlementEventRepository.findByProjectId(project.id()));
+        List<ProjectCommercializationView.ContributionLedgerEntryView> contributionLedger = contributionLedger(project.id());
+        List<ProjectCommercializationView.ContributionMemberView> contributors = contributionMembers(contributionLedger);
         List<ProjectCommercializationView.DirectionCardView> directions = directions(project, tasks);
         List<ProjectCommercializationView.DirectionCardView> validated = directions.stream()
                 .filter(direction -> "validated".equals(direction.status()))
                 .toList();
-        // 中文注释：商业化页只输出由 Validation Task、settlement 和 share pool 推导出的事实。
+        // 中文注释：商业化页输出协议事实与统一贡献账本，用户侧治理视图使用同一份来源数据。
         return new ProjectCommercializationView(
                 project.projectNo(),
                 project.id(),
@@ -62,7 +74,9 @@ public class ProjectCommercializationService {
                 proofStats(tasks),
                 shares,
                 revenue,
-                currentDistribution(revenue, shares, tasks));
+                currentDistribution(revenue, tasks, contributionLedger),
+                contributionLedger,
+                contributors);
     }
 
     private ProjectEntity requireProject(String projectNo) {
@@ -71,6 +85,29 @@ public class ProjectCommercializationService {
         }
         return projectRepository.findByProjectNo(projectNo.trim())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
+    }
+
+    private ProjectSharesView sharePool(String projectId) {
+        // 中文注释：旧测试数据和轻量项目可能先产生贡献账本，份额池缺口由治理页作为空池显示。
+        return projectSharePoolRepository.findByProjectId(projectId)
+                .map(this::sharesView)
+                .orElse(null);
+    }
+
+    private ProjectSharesView sharesView(ProjectSharePoolEntity pool) {
+        return new ProjectSharesView(
+                pool.marketId(),
+                pool.shareTotal(),
+                pool.shareMinted(),
+                pool.shareReserved(),
+                pool.shareRemaining(),
+                pool.taskBudget(),
+                pool.taskMinted(),
+                pool.taskReserved(),
+                pool.taskRemaining(),
+                pool.reserveBudget(),
+                pool.nextCurveSlot(),
+                pool.currentBaseReward());
     }
 
     private List<ProjectCommercializationView.DirectionCardView> directions(ProjectEntity project, List<TaskView> tasks) {
@@ -107,6 +144,14 @@ public class ProjectCommercializationService {
         return "Project direction";
     }
 
+    private int value(Integer value) {
+        return value == null ? 0 : value;
+    }
+
+    private BigDecimal decimal(BigDecimal value) {
+        return value == null ? BigDecimal.ZERO : value;
+    }
+
     private ProjectCommercializationView.ProofStatsView proofStats(List<TaskView> tasks) {
         return new ProjectCommercializationView.ProofStatsView(
                 tasks.size(),
@@ -136,17 +181,69 @@ public class ProjectCommercializationService {
 
     private ProjectCommercializationView.DistributionEpochView currentDistribution(
             ProjectCommercializationView.RevenuePoolView revenue,
-            ProjectSharesView shares,
-            List<TaskView> tasks) {
+            List<TaskView> tasks,
+            List<ProjectCommercializationView.ContributionLedgerEntryView> contributionLedger) {
         int acceptedCount = (int) tasks.stream().filter(this::accepted).count();
-        String status = revenue.totalMinor() > 0 && shares.shareMinted() > 0 ? "ready" : "collecting";
+        int eligibleShares = contributionLedger.stream()
+                .filter(entry -> "settled".equals(entry.status()))
+                .mapToInt(ProjectCommercializationView.ContributionLedgerEntryView::shares)
+                .sum();
+        String status = revenue.totalMinor() > 0 && eligibleShares > 0 ? "ready" : "collecting";
         return new ProjectCommercializationView.DistributionEpochView(
                 "current",
                 status,
                 revenue.currency(),
                 revenue.totalMinor(),
-                shares.shareMinted(),
+                eligibleShares,
                 acceptedCount);
+    }
+
+    private List<ProjectCommercializationView.ContributionLedgerEntryView> contributionLedger(String projectId) {
+        // 中文注释：治理页直接读取统一贡献账本，WorkThread、验证奖励和订单验收共享同一展示来源。
+        return dsl.resultQuery("""
+                        select id, project_id, source_type, source_id, contribution_role, account_id,
+                               task_value, shares, bounty_amount_minor, bounty_token, status,
+                               contribution_weight, metadata, created_at
+                        from contribution_ledger
+                        where project_id = ?
+                        order by created_at desc, id desc
+                        """, projectId)
+                .fetch(this::mapContributionLedgerEntry);
+    }
+
+    private ProjectCommercializationView.ContributionLedgerEntryView mapContributionLedgerEntry(Record record) {
+        return new ProjectCommercializationView.ContributionLedgerEntryView(
+                record.get("id", String.class),
+                record.get("project_id", String.class),
+                record.get("source_type", String.class),
+                record.get("source_id", String.class),
+                record.get("contribution_role", String.class),
+                record.get("account_id", String.class),
+                value(record.get("task_value", Integer.class)),
+                value(record.get("shares", Integer.class)),
+                value(record.get("bounty_amount_minor", Integer.class)),
+                firstText(record.get("bounty_token", String.class), DEFAULT_CURRENCY),
+                record.get("status", String.class),
+                decimal(record.get("contribution_weight", BigDecimal.class)),
+                PostgresJson.map(record.get("metadata", JSONB.class)),
+                PostgresJson.instant(record.get("created_at", OffsetDateTime.class)));
+    }
+
+    private List<ProjectCommercializationView.ContributionMemberView> contributionMembers(List<ProjectCommercializationView.ContributionLedgerEntryView> entries) {
+        Map<String, ContributorAccumulator> byAccount = new LinkedHashMap<>();
+        for (ProjectCommercializationView.ContributionLedgerEntryView entry : entries) {
+            if (!"settled".equals(entry.status())) {
+                continue;
+            }
+            byAccount.computeIfAbsent(entry.accountId(), ContributorAccumulator::new).add(entry);
+        }
+        return byAccount.values().stream()
+                .map(ContributorAccumulator::view)
+                .sorted(Comparator
+                        .comparingInt(ProjectCommercializationView.ContributionMemberView::totalShares)
+                        .reversed()
+                        .thenComparing(ProjectCommercializationView.ContributionMemberView::accountId))
+                .toList();
     }
 
     private boolean claimed(TaskView task) {
@@ -248,6 +345,47 @@ public class ProjectCommercializationService {
                     .anyMatch(kind -> Set.of("deployment", "release", "metric_snapshot", "experiment_report").contains(kind));
             int proofBonus = valuableEvidence ? 3 : 0;
             return base + proofBonus;
+        }
+    }
+
+    private static final class ContributorAccumulator {
+        private final String accountId;
+        private final Map<String, Integer> sourceCounts = new LinkedHashMap<>();
+        private int totalShares;
+        private int totalTaskValue;
+        private int settledCount;
+        private int bountyAmountMinor;
+        private String bountyToken = DEFAULT_CURRENCY;
+        private BigDecimal totalContributionWeight = BigDecimal.ZERO;
+
+        private ContributorAccumulator(String accountId) {
+            this.accountId = accountId;
+        }
+
+        private void add(ProjectCommercializationView.ContributionLedgerEntryView entry) {
+            totalShares += entry.shares();
+            totalTaskValue += entry.taskValue();
+            settledCount++;
+            bountyAmountMinor += entry.bountyAmountMinor();
+            bountyToken = firstNonBlank(entry.bountyToken(), bountyToken);
+            totalContributionWeight = totalContributionWeight.add(entry.contributionWeight());
+            sourceCounts.merge(entry.sourceType(), 1, Integer::sum);
+        }
+
+        private ProjectCommercializationView.ContributionMemberView view() {
+            return new ProjectCommercializationView.ContributionMemberView(
+                    accountId,
+                    totalShares,
+                    totalTaskValue,
+                    settledCount,
+                    bountyAmountMinor,
+                    bountyToken,
+                    totalContributionWeight,
+                    Map.copyOf(sourceCounts));
+        }
+
+        private static String firstNonBlank(String preferred, String fallback) {
+            return preferred == null || preferred.isBlank() ? fallback : preferred;
         }
     }
 }

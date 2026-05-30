@@ -86,7 +86,9 @@ class ProjectDashboardQueryServiceTest {
                         null,
                         null,
                         null,
-                        null));
+                        null,
+                        List.of(),
+                        List.of()));
         return new ProjectDashboardQueryService(
                 workspaceQueryService,
                 effectiveDevelopment,

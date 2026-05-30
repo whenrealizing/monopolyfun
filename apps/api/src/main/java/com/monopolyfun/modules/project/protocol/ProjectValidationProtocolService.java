@@ -4,6 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.monopolyfun.modules.project.domain.ProjectSharePoolEntity;
 import com.monopolyfun.modules.project.infra.ProjectRepository;
 import com.monopolyfun.modules.project.service.UrlHealthCheckService;
+import com.monopolyfun.modules.share.domain.LedgerReason;
+import com.monopolyfun.modules.share.domain.SettlementType;
+import com.monopolyfun.modules.share.domain.ShareIssuerType;
+import com.monopolyfun.modules.share.service.ProjectContributionSettlementService;
 import com.monopolyfun.modules.share.service.ProjectSharePoolService;
 import com.monopolyfun.shared.persistence.postgres.PostgresJson;
 import org.jooq.DSLContext;
@@ -68,16 +72,19 @@ public class ProjectValidationProtocolService {
     private final ProjectRepository projectRepository;
     private final UrlHealthCheckService urlHealthCheckService;
     private final ProjectSharePoolService projectSharePoolService;
+    private final ProjectContributionSettlementService contributionSettlementService;
 
     public ProjectValidationProtocolService(
             DSLContext dsl,
             ProjectRepository projectRepository,
             UrlHealthCheckService urlHealthCheckService,
-            ProjectSharePoolService projectSharePoolService) {
+            ProjectSharePoolService projectSharePoolService,
+            ProjectContributionSettlementService contributionSettlementService) {
         this.dsl = dsl;
         this.projectRepository = projectRepository;
         this.urlHealthCheckService = urlHealthCheckService;
         this.projectSharePoolService = projectSharePoolService;
+        this.contributionSettlementService = contributionSettlementService;
     }
 
     public List<LaunchView> listLaunches(String projectNo) {
@@ -659,7 +666,58 @@ public class ProjectValidationProtocolService {
                         output_snapshot = ?::jsonb
                     where id = ?
                     """, PostgresJson.jsonb(output).data(), reward.get("id", String.class)).execute();
+            settleValidationReward(reward.get("id", String.class), output, nextSnapshot, weight);
         }
+    }
+
+    private void settleValidationReward(String rewardId, Map<String, Object> output, Map<String, Object> rewardSnapshot, BigDecimal weight) {
+        int shares = settledShares(rewardSnapshot);
+        if (shares <= 0) {
+            return;
+        }
+        String projectId = string(output, "projectId", "");
+        String role = string(rewardSnapshot, "role", "proof_submitter");
+        LedgerReason reason = "proof_validator".equals(role) ? LedgerReason.VALIDATION_VALIDATOR : LedgerReason.VALIDATION_SUBMITTER;
+        // 中文注释：Validation reward 结算时同步写入贡献账本和 shares 账本，避免验证协议形成独立奖励孤岛。
+        contributionSettlementService.settle(new ProjectContributionSettlementService.ContributionCommand(
+                projectId,
+                "validation_reward",
+                rewardId,
+                string(output, "proofId", null),
+                string(output, "recipientAccountId", ""),
+                role,
+                contributionTaskValue(weight),
+                shares,
+                0,
+                "USDC",
+                reason,
+                SettlementType.SHARES,
+                ShareIssuerType.PROJECT,
+                projectId,
+                null,
+                null,
+                null,
+                null,
+                string(output, "taskId", null),
+                null,
+                weight,
+                Map.of(
+                        "launchId", string(output, "launchId", ""),
+                        "taskId", string(output, "taskId", ""),
+                        "proofId", string(output, "proofId", ""),
+                        "rewardSnapshot", rewardSnapshot),
+                true,
+                Instant.now()));
+    }
+
+    private int settledShares(Map<String, Object> rewardSnapshot) {
+        BigDecimal settledAmount = positiveDecimal(rewardSnapshot.get("settledAmount"), BigDecimal.ZERO);
+        return settledAmount.signum() <= 0 ? 0 : settledAmount.setScale(0, RoundingMode.DOWN).intValue();
+    }
+
+    private int contributionTaskValue(BigDecimal weight) {
+        BigDecimal normalized = weight == null ? BigDecimal.ZERO : weight.multiply(new BigDecimal("1000"));
+        return Math.max(0, Math.min(10000, normalized.setScale(0, RoundingMode.DOWN).intValue()));
     }
 
     private Map<String, Object> settlementRewardSnapshot(String projectId, String launchId, Map<String, Object> requestedSnapshot) {

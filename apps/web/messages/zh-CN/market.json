@@ -89,7 +89,7 @@
         "archived": "已归档"
       },
       "owner": {
-        "githubVerified": "GitHub 已认证",
+        "verified": "身份已认证",
         "coreProject": "核心项目"
       },
       "actions": {
@@ -330,6 +330,9 @@
     "commercialization": {
       "title": "虚拟股份与贡献账本",
       "description": "成果、验证、虚拟股份和贡献记录来自同一个项目账本。",
+      "ledgerTitle": "账本记录",
+      "contributorsTitle": "贡献者",
+      "empty": "暂无已结算贡献记录。",
       "status": {
         "planned": "计划中",
         "active": "执行中",
@@ -344,7 +347,23 @@
         "accepted": "已确认",
         "virtualSharePool": "虚拟股份池",
         "claimed": "领取",
-        "virtualShares": "虚拟股份"
+        "virtualShares": "虚拟股份",
+        "contributors": "位贡献者",
+        "ledgerEntries": "条记录",
+        "weight": "权重"
+      },
+      "sourceTypes": {
+        "order": "订单验收",
+        "workThread": "Work Thread",
+        "validationReward": "验证奖励"
+      },
+      "roles": {
+        "assignee": "执行者",
+        "proofSubmitter": "证明提交者",
+        "proofValidator": "证明验证者",
+        "orderAssignee": "订单执行者",
+        "workOrder": "工作订单",
+        "reviewOrder": "评审订单"
       }
     },
     "team": {

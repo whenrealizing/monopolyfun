@@ -78,13 +78,12 @@ public class ProjectDevelopmentService {
 
     public ProjectRepoBindingView bindRepo(String projectNo, ProjectRepoBindingRequest request, String actorAccountId) {
         String projectId = requireProjectId(projectNo);
-        requireRootProjectMaintenance(projectId);
         organizationAuthorityService.requireProjectCapability(actorAccountId, projectId, ProjectCapability.PROJECT_MANAGE);
         // 绑定仓库是项目级治理入口，只保留规范化后的远端地址，后续 PR/CI 事件按同一地址归集。
         String repoUrl = normalizeUrl(request.repoUrl(), "repoUrl");
         ProjectRepoBindingEntity binding = developmentRepository.saveRepoBinding(
                 projectId,
-                blank(request.provider()) ? "github" : request.provider().trim().toLowerCase(Locale.ROOT),
+                blank(request.provider()) ? "forgejo" : request.provider().trim().toLowerCase(Locale.ROOT),
                 repoUrl,
                 required(request.repoOwner(), "repoOwner", 120),
                 required(request.repoName(), "repoName", 120),
@@ -102,11 +101,10 @@ public class ProjectDevelopmentService {
 
     public ProjectPrCiStatusView ingestEvent(String projectNo, ProjectPrCiEventRequest request, String actorAccountId) {
         String projectId = requireProjectId(projectNo);
-        requireRootProjectMaintenance(projectId);
         organizationAuthorityService.requireProjectCapability(actorAccountId, projectId, ProjectCapability.PROOF_TECH_REVIEW);
         String eventType = required(request.eventType(), "eventType", 40).toLowerCase(Locale.ROOT);
         Map<String, Object> payload = request.payload() == null ? Map.of() : request.payload();
-        // 外部开发事件落库后直接刷新 WorkItem 投影，GitHub/CI 回调仍只产生待办和 memory source。
+        // 外部开发事件落库后直接刷新 WorkItem 投影，仓库与 CI 事件会产生待办和 memory source。
         if ("pull_request".equals(eventType) || "pr".equals(eventType)) {
             ProjectPrLinkEntity link = developmentRepository.savePrLink(
                     projectId,
@@ -836,15 +834,6 @@ public class ProjectDevelopmentService {
     private void requireProjectAccess(String projectId, String actorAccountId) {
         if (!organizationAuthorityService.hasProjectCapability(actorAccountId, projectId, ProjectCapability.PROJECT_PARTICIPATE)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Project participation required");
-        }
-    }
-
-    private void requireRootProjectMaintenance(String projectId) {
-        var project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
-        if (!RootProjectService.ROOT_PROJECT_ID.equals(project.id())
-                && !RootProjectService.ROOT_PROJECT_NO.equals(project.projectNo())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Project development maintenance is a Root Project operation");
         }
     }
 
