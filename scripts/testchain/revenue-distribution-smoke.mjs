@@ -24,6 +24,7 @@ const anvilPort = 18545;
 const period = "2026-05";
 const totalRevenueMinor = 100000n;
 const password = "CodexTestchain123!";
+const defaultAnvilDeployerPrivateKey = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 const forceForgeBuild = process.env.TESTCHAIN_FORCE_FORGE === "1";
 const defaultAnvilPrivateKeys = [
   "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
@@ -188,6 +189,7 @@ async function startApi() {
     UPLOAD_PROVIDER: "fake",
     MONOPOLYFUN_SCHEDULER_ENABLED: "false",
     MONOPOLYFUN_REVENUE_RPC_EIP155_31337: `http://127.0.0.1:${anvilPort}`,
+    MONOPOLYFUN_REVENUE_CLAIM_SIGNER_PRIVATE_KEY: process.env.MONOPOLYFUN_REVENUE_CLAIM_SIGNER_PRIVATE_KEY || defaultAnvilDeployerPrivateKey,
   };
   const child = spawn("mvn", ["-f", "apps/api/pom.xml", "spring-boot:run", `-Dspring-boot.run.arguments=--server.port=${apiPort}`], {
     cwd: repoRoot,
@@ -324,7 +326,7 @@ async function executeClaim(chain, batch, claim) {
       address: chain.distributor,
       abi: chain.distributorAbi,
       functionName: "claim",
-      args: [period, claim.accountId, chain.member, amount, claim.proof],
+      args: [period, claim.accountId, chain.member, amount, claim.proof, claim.authorization],
   });
   const receipt = await chain.publicClient.waitForTransactionReceipt({ hash: txHash });
   const balanceAfter = await chain.publicClient.readContract({

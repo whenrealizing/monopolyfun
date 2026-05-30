@@ -11,6 +11,7 @@ public record DistributionClaimView(
         int amountMinor,
         String token,
         List<String> proof,
+        String authorization,
         String txHash,
         String status
 ) {

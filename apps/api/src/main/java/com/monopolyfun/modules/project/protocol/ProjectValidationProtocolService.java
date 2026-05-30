@@ -680,6 +680,7 @@ public class ProjectValidationProtocolService {
         LedgerReason reason = "proof_validator".equals(role) ? LedgerReason.VALIDATION_VALIDATOR : LedgerReason.VALIDATION_SUBMITTER;
         // 中文注释：Validation reward 结算时同步写入贡献账本和 shares 账本，避免验证协议形成独立奖励孤岛。
         contributionSettlementService.settle(new ProjectContributionSettlementService.ContributionCommand(
+                null,
                 projectId,
                 "validation_reward",
                 rewardId,

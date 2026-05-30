@@ -15,6 +15,7 @@ export interface DistributionClaimView {
   amountMinor?: number;
   token?: string;
   proof?: string[];
+  authorization?: string;
   txHash?: string;
   status?: string;
 }

@@ -243,46 +243,6 @@ public class PostgresWorkThreadRepository implements WorkThreadRepository {
     }
 
     @Override
-    public ContributionEntryEntity saveContribution(ContributionEntryEntity contribution) {
-        dsl.query("""
-                        insert into contribution_ledger (
-                          id, project_id, work_thread_id, result_id, account_id, task_value, shares,
-                          bounty_amount_minor, bounty_token, status, created_at,
-                          source_type, source_id, contribution_role, contribution_weight, metadata
-                        )
-                        values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::timestamptz, 'work_thread', ?, 'assignee', ?, ?::jsonb)
-                        on conflict (work_thread_id, account_id) do update
-                        set result_id = excluded.result_id,
-                            task_value = excluded.task_value,
-                            shares = excluded.shares,
-                            bounty_amount_minor = excluded.bounty_amount_minor,
-                            bounty_token = excluded.bounty_token,
-                            status = excluded.status,
-                            source_type = excluded.source_type,
-                            source_id = excluded.source_id,
-                            contribution_role = excluded.contribution_role,
-                            contribution_weight = excluded.contribution_weight,
-                            metadata = excluded.metadata
-                        """,
-                contribution.id(),
-                contribution.projectId(),
-                contribution.workThreadId(),
-                contribution.resultId(),
-                contribution.accountId(),
-                contribution.taskValue(),
-                contribution.shares(),
-                contribution.bountyAmountMinor(),
-                contribution.bountyToken(),
-                contribution.status(),
-                PostgresJson.offsetDateTime(contribution.createdAt()),
-                contribution.workThreadId(),
-                contribution.taskValue(),
-                PostgresJson.jsonb(Map.of()).data())
-                .execute();
-        return contribution;
-    }
-
-    @Override
     public List<ContributionEntryEntity> listContributionsByProject(String projectId) {
         return dsl.resultQuery("""
                         select id, project_id, work_thread_id, result_id, account_id, task_value, shares,

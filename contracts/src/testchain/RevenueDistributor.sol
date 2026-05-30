@@ -44,8 +44,8 @@ contract RevenueDistributor {
         emit DistributionRootSet(period, root, totalAmount);
     }
 
-    function claim(string calldata period, string calldata accountId, address recipient, uint256 amount, bytes32[] calldata proof) external {
-        // 钱包领取时校验后端分配快照和重复领取状态，确保同一账号份额只能提现一次。
+    function claim(string calldata period, string calldata accountId, address recipient, uint256 amount, bytes32[] calldata proof, bytes calldata authorization) external {
+        // 钱包领取同时校验分配 proof 和 owner 授权，收款地址被签名绑定后可抵御 calldata 抢跑。
         require(bytes(accountId).length > 0, "RevenueDistributor: account required");
         require(recipient != address(0), "RevenueDistributor: recipient required");
         require(amount > 0, "RevenueDistributor: amount required");
@@ -54,6 +54,7 @@ contract RevenueDistributor {
         bytes32 root = distributionRoots[periodKey(period)];
         require(root != bytes32(0), "RevenueDistributor: missing root");
         require(verify(root, leaf(period, accountId, amount), proof), "RevenueDistributor: invalid proof");
+        require(recoverSigner(authorizationDigest(period, accountId, recipient, amount), authorization) == OWNER, "RevenueDistributor: invalid authorization");
 
         claimed[key] = true;
         require(TOKEN.transfer(recipient, amount), "RevenueDistributor: transfer failed");
@@ -72,6 +73,10 @@ contract RevenueDistributor {
         return sha256(abi.encodePacked(period, accountId, amount));
     }
 
+    function authorizationDigest(string memory period, string memory accountId, address recipient, uint256 amount) public view returns (bytes32) {
+        return keccak256(abi.encodePacked(address(this), block.chainid, bytes1(0x1f), period, bytes1(0x1f), accountId, bytes1(0x1f), recipient, amount));
+    }
+
     function verify(bytes32 root, bytes32 value, bytes32[] calldata proof) public pure returns (bool) {
         // 使用排序 Merkle proof，前端和后端生成证明时无需关心左右位置。
         bytes32 computed = value;
@@ -82,6 +87,27 @@ contract RevenueDistributor {
                 : sha256(abi.encodePacked(sibling, computed));
         }
         return computed == root;
+    }
+
+    function recoverSigner(bytes32 digest, bytes calldata signature) public pure returns (address) {
+        require(signature.length == 65, "RevenueDistributor: signature length");
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
+        assembly {
+            r := calldataload(signature.offset)
+            s := calldataload(add(signature.offset, 32))
+            v := byte(0, calldataload(add(signature.offset, 64)))
+        }
+        if (v < 27) {
+            v += 27;
+        }
+        require(v == 27 || v == 28, "RevenueDistributor: signature v");
+        return ecrecover(ethSignedMessageHash(digest), v, r, s);
+    }
+
+    function ethSignedMessageHash(bytes32 digest) public pure returns (bytes32) {
+        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", digest));
     }
 
     function _onlyOwner() internal view {
