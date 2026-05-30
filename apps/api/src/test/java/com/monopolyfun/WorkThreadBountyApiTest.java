@@ -28,7 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "monopolyfun.revenue.token-address=0x8888888888888888888888888888888888888888",
         "monopolyfun.revenue.router-address=0x9999999999999999999999999999999999999999",
         "monopolyfun.revenue.min-distribution-minor=100000",
-        "monopolyfun.revenue.minor-per-share=20"
+        "monopolyfun.revenue.minor-per-share=20",
+        "monopolyfun.revenue.claim-signer-private-key=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
 })
 @AutoConfigureMockMvc
 @Testcontainers
@@ -212,6 +213,7 @@ class WorkThreadBountyApiTest extends AbstractPostgresIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.amountMinor").value(100000))
                 .andExpect(jsonPath("$.walletAddress").value("0x1111111111111111111111111111111111111111"))
+                .andExpect(jsonPath("$.authorization").value(org.hamcrest.Matchers.matchesPattern("0x[a-f0-9]{130}")))
                 .andExpect(jsonPath("$.proof.length()").value(0));
 
         mockMvc.perform(get("/api/v1/projects/proj-1/workroom")

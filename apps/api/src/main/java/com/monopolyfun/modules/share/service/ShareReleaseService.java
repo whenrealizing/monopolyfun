@@ -334,6 +334,7 @@ public class ShareReleaseService {
         }
         // 中文注释：Order 释放的份额同时沉淀为项目贡献事实，贡献榜和 owner 接力共用同一账本。
         ProjectContributionSettlementService.ContributionSettlementResult settlement = contributionSettlementService.settle(new ProjectContributionSettlementService.ContributionCommand(
+                null,
                 request.projectId(),
                 "order",
                 order.id(),

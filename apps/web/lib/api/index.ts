@@ -921,6 +921,7 @@ export type DistributionClaim = {
     amountMinor: number;
     token: string;
     proof: string[];
+    authorization: string;
     txHash: string | null;
     status: string;
 };

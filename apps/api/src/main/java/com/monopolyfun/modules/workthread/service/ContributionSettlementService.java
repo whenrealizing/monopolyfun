@@ -44,9 +44,9 @@ public class ContributionSettlementService {
                 thread.bountyToken(),
                 "settled",
                 now);
-        ContributionEntryEntity saved = repository.saveContribution(contribution);
-        // 中文注释：Work Thread 验收后通过统一贡献结算服务进入 shares_ledger，避免工作流各自写账本。
+        // 中文注释：Work Thread 验收只通过统一贡献结算服务写 contribution_ledger 和 shares_ledger，避免同一事实双写。
         contributionSettlementService.settle(new ProjectContributionSettlementService.ContributionCommand(
+                contribution.id(),
                 thread.projectId(),
                 "work_thread",
                 thread.id(),
@@ -54,7 +54,7 @@ public class ContributionSettlementService {
                 result.actorAccountId(),
                 "assignee",
                 thread.taskValue(),
-                saved.shares(),
+                contribution.shares(),
                 thread.bountyAmountMinor(),
                 thread.bountyToken(),
                 LedgerReason.WORK_THREAD,
@@ -71,7 +71,7 @@ public class ContributionSettlementService {
                 Map.of("threadNo", thread.threadNo(), "resultNo", result.resultNo()),
                 false,
                 now));
-        return saved;
+        return contribution;
     }
 
     private int mintedShares(int taskValue, int curveSlot) {

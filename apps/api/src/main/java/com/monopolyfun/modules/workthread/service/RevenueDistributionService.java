@@ -44,16 +44,19 @@ public class RevenueDistributionService {
     private final CurrentAccountAccess currentAccountAccess;
     private final DistributionChainReceiptVerifier chainReceiptVerifier;
     private final RevenueAutomationService revenueAutomationService;
+    private final RevenueClaimAuthorizationService claimAuthorizationService;
 
     public RevenueDistributionService(
             WorkThreadRepository repository,
             CurrentAccountAccess currentAccountAccess,
             DistributionChainReceiptVerifier chainReceiptVerifier,
-            RevenueAutomationService revenueAutomationService) {
+            RevenueAutomationService revenueAutomationService,
+            RevenueClaimAuthorizationService claimAuthorizationService) {
         this.repository = repository;
         this.currentAccountAccess = currentAccountAccess;
         this.chainReceiptVerifier = chainReceiptVerifier;
         this.revenueAutomationService = revenueAutomationService;
+        this.claimAuthorizationService = claimAuthorizationService;
     }
 
     public ProjectRevenueAddressView upsertAddress(ProjectEntity project, UpsertProjectRevenueAddressRequest request) {
@@ -160,7 +163,7 @@ public class RevenueDistributionService {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "Distribution claim wallet already exists");
             }
             DistributionClaimEntity updated = submitClaimTxIfPresent(project, batch, existing, request.txHash(), request.txConfirmed(), now);
-            return new DistributionClaimView(batch.id(), batch.projectId(), batch.period(), updated.accountId(), updated.walletAddress(), updated.amountMinor(), CLAIM_TOKEN, updated.proof(), updated.txHash(), updated.status());
+            return toClaimView(project, batch, updated);
         }
         requireWalletAddress(request.walletAddress(), "walletAddress");
         List<String> proof = proof(batch, request.actorAccountId(), request.walletAddress(), amount);
@@ -184,7 +187,7 @@ public class RevenueDistributionService {
         if (Boolean.TRUE.equals(request.txConfirmed())) {
             saved = verifyAndConfirm(project, batch, saved, normalizedTxHash, now);
         }
-        return new DistributionClaimView(batch.id(), batch.projectId(), batch.period(), saved.accountId(), saved.walletAddress(), saved.amountMinor(), CLAIM_TOKEN, saved.proof(), saved.txHash(), saved.status());
+        return toClaimView(project, batch, saved);
     }
 
     private DistributionClaimEntity submitClaimTxIfPresent(ProjectEntity project, DistributionBatchEntity batch, DistributionClaimEntity existing, String txHash, Boolean txConfirmed, Instant now) {
@@ -229,6 +232,23 @@ public class RevenueDistributionService {
         return repository.confirmDistributionClaimTx(claim.batchId(), claim.accountId(), txHash, now);
     }
 
+    private DistributionClaimView toClaimView(ProjectEntity project, DistributionBatchEntity batch, DistributionClaimEntity claim) {
+        ProjectRevenueAddressEntity revenueAddress = revenueAddress(project);
+        String authorization = claimAuthorizationService.sign(revenueAddress, batch.period(), claim.accountId(), claim.walletAddress(), claim.amountMinor());
+        return new DistributionClaimView(
+                batch.id(),
+                batch.projectId(),
+                batch.period(),
+                claim.accountId(),
+                claim.walletAddress(),
+                claim.amountMinor(),
+                CLAIM_TOKEN,
+                claim.proof(),
+                authorization,
+                claim.txHash(),
+                claim.status());
+    }
+
     private void requireProjectOwner(ProjectEntity project, String actorAccountId) {
         if (!project.ownerAccountId().equals(actorAccountId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Project owner required");
@@ -251,6 +271,11 @@ public class RevenueDistributionService {
         if (txHash == null || !txHash.trim().matches("0x[a-fA-F0-9]{64}")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "txHash must be an EVM transaction hash");
         }
+    }
+
+    private ProjectRevenueAddressEntity revenueAddress(ProjectEntity project) {
+        return repository.findActiveRevenueAddress(project.id())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.CONFLICT, "Project revenue address required before claim"));
     }
 
     private int claimable(int totalRevenueMinor, int memberShares, int totalShares) {

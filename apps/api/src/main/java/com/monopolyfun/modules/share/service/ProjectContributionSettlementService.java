@@ -61,7 +61,7 @@ public class ProjectContributionSettlementService {
                             contribution_weight = excluded.contribution_weight,
                             metadata = excluded.metadata
                         """,
-                "ctr-" + UUID.randomUUID(),
+                blank(command.contributionId()) ? "ctr-" + UUID.randomUUID() : command.contributionId(),
                 command.projectId(),
                 "work_thread".equals(command.sourceType()) ? command.sourceId() : null,
                 // 中文注释：contribution_ledger.result_id 绑定 Work Thread 结果表；其它协议的 proofId 保留在 shares_ledger 和 metadata。
@@ -137,6 +137,7 @@ public class ProjectContributionSettlementService {
     }
 
     public record ContributionCommand(
+            String contributionId,
             String projectId,
             String sourceType,
             String sourceId,

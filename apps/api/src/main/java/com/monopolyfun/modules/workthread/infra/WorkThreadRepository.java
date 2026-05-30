@@ -30,8 +30,6 @@ public interface WorkThreadRepository {
 
     WorkThreadReviewEntity saveReview(WorkThreadReviewEntity review);
 
-    ContributionEntryEntity saveContribution(ContributionEntryEntity contribution);
-
     List<ContributionEntryEntity> listContributionsByProject(String projectId);
 
     int countSettledContributionsByProject(String projectId);

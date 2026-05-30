@@ -104,6 +104,7 @@ monopolyfun:
     token-type: ${MONOPOLYFUN_REVENUE_TOKEN_TYPE:mock-erc20}
     token-address: ${MONOPOLYFUN_REVENUE_TOKEN_ADDRESS:}
     router-address: ${MONOPOLYFUN_REVENUE_ROUTER_ADDRESS:}
+    claim-signer-private-key: ${MONOPOLYFUN_REVENUE_CLAIM_SIGNER_PRIVATE_KEY:}
     min-distribution-minor: ${MONOPOLYFUN_REVENUE_MIN_DISTRIBUTION_MINOR:100000}
     minor-per-share: ${MONOPOLYFUN_REVENUE_MINOR_PER_SHARE:20}
     rpc:
