@@ -22,7 +22,7 @@ class MarketLifecycleTest {
                 "Summary",
                 "Goal",
                 "acct-lead",
-                "github/example",
+                "forgejo/example",
                 "https://example.test",
                 SettlementType.SHARES,
                 createContext);

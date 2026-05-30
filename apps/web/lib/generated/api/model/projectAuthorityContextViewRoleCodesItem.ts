@@ -10,7 +10,7 @@ export type ProjectAuthorityContextViewRoleCodesItem = typeof ProjectAuthorityCo
 
 
 export const ProjectAuthorityContextViewRoleCodesItem = {
-    system_ceo: 'system_ceo',
-    system_cto: 'system_cto',
-    system_cfo: 'system_cfo',
+  system_ceo: 'system_ceo',
+  system_cto: 'system_cto',
+  system_cfo: 'system_cfo',
 } as const;

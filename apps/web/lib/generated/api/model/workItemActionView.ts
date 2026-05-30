@@ -7,6 +7,6 @@
  */
 
 export interface WorkItemActionView {
-    id?: string;
-    label?: string;
+  id?: string;
+  label?: string;
 }

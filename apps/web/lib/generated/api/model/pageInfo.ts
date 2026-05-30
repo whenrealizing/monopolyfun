@@ -7,7 +7,7 @@
  */
 
 export interface PageInfo {
-    limit?: number;
-    nextCursor?: string;
-    hasMore?: boolean;
+  limit?: number;
+  nextCursor?: string;
+  hasMore?: boolean;
 }

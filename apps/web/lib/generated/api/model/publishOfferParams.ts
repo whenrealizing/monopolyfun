@@ -7,5 +7,5 @@
  */
 
 export type PublishOfferParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

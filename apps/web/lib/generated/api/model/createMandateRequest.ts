@@ -5,13 +5,13 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {CreateMandateRequestBudget} from './createMandateRequestBudget';
-import type {CreateMandateRequestRiskPolicy} from './createMandateRequestRiskPolicy';
+import type { CreateMandateRequestBudget } from './createMandateRequestBudget';
+import type { CreateMandateRequestRiskPolicy } from './createMandateRequestRiskPolicy';
 
 export interface CreateMandateRequest {
-    /** @minLength 1 */
-    goal: string;
-    scope?: string[];
-    budget?: CreateMandateRequestBudget;
-    riskPolicy?: CreateMandateRequestRiskPolicy;
+  /** @minLength 1 */
+  goal: string;
+  scope?: string[];
+  budget?: CreateMandateRequestBudget;
+  riskPolicy?: CreateMandateRequestRiskPolicy;
 }

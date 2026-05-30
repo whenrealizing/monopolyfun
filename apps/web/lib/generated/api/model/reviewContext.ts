@@ -7,23 +7,23 @@
  */
 
 export interface ReviewContext {
-    parentOrderId?: string;
-    parentOrderNo?: string;
-    reviewPostId?: string;
-    reviewOrderId?: string;
-    reviewOrderNo?: string;
-    disputeReason?: string;
-    disputeOpenedByAccountId?: string;
-    disputeOpenedFromStatus?: string;
-    disputeOpenedFromWindowStatus?: string;
-    disputeOpenedFromWindowExpiresAt?: string;
-    disputeOpenedAt?: string;
-    disputeCancelledByAccountId?: string;
-    disputeCancelledAt?: string;
-    disputeCancelReason?: string;
-    reviewerAccountId?: string;
-    reviewDueAt?: string;
-    backofficeOverrideDecision?: string;
-    backofficeOverrideReason?: string;
-    disputeEvidenceRefs?: string[];
+  parentOrderId?: string;
+  parentOrderNo?: string;
+  reviewPostId?: string;
+  reviewOrderId?: string;
+  reviewOrderNo?: string;
+  disputeReason?: string;
+  disputeOpenedByAccountId?: string;
+  disputeOpenedFromStatus?: string;
+  disputeOpenedFromWindowStatus?: string;
+  disputeOpenedFromWindowExpiresAt?: string;
+  disputeOpenedAt?: string;
+  disputeCancelledByAccountId?: string;
+  disputeCancelledAt?: string;
+  disputeCancelReason?: string;
+  reviewerAccountId?: string;
+  reviewDueAt?: string;
+  backofficeOverrideDecision?: string;
+  backofficeOverrideReason?: string;
+  disputeEvidenceRefs?: string[];
 }

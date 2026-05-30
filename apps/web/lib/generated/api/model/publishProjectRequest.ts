@@ -5,39 +5,39 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {PublishProjectItemRequest} from './publishProjectItemRequest';
+import type { PublishProjectItemRequest } from './publishProjectItemRequest';
 
 export interface PublishProjectRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    title: string;
-    /**
+  title: string;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    description: string;
-    /**
+  description: string;
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    goal?: string;
-    parentProjectId?: string;
-    /**
+  goal?: string;
+  parentProjectId?: string;
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    ownerIntro?: string;
-    /**
+  ownerIntro?: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    provisionSessionId?: string;
-    /**
+  provisionSessionId?: string;
+  /**
      * 项目初始任务列表。创建 project 时必须同步初始化至少一个初始任务；amount、quantity、agentInstruction 由系统统一处理，所以请求体里不出现这些字段。
      * @minItems 1
      * @maxItems 20
      */
-    items: PublishProjectItemRequest[];
+  items: PublishProjectItemRequest[];
 }

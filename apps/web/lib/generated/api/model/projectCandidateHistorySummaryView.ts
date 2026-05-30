@@ -7,6 +7,6 @@
  */
 
 export interface ProjectCandidateHistorySummaryView {
-    mergedMainline?: number;
-    latestMergedAt?: string;
+  mergedMainline?: number;
+  latestMergedAt?: string;
 }

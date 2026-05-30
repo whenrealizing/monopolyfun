@@ -20,6 +20,84 @@ services:
     volumes:
       - monopolyfun-postgres:/var/lib/postgresql/data
 
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:12-rootless
+    container_name: monopolyfun-forgejo
+    restart: unless-stopped
+    environment:
+      USER_UID: 1000
+      USER_GID: 1000
+      FORGEJO__database__DB_TYPE: sqlite3
+      FORGEJO__security__INSTALL_LOCK: "true"
+      FORGEJO__service__DISABLE_REGISTRATION: "false"
+      FORGEJO__server__DOMAIN: localhost
+      FORGEJO__server__ROOT_URL: ${FORGEJO_WEB_BASE_URL:-http://localhost:3001/}
+      FORGEJO__server__SSH_DOMAIN: localhost
+      FORGEJO__server__SSH_PORT: "2222"
+    ports:
+      - "${FORGEJO_HOST_PORT:-3001}:3000"
+      - "${FORGEJO_SSH_HOST_PORT:-2222}:2222"
+    volumes:
+      - monopolyfun-forgejo:/var/lib/gitea
+
+  forgejo-init:
+    image: codeberg.org/forgejo/forgejo:12-rootless
+    container_name: monopolyfun-forgejo-init
+    restart: "no"
+    depends_on:
+      - forgejo
+    environment:
+      FORGEJO_ADMIN_USERNAME: ${FORGEJO_USERNAME:-monopolyfun}
+      FORGEJO_ADMIN_PASSWORD: ${FORGEJO_PASSWORD:-monopolyfun-dev-password}
+      FORGEJO_ADMIN_EMAIL: ${FORGEJO_ADMIN_EMAIL:-monopolyfun@example.local}
+    volumes:
+      - monopolyfun-forgejo:/var/lib/gitea
+    entrypoint:
+      - /bin/sh
+      - -ec
+      - |
+        # 中文注释：等待 Forgejo 生成配置后创建本地演示账号，初始化动作保持幂等。
+        until [ -f /var/lib/gitea/custom/conf/app.ini ]; do sleep 2; done
+        forgejo admin user create \
+          --config /var/lib/gitea/custom/conf/app.ini \
+          --username "$$FORGEJO_ADMIN_USERNAME" \
+          --password "$$FORGEJO_ADMIN_PASSWORD" \
+          --email "$$FORGEJO_ADMIN_EMAIL" \
+          --admin \
+          --must-change-password=false || true
+
+  anvil:
+    image: ghcr.io/foundry-rs/foundry:latest
+    container_name: monopolyfun-anvil
+    restart: unless-stopped
+    # 中文注释：覆盖 Foundry 镜像默认 shell 入口，确保 --host 生效并对宿主机开放 RPC。
+    entrypoint: ["anvil"]
+    command: ["--host", "0.0.0.0", "--port", "8545", "--chain-id", "31337"]
+    ports:
+      - "${ANVIL_HOST_PORT:-8545}:8545"
+    healthcheck:
+      test: ["CMD-SHELL", "cast chain-id --rpc-url http://127.0.0.1:8545 >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  testchain-deploy:
+    image: ghcr.io/foundry-rs/foundry:latest
+    container_name: monopolyfun-testchain-deploy
+    restart: "no"
+    depends_on:
+      anvil:
+        condition: service_healthy
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    environment:
+      MONOPOLYFUN_REVENUE_RPC_EIP155_31337: ${MONOPOLYFUN_REVENUE_RPC_EIP155_31337:-http://anvil:8545}
+      MONOPOLYFUN_REVENUE_TOKEN_ADDRESS: ${MONOPOLYFUN_REVENUE_TOKEN_ADDRESS:-0x5FbDB2315678afecb367f032d93F642f64180aa3}
+      MONOPOLYFUN_REVENUE_ROUTER_ADDRESS: ${MONOPOLYFUN_REVENUE_ROUTER_ADDRESS:-0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512}
+      TESTCHAIN_REVENUE_SEED_MINOR: ${TESTCHAIN_REVENUE_SEED_MINOR:-100000000000}
+    entrypoint: ["bash", "scripts/testchain/deploy-local-revenue-contracts.sh"]
+
   api:
     build:
       context: .
@@ -56,24 +134,20 @@ services:
       DIGITAL_INVENTORY_ENCRYPTION_SECRET: ${DIGITAL_INVENTORY_ENCRYPTION_SECRET:-monopolyfun-digital-inventory-dev-secret}
       PAYMENT_PUBLIC_BASE_URL: ${PAYMENT_PUBLIC_BASE_URL:-http://localhost:8080}
       PAYMENT_CURRENCY: ${PAYMENT_CURRENCY:-USD}
-      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:-}
-      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:-}
-      GITHUB_AUTHORIZE_URL: ${GITHUB_AUTHORIZE_URL:-https://github.com/login/oauth/authorize}
-      GITHUB_TOKEN_URL: ${GITHUB_TOKEN_URL:-https://github.com/login/oauth/access_token}
-      GITHUB_USER_URL: ${GITHUB_USER_URL:-https://api.github.com/user}
-      GITHUB_REDIRECT_URI: ${GITHUB_REDIRECT_URI:-http://localhost:8080/api/v1/auth/oauth/github/callback}
-      GITHUB_VERIFICATION_REDIRECT_URI: ${GITHUB_VERIFICATION_REDIRECT_URI:-http://localhost:8080/api/v1/identity/oauth/github/callback}
-      GITHUB_WEB_CALLBACK_URL: ${GITHUB_WEB_CALLBACK_URL:-http://localhost:3000/oauth/callback}
-      GITHUB_APP_API_BASE_URL: ${GITHUB_APP_API_BASE_URL:-https://api.github.com}
-      GITHUB_APP_ID: ${GITHUB_APP_ID:-}
-      GITHUB_APP_CLIENT_ID: ${GITHUB_APP_CLIENT_ID:-}
-      GITHUB_APP_CLIENT_SECRET: ${GITHUB_APP_CLIENT_SECRET:-}
-      GITHUB_APP_PRIVATE_KEY: ${GITHUB_APP_PRIVATE_KEY:-}
-      GITHUB_APP_WEBHOOK_SECRET: ${GITHUB_APP_WEBHOOK_SECRET:-}
-      GITHUB_APP_ORGANIZATION: ${GITHUB_APP_ORGANIZATION:-monopolyfun}
-      GITHUB_APP_TEMPLATE_OWNER: ${GITHUB_APP_TEMPLATE_OWNER:-}
-      GITHUB_APP_TEMPLATE_REPO: ${GITHUB_APP_TEMPLATE_REPO:-}
-      GITHUB_APP_DEFAULT_BRANCH: ${GITHUB_APP_DEFAULT_BRANCH:-main}
+      FORGEJO_API_BASE_URL: ${FORGEJO_API_BASE_URL:-http://forgejo:3000/api/v1}
+      FORGEJO_WEB_BASE_URL: ${FORGEJO_WEB_BASE_URL:-http://localhost:3001}
+      FORGEJO_ORGANIZATION: ${FORGEJO_ORGANIZATION:-}
+      FORGEJO_USERNAME: ${FORGEJO_USERNAME:-monopolyfun}
+      FORGEJO_PASSWORD: ${FORGEJO_PASSWORD:-monopolyfun-dev-password}
+      FORGEJO_ACCESS_TOKEN: ${FORGEJO_ACCESS_TOKEN:-}
+      FORGEJO_DEFAULT_BRANCH: ${FORGEJO_DEFAULT_BRANCH:-main}
+      MONOPOLYFUN_REVENUE_CHAIN_ID: ${MONOPOLYFUN_REVENUE_CHAIN_ID:-eip155:31337}
+      MONOPOLYFUN_REVENUE_CHAIN_NAME: ${MONOPOLYFUN_REVENUE_CHAIN_NAME:-Anvil}
+      MONOPOLYFUN_REVENUE_ASSET: ${MONOPOLYFUN_REVENUE_ASSET:-USDC}
+      MONOPOLYFUN_REVENUE_TOKEN_TYPE: ${MONOPOLYFUN_REVENUE_TOKEN_TYPE:-mock-erc20}
+      MONOPOLYFUN_REVENUE_TOKEN_ADDRESS: ${MONOPOLYFUN_REVENUE_TOKEN_ADDRESS:-0x5FbDB2315678afecb367f032d93F642f64180aa3}
+      MONOPOLYFUN_REVENUE_ROUTER_ADDRESS: ${MONOPOLYFUN_REVENUE_ROUTER_ADDRESS:-0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512}
+      MONOPOLYFUN_REVENUE_RPC_EIP155_31337: ${MONOPOLYFUN_REVENUE_RPC_EIP155_31337:-http://anvil:8545}
       MARKET_MATCHING_PROVIDER: ${MARKET_MATCHING_PROVIDER:-aliyun_qwen}
       ALIYUN_QWEN_API_KEY: ${ALIYUN_QWEN_API_KEY:-}
       ALIYUN_QWEN_BASE_URL: ${ALIYUN_QWEN_BASE_URL:-https://dashscope.aliyuncs.com/compatible-mode/v1}
@@ -88,6 +162,12 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      forgejo-init:
+        condition: service_completed_successfully
+      anvil:
+        condition: service_healthy
+      testchain-deploy:
+        condition: service_completed_successfully
     ports:
       - "${API_HOST_PORT:-8080}:8080"
     healthcheck:
@@ -116,3 +196,4 @@ services:
 
 volumes:
   monopolyfun-postgres:
+  monopolyfun-forgejo:

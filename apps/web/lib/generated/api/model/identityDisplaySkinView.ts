@@ -7,15 +7,15 @@
  */
 
 export interface IdentityDisplaySkinView {
-    source?: string;
-    certifierId?: string;
-    provider?: string;
-    platformUserId?: string;
-    displayName?: string;
-    displayHandle?: string;
-    avatarUrl?: string;
-    profileUrl?: string;
-    themeKey?: string;
-    verified?: boolean;
-    selected?: boolean;
+  source?: string;
+  certifierId?: string;
+  provider?: string;
+  platformUserId?: string;
+  displayName?: string;
+  displayHandle?: string;
+  avatarUrl?: string;
+  profileUrl?: string;
+  themeKey?: string;
+  verified?: boolean;
+  selected?: boolean;
 }

@@ -7,5 +7,5 @@
  */
 
 export type DisputeIntentParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

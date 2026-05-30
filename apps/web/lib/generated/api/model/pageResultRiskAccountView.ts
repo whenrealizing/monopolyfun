@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {PageInfo} from './pageInfo';
-import type {RiskAccountView} from './riskAccountView';
+import type { PageInfo } from './pageInfo';
+import type { RiskAccountView } from './riskAccountView';
 
 export interface PageResultRiskAccountView {
-    items?: RiskAccountView[];
-    pageInfo?: PageInfo;
+  items?: RiskAccountView[];
+  pageInfo?: PageInfo;
 }

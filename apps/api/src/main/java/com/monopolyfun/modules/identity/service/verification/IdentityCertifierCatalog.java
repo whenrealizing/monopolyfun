@@ -6,30 +6,14 @@ import java.util.Map;
 import java.util.Optional;
 
 public final class IdentityCertifierCatalog {
-    public static final String METHOD_OAUTH = "oauth";
     public static final String METHOD_PUBLIC_PROOF = "public_proof";
 
     private static final Map<String, BadgeSpec> BADGE_SPECS = Map.of(
-            "github_oauth", new BadgeSpec("github_oauth_verified", "GitHub 已验证", "github", 100),
             "x_public_proof", new BadgeSpec("x_public_proof_verified", "X 已验证", "x", 90),
             "reddit_public_proof", new BadgeSpec("reddit_public_proof_verified", "Reddit 已验证", "reddit", 80),
             "youtube_public_proof", new BadgeSpec("youtube_public_proof_verified", "YouTube 已验证", "youtube", 80));
 
     private IdentityCertifierCatalog() {
-    }
-
-    public static IdentityCertifierManifest githubOAuthManifest() {
-        return new IdentityCertifierManifest(
-                "github_oauth",
-                "GitHub",
-                "github",
-                METHOD_OAUTH,
-                "连接 GitHub 账号并生成可验证 badge。",
-                "high",
-                "github_oauth_verified",
-                null,
-                Map.of(),
-                Map.of("required", List.of("code", "state")));
     }
 
     public static PublicProofSpec xPublicProofSpec() {

@@ -5,24 +5,24 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {FeedbackViewEvidenceItem} from './feedbackViewEvidenceItem';
-import type {FeedbackViewMetadata} from './feedbackViewMetadata';
+import type { FeedbackViewEvidenceItem } from './feedbackViewEvidenceItem';
+import type { FeedbackViewMetadata } from './feedbackViewMetadata';
 
 export interface FeedbackView {
-    id?: string;
-    projectId?: string;
-    launchId?: string;
-    subjectType?: string;
-    subjectId?: string;
-    intent?: string;
-    reason?: string;
-    evidence?: FeedbackViewEvidenceItem[];
-    suggestedAction?: string;
-    status?: string;
-    metadata?: FeedbackViewMetadata;
-    createdByAccountId?: string;
-    resolvedByAccountId?: string;
-    createdAt?: string;
-    resolvedAt?: string;
-    updatedAt?: string;
+  id?: string;
+  projectId?: string;
+  launchId?: string;
+  subjectType?: string;
+  subjectId?: string;
+  intent?: string;
+  reason?: string;
+  evidence?: FeedbackViewEvidenceItem[];
+  suggestedAction?: string;
+  status?: string;
+  metadata?: FeedbackViewMetadata;
+  createdByAccountId?: string;
+  resolvedByAccountId?: string;
+  createdAt?: string;
+  resolvedAt?: string;
+  updatedAt?: string;
 }

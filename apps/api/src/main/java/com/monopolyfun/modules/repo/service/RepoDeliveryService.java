@@ -67,6 +67,7 @@ public class RepoDeliveryService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Current project does not use platform managed repository delivery");
         }
         RepoCoordinates repo = parseRepoUrl(repoUrl);
+        String repoProvider = firstNonBlank(metadataText(project.metadata(), "repoProvider"), repo.provider());
         String headBranch = buildHeadBranch(order.orderNo(), actorAccountId);
         RepoDeliverySessionEntity existing = repoDeliverySessionRepository.findActiveByOrderNo(order.orderNo()).orElse(null);
         if (existing != null) {
@@ -84,7 +85,7 @@ public class RepoDeliveryService {
                 "repo-delivery-" + UUID.randomUUID(),
                 project.projectNo(),
                 order.orderNo(),
-                "github",
+                repoProvider,
                 repoUrl,
                 cloneUrl,
                 defaultBranch(project),
@@ -95,7 +96,7 @@ public class RepoDeliveryService {
                 "issued",
                 runtime == null || runtime.isBlank() ? "openclaw" : runtime.trim(),
                 actorAccountId,
-                "secret://repo-delivery-sessions/%s/github-token".formatted(order.orderNo()),
+                "secret://repo-delivery-sessions/%s/%s-token".formatted(order.orderNo(), repoProvider),
                 access.expiresAt(),
                 Map.of(
                         "repoOwner", repo.owner(),
@@ -327,19 +328,29 @@ public class RepoDeliveryService {
         try {
             java.net.URI uri = java.net.URI.create(value);
             String[] parts = uri.getPath().replaceFirst("^/+", "").split("/");
-            if ((!"github.com".equalsIgnoreCase(uri.getHost()) && !"www.github.com".equalsIgnoreCase(uri.getHost()))
-                    || parts.length < 2) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Project repository must be a GitHub repository");
+            String scheme = uri.getScheme() == null ? "" : uri.getScheme().toLowerCase(Locale.ROOT);
+            if (!List.of("http", "https").contains(scheme)
+                    || uri.getHost() == null
+                    || parts.length < 2
+                    || parts[0].isBlank()
+                    || parts[1].isBlank()) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Project repository must be an http(s) Git repository");
             }
-            return new RepoCoordinates(parts[0], parts[1].replaceFirst("\\.git$", ""));
+            return new RepoCoordinates(providerFromHost(uri.getHost()), uri, parts[0], parts[1].replaceFirst("\\.git$", ""));
         } catch (IllegalArgumentException exception) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Project repository URL is invalid");
         }
     }
 
     private String safeCloneUrl(RepoCoordinates repo) {
-        // 中文注释：delivery session 只保存无凭据仓库地址，短期写入 token 由执行时凭据通道临时签发。
-        return "https://github.com/%s/%s.git".formatted(repo.owner(), repo.name());
+        // 中文注释：delivery session 只保存无凭据仓库地址，provider 凭据由执行时通道按需签发。
+        String port = repo.uri().getPort() < 0 ? "" : ":" + repo.uri().getPort();
+        return "%s://%s%s/%s/%s.git".formatted(repo.uri().getScheme(), repo.uri().getHost(), port, repo.owner(), repo.name());
+    }
+
+    private String providerFromHost(String host) {
+        // 中文注释：仓库交付围绕本地 Forgejo 语义建模，远端 host 只影响 URL 展示和 clone 地址。
+        return "forgejo";
     }
 
     private String firstNonBlank(String... values) {
@@ -370,6 +381,6 @@ public class RepoDeliveryService {
                 session.metadata());
     }
 
-    private record RepoCoordinates(String owner, String name) {
+    private record RepoCoordinates(String provider, java.net.URI uri, String owner, String name) {
     }
 }

@@ -7,21 +7,21 @@
  */
 
 export interface SkipProjectCandidateWindowRequest {
-    /** @minItems 1 */
-    skippedCandidateIds: string[];
-    /**
+  /** @minItems 1 */
+  skippedCandidateIds: string[];
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    reasonCode?: string;
-    /**
+  reasonCode?: string;
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    reason?: string;
-    /**
+  reason?: string;
+  /**
      * @minimum 1
      * @maximum 1440
      */
-    ttlMinutes?: number;
+  ttlMinutes?: number;
 }

@@ -7,6 +7,6 @@
  */
 
 export type GetAccountSharesLedgerParams = {
-    limit?: number;
-    cursor?: string;
+limit?: number;
+cursor?: string;
 };

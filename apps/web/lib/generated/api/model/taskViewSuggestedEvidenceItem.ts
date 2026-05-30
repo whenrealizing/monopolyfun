@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type TaskViewSuggestedEvidenceItem = { [key: string]: unknown };
+export type TaskViewSuggestedEvidenceItem = {[key: string]: unknown};

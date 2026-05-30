@@ -7,15 +7,15 @@
  */
 
 export interface ReviewProjectResultCandidateRequest {
-    prNumber?: number;
-    /**
+  prNumber?: number;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    decision: string;
-    /**
+  decision: string;
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    reason?: string;
+  reason?: string;
 }

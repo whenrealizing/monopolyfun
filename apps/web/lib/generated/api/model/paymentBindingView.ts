@@ -7,20 +7,20 @@
  */
 
 export interface PaymentBindingView {
-    orderId?: string;
-    orderNo?: string;
-    payerAccountId?: string;
-    payeeAccountId?: string;
-    fulfillerAccountId?: string;
-    postKind?: string;
-    postId?: string;
-    itemId?: string;
-    payerAddress?: string;
-    recipientAddress?: string;
-    paymentId?: string;
-    txHash?: string;
-    network?: string;
-    asset?: string;
-    evidenceStatus?: string;
-    evidencePath?: string;
+  orderId?: string;
+  orderNo?: string;
+  payerAccountId?: string;
+  payeeAccountId?: string;
+  fulfillerAccountId?: string;
+  postKind?: string;
+  postId?: string;
+  itemId?: string;
+  payerAddress?: string;
+  recipientAddress?: string;
+  paymentId?: string;
+  txHash?: string;
+  network?: string;
+  asset?: string;
+  evidenceStatus?: string;
+  evidencePath?: string;
 }

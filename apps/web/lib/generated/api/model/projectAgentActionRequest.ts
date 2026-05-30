@@ -5,18 +5,18 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectAgentActionRequestPayload} from './projectAgentActionRequestPayload';
+import type { ProjectAgentActionRequestPayload } from './projectAgentActionRequestPayload';
 
 export interface ProjectAgentActionRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    actionType: string;
-    /**
+  actionType: string;
+  /**
      * @minLength 0
      * @maxLength 180
      */
-    cardId?: string;
-    payload?: ProjectAgentActionRequestPayload;
+  cardId?: string;
+  payload?: ProjectAgentActionRequestPayload;
 }

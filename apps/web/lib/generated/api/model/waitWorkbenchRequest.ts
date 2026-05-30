@@ -7,5 +7,5 @@
  */
 
 export interface WaitWorkbenchRequest {
-    timeoutSec?: number;
+  timeoutSec?: number;
 }

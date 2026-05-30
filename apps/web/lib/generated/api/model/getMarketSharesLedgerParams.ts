@@ -7,6 +7,6 @@
  */
 
 export type GetMarketSharesLedgerParams = {
-    limit?: number;
-    cursor?: string;
+limit?: number;
+cursor?: string;
 };

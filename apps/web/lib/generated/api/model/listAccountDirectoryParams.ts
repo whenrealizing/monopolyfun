@@ -7,6 +7,6 @@
  */
 
 export type ListAccountDirectoryParams = {
-    limit?: number;
-    cursor?: string;
+limit?: number;
+cursor?: string;
 };

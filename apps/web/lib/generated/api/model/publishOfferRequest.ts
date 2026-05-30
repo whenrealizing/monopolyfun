@@ -5,28 +5,28 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {PublishPostItemRequest} from './publishPostItemRequest';
+import type { PublishPostItemRequest } from './publishPostItemRequest';
 
 export interface PublishOfferRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    title: string;
-    /**
+  title: string;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    description: string;
-    currency?: string;
-    paymentMethod?: string;
-    paymentProfile?: string;
-    paymentNetwork?: string;
-    paymentAsset?: string;
-    paymentRecipient?: string;
-    /**
+  description: string;
+  currency?: string;
+  paymentMethod?: string;
+  paymentProfile?: string;
+  paymentNetwork?: string;
+  paymentAsset?: string;
+  paymentRecipient?: string;
+  /**
      * @minItems 0
      * @maxItems 20
      */
-    items: PublishPostItemRequest[];
+  items: PublishPostItemRequest[];
 }

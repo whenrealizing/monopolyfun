@@ -5,20 +5,20 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {IdentityVerificationChallengeViewContext} from './identityVerificationChallengeViewContext';
-import type {IdentityVerificationChallengeViewInstructions} from './identityVerificationChallengeViewInstructions';
+import type { IdentityVerificationChallengeViewContext } from './identityVerificationChallengeViewContext';
+import type { IdentityVerificationChallengeViewInstructions } from './identityVerificationChallengeViewInstructions';
 
 export interface IdentityVerificationChallengeView {
-    id?: string;
-    certifierId?: string;
-    provider?: string;
-    status?: string;
-    verificationMethod?: string;
-    challengeToken?: string;
-    context?: IdentityVerificationChallengeViewContext;
-    instructions?: IdentityVerificationChallengeViewInstructions;
-    failureReason?: string;
-    createdAt?: string;
-    expiresAt?: string;
-    completedAt?: string;
+  id?: string;
+  certifierId?: string;
+  provider?: string;
+  status?: string;
+  verificationMethod?: string;
+  challengeToken?: string;
+  context?: IdentityVerificationChallengeViewContext;
+  instructions?: IdentityVerificationChallengeViewInstructions;
+  failureReason?: string;
+  createdAt?: string;
+  expiresAt?: string;
+  completedAt?: string;
 }

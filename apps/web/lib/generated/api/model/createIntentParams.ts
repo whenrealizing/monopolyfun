@@ -7,5 +7,5 @@
  */
 
 export type CreateIntentParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

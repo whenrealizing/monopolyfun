@@ -5,35 +5,35 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ShareReleaseRequestViewApprovedRoleCodesItem} from './shareReleaseRequestViewApprovedRoleCodesItem';
-import type {ShareReleaseRequestViewBlockedCapabilitiesItem} from './shareReleaseRequestViewBlockedCapabilitiesItem';
-import type {ShareReleaseRequestViewIssuerType} from './shareReleaseRequestViewIssuerType';
-import type {ShareReleaseRequestViewMetadata} from './shareReleaseRequestViewMetadata';
-import type {ShareReleaseRequestViewRequiredRoleCodesItem} from './shareReleaseRequestViewRequiredRoleCodesItem';
-import type {ShareReleaseRequestViewSkippedRoleCodesItem} from './shareReleaseRequestViewSkippedRoleCodesItem';
-import type {ShareReleaseRequestViewStatus} from './shareReleaseRequestViewStatus';
+import type { ShareReleaseRequestViewApprovedRoleCodesItem } from './shareReleaseRequestViewApprovedRoleCodesItem';
+import type { ShareReleaseRequestViewBlockedCapabilitiesItem } from './shareReleaseRequestViewBlockedCapabilitiesItem';
+import type { ShareReleaseRequestViewIssuerType } from './shareReleaseRequestViewIssuerType';
+import type { ShareReleaseRequestViewMetadata } from './shareReleaseRequestViewMetadata';
+import type { ShareReleaseRequestViewRequiredRoleCodesItem } from './shareReleaseRequestViewRequiredRoleCodesItem';
+import type { ShareReleaseRequestViewSkippedRoleCodesItem } from './shareReleaseRequestViewSkippedRoleCodesItem';
+import type { ShareReleaseRequestViewStatus } from './shareReleaseRequestViewStatus';
 
 export interface ShareReleaseRequestView {
-    id?: string;
-    issuerType?: ShareReleaseRequestViewIssuerType;
-    issuerId?: string;
-    marketId?: string;
-    projectId?: string;
-    orderId?: string;
-    proofId?: string;
-    accountId?: string;
-    amount?: number;
-    curveSlot?: number;
-    status?: ShareReleaseRequestViewStatus;
-    requiredRoleCodes?: ShareReleaseRequestViewRequiredRoleCodesItem[];
-    approvedRoleCodes?: ShareReleaseRequestViewApprovedRoleCodesItem[];
-    skippedRoleCodes?: ShareReleaseRequestViewSkippedRoleCodesItem[];
-    requestedByAccountId?: string;
-    resolvedAt?: string;
-    metadata?: ShareReleaseRequestViewMetadata;
-    createdAt?: string;
-    updatedAt?: string;
-    resourceKey?: string;
-    capabilities?: string[];
-    blockedCapabilities?: ShareReleaseRequestViewBlockedCapabilitiesItem[];
+  id?: string;
+  issuerType?: ShareReleaseRequestViewIssuerType;
+  issuerId?: string;
+  marketId?: string;
+  projectId?: string;
+  orderId?: string;
+  proofId?: string;
+  accountId?: string;
+  amount?: number;
+  curveSlot?: number;
+  status?: ShareReleaseRequestViewStatus;
+  requiredRoleCodes?: ShareReleaseRequestViewRequiredRoleCodesItem[];
+  approvedRoleCodes?: ShareReleaseRequestViewApprovedRoleCodesItem[];
+  skippedRoleCodes?: ShareReleaseRequestViewSkippedRoleCodesItem[];
+  requestedByAccountId?: string;
+  resolvedAt?: string;
+  metadata?: ShareReleaseRequestViewMetadata;
+  createdAt?: string;
+  updatedAt?: string;
+  resourceKey?: string;
+  capabilities?: string[];
+  blockedCapabilities?: ShareReleaseRequestViewBlockedCapabilitiesItem[];
 }

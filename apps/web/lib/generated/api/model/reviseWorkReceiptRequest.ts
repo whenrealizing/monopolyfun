@@ -7,9 +7,9 @@
  */
 
 export interface ReviseWorkReceiptRequest {
-    /** @minLength 1 */
-    reviewerAccountId: string;
-    /** @minLength 1 */
-    reason: string;
-    evidenceRefs?: string[];
+  /** @minLength 1 */
+  reviewerAccountId: string;
+  /** @minLength 1 */
+  reason: string;
+  evidenceRefs?: string[];
 }

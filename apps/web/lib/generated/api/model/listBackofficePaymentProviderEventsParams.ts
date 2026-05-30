@@ -7,5 +7,5 @@
  */
 
 export type ListBackofficePaymentProviderEventsParams = {
-    limit?: number;
+limit?: number;
 };

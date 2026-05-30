@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type PaymentIntentViewBlockedCapabilitiesItem = { [key: string]: unknown };
+export type PaymentIntentViewBlockedCapabilitiesItem = {[key: string]: unknown};

@@ -5,13 +5,13 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectCandidateBlockedSummaryView} from './projectCandidateBlockedSummaryView';
-import type {ProjectCandidateHistorySummaryView} from './projectCandidateHistorySummaryView';
-import type {ProjectResultCandidateWindowItemView} from './projectResultCandidateWindowItemView';
+import type { ProjectCandidateBlockedSummaryView } from './projectCandidateBlockedSummaryView';
+import type { ProjectCandidateHistorySummaryView } from './projectCandidateHistorySummaryView';
+import type { ProjectResultCandidateWindowItemView } from './projectResultCandidateWindowItemView';
 
 export interface ProjectResultCandidateWindowView {
-    current?: ProjectResultCandidateWindowItemView[];
-    nextCursor?: string;
-    blockedSummary?: ProjectCandidateBlockedSummaryView;
-    historySummary?: ProjectCandidateHistorySummaryView;
+  current?: ProjectResultCandidateWindowItemView[];
+  nextCursor?: string;
+  blockedSummary?: ProjectCandidateBlockedSummaryView;
+  historySummary?: ProjectCandidateHistorySummaryView;
 }

@@ -7,6 +7,6 @@
  */
 
 export interface PasswordResetRequestResponse {
-    handle?: string;
-    requestedAt?: string;
+  handle?: string;
+  requestedAt?: string;
 }

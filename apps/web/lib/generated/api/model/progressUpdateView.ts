@@ -5,17 +5,17 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProofLink} from './proofLink';
+import type { ProofLink } from './proofLink';
 
 export interface ProgressUpdateView {
-    id?: string;
-    orderId?: string;
-    stepIndex?: number;
-    stepTitle?: string;
-    summary?: string;
-    links?: ProofLink[];
-    artifacts?: string[];
-    executionMode?: string;
-    agentRuntime?: string;
-    createdAt?: string;
+  id?: string;
+  orderId?: string;
+  stepIndex?: number;
+  stepTitle?: string;
+  summary?: string;
+  links?: ProofLink[];
+  artifacts?: string[];
+  executionMode?: string;
+  agentRuntime?: string;
+  createdAt?: string;
 }

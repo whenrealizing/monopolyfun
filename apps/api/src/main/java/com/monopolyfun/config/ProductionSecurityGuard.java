@@ -45,9 +45,6 @@ public class ProductionSecurityGuard {
         requireRotatedSecret(digitalInventoryConfig.getEncryptionSecret(), DEV_DIGITAL_INVENTORY_SECRET, "DIGITAL_INVENTORY_ENCRYPTION_SECRET");
         require(!"postgres".equals(environment.getProperty("spring.datasource.password")), "DATABASE_PASSWORD must be rotated");
         require(!isLocalDatabaseUrl(environment.getProperty("spring.datasource.url")), "DATABASE_URL must point to an external PostgreSQL service");
-        require(!isLocalUrl(environment.getProperty("monopolyfun.oauth.github.redirect-uri")), "GITHUB_REDIRECT_URI must use a production domain");
-        require(!isLocalUrl(environment.getProperty("monopolyfun.oauth.github.verification-redirect-uri")), "GITHUB_VERIFICATION_REDIRECT_URI must use a production domain");
-        require(!isLocalUrl(environment.getProperty("monopolyfun.oauth.github.web-callback-url")), "GITHUB_WEB_CALLBACK_URL must use a production domain");
         require(hasText(r2Config.getBucket()), "UPLOAD_BUCKET is required");
     }
 

@@ -5,18 +5,18 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectAgentContextViewMemory} from './projectAgentContextViewMemory';
-import type {ProjectAgentContextViewMemorySource} from './projectAgentContextViewMemorySource';
-import type {ProjectAgentContextViewProject} from './projectAgentContextViewProject';
-import type {ProjectAgentContextViewToolContracts} from './projectAgentContextViewToolContracts';
-import type {ProjectAgentContextViewValidation} from './projectAgentContextViewValidation';
-import type {ProjectAgentContextViewWorkbench} from './projectAgentContextViewWorkbench';
+import type { ProjectAgentContextViewMemory } from './projectAgentContextViewMemory';
+import type { ProjectAgentContextViewMemorySource } from './projectAgentContextViewMemorySource';
+import type { ProjectAgentContextViewProject } from './projectAgentContextViewProject';
+import type { ProjectAgentContextViewToolContracts } from './projectAgentContextViewToolContracts';
+import type { ProjectAgentContextViewValidation } from './projectAgentContextViewValidation';
+import type { ProjectAgentContextViewWorkbench } from './projectAgentContextViewWorkbench';
 
 export interface ProjectAgentContextView {
-    project?: ProjectAgentContextViewProject;
-    memory?: ProjectAgentContextViewMemory;
-    validation?: ProjectAgentContextViewValidation;
-    workbench?: ProjectAgentContextViewWorkbench;
-    toolContracts?: ProjectAgentContextViewToolContracts;
-    memorySource?: ProjectAgentContextViewMemorySource;
+  project?: ProjectAgentContextViewProject;
+  memory?: ProjectAgentContextViewMemory;
+  validation?: ProjectAgentContextViewValidation;
+  workbench?: ProjectAgentContextViewWorkbench;
+  toolContracts?: ProjectAgentContextViewToolContracts;
+  memorySource?: ProjectAgentContextViewMemorySource;
 }

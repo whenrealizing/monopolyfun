@@ -5,17 +5,17 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {AccountSummary} from './accountSummary';
-import type {IdentityBadgeView} from './identityBadgeView';
-import type {IdentityDisplaySkinView} from './identityDisplaySkinView';
-import type {IdentityLinkedAccountView} from './identityLinkedAccountView';
+import type { AccountSummary } from './accountSummary';
+import type { IdentityBadgeView } from './identityBadgeView';
+import type { IdentityDisplaySkinView } from './identityDisplaySkinView';
+import type { IdentityLinkedAccountView } from './identityLinkedAccountView';
 
 export interface IdentityProfileView {
-    account?: AccountSummary;
-    verified?: boolean;
-    verifiedFactCount?: number;
-    badges?: IdentityBadgeView[];
-    linkedAccounts?: IdentityLinkedAccountView[];
-    displaySkin?: IdentityDisplaySkinView;
-    displaySkinOptions?: IdentityDisplaySkinView[];
+  account?: AccountSummary;
+  verified?: boolean;
+  verifiedFactCount?: number;
+  badges?: IdentityBadgeView[];
+  linkedAccounts?: IdentityLinkedAccountView[];
+  displaySkin?: IdentityDisplaySkinView;
+  displaySkinOptions?: IdentityDisplaySkinView[];
 }

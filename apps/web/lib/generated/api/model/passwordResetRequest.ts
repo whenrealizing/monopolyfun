@@ -7,6 +7,6 @@
  */
 
 export interface PasswordResetRequest {
-    /** @minLength 1 */
-    handle: string;
+  /** @minLength 1 */
+  handle: string;
 }

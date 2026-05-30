@@ -5,25 +5,25 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProofAssetViewMetadata} from './proofAssetViewMetadata';
-import type {ProofAssetViewStatus} from './proofAssetViewStatus';
+import type { ProofAssetViewMetadata } from './proofAssetViewMetadata';
+import type { ProofAssetViewStatus } from './proofAssetViewStatus';
 
 export interface ProofAssetView {
-    id?: string;
-    orderId?: string;
-    artifactRef?: string;
-    objectKey?: string;
-    filename?: string;
-    contentType?: string;
-    contentLengthBytes?: number;
-    checksumSha256?: string;
-    storageProvider?: string;
-    bucket?: string;
-    status?: ProofAssetViewStatus;
-    uploadedByAccountId?: string;
-    purpose?: string;
-    visibility?: string;
-    metadata?: ProofAssetViewMetadata;
-    createdAt?: string;
-    updatedAt?: string;
+  id?: string;
+  orderId?: string;
+  artifactRef?: string;
+  objectKey?: string;
+  filename?: string;
+  contentType?: string;
+  contentLengthBytes?: number;
+  checksumSha256?: string;
+  storageProvider?: string;
+  bucket?: string;
+  status?: ProofAssetViewStatus;
+  uploadedByAccountId?: string;
+  purpose?: string;
+  visibility?: string;
+  metadata?: ProofAssetViewMetadata;
+  createdAt?: string;
+  updatedAt?: string;
 }

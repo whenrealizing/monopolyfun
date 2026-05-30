@@ -7,29 +7,29 @@
  */
 
 export interface CreateProjectItemRequest {
-    /**
+  /**
      * 执行当前创建操作的账号 ID。
      * @minLength 1
      */
-    actorAccountId: string;
-    /**
+  actorAccountId: string;
+  /**
      * 项目任务名称。
      * @minLength 1
      */
-    name: string;
-    /** 项目任务补充说明。 */
-    description?: string;
-    /**
+  name: string;
+  /** 项目任务补充说明。 */
+  description?: string;
+  /**
      * 任务交付标准。agentInstruction 由系统根据交付标准派生。
      * @minLength 1
      */
-    deliveryStandard: string;
-    /** 任务验收标准列表。为空时系统回退到 deliveryStandard。 */
-    acceptanceCriteria?: string[];
-    /** 项目任务难度分，用于领取时计算 shares。范围 0.5 到 8。 */
-    difficultyScore?: number;
-    /** 项目任务类型。可选值 normal、bug、review、dispute。 */
-    itemType?: string;
-    /** 项目任务交付模式。可选值 reviewed_delivery、instant_fulfillment。 */
-    mode?: string;
+  deliveryStandard: string;
+  /** 任务验收标准列表。为空时系统回退到 deliveryStandard。 */
+  acceptanceCriteria?: string[];
+  /** 项目任务难度分，用于领取时计算 shares。范围 0.5 到 8。 */
+  difficultyScore?: number;
+  /** 项目任务类型。可选值 normal、bug、review、dispute。 */
+  itemType?: string;
+  /** 项目任务交付模式。可选值 reviewed_delivery、instant_fulfillment。 */
+  mode?: string;
 }

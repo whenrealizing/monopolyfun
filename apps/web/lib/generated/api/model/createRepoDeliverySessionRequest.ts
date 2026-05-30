@@ -7,19 +7,19 @@
  */
 
 export interface CreateRepoDeliverySessionRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    projectNo?: string;
-    /**
+  projectNo?: string;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    orderNo?: string;
-    /**
+  orderNo?: string;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    runtime?: string;
+  runtime?: string;
 }

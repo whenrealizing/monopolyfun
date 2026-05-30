@@ -7,8 +7,8 @@
  */
 
 export interface CloseOrderRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    /** @minLength 1 */
-    reason: string;
+  /** @minLength 1 */
+  actorAccountId: string;
+  /** @minLength 1 */
+  reason: string;
 }

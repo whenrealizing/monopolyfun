@@ -7,12 +7,12 @@
  */
 
 export interface ProjectRepoProvisionResponse {
-    provisionSessionId?: string;
-    repoUrl?: string;
-    cloneUrl?: string;
-    provider?: string;
-    owner?: string;
-    name?: string;
-    defaultBranch?: string;
-    visibility?: string;
+  provisionSessionId?: string;
+  repoUrl?: string;
+  cloneUrl?: string;
+  provider?: string;
+  owner?: string;
+  name?: string;
+  defaultBranch?: string;
+  visibility?: string;
 }

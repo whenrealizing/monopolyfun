@@ -7,19 +7,19 @@
  */
 
 export interface ReportPullRequestProofRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    prUrl: string;
-    /**
+  prUrl: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    headCommit: string;
-    /**
+  headCommit: string;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    diffSummary?: string;
+  diffSummary?: string;
 }

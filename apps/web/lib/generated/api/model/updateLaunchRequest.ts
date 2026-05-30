@@ -5,18 +5,18 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {UpdateLaunchRequestMetadata} from './updateLaunchRequestMetadata';
+import type { UpdateLaunchRequestMetadata } from './updateLaunchRequestMetadata';
 
 export interface UpdateLaunchRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 160
      */
-    title?: string;
-    /**
+  title?: string;
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    hypothesis?: string;
-    metadata?: UpdateLaunchRequestMetadata;
+  hypothesis?: string;
+  metadata?: UpdateLaunchRequestMetadata;
 }

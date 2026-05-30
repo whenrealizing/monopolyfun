@@ -674,11 +674,11 @@ function extractExternalRef(text) {
 }
 
 function extractBindings(text) {
-  const refs = [...text.matchAll(/(github|issue|email|mail|feishu|slack|discord)?\s*([a-z0-9_.+-]+\/[a-z0-9_.-]+#[a-z0-9_.-]+|[a-z0-9_.+-]+@[a-z0-9_.-]+|https?:\/\/\S+)/gi)]
+  const refs = [...text.matchAll(/(forgejo|issue|email|mail|feishu|slack|discord)?\s*([a-z0-9_.+-]+\/[a-z0-9_.-]+#[a-z0-9_.-]+|[a-z0-9_.+-]+@[a-z0-9_.-]+|https?:\/\/\S+)/gi)]
     .map((match) => match[2].replace(/[。),，]+$/g, ""));
   const bindings = [];
   if (refs[0]) {
-    bindings.push(binding("L1", "github", "issue", refs[0]));
+    bindings.push(binding("L1", "forgejo", "issue", refs[0]));
   }
   if (refs[1]) {
     bindings.push(binding("L2", "email", "thread", refs[1]));

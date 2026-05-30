@@ -5,18 +5,18 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectMemorySourceViewMetadata} from './projectMemorySourceViewMetadata';
+import type { ProjectMemorySourceViewMetadata } from './projectMemorySourceViewMetadata';
 
 export interface ProjectMemorySourceView {
-    id?: string;
-    sourceId?: string;
-    kind?: string;
-    path?: string;
-    sha256?: string;
-    visibility?: string;
-    provider?: string;
-    externalUrl?: string;
-    syncStatus?: string;
-    metadata?: ProjectMemorySourceViewMetadata;
-    createdAt?: string;
+  id?: string;
+  sourceId?: string;
+  kind?: string;
+  path?: string;
+  sha256?: string;
+  visibility?: string;
+  provider?: string;
+  externalUrl?: string;
+  syncStatus?: string;
+  metadata?: ProjectMemorySourceViewMetadata;
+  createdAt?: string;
 }

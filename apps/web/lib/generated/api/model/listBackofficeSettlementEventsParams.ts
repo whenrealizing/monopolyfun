@@ -7,5 +7,5 @@
  */
 
 export type ListBackofficeSettlementEventsParams = {
-    limit?: number;
+limit?: number;
 };

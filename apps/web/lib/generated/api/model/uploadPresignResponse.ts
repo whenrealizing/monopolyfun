@@ -5,14 +5,14 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {UploadPresignResponseUploadHeaders} from './uploadPresignResponseUploadHeaders';
+import type { UploadPresignResponseUploadHeaders } from './uploadPresignResponseUploadHeaders';
 
 export interface UploadPresignResponse {
-    assetId?: string;
-    artifactRef?: string;
-    objectKey?: string;
-    uploadMethod?: string;
-    uploadUrl?: string;
-    uploadHeaders?: UploadPresignResponseUploadHeaders;
-    expiresAt?: string;
+  assetId?: string;
+  artifactRef?: string;
+  objectKey?: string;
+  uploadMethod?: string;
+  uploadUrl?: string;
+  uploadHeaders?: UploadPresignResponseUploadHeaders;
+  expiresAt?: string;
 }

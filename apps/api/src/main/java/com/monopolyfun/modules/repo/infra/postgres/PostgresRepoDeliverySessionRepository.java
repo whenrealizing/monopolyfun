@@ -76,7 +76,7 @@ public class PostgresRepoDeliverySessionRepository implements RepoDeliverySessio
                 .where(REPO_URL.eq(repoUrl))
                 .and(JOB_TYPE.eq("delivery"))
                 .and(HEAD_BRANCH.eq(headBranch))
-                // 中文注释：GitHub webhook 只续期仍在交付中的 session，避免已提交证明的历史记录被重新激活。
+                // 中文注释：仓库事件只续期仍在交付中的 session，避免已提交证明的历史记录被重新激活。
                 .and(STATUS.in("issued", "pr_reported", "progress_observed"))
                 .orderBy(UPDATED_AT.desc())
                 .limit(1)

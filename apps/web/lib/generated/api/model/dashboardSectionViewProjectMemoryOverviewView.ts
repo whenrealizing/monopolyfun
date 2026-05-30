@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectMemoryOverviewView} from './projectMemoryOverviewView';
+import type { ProjectMemoryOverviewView } from './projectMemoryOverviewView';
 
 export interface DashboardSectionViewProjectMemoryOverviewView {
-    status?: string;
-    data?: ProjectMemoryOverviewView;
-    errorCode?: string;
+  status?: string;
+  data?: ProjectMemoryOverviewView;
+  errorCode?: string;
 }

@@ -7,10 +7,10 @@
  */
 
 export interface DigitalInventorySummaryView {
-    itemId?: string;
-    available?: number;
-    reserved?: number;
-    delivered?: number;
-    voided?: number;
-    total?: number;
+  itemId?: string;
+  available?: number;
+  reserved?: number;
+  delivered?: number;
+  voided?: number;
+  total?: number;
 }

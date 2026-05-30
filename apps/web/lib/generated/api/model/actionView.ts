@@ -7,15 +7,15 @@
  */
 
 export interface ActionView {
-    id?: string;
-    label?: string;
-    method?: string;
-    href?: string;
-    importance?: string;
-    role?: string;
-    reasonCode?: string;
-    disabledReason?: string;
-    requiresPayment?: boolean;
-    requiresProof?: boolean;
-    dangerLevel?: string;
+  id?: string;
+  label?: string;
+  method?: string;
+  href?: string;
+  importance?: string;
+  role?: string;
+  reasonCode?: string;
+  disabledReason?: string;
+  requiresPayment?: boolean;
+  requiresProof?: boolean;
+  dangerLevel?: string;
 }

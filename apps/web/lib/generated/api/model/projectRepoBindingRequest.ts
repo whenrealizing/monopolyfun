@@ -7,34 +7,34 @@
  */
 
 export interface ProjectRepoBindingRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    provider?: string;
-    /**
+  provider?: string;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    repoUrl: string;
-    /**
+  repoUrl: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    repoOwner: string;
-    /**
+  repoOwner: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    repoName: string;
-    /**
+  repoName: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    defaultBranch?: string;
-    /**
+  defaultBranch?: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    installationId?: string;
+  installationId?: string;
 }

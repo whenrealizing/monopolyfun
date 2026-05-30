@@ -5,29 +5,29 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {TaskViewMetadata} from './taskViewMetadata';
-import type {TaskViewRewardPreview} from './taskViewRewardPreview';
-import type {TaskViewSuggestedEvidenceItem} from './taskViewSuggestedEvidenceItem';
+import type { TaskViewMetadata } from './taskViewMetadata';
+import type { TaskViewRewardPreview } from './taskViewRewardPreview';
+import type { TaskViewSuggestedEvidenceItem } from './taskViewSuggestedEvidenceItem';
 
 export interface TaskView {
-    id?: string;
-    projectId?: string;
-    launchId?: string;
-    title?: string;
-    intent?: string;
-    linkedProofRequestIds?: string[];
-    deliverable?: string;
-    acceptanceCriteria?: string[];
-    suggestedEvidence?: TaskViewSuggestedEvidenceItem[];
-    rewardPreview?: TaskViewRewardPreview;
-    templateRef?: string;
-    status?: string;
-    subStatus?: string;
-    tags?: string[];
-    metadata?: TaskViewMetadata;
-    createdByAccountId?: string;
-    claimedByAccountId?: string;
-    createdAt?: string;
-    claimedAt?: string;
-    updatedAt?: string;
+  id?: string;
+  projectId?: string;
+  launchId?: string;
+  title?: string;
+  intent?: string;
+  linkedProofRequestIds?: string[];
+  deliverable?: string;
+  acceptanceCriteria?: string[];
+  suggestedEvidence?: TaskViewSuggestedEvidenceItem[];
+  rewardPreview?: TaskViewRewardPreview;
+  templateRef?: string;
+  status?: string;
+  subStatus?: string;
+  tags?: string[];
+  metadata?: TaskViewMetadata;
+  createdByAccountId?: string;
+  claimedByAccountId?: string;
+  createdAt?: string;
+  claimedAt?: string;
+  updatedAt?: string;
 }

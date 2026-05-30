@@ -7,10 +7,10 @@
  */
 
 export type ListProjectsParams = {
-    status?: string;
-    q?: string;
-    sort?: string;
-    limit?: number;
-    cursor?: string;
-    includeAgent?: boolean;
+status?: string;
+q?: string;
+sort?: string;
+limit?: number;
+cursor?: string;
+includeAgent?: boolean;
 };

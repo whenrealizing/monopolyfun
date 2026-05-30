@@ -7,5 +7,5 @@
  */
 
 export type GetShareReleaseRequestParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

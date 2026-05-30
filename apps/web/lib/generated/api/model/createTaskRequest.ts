@@ -5,35 +5,35 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {CreateTaskRequestMetadata} from './createTaskRequestMetadata';
-import type {CreateTaskRequestRewardPreview} from './createTaskRequestRewardPreview';
-import type {CreateTaskRequestSuggestedEvidenceItem} from './createTaskRequestSuggestedEvidenceItem';
+import type { CreateTaskRequestMetadata } from './createTaskRequestMetadata';
+import type { CreateTaskRequestRewardPreview } from './createTaskRequestRewardPreview';
+import type { CreateTaskRequestSuggestedEvidenceItem } from './createTaskRequestSuggestedEvidenceItem';
 
 export interface CreateTaskRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 160
      */
-    title: string;
-    /**
+  title: string;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    intent: string;
-    linkedProofRequestIds?: string[];
-    /**
+  intent: string;
+  linkedProofRequestIds?: string[];
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    deliverable: string;
-    acceptanceCriteria?: string[];
-    suggestedEvidence?: CreateTaskRequestSuggestedEvidenceItem[];
-    rewardPreview?: CreateTaskRequestRewardPreview;
-    /**
+  deliverable: string;
+  acceptanceCriteria?: string[];
+  suggestedEvidence?: CreateTaskRequestSuggestedEvidenceItem[];
+  rewardPreview?: CreateTaskRequestRewardPreview;
+  /**
      * @minLength 0
      * @maxLength 200
      */
-    templateRef?: string;
-    tags?: string[];
-    metadata?: CreateTaskRequestMetadata;
+  templateRef?: string;
+  tags?: string[];
+  metadata?: CreateTaskRequestMetadata;
 }

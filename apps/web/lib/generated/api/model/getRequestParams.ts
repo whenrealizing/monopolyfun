@@ -7,5 +7,5 @@
  */
 
 export type GetRequestParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

@@ -55,7 +55,7 @@ public class ProjectMemoryMaintenanceService {
                 ".monopoly-memory/sources/" + DATE.format(Instant.now()) + "-" + subject + "-ci.md",
                 null,
                 "team",
-                "github",
+                "git",
                 request.prUrl() == null || request.prUrl().isBlank() ? request.detailsUrl() : request.prUrl(),
                 request.headSha(),
                 null,

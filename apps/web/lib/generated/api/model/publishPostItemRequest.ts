@@ -7,52 +7,52 @@
  */
 
 export interface PublishPostItemRequest {
-    /**
+  /**
      * 报价项或需求项名称。Project 初始任务请使用 PublishProjectItemRequest。
      * @minLength 0
      * @maxLength 120
      */
-    name: string;
-    /**
+  name: string;
+  /**
      * 任务补充说明。
      * @minLength 0
      * @maxLength 1000
      */
-    description?: string;
-    /**
+  description?: string;
+  /**
      * 任务交付标准。
      * @minLength 0
      * @maxLength 1000
      */
-    deliveryStandard: string;
-    /**
+  deliveryStandard: string;
+  /**
      * 任务验收标准列表。
      * @minItems 0
      * @maxItems 20
      */
-    acceptanceCriteria?: string[];
-    /**
+  acceptanceCriteria?: string[];
+  /**
      * 报价项价格或需求项预算。Project 初始任务由系统定价，这个字段只用于 offer/request。
      * @minimum 0.01
      */
-    amount?: number;
-    /** Project 初始任务难度分。offer/request 不使用这个字段。 */
-    difficultyScore?: number;
-    /**
+  amount?: number;
+  /** Project 初始任务难度分。offer/request 不使用这个字段。 */
+  difficultyScore?: number;
+  /**
      * 席位数量。Project 初始任务固定为 1，这个字段只用于 offer/request。
      * @minimum 1
      */
-    quantity: number;
-    /**
+  quantity: number;
+  /**
      * Agent 执行提示。Project 初始任务由系统根据 deliveryStandard 派生，这个字段只用于 offer/request。
      * @minLength 0
      * @maxLength 2000
      */
-    agentInstruction?: string;
-    /**
+  agentInstruction?: string;
+  /**
      * 履约模式：reviewed_delivery / instant_fulfillment。instant_fulfillment 会启用付款后直接发货。
      * @minLength 0
      * @maxLength 32
      */
-    mode?: string;
+  mode?: string;
 }

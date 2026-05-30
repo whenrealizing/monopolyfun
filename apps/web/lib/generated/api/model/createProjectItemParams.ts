@@ -7,5 +7,5 @@
  */
 
 export type CreateProjectItemParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

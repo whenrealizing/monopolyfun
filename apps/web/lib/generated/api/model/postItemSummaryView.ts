@@ -7,11 +7,11 @@
  */
 
 export interface PostItemSummaryView {
-    itemCount?: number;
-    openItemCount?: number;
-    minAmount?: number;
-    maxAmount?: number;
-    totalQuantity?: number;
-    remainingQuantity?: number;
-    currency?: string;
+  itemCount?: number;
+  openItemCount?: number;
+  minAmount?: number;
+  maxAmount?: number;
+  totalQuantity?: number;
+  remainingQuantity?: number;
+  currency?: string;
 }

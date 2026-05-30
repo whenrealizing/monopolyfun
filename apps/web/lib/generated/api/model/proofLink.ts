@@ -7,6 +7,6 @@
  */
 
 export interface ProofLink {
-    label?: string;
-    href?: string;
+  label?: string;
+  href?: string;
 }

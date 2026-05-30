@@ -427,10 +427,10 @@ async function submitWorkThreadResult(params, client) {
     actorAccountId: client.account.id,
     resultMarkdown,
     summary: params.summary || "OpenClaw 已完成 WorkThread 交付。",
-    prUrl: params.prUrl || params.proofUrl || "https://github.com/monopolyfun/openclaw-smoke/pull/1",
+    prUrl: params.prUrl || params.proofUrl || "http://localhost:3001/monopolyfun/openclaw-smoke/pulls/1",
     testSummary: params.testSummary || "OpenClaw smoke 已完成可复核检查。",
     changedFiles: normalizeList(params.changedFiles, ["docs/evidence/openclaw-smoke/result.md"]),
-    evidenceRefs: normalizeList(params.evidenceRefs, [params.prUrl || params.proofUrl || "https://github.com/monopolyfun/openclaw-smoke/pull/1"]),
+    evidenceRefs: normalizeList(params.evidenceRefs, [params.prUrl || params.proofUrl || "http://localhost:3001/monopolyfun/openclaw-smoke/pulls/1"]),
     runtime: params.runtime || "openclaw",
   };
   // 中文注释：结构化字段和 markdown 同时提交，便于人类验收和机器读回保持同一份证据。
@@ -1221,10 +1221,10 @@ function normalizeBindings(bindings) {
   }
   return [{
     level: "L1",
-    provider: "github",
+    provider: "forgejo",
     channelType: "issue",
     externalRef: "monopolyfun/project#manual",
-    displayName: "github:monopolyfun/project#manual",
+    displayName: "forgejo:monopolyfun/project#manual",
     actionPolicy: { actionEntry: "project_inbox" },
     archivePolicy: { mode: "manual" },
   }];
@@ -1234,8 +1234,8 @@ function inferProvider(externalRef) {
   if (externalRef.includes("@")) {
     return "email";
   }
-  if (externalRef.includes("github") || externalRef.includes("#")) {
-    return "github";
+  if (externalRef.includes("forgejo") || externalRef.includes("#")) {
+    return "forgejo";
   }
   return "monopolyfun";
 }

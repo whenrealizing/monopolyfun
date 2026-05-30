@@ -7,5 +7,5 @@
  */
 
 export type CreatePostItemParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

@@ -7,18 +7,18 @@
  */
 
 export interface ProjectResultCandidateWindowItemView {
-    candidateId?: string;
-    taskId?: string;
-    taskTitle?: string;
-    resultType?: string;
-    candidateStatus?: string;
-    consensusStatus?: string;
-    supportCount?: number;
-    supportThreshold?: number;
-    reasonToAct?: string;
-    nextAction?: string;
-    actionScore?: number;
-    prNumber?: number;
-    headSha?: string;
-    taskUpdatedAt?: string;
+  candidateId?: string;
+  taskId?: string;
+  taskTitle?: string;
+  resultType?: string;
+  candidateStatus?: string;
+  consensusStatus?: string;
+  supportCount?: number;
+  supportThreshold?: number;
+  reasonToAct?: string;
+  nextAction?: string;
+  actionScore?: number;
+  prNumber?: number;
+  headSha?: string;
+  taskUpdatedAt?: string;
 }

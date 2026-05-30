@@ -10,7 +10,7 @@ export type ShareReleaseRequestViewStatus = typeof ShareReleaseRequestViewStatus
 
 
 export const ShareReleaseRequestViewStatus = {
-    pending: 'pending',
-    approved: 'approved',
-    skipped: 'skipped',
+  pending: 'pending',
+  approved: 'approved',
+  skipped: 'skipped',
 } as const;

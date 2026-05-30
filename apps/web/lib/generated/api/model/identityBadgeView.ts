@@ -7,9 +7,9 @@
  */
 
 export interface IdentityBadgeView {
-    code?: string;
-    label?: string;
-    kind?: string;
-    icon?: string;
-    weight?: number;
+  code?: string;
+  label?: string;
+  kind?: string;
+  icon?: string;
+  weight?: number;
 }

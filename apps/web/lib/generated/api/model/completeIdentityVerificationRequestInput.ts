@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type CompleteIdentityVerificationRequestInput = { [key: string]: unknown };
+export type CompleteIdentityVerificationRequestInput = {[key: string]: unknown};

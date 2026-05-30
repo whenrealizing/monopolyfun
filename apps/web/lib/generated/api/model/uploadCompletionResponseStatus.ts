@@ -10,10 +10,10 @@ export type UploadCompletionResponseStatus = typeof UploadCompletionResponseStat
 
 
 export const UploadCompletionResponseStatus = {
-    PENDING: 'PENDING',
-    UPLOADED: 'UPLOADED',
-    VERIFIED: 'VERIFIED',
-    QUARANTINED: 'QUARANTINED',
-    FAILED: 'FAILED',
-    CANCELLED: 'CANCELLED',
+  PENDING: 'PENDING',
+  UPLOADED: 'UPLOADED',
+  VERIFIED: 'VERIFIED',
+  QUARANTINED: 'QUARANTINED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
 } as const;

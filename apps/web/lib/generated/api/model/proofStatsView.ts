@@ -7,11 +7,11 @@
  */
 
 export interface ProofStatsView {
-    totalTasks?: number;
-    claimedTasks?: number;
-    submittedProofs?: number;
-    acceptedProofs?: number;
-    deploymentProofs?: number;
-    releaseProofs?: number;
-    opsIncidentProofs?: number;
+  totalTasks?: number;
+  claimedTasks?: number;
+  submittedProofs?: number;
+  acceptedProofs?: number;
+  deploymentProofs?: number;
+  releaseProofs?: number;
+  opsIncidentProofs?: number;
 }

@@ -5,27 +5,27 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProofRequestDraftAcceptanceSignalsItem} from './proofRequestDraftAcceptanceSignalsItem';
-import type {ProofRequestDraftEvidenceRequirementsItem} from './proofRequestDraftEvidenceRequirementsItem';
-import type {ProofRequestDraftMetadata} from './proofRequestDraftMetadata';
+import type { ProofRequestDraftAcceptanceSignalsItem } from './proofRequestDraftAcceptanceSignalsItem';
+import type { ProofRequestDraftEvidenceRequirementsItem } from './proofRequestDraftEvidenceRequirementsItem';
+import type { ProofRequestDraftMetadata } from './proofRequestDraftMetadata';
 
 export interface ProofRequestDraft {
-    /**
+  /**
      * @minLength 0
      * @maxLength 160
      */
-    title: string;
-    /**
+  title: string;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    intent: string;
-    evidenceRequirements?: ProofRequestDraftEvidenceRequirementsItem[];
-    acceptanceSignals?: ProofRequestDraftAcceptanceSignalsItem[];
-    /**
+  intent: string;
+  evidenceRequirements?: ProofRequestDraftEvidenceRequirementsItem[];
+  acceptanceSignals?: ProofRequestDraftAcceptanceSignalsItem[];
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    riskLevel?: string;
-    metadata?: ProofRequestDraftMetadata;
+  riskLevel?: string;
+  metadata?: ProofRequestDraftMetadata;
 }

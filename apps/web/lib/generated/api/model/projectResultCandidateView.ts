@@ -5,38 +5,38 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectResultCandidateViewChecksItem} from './projectResultCandidateViewChecksItem';
+import type { ProjectResultCandidateViewChecksItem } from './projectResultCandidateViewChecksItem';
 
 export interface ProjectResultCandidateView {
-    candidateId?: string;
-    projectId?: string;
-    taskId?: string;
-    launchId?: string;
-    taskTitle?: string;
-    taskStatus?: string;
-    taskCompleted?: boolean;
-    createdByAccountId?: string;
-    claimedByAccountId?: string;
-    resultType?: string;
-    candidateStatus?: string;
-    mergeabilityStatus?: string;
-    mergeabilityReason?: string;
-    repoUrl?: string;
-    prNumber?: number;
-    prUrl?: string;
-    headSha?: string;
-    baseBranch?: string;
-    branchName?: string;
-    prState?: string;
-    ciStatus?: string;
-    ciPassed?: boolean;
-    supportCount?: number;
-    weightedSupport?: number;
-    supportThreshold?: number;
-    consensusStatus?: string;
-    finalReviewStatus?: string;
-    reviewedCommitSha?: string;
-    checks?: ProjectResultCandidateViewChecksItem[];
-    lastSyncedAt?: string;
-    taskUpdatedAt?: string;
+  candidateId?: string;
+  projectId?: string;
+  taskId?: string;
+  launchId?: string;
+  taskTitle?: string;
+  taskStatus?: string;
+  taskCompleted?: boolean;
+  createdByAccountId?: string;
+  claimedByAccountId?: string;
+  resultType?: string;
+  candidateStatus?: string;
+  mergeabilityStatus?: string;
+  mergeabilityReason?: string;
+  repoUrl?: string;
+  prNumber?: number;
+  prUrl?: string;
+  headSha?: string;
+  baseBranch?: string;
+  branchName?: string;
+  prState?: string;
+  ciStatus?: string;
+  ciPassed?: boolean;
+  supportCount?: number;
+  weightedSupport?: number;
+  supportThreshold?: number;
+  consensusStatus?: string;
+  finalReviewStatus?: string;
+  reviewedCommitSha?: string;
+  checks?: ProjectResultCandidateViewChecksItem[];
+  lastSyncedAt?: string;
+  taskUpdatedAt?: string;
 }

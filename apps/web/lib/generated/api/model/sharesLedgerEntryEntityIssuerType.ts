@@ -10,5 +10,5 @@ export type SharesLedgerEntryEntityIssuerType = typeof SharesLedgerEntryEntityIs
 
 
 export const SharesLedgerEntryEntityIssuerType = {
-    project: 'project',
+  project: 'project',
 } as const;

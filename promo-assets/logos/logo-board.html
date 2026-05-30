@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MonopolyFun promo logo board</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #061015;
+        --panel: rgba(12, 25, 32, 0.86);
+        --panel-strong: rgba(16, 35, 44, 0.96);
+        --line: rgba(86, 214, 205, 0.32);
+        --text: #f4fbfb;
+        --muted: #9ab3b4;
+        --teal: #20d9c2;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(32, 217, 194, 0.14), transparent 28%),
+          radial-gradient(circle at 80% 18%, rgba(95, 147, 255, 0.12), transparent 26%),
+          linear-gradient(135deg, #05090d 0%, var(--bg) 48%, #08141f 100%);
+        color: var(--text);
+      }
+
+      .board {
+        width: 1600px;
+        height: 900px;
+        padding: 46px 64px 50px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .board::before {
+        content: "";
+        position: absolute;
+        inset: 34px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 36px;
+        pointer-events: none;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 48px;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 50px;
+        line-height: 1.02;
+        letter-spacing: 0;
+        max-width: 780px;
+      }
+
+      .subtitle {
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 20px;
+      }
+
+      .wordmark {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 18px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .wordmark img:first-child {
+        width: 56px;
+        height: 56px;
+      }
+
+      .wordmark img:last-child {
+        width: 238px;
+        max-height: 44px;
+        filter: brightness(1.55);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 22px;
+      }
+
+      .card {
+        height: 608px;
+        padding: 24px;
+        border-radius: 30px;
+        background: linear-gradient(180deg, var(--panel-strong), var(--panel));
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow:
+          0 26px 80px rgba(0, 0, 0, 0.36),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .logo-disc {
+        width: 142px;
+        height: 142px;
+        flex: 0 0 142px;
+        aspect-ratio: 1 / 1;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.16), transparent 56%),
+          #f7fbfb;
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.18),
+          0 0 46px rgba(32, 217, 194, 0.22);
+      }
+
+      .logo-disc.dark {
+        background:
+          radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.1), transparent 56%),
+          #0c1117;
+      }
+
+      .logo-disc img {
+        max-width: 96px;
+        max-height: 96px;
+        object-fit: contain;
+      }
+
+      .logo-disc .coin {
+        max-width: 116px;
+        max-height: 116px;
+      }
+
+      .logo-disc .wide {
+        max-width: 124px;
+        max-height: 76px;
+      }
+
+      .logo-disc .invert {
+        filter: invert(1);
+      }
+
+      .brand {
+        margin-top: 18px;
+        font-size: 24px;
+        font-weight: 760;
+        letter-spacing: 0;
+      }
+
+      .role {
+        margin-top: 8px;
+        min-height: 44px;
+        color: var(--muted);
+        text-align: center;
+        font-size: 15px;
+        line-height: 1.35;
+      }
+
+      .burst {
+        width: 100%;
+        margin: 22px 0 16px;
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+
+      .burst::before {
+        content: "";
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--line), transparent);
+      }
+
+      .burst span {
+        position: absolute;
+        padding: 5px 10px;
+        border-radius: 999px;
+        color: #05211e;
+        background: var(--teal);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+
+      .fragments {
+        width: 100%;
+        display: grid;
+        gap: 12px;
+      }
+
+      .fragment {
+        min-height: 52px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: 18px;
+        color: #dffafa;
+        background: rgba(255, 255, 255, 0.055);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .icon {
+        width: 34px;
+        height: 34px;
+        flex: 0 0 auto;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: rgba(32, 217, 194, 0.14);
+        border: 1px solid rgba(32, 217, 194, 0.24);
+        color: var(--teal);
+        font-weight: 900;
+      }
+
+      .label {
+        font-size: 15px;
+        line-height: 1.2;
+      }
+
+      .caption {
+        margin-top: auto;
+        padding-top: 14px;
+        color: #c9fbf5;
+        font-size: 14px;
+        line-height: 1.35;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="board">
+      <section class="header">
+        <div>
+          <h1>Real logos explode into the MonopolyFun workflow</h1>
+          <div class="subtitle">Source brands become concrete work objects for the promo transition.</div>
+        </div>
+        <div class="wordmark">
+          <img src="./monopolyfun-mark.png" alt="MonopolyFun mark" />
+          <img src="./monopolyfun-wordmark.svg" alt="MonopolyFun wordmark" />
+        </div>
+      </section>
+
+      <section class="grid" aria-label="Logo storyboard">
+        <article class="card">
+          <div class="logo-disc dark">
+            <img class="invert" src="./github.svg" alt="GitHub mark" />
+          </div>
+          <div class="brand">GitHub</div>
+          <div class="role">source of public work</div>
+          <div class="burst"><span>EXPLODES INTO</span></div>
+          <div class="fragments">
+            <div class="fragment"><div class="icon">#</div><div class="label">Issue card</div></div>
+            <div class="fragment"><div class="icon">PR</div><div class="label">Pull request card</div></div>
+            <div class="fragment"><div class="icon">R</div><div class="label">Review comment</div></div>
+            <div class="fragment"><div class="icon">✓</div><div class="label">Accepted change</div></div>
+          </div>
+          <div class="caption">This logo starts the video with recognizable open-source work pressure.</div>
+        </article>
+
+        <article class="card">
+          <div class="logo-disc dark">
+            <img src="./slack-hash.png" alt="Slack logo" />
+          </div>
+          <div class="brand">Slack</div>
+          <div class="role">source of team context</div>
+          <div class="burst"><span>EXPLODES INTO</span></div>
+          <div class="fragments">
+            <div class="fragment"><div class="icon">@</div><div class="label">Mention bubble</div></div>
+            <div class="fragment"><div class="icon">···</div><div class="label">Thread reply</div></div>
+            <div class="fragment"><div class="icon">C</div><div class="label">Channel decision</div></div>
+            <div class="fragment"><div class="icon">!</div><div class="label">Blocked status</div></div>
+          </div>
+          <div class="caption">Team discussion becomes structured task context.</div>
+        </article>
+
+        <article class="card">
+          <div class="logo-disc dark">
+            <img class="invert" src="./openai.svg" alt="OpenAI logo" />
+          </div>
+          <div class="brand">OpenAI / Codex</div>
+          <div class="role">agent execution layer</div>
+          <div class="burst"><span>EXPLODES INTO</span></div>
+          <div class="fragments">
+            <div class="fragment"><div class="icon">AI</div><div class="label">Agent action</div></div>
+            <div class="fragment"><div class="icon">±</div><div class="label">Code diff</div></div>
+            <div class="fragment"><div class="icon">T</div><div class="label">Test log</div></div>
+            <div class="fragment"><div class="icon">OK</div><div class="label">Verified result</div></div>
+          </div>
+          <div class="caption">Execution becomes evidence the reviewer can inspect.</div>
+        </article>
+
+        <article class="card">
+          <div class="logo-disc">
+            <img class="coin" src="./usdc.svg" alt="USDC logo" />
+          </div>
+          <div class="brand">USDC</div>
+          <div class="role">settlement symbol</div>
+          <div class="burst"><span>EXPLODES INTO</span></div>
+          <div class="fragments">
+            <div class="fragment"><div class="icon">$</div><div class="label">Bounty token</div></div>
+            <div class="fragment"><div class="icon">%</div><div class="label">Revenue share</div></div>
+            <div class="fragment"><div class="icon">→</div><div class="label">Claim action</div></div>
+            <div class="fragment"><div class="icon">L</div><div class="label">Ledger row</div></div>
+          </div>
+          <div class="caption">Payment fragments become claimable rewards.</div>
+        </article>
+
+        <article class="card">
+          <div class="logo-disc dark">
+            <img class="wide" src="./monopolyfun-wordmark.svg" alt="MonopolyFun wordmark" />
+          </div>
+          <div class="brand">MonopolyFun</div>
+          <div class="role">auditable workroom</div>
+          <div class="burst"><span>COLLECTS INTO</span></div>
+          <div class="fragments">
+            <div class="fragment"><div class="icon">W</div><div class="label">Work Thread</div></div>
+            <div class="fragment"><div class="icon">M</div><div class="label">Result.md</div></div>
+            <div class="fragment"><div class="icon">✓</div><div class="label">Review decision</div></div>
+            <div class="fragment"><div class="icon">S</div><div class="label">Contribution record</div></div>
+          </div>
+          <div class="caption">All fragments settle into one project room.</div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

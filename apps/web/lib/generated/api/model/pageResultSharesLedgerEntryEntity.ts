@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {PageInfo} from './pageInfo';
-import type {SharesLedgerEntryEntity} from './sharesLedgerEntryEntity';
+import type { PageInfo } from './pageInfo';
+import type { SharesLedgerEntryEntity } from './sharesLedgerEntryEntity';
 
 export interface PageResultSharesLedgerEntryEntity {
-    items?: SharesLedgerEntryEntity[];
-    pageInfo?: PageInfo;
+  items?: SharesLedgerEntryEntity[];
+  pageInfo?: PageInfo;
 }

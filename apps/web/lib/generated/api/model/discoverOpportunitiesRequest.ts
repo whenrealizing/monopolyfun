@@ -5,14 +5,14 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {DiscoverOpportunitiesRequestSignal} from './discoverOpportunitiesRequestSignal';
+import type { DiscoverOpportunitiesRequestSignal } from './discoverOpportunitiesRequestSignal';
 
 export interface DiscoverOpportunitiesRequest {
-    /** @minLength 1 */
-    mandateNo: string;
-    targetType?: string;
-    targetId?: string;
-    reason?: string;
-    suggestedAction?: string;
-    signal?: DiscoverOpportunitiesRequestSignal;
+  /** @minLength 1 */
+  mandateNo: string;
+  targetType?: string;
+  targetId?: string;
+  reason?: string;
+  suggestedAction?: string;
+  signal?: DiscoverOpportunitiesRequestSignal;
 }

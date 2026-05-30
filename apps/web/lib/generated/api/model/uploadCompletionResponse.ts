@@ -5,12 +5,12 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {UploadCompletionResponseStatus} from './uploadCompletionResponseStatus';
+import type { UploadCompletionResponseStatus } from './uploadCompletionResponseStatus';
 
 export interface UploadCompletionResponse {
-    assetId?: string;
-    artifactRef?: string;
-    objectKey?: string;
-    status?: UploadCompletionResponseStatus;
-    updatedAt?: string;
+  assetId?: string;
+  artifactRef?: string;
+  objectKey?: string;
+  status?: UploadCompletionResponseStatus;
+  updatedAt?: string;
 }

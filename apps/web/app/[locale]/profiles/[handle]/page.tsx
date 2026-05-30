@@ -1,6 +1,6 @@
 import {notFound} from "next/navigation";
 import {getLocale, getTranslations} from "next-intl/server";
-import {BadgeCheck, BriefcaseBusiness, Github, type LucideIcon, PackageCheck, ShieldCheck} from "lucide-react";
+import {BadgeCheck, BriefcaseBusiness, type LucideIcon, PackageCheck, ShieldCheck} from "lucide-react";
 
 import {Badge} from "@/components/ui/badge";
 import {EmptyState, PageContainer} from "@/components/ui/page-layout";
@@ -48,7 +48,7 @@ export default async function PublicProfilePage({params}: { params: Promise<{ ha
             value: t("trust.factCount", {count: profile.profile.verifiedFactCount}),
         },
         {
-            icon: Github,
+            icon: ShieldCheck,
             label: t("trust.externalAccounts"),
             value: t("trust.externalCount", {count: profile.profile.linkedAccounts.length}),
         },
@@ -152,7 +152,7 @@ function publicIdentity(profile: PublicProfileIdentity) {
         handle,
         avatarUrl: displaySkin?.avatarUrl ?? null,
         verified: profile.verified === true || displaySkin?.verified === true,
-        sourceLabel: displaySkin?.provider === "github" ? "GitHub" : "monopolyfun",
+        sourceLabel: displaySkin?.provider ?? "monopolyfun",
     };
 }
 

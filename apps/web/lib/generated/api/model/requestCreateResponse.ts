@@ -5,8 +5,8 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {RequestView} from './requestView';
+import type { RequestView } from './requestView';
 
 export interface RequestCreateResponse {
-    request?: RequestView;
+  request?: RequestView;
 }

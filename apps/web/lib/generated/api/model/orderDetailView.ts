@@ -5,31 +5,31 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ActionView} from './actionView';
-import type {OrderEventView} from './orderEventView';
-import type {OrderPostView} from './orderPostView';
-import type {OrderSummary} from './orderSummary';
-import type {PaymentIntentView} from './paymentIntentView';
-import type {PostItemView} from './postItemView';
-import type {ProgressUpdateView} from './progressUpdateView';
-import type {ProofSummary} from './proofSummary';
-import type {ReviewContext} from './reviewContext';
-import type {SettlementPreview} from './settlementPreview';
-import type {ShareReleaseRequestView} from './shareReleaseRequestView';
-import type {ShareSettlementHoldView} from './shareSettlementHoldView';
+import type { ActionView } from './actionView';
+import type { OrderEventView } from './orderEventView';
+import type { OrderPostView } from './orderPostView';
+import type { OrderSummary } from './orderSummary';
+import type { PaymentIntentView } from './paymentIntentView';
+import type { PostItemView } from './postItemView';
+import type { ProgressUpdateView } from './progressUpdateView';
+import type { ProofSummary } from './proofSummary';
+import type { ReviewContext } from './reviewContext';
+import type { SettlementPreview } from './settlementPreview';
+import type { ShareReleaseRequestView } from './shareReleaseRequestView';
+import type { ShareSettlementHoldView } from './shareSettlementHoldView';
 
 export interface OrderDetailView {
-    order?: OrderSummary;
-    post?: OrderPostView;
-    item?: PostItemView;
-    proof?: ProofSummary;
-    progressTimeline?: ProgressUpdateView[];
-    paymentIntent?: PaymentIntentView;
-    availableActions?: ActionView[];
-    displayPhase?: string;
-    settlementPreview?: SettlementPreview;
-    shareSettlementHold?: ShareSettlementHoldView;
-    shareReleaseRequest?: ShareReleaseRequestView;
-    reviewContext?: ReviewContext;
-    eventTimeline?: OrderEventView[];
+  order?: OrderSummary;
+  post?: OrderPostView;
+  item?: PostItemView;
+  proof?: ProofSummary;
+  progressTimeline?: ProgressUpdateView[];
+  paymentIntent?: PaymentIntentView;
+  availableActions?: ActionView[];
+  displayPhase?: string;
+  settlementPreview?: SettlementPreview;
+  shareSettlementHold?: ShareSettlementHoldView;
+  shareReleaseRequest?: ShareReleaseRequestView;
+  reviewContext?: ReviewContext;
+  eventTimeline?: OrderEventView[];
 }

@@ -7,6 +7,6 @@
  */
 
 export type NextResultCandidateWindowParams = {
-    limit?: number;
-    after?: string;
+limit?: number;
+after?: string;
 };

@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type ProjectAgentContextViewProject = { [key: string]: unknown };
+export type ProjectAgentContextViewProject = {[key: string]: unknown};

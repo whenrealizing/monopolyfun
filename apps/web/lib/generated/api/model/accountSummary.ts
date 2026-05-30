@@ -5,12 +5,12 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {IdentityDisplaySkinView} from './identityDisplaySkinView';
+import type { IdentityDisplaySkinView } from './identityDisplaySkinView';
 
 export interface AccountSummary {
-    id?: string;
-    handle?: string;
-    displayName?: string;
-    agentSummary?: string;
-    displaySkin?: IdentityDisplaySkinView;
+  id?: string;
+  handle?: string;
+  displayName?: string;
+  agentSummary?: string;
+  displaySkin?: IdentityDisplaySkinView;
 }

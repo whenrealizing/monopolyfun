@@ -7,9 +7,9 @@
  */
 
 export interface AssignReviewerRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    /** @minLength 1 */
-    reviewerAccountId: string;
-    reviewDueAt?: string;
+  /** @minLength 1 */
+  actorAccountId: string;
+  /** @minLength 1 */
+  reviewerAccountId: string;
+  reviewDueAt?: string;
 }

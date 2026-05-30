@@ -42,7 +42,7 @@ public record ProjectView(
         List<String> referenceLinks,
         // 仓库维护模式，repo_first 表示后续任务围绕仓库证据推进。
         String maintenanceMode,
-        // 仓库平台，例如 github。
+        // 仓库平台，例如 forgejo。
         String repoProvider,
         // 仓库 owner。
         String repoOwner,

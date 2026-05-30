@@ -25,6 +25,11 @@ const period = "2026-05";
 const totalRevenueMinor = 100000n;
 const password = "CodexTestchain123!";
 const forceForgeBuild = process.env.TESTCHAIN_FORCE_FORGE === "1";
+const defaultAnvilPrivateKeys = [
+  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+  "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
+  "0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a",
+];
 const children = [];
 
 async function main() {
@@ -63,8 +68,8 @@ try {
     taskValue: 5000,
     bountyAmountMinor: 0,
     bountyToken: "USDC",
-    repoRef: "github.com/monopolyfun/testchain",
-    issueUrl: "https://github.com/monopolyfun/testchain/issues/1",
+    repoRef: "localhost:3001/monopolyfun/testchain",
+    issueUrl: "http://localhost:3001/monopolyfun/testchain/issues/1",
   });
   await api.as(worker).post(`/api/v1/work-threads/${thread.id}/claim`, {
     actorAccountId: worker.account.id,
@@ -206,37 +211,37 @@ async function startApi() {
 async function startAnvil() {
   const logPath = join(evidenceDir, "anvil.log");
   const log = createWriteStream(logPath, { flags: "a" });
-  const privateKeys = [];
+  let exitStatus = null;
   const child = spawn("anvil", ["--host", "127.0.0.1", "--port", String(anvilPort), "--chain-id", "31337"], {
     cwd: repoRoot,
     stdio: ["ignore", "pipe", "pipe"],
   });
-  child.stdout.on("data", (chunk) => {
-    const text = chunk.toString();
-    log.write(text);
-    for (const line of text.split(/\r?\n/)) {
-      const match = /\(\d+\)\s+(0x[0-9a-fA-F]{64})/.exec(line);
-      if (match) {
-        privateKeys.push(match[1]);
-      }
-    }
-  });
+  child.stdout.pipe(log);
   child.stderr.pipe(log);
+  child.on("exit", (code, signal) => {
+    exitStatus = { code, signal };
+    log.write(`\nanvil exited code=${code ?? ""} signal=${signal ?? ""}\n`);
+  });
   children.push(child);
   const rpcUrl = `http://127.0.0.1:${anvilPort}`;
   await waitFor(async () => {
+    if (exitStatus) {
+      throw new Error(`anvil exited before ready code=${exitStatus.code ?? "null"} signal=${exitStatus.signal ?? "null"}`);
+    }
     try {
       const response = await fetch(rpcUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_chainId", params: [] }),
       });
-      return response.ok && privateKeys.length >= 3;
+      const payload = await response.json().catch(() => null);
+      return response.ok && payload?.result === "0x7a69";
     } catch {
       return false;
     }
   }, "anvil ready");
-  return { rpcUrl, privateKeys };
+  // 中文注释：Anvil 默认 mnemonic 的前三个私钥稳定，直接使用可避免启动 banner 解析造成 smoke 卡死。
+  return { rpcUrl, privateKeys: defaultAnvilPrivateKeys };
 }
 
 async function deployChain(rpcUrl, privateKeys) {
@@ -507,7 +512,7 @@ function resultMarkdown(threadId) {
     "Connected local testchain revenue claim.",
     "",
     "## Evidence",
-    "- PR: https://github.com/monopolyfun/testchain/pull/1",
+    "- PR: http://localhost:3001/monopolyfun/testchain/pulls/1",
     "- Test: scripts/testchain/revenue-distribution-smoke.mjs passed",
     "",
     "## Changed Files",

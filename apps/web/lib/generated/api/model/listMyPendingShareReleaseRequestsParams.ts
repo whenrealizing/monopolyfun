@@ -7,5 +7,5 @@
  */
 
 export type ListMyPendingShareReleaseRequestsParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

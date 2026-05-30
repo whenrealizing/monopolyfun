@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {StartIdentityVerificationRequestInput} from './startIdentityVerificationRequestInput';
+import type { StartIdentityVerificationRequestInput } from './startIdentityVerificationRequestInput';
 
 export interface StartIdentityVerificationRequest {
-    /** @minLength 1 */
-    certifierId: string;
-    input?: StartIdentityVerificationRequestInput;
+  /** @minLength 1 */
+  certifierId: string;
+  input?: StartIdentityVerificationRequestInput;
 }

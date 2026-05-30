@@ -5,19 +5,19 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {AgentActionProposalEntityInput} from './agentActionProposalEntityInput';
+import type { AgentActionProposalEntityInput } from './agentActionProposalEntityInput';
 
 export interface AgentActionProposalEntity {
-    id?: string;
-    proposalNo?: string;
-    opportunityId?: string;
-    mandateId?: string;
-    actionId?: string;
-    reason?: string;
-    risk?: string;
-    input?: AgentActionProposalEntityInput;
-    expectedOutcome?: string;
-    status?: string;
-    createdAt?: string;
-    updatedAt?: string;
+  id?: string;
+  proposalNo?: string;
+  opportunityId?: string;
+  mandateId?: string;
+  actionId?: string;
+  reason?: string;
+  risk?: string;
+  input?: AgentActionProposalEntityInput;
+  expectedOutcome?: string;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

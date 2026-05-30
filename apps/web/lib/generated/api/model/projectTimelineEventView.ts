@@ -5,16 +5,16 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectTimelineEventViewPayload} from './projectTimelineEventViewPayload';
+import type { ProjectTimelineEventViewPayload } from './projectTimelineEventViewPayload';
 
 export interface ProjectTimelineEventView {
-    id?: string;
-    type?: string;
-    title?: string;
-    summary?: string;
-    actorAccountId?: string;
-    subjectType?: string;
-    subjectId?: string;
-    createdAt?: string;
-    payload?: ProjectTimelineEventViewPayload;
+  id?: string;
+  type?: string;
+  title?: string;
+  summary?: string;
+  actorAccountId?: string;
+  subjectType?: string;
+  subjectId?: string;
+  createdAt?: string;
+  payload?: ProjectTimelineEventViewPayload;
 }

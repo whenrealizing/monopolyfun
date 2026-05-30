@@ -7,9 +7,9 @@
  */
 
 export interface ProjectResultCandidateSummaryView {
-    candidateReady?: number;
-    finalReviewRequired?: number;
-    integrationChecking?: number;
-    integrationBlocked?: number;
-    mergedMainline?: number;
+  candidateReady?: number;
+  finalReviewRequired?: number;
+  integrationChecking?: number;
+  integrationBlocked?: number;
+  mergedMainline?: number;
 }

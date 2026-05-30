@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type CreateProofRequestRequestAcceptanceSignalsItem = { [key: string]: unknown };
+export type CreateProofRequestRequestAcceptanceSignalsItem = {[key: string]: unknown};

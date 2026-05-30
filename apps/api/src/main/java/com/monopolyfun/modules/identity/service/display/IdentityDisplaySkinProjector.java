@@ -163,7 +163,6 @@ public class IdentityDisplaySkinProjector {
 
     private String themeKey(String provider, String certifierId) {
         String raw = ((provider == null ? "" : provider) + " " + (certifierId == null ? "" : certifierId)).toLowerCase();
-        if (raw.contains("github")) return "github";
         if (raw.equals("x") || raw.startsWith("x ") || raw.contains("twitter") || raw.contains("x.com")) return "x";
         if (raw.contains("tiktok")) return "tiktok";
         return "certifier";

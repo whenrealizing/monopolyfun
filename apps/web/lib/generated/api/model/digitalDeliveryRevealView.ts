@@ -7,9 +7,9 @@
  */
 
 export interface DigitalDeliveryRevealView {
-    orderNo?: string;
-    inventoryItemId?: string;
-    payload?: string;
-    payloadPreview?: string;
-    deliveredAt?: string;
+  orderNo?: string;
+  inventoryItemId?: string;
+  payload?: string;
+  payloadPreview?: string;
+  deliveredAt?: string;
 }

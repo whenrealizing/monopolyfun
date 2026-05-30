@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {PageInfo} from './pageInfo';
-import type {PublicAccountSummary} from './publicAccountSummary';
+import type { PageInfo } from './pageInfo';
+import type { PublicAccountSummary } from './publicAccountSummary';
 
 export interface PageResultPublicAccountSummary {
-    items?: PublicAccountSummary[];
-    pageInfo?: PageInfo;
+  items?: PublicAccountSummary[];
+  pageInfo?: PageInfo;
 }

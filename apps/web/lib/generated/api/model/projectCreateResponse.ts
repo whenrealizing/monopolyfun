@@ -5,8 +5,8 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectView} from './projectView';
+import type { ProjectView } from './projectView';
 
 export interface ProjectCreateResponse {
-    project?: ProjectView;
+  project?: ProjectView;
 }

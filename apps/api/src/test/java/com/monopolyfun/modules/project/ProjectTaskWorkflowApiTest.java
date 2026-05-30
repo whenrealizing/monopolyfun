@@ -63,9 +63,9 @@ class ProjectPostItemWorkflowApiTest extends AbstractPostgresIntegrationTest {
                 ('acct-cfo', '@cfo', 'CFO', '{}'::jsonb)
                 """);
         when(repoProviderClient.provisionPublicRepository(any())).thenReturn(new RepoProviderClient.ProvisionedRepository(
-                "github",
-                "https://github.com/whenrealizing/monopolyfun",
-                "https://github.com/whenrealizing/monopolyfun.git",
+                "forgejo",
+                "http://localhost:3001/whenrealizing/monopolyfun",
+                "http://localhost:3001/whenrealizing/monopolyfun.git",
                 "whenrealizing",
                 "monopolyfun",
                 "main",
@@ -246,7 +246,7 @@ class ProjectPostItemWorkflowApiTest extends AbstractPostgresIntegrationTest {
 
     @Test
     void publishProjectCanCreateInitialItems() throws Exception {
-        // 中文注释：Project 外部协作证据使用当前仓库真实 GitHub URL，闭环测试可用 gh repo view 复核。
+        // 中文注释：Project 外部协作证据使用轻量 Git 仓库 URL，闭环测试可用 git remote -v 复核。
         var projectCreate = mockMvc.perform(post("/api/v1/projects")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-founder"))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -272,9 +272,9 @@ class ProjectPostItemWorkflowApiTest extends AbstractPostgresIntegrationTest {
                                 }
                                 """))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.project.referenceLinks[0]").value("https://github.com/whenrealizing/monopolyfun"))
+                .andExpect(jsonPath("$.project.referenceLinks[0]").value("http://localhost:3001/whenrealizing/monopolyfun"))
                 .andExpect(jsonPath("$.project.maintenanceMode").value("repo_first"))
-                .andExpect(jsonPath("$.project.repoProvider").value("github"))
+                .andExpect(jsonPath("$.project.repoProvider").value("forgejo"))
                 .andExpect(jsonPath("$.project.repoOwner").value("whenrealizing"))
                 .andExpect(jsonPath("$.project.repoName").value("monopolyfun"))
                 .andExpect(jsonPath("$.project.defaultMaintenanceCommands[0]").value("git remote -v"))
@@ -328,7 +328,7 @@ class ProjectPostItemWorkflowApiTest extends AbstractPostgresIntegrationTest {
     @Test
     void publishProjectReturnsConfigErrorWhenManagedRepoProviderMissingConfig() throws Exception {
         when(repoProviderClient.provisionPublicRepository(any()))
-                .thenThrow(new ResponseStatusException(HttpStatus.CONFLICT, "Platform GitHub repository service is not configured"));
+                .thenThrow(new ResponseStatusException(HttpStatus.CONFLICT, "Forgejo repository service credentials are not configured"));
         mockMvc.perform(post("/api/v1/projects")
                         .with(SecurityTestSupport.session(jdbcTemplate, "acct-founder"))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -922,8 +922,8 @@ class ProjectPostItemWorkflowApiTest extends AbstractPostgresIntegrationTest {
                         .content("""
                                 {
                                   "submittedByAccountId": "acct-worker",
-                                  "summary": "提交 GitHub PR 交付。",
-                                  "links": [{"label": "PR", "href": "https://github.com/whenrealizing/monopolyfun/pull/42"}],
+                                  "summary": "提交 Forgejo PR 交付。",
+                                  "links": [{"label": "PR", "href": "http://localhost:3001/whenrealizing/monopolyfun/pulls/42"}],
                                   "criteriaRefs": ["提交可验证链接。"],
                                   "proofPayload": {
                                     "deliveryType": "code_pr"
@@ -941,16 +941,16 @@ class ProjectPostItemWorkflowApiTest extends AbstractPostgresIntegrationTest {
                         .content("""
                                 {
                                   "submittedByAccountId": "acct-worker",
-                                  "summary": "提交 GitHub PR、CI 和安全策略证据。",
-                                  "links": [{"label": "PR", "href": "https://github.com/whenrealizing/monopolyfun/pull/42"}],
+                                  "summary": "提交 Forgejo PR、CI 和安全策略证据。",
+                                  "links": [{"label": "PR", "href": "http://localhost:3001/whenrealizing/monopolyfun/pulls/42"}],
                                   "artifacts": ["asset://asset-code-pr"],
                                   "criteriaRefs": ["提交可验证链接。"],
                                   "proofPayload": {
                                     "deliveryType": "code_pr",
                                     "prSecurity": {
                                       "orderNo": "%s",
-                                      "repoUrl": "https://github.com/whenrealizing/monopolyfun",
-                                      "prUrl": "https://github.com/whenrealizing/monopolyfun/pull/42",
+                                      "repoUrl": "http://localhost:3001/whenrealizing/monopolyfun",
+                                      "prUrl": "http://localhost:3001/whenrealizing/monopolyfun/pulls/42",
                                       "commitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                                       "ciStatus": "success",
                                       "securityPolicyResult": "passed",

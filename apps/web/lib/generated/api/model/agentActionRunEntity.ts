@@ -5,16 +5,16 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {AgentActionRunEntityOutput} from './agentActionRunEntityOutput';
+import type { AgentActionRunEntityOutput } from './agentActionRunEntityOutput';
 
 export interface AgentActionRunEntity {
-    id?: string;
-    actionRunNo?: string;
-    proposalId?: string;
-    status?: string;
-    workItemId?: string;
-    output?: AgentActionRunEntityOutput;
-    errorMessage?: string;
-    createdAt?: string;
-    completedAt?: string;
+  id?: string;
+  actionRunNo?: string;
+  proposalId?: string;
+  status?: string;
+  workItemId?: string;
+  output?: AgentActionRunEntityOutput;
+  errorMessage?: string;
+  createdAt?: string;
+  completedAt?: string;
 }

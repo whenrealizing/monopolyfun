@@ -7,12 +7,12 @@
  */
 
 export interface OrderPostView {
-    kind?: string;
-    id?: string;
-    title?: string;
-    summary?: string;
-    deliveryStandard?: string;
-    settlementSummary?: string;
-    inventorySummary?: string;
-    status?: string;
+  kind?: string;
+  id?: string;
+  title?: string;
+  summary?: string;
+  deliveryStandard?: string;
+  settlementSummary?: string;
+  inventorySummary?: string;
+  status?: string;
 }

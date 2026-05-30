@@ -5,12 +5,12 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {CreatePostOrderRequestDeliveryInput} from './createPostOrderRequestDeliveryInput';
+import type { CreatePostOrderRequestDeliveryInput } from './createPostOrderRequestDeliveryInput';
 
 export interface CreatePostOrderRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    buyerNote?: string;
-    paymentRecipient?: string;
-    deliveryInput?: CreatePostOrderRequestDeliveryInput;
+  /** @minLength 1 */
+  actorAccountId: string;
+  buyerNote?: string;
+  paymentRecipient?: string;
+  deliveryInput?: CreatePostOrderRequestDeliveryInput;
 }

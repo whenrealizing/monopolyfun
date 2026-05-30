@@ -10,6 +10,6 @@ export type MarketSummaryStatus = typeof MarketSummaryStatus[keyof typeof Market
 
 
 export const MarketSummaryStatus = {
-    ACTIVE: 'ACTIVE',
-    STALLED: 'STALLED',
+  ACTIVE: 'ACTIVE',
+  STALLED: 'STALLED',
 } as const;

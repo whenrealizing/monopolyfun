@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type TaskViewRewardPreview = { [key: string]: unknown };
+export type TaskViewRewardPreview = {[key: string]: unknown};

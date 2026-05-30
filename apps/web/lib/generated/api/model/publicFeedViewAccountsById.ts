@@ -5,6 +5,6 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {PublicAccountSummary} from './publicAccountSummary';
+import type { PublicAccountSummary } from './publicAccountSummary';
 
-export type PublicFeedViewAccountsById = { [key: string]: PublicAccountSummary };
+export type PublicFeedViewAccountsById = {[key: string]: PublicAccountSummary};

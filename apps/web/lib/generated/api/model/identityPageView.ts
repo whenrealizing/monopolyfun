@@ -5,14 +5,14 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {IdentityActivityView} from './identityActivityView';
-import type {IdentityCertifierView} from './identityCertifierView';
-import type {IdentityProfileView} from './identityProfileView';
-import type {IdentityVerificationChallengeView} from './identityVerificationChallengeView';
+import type { IdentityActivityView } from './identityActivityView';
+import type { IdentityCertifierView } from './identityCertifierView';
+import type { IdentityProfileView } from './identityProfileView';
+import type { IdentityVerificationChallengeView } from './identityVerificationChallengeView';
 
 export interface IdentityPageView {
-    profile?: IdentityProfileView;
-    activity?: IdentityActivityView;
-    certifiers?: IdentityCertifierView[];
-    challenges?: IdentityVerificationChallengeView[];
+  profile?: IdentityProfileView;
+  activity?: IdentityActivityView;
+  certifiers?: IdentityCertifierView[];
+  challenges?: IdentityVerificationChallengeView[];
 }

@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type ProjectResultCandidateViewChecksItem = { [key: string]: unknown };
+export type ProjectResultCandidateViewChecksItem = {[key: string]: unknown};

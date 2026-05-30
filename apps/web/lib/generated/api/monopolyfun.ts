@@ -6,1547 +6,1763 @@
  * OpenAPI spec version: 0.1.0
  */
 import type {
-    AcceptOrderRequest,
-    AccountSummary,
-    AdminIssuePasswordResetRequest,
-    AdminPasswordResetTokenResponse,
-    AgentMandateEntity,
-    AppealOrderRequest,
-    ApproveProposalRequest,
-    ApproveShareReleaseRequestParams,
-    AssignProjectRoleRequest,
-    AssignReviewerRequest,
-    AuditEventView,
-    AuthSessionResponse,
-    BackofficeDashboardView,
-    BackofficeOverrideReviewRequest,
-    CancelDisputeRequest,
-    CancelIntentParams,
-    ClaimProjectOwnerRequest,
-    ClaimWorkItemRequest,
-    CloseOrderRequest,
-    ClosePostRequest,
-    CloseWorkRunRequest,
-    CommandReceipt,
-    CompleteIdentityVerificationRequest,
-    CompleteUploadRequest,
-    CreateFeedbackRequest,
-    CreateIntentParams,
-    CreateLaunchRequest,
-    CreateMandateRequest,
-    CreatePaymentIntentRequest,
-    CreatePostItemParams,
-    CreatePostItemRequest,
-    CreatePostOrderRequest,
-    CreateProjectItemParams,
-    CreateProjectItemRequest,
-    CreateProofRequestRequest,
-    CreateProposalRequest,
-    CreateRepoDeliverySessionRequest,
-    CreateTaskRequest,
-    DefaultIntentParams,
-    DeliveryAttemptEntity,
-    DigitalDeliveryRevealView,
-    DigitalInventorySummaryView,
-    DigitalInventoryUploadResponse,
-    DiscoverOpportunitiesRequest,
-    DisputeIntentParams,
-    DisputeOrderRequest,
-    ExecuteProposalRequest,
-    FeedbackView,
-    FinalizeRepoProofRequest,
-    GetAccountSharesLedgerParams,
-    GetDigitalInventorySummaryParams,
-    GetIntentParams,
-    GetMarketFeedParams,
-    GetMarketSharesLedgerParams,
-    GetOfferParams,
-    GetOrderParams,
-    GetPostItemParams,
-    GetPostWorkspaceParams,
-    GetProjectParams,
-    GetRequestParams,
-    GetRootProjectParams,
-    GetShareReleaseRequestParams,
-    GithubAuthorizeParams,
-    GithubAuthorizeRedirectParams,
-    GithubCallbackParams,
-    GithubVerificationCallbackParams,
-    IdentityCertifierView,
-    IdentityPageView,
-    IdentityVerificationStartResponse,
-    InitiativeProjectionView,
-    InviteProjectRoleRequest,
-    LaunchView,
-    ListAccountDirectoryParams,
-    ListBackofficeAuditEventsParams,
-    ListBackofficeDeliveryAttemptsParams,
-    ListBackofficePaymentIntentsParams,
-    ListBackofficePaymentProviderEventsParams,
-    ListBackofficeProofAssetsParams,
-    ListBackofficeRiskEventsParams,
-    ListBackofficeSettlementEventsParams,
-    ListMyPendingShareReleaseRequestsParams,
-    ListOffersParams,
-    ListOrdersParams,
-    ListPostItemsParams,
-    ListProjectsParams,
-    ListPublicAccountsParams,
-    ListRequestsParams,
-    ListResultCandidatesParams,
-    ListRiskAccountsParams,
-    LoginRequest,
-    LookupPublicAccountsParams,
-    ManualRiskActionRequest,
-    NextResultCandidateWindowParams,
-    OAuthAuthorizeResponse,
-    OfferCreateResponse,
-    OfferView,
-    OrderDetailView,
-    OrderSummary,
-    PageResultAccountSummary,
-    PageResultOfferView,
-    PageResultOrderSummary,
-    PageResultProjectView,
-    PageResultPublicAccountSummary,
-    PageResultRequestView,
-    PageResultRiskAccountView,
-    PageResultSharesLedgerEntryEntity,
-    PasswordResetConfirmRequest,
-    PasswordResetRequest,
-    PasswordResetRequestResponse,
-    PaymentActionRequest,
-    PaymentIntentResponse,
-    PaymentIntentView,
-    PaymentProviderEventEntity,
-    PostItemView,
-    PostWorkspaceView,
-    ProjectAgentActionRequest,
-    ProjectAgentActionResultView,
-    ProjectAgentContextView,
-    ProjectAgentInboxView,
-    ProjectAuthorityContextView,
-    ProjectCommercializationView,
-    ProjectCreateResponse,
-    ProjectDashboardView,
-    ProjectInitiativeRecommendationEntity,
-    ProjectMemoryEntryRequest,
-    ProjectMemoryEntryView,
-    ProjectMemoryOverviewView,
-    ProjectMemoryRepoSyncRequest,
-    ProjectMemoryReviewRequest,
-    ProjectMemoryRootView,
-    ProjectMemorySourceRequest,
-    ProjectMemorySourceView,
-    ProjectPrCiEventRequest,
-    ProjectPrCiStatusView,
-    ProjectRepoBindingRequest,
-    ProjectRepoBindingView,
-    ProjectRepoProvisionResponse,
-    ProjectResultCandidatePageView,
-    ProjectResultCandidateView,
-    ProjectResultCandidateWindowView,
-    ProjectRoleInviteView,
-    ProjectRoleView,
-    ProjectTimelineEventView,
-    ProjectView,
-    ProofAssetView,
-    ProofRequestView,
-    ProofView,
-    ProvisionProjectRepoRequest,
-    PublicAccountSummary,
-    PublicFeedView,
-    PublicProfileView,
-    PublishOfferParams,
-    PublishOfferRequest,
-    PublishProjectParams,
-    PublishProjectRequest,
-    PublishRequestParams,
-    PublishRequestRequest,
-    RefreshIntentParams,
-    RefundIntentParams,
-    RegisterAccountRequest,
-    RepoDeliverySessionResponse,
-    ReportPullRequestProofRequest,
-    RequestCreateResponse,
-    RequestView,
-    RequestWorkHelpRequest,
-    ResolveFeedbackRequest,
-    ReviewProjectResultCandidateRequest,
-    ReviewProofRequest,
-    ReviewQueueItemView,
-    ReviewWorkReceiptRequest,
-    ReviseWorkReceiptRequest,
-    RewardView,
-    RiskAccountView,
-    RiskEventView,
-    SettleLaunchRequest,
-    SettlementEventEntity,
-    ShareReleaseRequestView,
-    SkipProjectCandidateWindowRequest,
-    SourceContract200,
-    StartIdentityVerificationRequest,
-    SubmitProgressRequest,
-    SubmitProofRequest,
-    SubmitWorkProgressRequest,
-    SubmitWorkReceiptRequest,
-    SupportProjectResultCandidateRequest,
-    TaskView,
-    UpdateIdentityDisplaySkinRequest,
-    UpdateIdentityProfileRequest,
-    UpdateLaunchRequest,
-    UpdateOfferPostRequest,
-    UpdateProjectPostRequest,
-    UpdateRequestPostRequest,
-    UploadCompletionResponse,
-    UploadDigitalInventoryRequest,
-    UploadDownloadResponse,
-    UploadPresignRequest,
-    UploadPresignResponse,
-    WaitWorkbenchRequest,
-    WorkbenchItemView,
-    WorkItemView
+  AcceptOrderRequest,
+  AccountSummary,
+  AdminIssuePasswordResetRequest,
+  AdminPasswordResetTokenResponse,
+  AgentMandateEntity,
+  AgentTurnRequest,
+  AgentTurnResult,
+  AppealOrderRequest,
+  ApproveProposalRequest,
+  ApproveShareReleaseRequestParams,
+  AssignProjectRoleRequest,
+  AssignReviewerRequest,
+  AuditEventView,
+  AuthSessionResponse,
+  BackofficeDashboardView,
+  BackofficeOverrideReviewRequest,
+  CancelDisputeRequest,
+  CancelIntentParams,
+  ClaimDistributionRequest,
+  ClaimProjectOwnerRequest,
+  ClaimWorkItemRequest,
+  ClaimWorkThreadRequest,
+  CloseOrderRequest,
+  ClosePostRequest,
+  CloseWorkRunRequest,
+  CommandReceipt,
+  CompleteIdentityVerificationRequest,
+  CompleteUploadRequest,
+  ContributionRewardView,
+  CreateDistributionBatchRequest,
+  CreateFeedbackRequest,
+  CreateIntentParams,
+  CreateLaunchRequest,
+  CreateMandateRequest,
+  CreatePaymentIntentRequest,
+  CreatePostItemParams,
+  CreatePostItemRequest,
+  CreatePostOrderRequest,
+  CreateProjectItemParams,
+  CreateProjectItemRequest,
+  CreateProofRequestRequest,
+  CreateProposalRequest,
+  CreateRepoDeliverySessionRequest,
+  CreateTaskRequest,
+  CreateWorkThreadRequest,
+  DefaultIntentParams,
+  DeliveryAttemptEntity,
+  DigitalDeliveryRevealView,
+  DigitalInventorySummaryView,
+  DigitalInventoryUploadResponse,
+  DiscoverOpportunitiesRequest,
+  DisputeIntentParams,
+  DisputeOrderRequest,
+  DistributionBatchView,
+  DistributionClaimView,
+  ExecuteProposalRequest,
+  FeedbackView,
+  FinalizeRepoProofRequest,
+  GetAccountSharesLedgerParams,
+  GetDigitalInventorySummaryParams,
+  GetIntentParams,
+  GetMarketFeedParams,
+  GetMarketSharesLedgerParams,
+  GetOfferParams,
+  GetOrderParams,
+  GetPostItemParams,
+  GetPostWorkspaceParams,
+  GetProjectParams,
+  GetRequestParams,
+  GetRootProjectParams,
+  GetShareReleaseRequestParams,
+  IdentityCertifierView,
+  IdentityPageView,
+  IdentityVerificationStartResponse,
+  InitiativeProjectionView,
+  InviteProjectRoleRequest,
+  LaunchView,
+  ListAccountDirectoryParams,
+  ListBackofficeAuditEventsParams,
+  ListBackofficeDeliveryAttemptsParams,
+  ListBackofficePaymentIntentsParams,
+  ListBackofficePaymentProviderEventsParams,
+  ListBackofficeProofAssetsParams,
+  ListBackofficeRiskEventsParams,
+  ListBackofficeSettlementEventsParams,
+  ListMyPendingShareReleaseRequestsParams,
+  ListOffersParams,
+  ListOrdersParams,
+  ListPostItemsParams,
+  ListProjectsParams,
+  ListPublicAccountsParams,
+  ListRequestsParams,
+  ListResultCandidatesParams,
+  ListRiskAccountsParams,
+  LoginRequest,
+  LookupPublicAccountsParams,
+  ManualRiskActionRequest,
+  NextResultCandidateWindowParams,
+  OfferCreateResponse,
+  OfferView,
+  OrderDetailView,
+  OrderSummary,
+  PageResultAccountSummary,
+  PageResultOfferView,
+  PageResultOrderSummary,
+  PageResultProjectView,
+  PageResultPublicAccountSummary,
+  PageResultRequestView,
+  PageResultRiskAccountView,
+  PageResultSharesLedgerEntryEntity,
+  PasswordResetConfirmRequest,
+  PasswordResetRequest,
+  PasswordResetRequestResponse,
+  PaymentActionRequest,
+  PaymentIntentResponse,
+  PaymentIntentView,
+  PaymentProviderEventEntity,
+  PostItemView,
+  PostWorkspaceView,
+  ProjectAgentActionRequest,
+  ProjectAgentActionResultView,
+  ProjectAgentContextView,
+  ProjectAgentInboxView,
+  ProjectAuthorityContextView,
+  ProjectCommercializationView,
+  ProjectCreateResponse,
+  ProjectDashboardView,
+  ProjectInitiativeRecommendationEntity,
+  ProjectMemoryEntryRequest,
+  ProjectMemoryEntryView,
+  ProjectMemoryOverviewView,
+  ProjectMemoryRepoSyncRequest,
+  ProjectMemoryReviewRequest,
+  ProjectMemoryRootView,
+  ProjectMemorySourceRequest,
+  ProjectMemorySourceView,
+  ProjectPrCiEventRequest,
+  ProjectPrCiStatusView,
+  ProjectRepoBindingRequest,
+  ProjectRepoBindingView,
+  ProjectRepoProvisionResponse,
+  ProjectResultCandidatePageView,
+  ProjectResultCandidateView,
+  ProjectResultCandidateWindowView,
+  ProjectRevenueAddressView,
+  ProjectRoleInviteView,
+  ProjectRoleView,
+  ProjectTimelineEventView,
+  ProjectView,
+  ProofAssetView,
+  ProofRequestView,
+  ProofView,
+  ProvisionProjectRepoRequest,
+  PublicAccountSummary,
+  PublicFeedView,
+  PublicProfileView,
+  PublishOfferParams,
+  PublishOfferRequest,
+  PublishProjectParams,
+  PublishProjectRequest,
+  PublishRequestParams,
+  PublishRequestRequest,
+  RefreshIntentParams,
+  RefundIntentParams,
+  RegisterAccountRequest,
+  RepoDeliverySessionResponse,
+  ReportPullRequestProofRequest,
+  RequestCreateResponse,
+  RequestView,
+  RequestWorkHelpRequest,
+  ResolveFeedbackRequest,
+  ReviewProjectResultCandidateRequest,
+  ReviewProofRequest,
+  ReviewQueueItemView,
+  ReviewWorkReceiptRequest,
+  ReviewWorkThreadRequest,
+  ReviseWorkReceiptRequest,
+  RewardView,
+  RiskAccountView,
+  RiskEventView,
+  SettleLaunchRequest,
+  SettlementEventEntity,
+  ShareReleaseRequestView,
+  SkipProjectCandidateWindowRequest,
+  SourceContract200,
+  StartIdentityVerificationRequest,
+  SubmitProgressRequest,
+  SubmitProofRequest,
+  SubmitWorkProgressRequest,
+  SubmitWorkReceiptRequest,
+  SubmitWorkThreadResultRequest,
+  SupportProjectResultCandidateRequest,
+  TaskView,
+  UpdateIdentityDisplaySkinRequest,
+  UpdateIdentityProfileRequest,
+  UpdateLaunchRequest,
+  UpdateOfferPostRequest,
+  UpdateProjectPostRequest,
+  UpdateRequestPostRequest,
+  UploadCompletionResponse,
+  UploadDigitalInventoryRequest,
+  UploadDownloadResponse,
+  UploadPresignRequest,
+  UploadPresignResponse,
+  UpsertProjectRevenueAddressRequest,
+  WaitWorkbenchRequest,
+  WorkItemView,
+  WorkResultView,
+  WorkThreadOverviewView,
+  WorkThreadPacketView,
+  WorkThreadView,
+  WorkbenchItemView
 } from './model';
 
-import {monopolyfunFetch} from '../../api-runtime';
+import { monopolyfunFetch } from '../../api-runtime';
 
 export const getDeclineProjectInviteUrl = (itemId: string,) => {
 
 
-    return `/api/v1/workbench/${itemId}/project-invite/decline`
+
+
+  return `/api/v1/workbench/${itemId}/project-invite/decline`
 }
 
 export const declineProjectInvite = async (itemId: string, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getDeclineProjectInviteUrl(itemId),
-        {
-            ...options,
-            method: 'POST'
+  return monopolyfunFetch<CommandReceipt>(getDeclineProjectInviteUrl(itemId),
+  {
+    ...options,
+    method: 'POST'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getAcceptProjectInviteUrl = (itemId: string,) => {
 
 
-    return `/api/v1/workbench/${itemId}/project-invite/accept`
+
+
+  return `/api/v1/workbench/${itemId}/project-invite/accept`
 }
 
 export const acceptProjectInvite = async (itemId: string, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getAcceptProjectInviteUrl(itemId),
-        {
-            ...options,
-            method: 'POST'
+  return monopolyfunFetch<CommandReceipt>(getAcceptProjectInviteUrl(itemId),
+  {
+    ...options,
+    method: 'POST'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getDismissWorkbenchItemUrl = (itemId: string,) => {
 
 
-    return `/api/v1/workbench/${itemId}/dismiss`
+
+
+  return `/api/v1/workbench/${itemId}/dismiss`
 }
 
 export const dismissWorkbenchItem = async (itemId: string, options?: RequestInit): Promise<WorkbenchItemView> => {
 
-    return monopolyfunFetch<WorkbenchItemView>(getDismissWorkbenchItemUrl(itemId),
-        {
-            ...options,
-            method: 'POST'
+  return monopolyfunFetch<WorkbenchItemView>(getDismissWorkbenchItemUrl(itemId),
+  {
+    ...options,
+    method: 'POST'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getWaitWorkbenchItemsUrl = () => {
 
 
-    return `/api/v1/workbench/wait`
+
+
+  return `/api/v1/workbench/wait`
 }
 
 export const waitWorkbenchItems = async (waitWorkbenchRequest?: WaitWorkbenchRequest, options?: RequestInit): Promise<WorkbenchItemView[]> => {
 
-    return monopolyfunFetch<WorkbenchItemView[]>(getWaitWorkbenchItemsUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                waitWorkbenchRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<WorkbenchItemView[]>(getWaitWorkbenchItemsUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      waitWorkbenchRequest,)
+  }
+);}
+
 
 
 export const getCreateRepoDeliverySessionUrl = () => {
 
 
-    return `/api/v1/work/repo-delivery-sessions`
+
+
+  return `/api/v1/work/repo-delivery-sessions`
 }
 
 export const createRepoDeliverySession = async (createRepoDeliverySessionRequest: CreateRepoDeliverySessionRequest, options?: RequestInit): Promise<RepoDeliverySessionResponse> => {
 
-    return monopolyfunFetch<RepoDeliverySessionResponse>(getCreateRepoDeliverySessionUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createRepoDeliverySessionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<RepoDeliverySessionResponse>(getCreateRepoDeliverySessionUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createRepoDeliverySessionRequest,)
+  }
+);}
+
 
 
 export const getReportPullRequestUrl = (sessionId: string,) => {
 
 
-    return `/api/v1/work/repo-delivery-sessions/${sessionId}/report-pr`
+
+
+  return `/api/v1/work/repo-delivery-sessions/${sessionId}/report-pr`
 }
 
 export const reportPullRequest = async (sessionId: string,
-                                        reportPullRequestProofRequest: ReportPullRequestProofRequest, options?: RequestInit): Promise<RepoDeliverySessionResponse> => {
+    reportPullRequestProofRequest: ReportPullRequestProofRequest, options?: RequestInit): Promise<RepoDeliverySessionResponse> => {
 
-    return monopolyfunFetch<RepoDeliverySessionResponse>(getReportPullRequestUrl(sessionId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                reportPullRequestProofRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<RepoDeliverySessionResponse>(getReportPullRequestUrl(sessionId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      reportPullRequestProofRequest,)
+  }
+);}
+
 
 
 export const getFinalizeRepoProofUrl = (sessionId: string,) => {
 
 
-    return `/api/v1/work/repo-delivery-sessions/${sessionId}/finalize-proof`
+
+
+  return `/api/v1/work/repo-delivery-sessions/${sessionId}/finalize-proof`
 }
 
 export const finalizeRepoProof = async (sessionId: string,
-                                        finalizeRepoProofRequest: FinalizeRepoProofRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    finalizeRepoProofRequest: FinalizeRepoProofRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getFinalizeRepoProofUrl(sessionId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                finalizeRepoProofRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getFinalizeRepoProofUrl(sessionId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      finalizeRepoProofRequest,)
+  }
+);}
+
 
 
 export const getSubmitOrderProofUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/work/orders/${orderNo}/proofs`
+
+
+  return `/api/v1/work/orders/${orderNo}/proofs`
 }
 
 export const submitOrderProof = async (orderNo: string,
-                                       submitProofRequest: SubmitProofRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    submitProofRequest: SubmitProofRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getSubmitOrderProofUrl(orderNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                submitProofRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getSubmitOrderProofUrl(orderNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      submitProofRequest,)
+  }
+);}
+
 
 
 export const getSubmitOrderProgressUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/work/orders/${orderNo}/progress`
+
+
+  return `/api/v1/work/orders/${orderNo}/progress`
 }
 
 export const submitOrderProgress = async (orderNo: string,
-                                          submitProgressRequest: SubmitProgressRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    submitProgressRequest: SubmitProgressRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getSubmitOrderProgressUrl(orderNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                submitProgressRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getSubmitOrderProgressUrl(orderNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      submitProgressRequest,)
+  }
+);}
+
 
 
 export const getOverrideOrderReviewUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/work/orders/${orderNo}/override-review`
+
+
+  return `/api/v1/work/orders/${orderNo}/override-review`
 }
 
 export const overrideOrderReview = async (orderNo: string,
-                                          backofficeOverrideReviewRequest: BackofficeOverrideReviewRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    backofficeOverrideReviewRequest: BackofficeOverrideReviewRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getOverrideOrderReviewUrl(orderNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                backofficeOverrideReviewRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getOverrideOrderReviewUrl(orderNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      backofficeOverrideReviewRequest,)
+  }
+);}
+
 
 
 export const getRetryInstantFulfillmentUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/work/orders/${orderNo}/instant-fulfillment/retry`
+
+
+  return `/api/v1/work/orders/${orderNo}/instant-fulfillment/retry`
 }
 
 export const retryInstantFulfillment = async (orderNo: string, options?: RequestInit): Promise<OrderSummary> => {
 
-    return monopolyfunFetch<OrderSummary>(getRetryInstantFulfillmentUrl(orderNo),
-        {
-            ...options,
-            method: 'POST'
+  return monopolyfunFetch<OrderSummary>(getRetryInstantFulfillmentUrl(orderNo),
+  {
+    ...options,
+    method: 'POST'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getOpenOrderDisputeUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/work/orders/${orderNo}/dispute`
+
+
+  return `/api/v1/work/orders/${orderNo}/dispute`
 }
 
 export const openOrderDispute = async (orderNo: string,
-                                       disputeOrderRequest: DisputeOrderRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    disputeOrderRequest: DisputeOrderRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getOpenOrderDisputeUrl(orderNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                disputeOrderRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getOpenOrderDisputeUrl(orderNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      disputeOrderRequest,)
+  }
+);}
+
 
 
 export const getCloseWorkOrderUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/work/orders/${orderNo}/close`
+
+
+  return `/api/v1/work/orders/${orderNo}/close`
 }
 
 export const closeWorkOrder = async (orderNo: string,
-                                     closeOrderRequest: CloseOrderRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    closeOrderRequest: CloseOrderRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getCloseWorkOrderUrl(orderNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                closeOrderRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getCloseWorkOrderUrl(orderNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      closeOrderRequest,)
+  }
+);}
+
 
 
 export const getCancelOrderDisputeUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/work/orders/${orderNo}/cancel-dispute`
+
+
+  return `/api/v1/work/orders/${orderNo}/cancel-dispute`
 }
 
 export const cancelOrderDispute = async (orderNo: string,
-                                         cancelDisputeRequest: CancelDisputeRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    cancelDisputeRequest: CancelDisputeRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getCancelOrderDisputeUrl(orderNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                cancelDisputeRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getCancelOrderDisputeUrl(orderNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      cancelDisputeRequest,)
+  }
+);}
+
 
 
 export const getAssignOrderReviewerUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/work/orders/${orderNo}/assign-reviewer`
+
+
+  return `/api/v1/work/orders/${orderNo}/assign-reviewer`
 }
 
 export const assignOrderReviewer = async (orderNo: string,
-                                          assignReviewerRequest: AssignReviewerRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    assignReviewerRequest: AssignReviewerRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getAssignOrderReviewerUrl(orderNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                assignReviewerRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getAssignOrderReviewerUrl(orderNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      assignReviewerRequest,)
+  }
+);}
+
 
 
 export const getOpenOrderAppealUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/work/orders/${orderNo}/appeal`
+
+
+  return `/api/v1/work/orders/${orderNo}/appeal`
 }
 
 export const openOrderAppeal = async (orderNo: string,
-                                      appealOrderRequest: AppealOrderRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    appealOrderRequest: AppealOrderRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getOpenOrderAppealUrl(orderNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                appealOrderRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getOpenOrderAppealUrl(orderNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      appealOrderRequest,)
+  }
+);}
+
 
 
 export const getAcceptWorkOrderUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/work/orders/${orderNo}/accept`
+
+
+  return `/api/v1/work/orders/${orderNo}/accept`
 }
 
 export const acceptWorkOrder = async (orderNo: string,
-                                      acceptOrderRequest: AcceptOrderRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    acceptOrderRequest: AcceptOrderRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getAcceptWorkOrderUrl(orderNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                acceptOrderRequest,)
-        }
-    );
+  return monopolyfunFetch<CommandReceipt>(getAcceptWorkOrderUrl(orderNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      acceptOrderRequest,)
+  }
+);}
+
+
+
+export const getAbandonOrderPaymentUrl = (orderNo: string,) => {
+
+
+
+
+  return `/api/v1/work/orders/${orderNo}/abandon-payment`
 }
+
+export const abandonOrderPayment = async (orderNo: string,
+    closeOrderRequest: CloseOrderRequest, options?: RequestInit): Promise<CommandReceipt> => {
+
+  return monopolyfunFetch<CommandReceipt>(getAbandonOrderPaymentUrl(orderNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      closeOrderRequest,)
+  }
+);}
+
 
 
 export const getReviseWorkReceiptUrl = (itemId: string,) => {
 
 
-    return `/api/v1/work/items/${itemId}/revise`
+
+
+  return `/api/v1/work/items/${itemId}/revise`
 }
 
 export const reviseWorkReceipt = async (itemId: string,
-                                        reviseWorkReceiptRequest: ReviseWorkReceiptRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    reviseWorkReceiptRequest: ReviseWorkReceiptRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getReviseWorkReceiptUrl(itemId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                reviseWorkReceiptRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getReviseWorkReceiptUrl(itemId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      reviseWorkReceiptRequest,)
+  }
+);}
+
 
 
 export const getReviewWorkReceiptUrl = (itemId: string,) => {
 
 
-    return `/api/v1/work/items/${itemId}/review`
+
+
+  return `/api/v1/work/items/${itemId}/review`
 }
 
 export const reviewWorkReceipt = async (itemId: string,
-                                        reviewWorkReceiptRequest: ReviewWorkReceiptRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    reviewWorkReceiptRequest: ReviewWorkReceiptRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getReviewWorkReceiptUrl(itemId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                reviewWorkReceiptRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getReviewWorkReceiptUrl(itemId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      reviewWorkReceiptRequest,)
+  }
+);}
+
 
 
 export const getSubmitWorkReceiptUrl = (itemId: string,) => {
 
 
-    return `/api/v1/work/items/${itemId}/receipt`
+
+
+  return `/api/v1/work/items/${itemId}/receipt`
 }
 
 export const submitWorkReceipt = async (itemId: string,
-                                        submitWorkReceiptRequest: SubmitWorkReceiptRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    submitWorkReceiptRequest: SubmitWorkReceiptRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getSubmitWorkReceiptUrl(itemId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                submitWorkReceiptRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getSubmitWorkReceiptUrl(itemId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      submitWorkReceiptRequest,)
+  }
+);}
+
 
 
 export const getSubmitWorkProgressUrl = (itemId: string,) => {
 
 
-    return `/api/v1/work/items/${itemId}/progress`
+
+
+  return `/api/v1/work/items/${itemId}/progress`
 }
 
 export const submitWorkProgress = async (itemId: string,
-                                         submitWorkProgressRequest: SubmitWorkProgressRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    submitWorkProgressRequest: SubmitWorkProgressRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getSubmitWorkProgressUrl(itemId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                submitWorkProgressRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getSubmitWorkProgressUrl(itemId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      submitWorkProgressRequest,)
+  }
+);}
+
 
 
 export const getRequestWorkHelpUrl = (itemId: string,) => {
 
 
-    return `/api/v1/work/items/${itemId}/help`
+
+
+  return `/api/v1/work/items/${itemId}/help`
 }
 
 export const requestWorkHelp = async (itemId: string,
-                                      requestWorkHelpRequest: RequestWorkHelpRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    requestWorkHelpRequest: RequestWorkHelpRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getRequestWorkHelpUrl(itemId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                requestWorkHelpRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getRequestWorkHelpUrl(itemId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      requestWorkHelpRequest,)
+  }
+);}
+
 
 
 export const getCloseWorkRunUrl = (itemId: string,) => {
 
 
-    return `/api/v1/work/items/${itemId}/close`
+
+
+  return `/api/v1/work/items/${itemId}/close`
 }
 
 export const closeWorkRun = async (itemId: string,
-                                   closeWorkRunRequest: CloseWorkRunRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    closeWorkRunRequest: CloseWorkRunRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getCloseWorkRunUrl(itemId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                closeWorkRunRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getCloseWorkRunUrl(itemId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      closeWorkRunRequest,)
+  }
+);}
+
 
 
 export const getClaimWorkItemUrl = (itemId: string,) => {
 
 
-    return `/api/v1/work/items/${itemId}/claim`
+
+
+  return `/api/v1/work/items/${itemId}/claim`
 }
 
 export const claimWorkItem = async (itemId: string,
-                                    claimWorkItemRequest: ClaimWorkItemRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    claimWorkItemRequest: ClaimWorkItemRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getClaimWorkItemUrl(itemId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                claimWorkItemRequest,)
-        }
-    );
+  return monopolyfunFetch<CommandReceipt>(getClaimWorkItemUrl(itemId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      claimWorkItemRequest,)
+  }
+);}
+
+
+
+export const getReviewUrl = (threadId: string,) => {
+
+
+
+
+  return `/api/v1/work-threads/${threadId}/review`
 }
+
+export const review = async (threadId: string,
+    reviewWorkThreadRequest: ReviewWorkThreadRequest, options?: RequestInit): Promise<CommandReceipt> => {
+
+  return monopolyfunFetch<CommandReceipt>(getReviewUrl(threadId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      reviewWorkThreadRequest,)
+  }
+);}
+
+
+
+export const getSubmitResultUrl = (threadId: string,) => {
+
+
+
+
+  return `/api/v1/work-threads/${threadId}/result`
+}
+
+export const submitResult = async (threadId: string,
+    submitWorkThreadResultRequest: SubmitWorkThreadResultRequest, options?: RequestInit): Promise<WorkResultView> => {
+
+  return monopolyfunFetch<WorkResultView>(getSubmitResultUrl(threadId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      submitWorkThreadResultRequest,)
+  }
+);}
+
+
+
+export const getClaimWorkThreadUrl = (threadId: string,) => {
+
+
+
+
+  return `/api/v1/work-threads/${threadId}/claim`
+}
+
+export const claimWorkThread = async (threadId: string,
+    claimWorkThreadRequest: ClaimWorkThreadRequest, options?: RequestInit): Promise<CommandReceipt> => {
+
+  return monopolyfunFetch<CommandReceipt>(getClaimWorkThreadUrl(threadId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      claimWorkThreadRequest,)
+  }
+);}
+
 
 
 export const getVerifyUrl = (assetId: string,) => {
 
 
-    return `/api/v1/uploads/${assetId}/verify`
+
+
+  return `/api/v1/uploads/${assetId}/verify`
 }
 
 export const verify = async (assetId: string,
-                             paymentActionRequest: PaymentActionRequest, options?: RequestInit): Promise<ProofAssetView> => {
+    paymentActionRequest: PaymentActionRequest, options?: RequestInit): Promise<ProofAssetView> => {
 
-    return monopolyfunFetch<ProofAssetView>(getVerifyUrl(assetId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                paymentActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProofAssetView>(getVerifyUrl(assetId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentActionRequest,)
+  }
+);}
+
 
 
 export const getQuarantineUrl = (assetId: string,) => {
 
 
-    return `/api/v1/uploads/${assetId}/quarantine`
+
+
+  return `/api/v1/uploads/${assetId}/quarantine`
 }
 
 export const quarantine = async (assetId: string,
-                                 paymentActionRequest: PaymentActionRequest, options?: RequestInit): Promise<ProofAssetView> => {
+    paymentActionRequest: PaymentActionRequest, options?: RequestInit): Promise<ProofAssetView> => {
 
-    return monopolyfunFetch<ProofAssetView>(getQuarantineUrl(assetId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                paymentActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProofAssetView>(getQuarantineUrl(assetId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentActionRequest,)
+  }
+);}
+
 
 
 export const getDownloadUrl = (assetId: string,) => {
 
 
-    return `/api/v1/uploads/${assetId}/download`
+
+
+  return `/api/v1/uploads/${assetId}/download`
 }
 
 export const download = async (assetId: string, options?: RequestInit): Promise<UploadDownloadResponse> => {
 
-    return monopolyfunFetch<UploadDownloadResponse>(getDownloadUrl(assetId),
-        {
-            ...options,
-            method: 'POST'
+  return monopolyfunFetch<UploadDownloadResponse>(getDownloadUrl(assetId),
+  {
+    ...options,
+    method: 'POST'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getCompleteUrl = (assetId: string,) => {
 
 
-    return `/api/v1/uploads/${assetId}/complete`
+
+
+  return `/api/v1/uploads/${assetId}/complete`
 }
 
 export const complete = async (assetId: string,
-                               completeUploadRequest: CompleteUploadRequest, options?: RequestInit): Promise<UploadCompletionResponse> => {
+    completeUploadRequest: CompleteUploadRequest, options?: RequestInit): Promise<UploadCompletionResponse> => {
 
-    return monopolyfunFetch<UploadCompletionResponse>(getCompleteUrl(assetId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                completeUploadRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<UploadCompletionResponse>(getCompleteUrl(assetId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      completeUploadRequest,)
+  }
+);}
+
 
 
 export const getCancelUrl = (assetId: string,) => {
 
 
-    return `/api/v1/uploads/${assetId}/cancel`
+
+
+  return `/api/v1/uploads/${assetId}/cancel`
 }
 
 export const cancel = async (assetId: string,
-                             paymentActionRequest: PaymentActionRequest, options?: RequestInit): Promise<ProofAssetView> => {
+    paymentActionRequest: PaymentActionRequest, options?: RequestInit): Promise<ProofAssetView> => {
 
-    return monopolyfunFetch<ProofAssetView>(getCancelUrl(assetId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                paymentActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProofAssetView>(getCancelUrl(assetId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentActionRequest,)
+  }
+);}
+
 
 
 export const getPresignUrl = () => {
 
 
-    return `/api/v1/uploads/presign`
+
+
+  return `/api/v1/uploads/presign`
 }
 
 export const presign = async (uploadPresignRequest: UploadPresignRequest, options?: RequestInit): Promise<UploadPresignResponse> => {
 
-    return monopolyfunFetch<UploadPresignResponse>(getPresignUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                uploadPresignRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<UploadPresignResponse>(getPresignUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      uploadPresignRequest,)
+  }
+);}
+
 
 
 export const getApproveShareReleaseRequestUrl = (requestId: string,
-                                                 params?: ApproveShareReleaseRequestParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: ApproveShareReleaseRequestParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/share-release-requests/${requestId}/approve?${stringifiedParams}` : `/api/v1/share-release-requests/${requestId}/approve`
+  return stringifiedParams.length > 0 ? `/api/v1/share-release-requests/${requestId}/approve?${stringifiedParams}` : `/api/v1/share-release-requests/${requestId}/approve`
 }
 
 export const approveShareReleaseRequest = async (requestId: string,
-                                                 params?: ApproveShareReleaseRequestParams, options?: RequestInit): Promise<ShareReleaseRequestView> => {
+    params?: ApproveShareReleaseRequestParams, options?: RequestInit): Promise<ShareReleaseRequestView> => {
 
-    return monopolyfunFetch<ShareReleaseRequestView>(getApproveShareReleaseRequestUrl(requestId, params),
-        {
-            ...options,
-            method: 'POST'
+  return monopolyfunFetch<ShareReleaseRequestView>(getApproveShareReleaseRequestUrl(requestId,params),
+  {
+    ...options,
+    method: 'POST'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListRequestsUrl = (params?: ListRequestsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/requests?${stringifiedParams}` : `/api/v1/requests`
+  return stringifiedParams.length > 0 ? `/api/v1/requests?${stringifiedParams}` : `/api/v1/requests`
 }
 
 export const listRequests = async (params?: ListRequestsParams, options?: RequestInit): Promise<PageResultRequestView> => {
 
-    return monopolyfunFetch<PageResultRequestView>(getListRequestsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PageResultRequestView>(getListRequestsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getPublishRequestUrl = (params?: PublishRequestParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/requests?${stringifiedParams}` : `/api/v1/requests`
+  return stringifiedParams.length > 0 ? `/api/v1/requests?${stringifiedParams}` : `/api/v1/requests`
 }
 
 export const publishRequest = async (publishRequestRequest: PublishRequestRequest,
-                                     params?: PublishRequestParams, options?: RequestInit): Promise<RequestCreateResponse> => {
+    params?: PublishRequestParams, options?: RequestInit): Promise<RequestCreateResponse> => {
 
-    return monopolyfunFetch<RequestCreateResponse>(getPublishRequestUrl(params),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                publishRequestRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<RequestCreateResponse>(getPublishRequestUrl(params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      publishRequestRequest,)
+  }
+);}
+
 
 
 export const getCloseRequestUrl = (requestNo: string,) => {
 
 
-    return `/api/v1/requests/${requestNo}/close`
+
+
+  return `/api/v1/requests/${requestNo}/close`
 }
 
 export const closeRequest = async (requestNo: string,
-                                   closePostRequest: ClosePostRequest, options?: RequestInit): Promise<RequestView> => {
+    closePostRequest: ClosePostRequest, options?: RequestInit): Promise<RequestView> => {
 
-    return monopolyfunFetch<RequestView>(getCloseRequestUrl(requestNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                closePostRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<RequestView>(getCloseRequestUrl(requestNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      closePostRequest,)
+  }
+);}
+
 
 
 export const getListProjectsUrl = (params?: ListProjectsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/projects?${stringifiedParams}` : `/api/v1/projects`
+  return stringifiedParams.length > 0 ? `/api/v1/projects?${stringifiedParams}` : `/api/v1/projects`
 }
 
 export const listProjects = async (params?: ListProjectsParams, options?: RequestInit): Promise<PageResultProjectView> => {
 
-    return monopolyfunFetch<PageResultProjectView>(getListProjectsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PageResultProjectView>(getListProjectsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getPublishProjectUrl = (params?: PublishProjectParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/projects?${stringifiedParams}` : `/api/v1/projects`
+  return stringifiedParams.length > 0 ? `/api/v1/projects?${stringifiedParams}` : `/api/v1/projects`
 }
 
 export const publishProject = async (publishProjectRequest: PublishProjectRequest,
-                                     params?: PublishProjectParams, options?: RequestInit): Promise<ProjectCreateResponse> => {
+    params?: PublishProjectParams, options?: RequestInit): Promise<ProjectCreateResponse> => {
 
-    return monopolyfunFetch<ProjectCreateResponse>(getPublishProjectUrl(params),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                publishProjectRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectCreateResponse>(getPublishProjectUrl(params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      publishProjectRequest,)
+  }
+);}
+
 
 
 export const getListFeedbackUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/validation-feedback`
+
+
+  return `/api/v1/projects/${projectNo}/validation-feedback`
 }
 
 export const listFeedback = async (projectNo: string, options?: RequestInit): Promise<FeedbackView[]> => {
 
-    return monopolyfunFetch<FeedbackView[]>(getListFeedbackUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<FeedbackView[]>(getListFeedbackUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getCreateFeedbackUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/validation-feedback`
+
+
+  return `/api/v1/projects/${projectNo}/validation-feedback`
 }
 
 export const createFeedback = async (projectNo: string,
-                                     createFeedbackRequest: CreateFeedbackRequest, options?: RequestInit): Promise<FeedbackView> => {
+    createFeedbackRequest: CreateFeedbackRequest, options?: RequestInit): Promise<FeedbackView> => {
 
-    return monopolyfunFetch<FeedbackView>(getCreateFeedbackUrl(projectNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createFeedbackRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<FeedbackView>(getCreateFeedbackUrl(projectNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createFeedbackRequest,)
+  }
+);}
+
 
 
 export const getResolveFeedbackUrl = (projectNo: string,
-                                      feedbackId: string,) => {
+    feedbackId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/validation-feedback/${feedbackId}/resolve`
+
+
+  return `/api/v1/projects/${projectNo}/validation-feedback/${feedbackId}/resolve`
 }
 
 export const resolveFeedback = async (projectNo: string,
-                                      feedbackId: string,
-                                      resolveFeedbackRequest: ResolveFeedbackRequest, options?: RequestInit): Promise<FeedbackView> => {
+    feedbackId: string,
+    resolveFeedbackRequest: ResolveFeedbackRequest, options?: RequestInit): Promise<FeedbackView> => {
 
-    return monopolyfunFetch<FeedbackView>(getResolveFeedbackUrl(projectNo, feedbackId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                resolveFeedbackRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<FeedbackView>(getResolveFeedbackUrl(projectNo,feedbackId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      resolveFeedbackRequest,)
+  }
+);}
+
 
 
 export const getSubmitProofUrl = (projectNo: string,
-                                  taskId: string,) => {
+    taskId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/tasks/${taskId}/proof`
+
+
+  return `/api/v1/projects/${projectNo}/tasks/${taskId}/proof`
 }
 
 export const submitProof = async (projectNo: string,
-                                  taskId: string,
-                                  submitProofRequest: SubmitProofRequest, options?: RequestInit): Promise<ProofView> => {
+    taskId: string,
+    submitProofRequest: SubmitProofRequest, options?: RequestInit): Promise<ProofView> => {
 
-    return monopolyfunFetch<ProofView>(getSubmitProofUrl(projectNo, taskId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                submitProofRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProofView>(getSubmitProofUrl(projectNo,taskId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      submitProofRequest,)
+  }
+);}
+
 
 
 export const getClaimTaskUrl = (projectNo: string,
-                                taskId: string,) => {
+    taskId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/tasks/${taskId}/claim`
+
+
+  return `/api/v1/projects/${projectNo}/tasks/${taskId}/claim`
 }
 
 export const claimTask = async (projectNo: string,
-                                taskId: string, options?: RequestInit): Promise<TaskView> => {
+    taskId: string, options?: RequestInit): Promise<TaskView> => {
 
-    return monopolyfunFetch<TaskView>(getClaimTaskUrl(projectNo, taskId),
-        {
-            ...options,
-            method: 'POST'
+  return monopolyfunFetch<TaskView>(getClaimTaskUrl(projectNo,taskId),
+  {
+    ...options,
+    method: 'POST'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getVacateProjectRoleUrl = (projectNo: string,
-                                        roleCode: string,
-                                        accountId: string,) => {
+    roleCode: string,
+    accountId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/roles/${roleCode}/${accountId}/vacate`
+
+
+  return `/api/v1/projects/${projectNo}/roles/${roleCode}/${accountId}/vacate`
 }
 
 export const vacateProjectRole = async (projectNo: string,
-                                        roleCode: string,
-                                        accountId: string, options?: RequestInit): Promise<ProjectRoleView> => {
+    roleCode: string,
+    accountId: string, options?: RequestInit): Promise<ProjectRoleView> => {
 
-    return monopolyfunFetch<ProjectRoleView>(getVacateProjectRoleUrl(projectNo, roleCode, accountId),
-        {
-            ...options,
-            method: 'POST'
+  return monopolyfunFetch<ProjectRoleView>(getVacateProjectRoleUrl(projectNo,roleCode,accountId),
+  {
+    ...options,
+    method: 'POST'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getInviteProjectRoleUrl = (projectNo: string,
-                                        roleCode: string,) => {
+    roleCode: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/roles/${roleCode}/invite`
+
+
+  return `/api/v1/projects/${projectNo}/roles/${roleCode}/invite`
 }
 
 export const inviteProjectRole = async (projectNo: string,
-                                        roleCode: string,
-                                        inviteProjectRoleRequest: InviteProjectRoleRequest, options?: RequestInit): Promise<ProjectRoleInviteView> => {
+    roleCode: string,
+    inviteProjectRoleRequest: InviteProjectRoleRequest, options?: RequestInit): Promise<ProjectRoleInviteView> => {
 
-    return monopolyfunFetch<ProjectRoleInviteView>(getInviteProjectRoleUrl(projectNo, roleCode),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                inviteProjectRoleRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectRoleInviteView>(getInviteProjectRoleUrl(projectNo,roleCode),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      inviteProjectRoleRequest,)
+  }
+);}
+
 
 
 export const getAssignProjectRoleUrl = (projectNo: string,
-                                        roleCode: string,) => {
+    roleCode: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/roles/${roleCode}/assign`
+
+
+  return `/api/v1/projects/${projectNo}/roles/${roleCode}/assign`
 }
 
 export const assignProjectRole = async (projectNo: string,
-                                        roleCode: string,
-                                        assignProjectRoleRequest: AssignProjectRoleRequest, options?: RequestInit): Promise<ProjectRoleView> => {
+    roleCode: string,
+    assignProjectRoleRequest: AssignProjectRoleRequest, options?: RequestInit): Promise<ProjectRoleView> => {
 
-    return monopolyfunFetch<ProjectRoleView>(getAssignProjectRoleUrl(projectNo, roleCode),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                assignProjectRoleRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectRoleView>(getAssignProjectRoleUrl(projectNo,roleCode),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      assignProjectRoleRequest,)
+  }
+);}
+
 
 
 export const getReviewProofUrl = (projectNo: string,
-                                  proofId: string,) => {
+    proofId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/proofs/${proofId}/review`
+
+
+  return `/api/v1/projects/${projectNo}/proofs/${proofId}/review`
 }
 
 export const reviewProof = async (projectNo: string,
-                                  proofId: string,
-                                  reviewProofRequest: ReviewProofRequest, options?: RequestInit): Promise<ProofView> => {
+    proofId: string,
+    reviewProofRequest: ReviewProofRequest, options?: RequestInit): Promise<ProofView> => {
 
-    return monopolyfunFetch<ProofView>(getReviewProofUrl(projectNo, proofId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                reviewProofRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProofView>(getReviewProofUrl(projectNo,proofId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      reviewProofRequest,)
+  }
+);}
+
 
 
 export const getClaimProjectOwnerUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/owner-claim`
+
+
+  return `/api/v1/projects/${projectNo}/owner-claim`
 }
 
 export const claimProjectOwner = async (projectNo: string,
-                                        claimProjectOwnerRequest: ClaimProjectOwnerRequest, options?: RequestInit): Promise<ProjectView> => {
+    claimProjectOwnerRequest: ClaimProjectOwnerRequest, options?: RequestInit): Promise<ProjectView> => {
 
-    return monopolyfunFetch<ProjectView>(getClaimProjectOwnerUrl(projectNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                claimProjectOwnerRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectView>(getClaimProjectOwnerUrl(projectNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      claimProjectOwnerRequest,)
+  }
+);}
+
 
 
 export const getSourcesUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/memory/sources`
+
+
+  return `/api/v1/projects/${projectNo}/memory/sources`
 }
 
 export const sources = async (projectNo: string, options?: RequestInit): Promise<ProjectMemorySourceView[]> => {
 
-    return monopolyfunFetch<ProjectMemorySourceView[]>(getSourcesUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectMemorySourceView[]>(getSourcesUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getCreateSourceUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/memory/sources`
+
+
+  return `/api/v1/projects/${projectNo}/memory/sources`
 }
 
 export const createSource = async (projectNo: string,
-                                   projectMemorySourceRequest: ProjectMemorySourceRequest, options?: RequestInit): Promise<ProjectMemorySourceView> => {
+    projectMemorySourceRequest: ProjectMemorySourceRequest, options?: RequestInit): Promise<ProjectMemorySourceView> => {
 
-    return monopolyfunFetch<ProjectMemorySourceView>(getCreateSourceUrl(projectNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                projectMemorySourceRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectMemorySourceView>(getCreateSourceUrl(projectNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      projectMemorySourceRequest,)
+  }
+);}
+
 
 
 export const getSyncRepoUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/memory/repo-sync`
+
+
+  return `/api/v1/projects/${projectNo}/memory/repo-sync`
 }
 
 export const syncRepo = async (projectNo: string,
-                               projectMemoryRepoSyncRequest: ProjectMemoryRepoSyncRequest, options?: RequestInit): Promise<ProjectMemoryRootView> => {
+    projectMemoryRepoSyncRequest: ProjectMemoryRepoSyncRequest, options?: RequestInit): Promise<ProjectMemoryRootView> => {
 
-    return monopolyfunFetch<ProjectMemoryRootView>(getSyncRepoUrl(projectNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                projectMemoryRepoSyncRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectMemoryRootView>(getSyncRepoUrl(projectNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      projectMemoryRepoSyncRequest,)
+  }
+);}
+
 
 
 export const getEntriesUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/memory/entries`
+
+
+  return `/api/v1/projects/${projectNo}/memory/entries`
 }
 
 export const entries = async (projectNo: string, options?: RequestInit): Promise<ProjectMemoryEntryView[]> => {
 
-    return monopolyfunFetch<ProjectMemoryEntryView[]>(getEntriesUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectMemoryEntryView[]>(getEntriesUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getCreateEntryUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/memory/entries`
+
+
+  return `/api/v1/projects/${projectNo}/memory/entries`
 }
 
 export const createEntry = async (projectNo: string,
-                                  projectMemoryEntryRequest: ProjectMemoryEntryRequest, options?: RequestInit): Promise<ProjectMemoryEntryView> => {
+    projectMemoryEntryRequest: ProjectMemoryEntryRequest, options?: RequestInit): Promise<ProjectMemoryEntryView> => {
 
-    return monopolyfunFetch<ProjectMemoryEntryView>(getCreateEntryUrl(projectNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                projectMemoryEntryRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectMemoryEntryView>(getCreateEntryUrl(projectNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      projectMemoryEntryRequest,)
+  }
+);}
+
 
 
 export const getSupersedeEntryUrl = (projectNo: string,
-                                     memoryId: string,) => {
+    memoryId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/memory/entries/${memoryId}/supersede`
+
+
+  return `/api/v1/projects/${projectNo}/memory/entries/${memoryId}/supersede`
 }
 
 export const supersedeEntry = async (projectNo: string,
-                                     memoryId: string,
-                                     projectMemoryReviewRequest?: ProjectMemoryReviewRequest, options?: RequestInit): Promise<ProjectMemoryEntryView> => {
+    memoryId: string,
+    projectMemoryReviewRequest?: ProjectMemoryReviewRequest, options?: RequestInit): Promise<ProjectMemoryEntryView> => {
 
-    return monopolyfunFetch<ProjectMemoryEntryView>(getSupersedeEntryUrl(projectNo, memoryId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                projectMemoryReviewRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectMemoryEntryView>(getSupersedeEntryUrl(projectNo,memoryId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      projectMemoryReviewRequest,)
+  }
+);}
+
 
 
 export const getApproveEntryUrl = (projectNo: string,
-                                   memoryId: string,) => {
+    memoryId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/memory/entries/${memoryId}/approve`
+
+
+  return `/api/v1/projects/${projectNo}/memory/entries/${memoryId}/approve`
 }
 
 export const approveEntry = async (projectNo: string,
-                                   memoryId: string,
-                                   projectMemoryReviewRequest?: ProjectMemoryReviewRequest, options?: RequestInit): Promise<ProjectMemoryEntryView> => {
+    memoryId: string,
+    projectMemoryReviewRequest?: ProjectMemoryReviewRequest, options?: RequestInit): Promise<ProjectMemoryEntryView> => {
 
-    return monopolyfunFetch<ProjectMemoryEntryView>(getApproveEntryUrl(projectNo, memoryId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                projectMemoryReviewRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectMemoryEntryView>(getApproveEntryUrl(projectNo,memoryId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      projectMemoryReviewRequest,)
+  }
+);}
+
 
 
 export const getListLaunchesUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/launches`
+
+
+  return `/api/v1/projects/${projectNo}/launches`
 }
 
 export const listLaunches = async (projectNo: string, options?: RequestInit): Promise<LaunchView[]> => {
 
-    return monopolyfunFetch<LaunchView[]>(getListLaunchesUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<LaunchView[]>(getListLaunchesUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getCreateLaunchUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/launches`
+
+
+  return `/api/v1/projects/${projectNo}/launches`
 }
 
 export const createLaunch = async (projectNo: string,
-                                   createLaunchRequest: CreateLaunchRequest, options?: RequestInit): Promise<LaunchView> => {
+    createLaunchRequest: CreateLaunchRequest, options?: RequestInit): Promise<LaunchView> => {
 
-    return monopolyfunFetch<LaunchView>(getCreateLaunchUrl(projectNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createLaunchRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<LaunchView>(getCreateLaunchUrl(projectNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createLaunchRequest,)
+  }
+);}
+
 
 
 export const getListLaunchTasksUrl = (projectNo: string,
-                                      launchId: string,) => {
+    launchId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/launches/${launchId}/tasks`
+
+
+  return `/api/v1/projects/${projectNo}/launches/${launchId}/tasks`
 }
 
 export const listLaunchTasks = async (projectNo: string,
-                                      launchId: string, options?: RequestInit): Promise<TaskView[]> => {
+    launchId: string, options?: RequestInit): Promise<TaskView[]> => {
 
-    return monopolyfunFetch<TaskView[]>(getListLaunchTasksUrl(projectNo, launchId),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<TaskView[]>(getListLaunchTasksUrl(projectNo,launchId),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getCreateTaskUrl = (projectNo: string,
-                                 launchId: string,) => {
+    launchId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/launches/${launchId}/tasks`
+
+
+  return `/api/v1/projects/${projectNo}/launches/${launchId}/tasks`
 }
 
 export const createTask = async (projectNo: string,
-                                 launchId: string,
-                                 createTaskRequest: CreateTaskRequest, options?: RequestInit): Promise<TaskView> => {
+    launchId: string,
+    createTaskRequest: CreateTaskRequest, options?: RequestInit): Promise<TaskView> => {
 
-    return monopolyfunFetch<TaskView>(getCreateTaskUrl(projectNo, launchId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createTaskRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<TaskView>(getCreateTaskUrl(projectNo,launchId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createTaskRequest,)
+  }
+);}
+
 
 
 export const getSettleLaunchUrl = (projectNo: string,
-                                   launchId: string,) => {
+    launchId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/launches/${launchId}/settle`
+
+
+  return `/api/v1/projects/${projectNo}/launches/${launchId}/settle`
 }
 
 export const settleLaunch = async (projectNo: string,
-                                   launchId: string,
-                                   settleLaunchRequest: SettleLaunchRequest, options?: RequestInit): Promise<LaunchView> => {
+    launchId: string,
+    settleLaunchRequest: SettleLaunchRequest, options?: RequestInit): Promise<LaunchView> => {
 
-    return monopolyfunFetch<LaunchView>(getSettleLaunchUrl(projectNo, launchId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                settleLaunchRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<LaunchView>(getSettleLaunchUrl(projectNo,launchId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      settleLaunchRequest,)
+  }
+);}
+
 
 
 export const getPublishLaunchUrl = (projectNo: string,
-                                    launchId: string,) => {
+    launchId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/launches/${launchId}/publish`
+
+
+  return `/api/v1/projects/${projectNo}/launches/${launchId}/publish`
 }
 
 export const publishLaunch = async (projectNo: string,
-                                    launchId: string, options?: RequestInit): Promise<LaunchView> => {
+    launchId: string, options?: RequestInit): Promise<LaunchView> => {
 
-    return monopolyfunFetch<LaunchView>(getPublishLaunchUrl(projectNo, launchId),
-        {
-            ...options,
-            method: 'POST'
+  return monopolyfunFetch<LaunchView>(getPublishLaunchUrl(projectNo,launchId),
+  {
+    ...options,
+    method: 'POST'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListProofRequestsUrl = (projectNo: string,
-                                        launchId: string,) => {
+    launchId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/launches/${launchId}/proof-requests`
+
+
+  return `/api/v1/projects/${projectNo}/launches/${launchId}/proof-requests`
 }
 
 export const listProofRequests = async (projectNo: string,
-                                        launchId: string, options?: RequestInit): Promise<ProofRequestView[]> => {
+    launchId: string, options?: RequestInit): Promise<ProofRequestView[]> => {
 
-    return monopolyfunFetch<ProofRequestView[]>(getListProofRequestsUrl(projectNo, launchId),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProofRequestView[]>(getListProofRequestsUrl(projectNo,launchId),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getCreateProofRequestUrl = (projectNo: string,
-                                         launchId: string,) => {
+    launchId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/launches/${launchId}/proof-requests`
+
+
+  return `/api/v1/projects/${projectNo}/launches/${launchId}/proof-requests`
 }
 
 export const createProofRequest = async (projectNo: string,
-                                         launchId: string,
-                                         createProofRequestRequest: CreateProofRequestRequest, options?: RequestInit): Promise<ProofRequestView> => {
+    launchId: string,
+    createProofRequestRequest: CreateProofRequestRequest, options?: RequestInit): Promise<ProofRequestView> => {
 
-    return monopolyfunFetch<ProofRequestView>(getCreateProofRequestUrl(projectNo, launchId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createProofRequestRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProofRequestView>(getCreateProofRequestUrl(projectNo,launchId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createProofRequestRequest,)
+  }
+);}
+
 
 
 export const getCreateProjectItemUrl = (projectNo: string,
-                                        params?: CreateProjectItemParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: CreateProjectItemParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/projects/${projectNo}/items?${stringifiedParams}` : `/api/v1/projects/${projectNo}/items`
+  return stringifiedParams.length > 0 ? `/api/v1/projects/${projectNo}/items?${stringifiedParams}` : `/api/v1/projects/${projectNo}/items`
 }
 
 /**
@@ -1554,234 +1770,365 @@ export const getCreateProjectItemUrl = (projectNo: string,
  * @summary 创建项目任务项
  */
 export const createProjectItem = async (projectNo: string,
-                                        createProjectItemRequest: CreateProjectItemRequest,
-                                        params?: CreateProjectItemParams, options?: RequestInit): Promise<PostItemView> => {
+    createProjectItemRequest: CreateProjectItemRequest,
+    params?: CreateProjectItemParams, options?: RequestInit): Promise<PostItemView> => {
 
-    return monopolyfunFetch<PostItemView>(getCreateProjectItemUrl(projectNo, params),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createProjectItemRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<PostItemView>(getCreateProjectItemUrl(projectNo,params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createProjectItemRequest,)
+  }
+);}
+
 
 
 export const getListRepoBindingsUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/development/repo-bindings`
+
+
+  return `/api/v1/projects/${projectNo}/development/repo-bindings`
 }
 
 export const listRepoBindings = async (projectNo: string, options?: RequestInit): Promise<ProjectRepoBindingView[]> => {
 
-    return monopolyfunFetch<ProjectRepoBindingView[]>(getListRepoBindingsUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectRepoBindingView[]>(getListRepoBindingsUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getBindRepoUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/development/repo-bindings`
+
+
+  return `/api/v1/projects/${projectNo}/development/repo-bindings`
 }
 
 export const bindRepo = async (projectNo: string,
-                               projectRepoBindingRequest: ProjectRepoBindingRequest, options?: RequestInit): Promise<ProjectRepoBindingView> => {
+    projectRepoBindingRequest: ProjectRepoBindingRequest, options?: RequestInit): Promise<ProjectRepoBindingView> => {
 
-    return monopolyfunFetch<ProjectRepoBindingView>(getBindRepoUrl(projectNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                projectRepoBindingRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectRepoBindingView>(getBindRepoUrl(projectNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      projectRepoBindingRequest,)
+  }
+);}
+
 
 
 export const getIngestPrCiEventUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/development/pr-ci/events`
+
+
+  return `/api/v1/projects/${projectNo}/development/pr-ci/events`
 }
 
 export const ingestPrCiEvent = async (projectNo: string,
-                                      projectPrCiEventRequest: ProjectPrCiEventRequest, options?: RequestInit): Promise<ProjectPrCiStatusView> => {
+    projectPrCiEventRequest: ProjectPrCiEventRequest, options?: RequestInit): Promise<ProjectPrCiStatusView> => {
 
-    return monopolyfunFetch<ProjectPrCiStatusView>(getIngestPrCiEventUrl(projectNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                projectPrCiEventRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectPrCiStatusView>(getIngestPrCiEventUrl(projectNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      projectPrCiEventRequest,)
+  }
+);}
+
 
 
 export const getSupportResultCandidateUrl = (projectNo: string,
-                                             taskId: string,) => {
+    taskId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/development/candidates/${taskId}/support`
+
+
+  return `/api/v1/projects/${projectNo}/development/candidates/${taskId}/support`
 }
 
 export const supportResultCandidate = async (projectNo: string,
-                                             taskId: string,
-                                             supportProjectResultCandidateRequest: SupportProjectResultCandidateRequest, options?: RequestInit): Promise<ProjectResultCandidateView> => {
+    taskId: string,
+    supportProjectResultCandidateRequest: SupportProjectResultCandidateRequest, options?: RequestInit): Promise<ProjectResultCandidateView> => {
 
-    return monopolyfunFetch<ProjectResultCandidateView>(getSupportResultCandidateUrl(projectNo, taskId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                supportProjectResultCandidateRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectResultCandidateView>(getSupportResultCandidateUrl(projectNo,taskId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      supportProjectResultCandidateRequest,)
+  }
+);}
+
 
 
 export const getFinalReviewResultCandidateUrl = (projectNo: string,
-                                                 taskId: string,) => {
+    taskId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/development/candidates/${taskId}/final-review`
+
+
+  return `/api/v1/projects/${projectNo}/development/candidates/${taskId}/final-review`
 }
 
 export const finalReviewResultCandidate = async (projectNo: string,
-                                                 taskId: string,
-                                                 reviewProjectResultCandidateRequest: ReviewProjectResultCandidateRequest, options?: RequestInit): Promise<ProjectResultCandidateView> => {
+    taskId: string,
+    reviewProjectResultCandidateRequest: ReviewProjectResultCandidateRequest, options?: RequestInit): Promise<ProjectResultCandidateView> => {
 
-    return monopolyfunFetch<ProjectResultCandidateView>(getFinalReviewResultCandidateUrl(projectNo, taskId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                reviewProjectResultCandidateRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectResultCandidateView>(getFinalReviewResultCandidateUrl(projectNo,taskId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      reviewProjectResultCandidateRequest,)
+  }
+);}
+
 
 
 export const getSkipResultCandidateWindowUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/development/candidates/window-skip`
+
+
+  return `/api/v1/projects/${projectNo}/development/candidates/window-skip`
 }
 
 export const skipResultCandidateWindow = async (projectNo: string,
-                                                skipProjectCandidateWindowRequest: SkipProjectCandidateWindowRequest, options?: RequestInit): Promise<ProjectResultCandidateWindowView> => {
+    skipProjectCandidateWindowRequest: SkipProjectCandidateWindowRequest, options?: RequestInit): Promise<ProjectResultCandidateWindowView> => {
 
-    return monopolyfunFetch<ProjectResultCandidateWindowView>(getSkipResultCandidateWindowUrl(projectNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                skipProjectCandidateWindowRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectResultCandidateWindowView>(getSkipResultCandidateWindowUrl(projectNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      skipProjectCandidateWindowRequest,)
+  }
+);}
+
 
 
 export const getActionUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/agent/actions`
+
+
+  return `/api/v1/projects/${projectNo}/agent/actions`
 }
 
 export const action = async (projectNo: string,
-                             projectAgentActionRequest: ProjectAgentActionRequest, options?: RequestInit): Promise<ProjectAgentActionResultView> => {
+    projectAgentActionRequest: ProjectAgentActionRequest, options?: RequestInit): Promise<ProjectAgentActionResultView> => {
 
-    return monopolyfunFetch<ProjectAgentActionResultView>(getActionUrl(projectNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                projectAgentActionRequest,)
-        }
-    );
+  return monopolyfunFetch<ProjectAgentActionResultView>(getActionUrl(projectNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      projectAgentActionRequest,)
+  }
+);}
+
+
+
+export const getListWorkThreadsUrl = (projectId: string,) => {
+
+
+
+
+  return `/api/v1/projects/${projectId}/work-threads`
 }
+
+export const listWorkThreads = async (projectId: string, options?: RequestInit): Promise<WorkThreadView[]> => {
+
+  return monopolyfunFetch<WorkThreadView[]>(getListWorkThreadsUrl(projectId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCreateWorkThreadUrl = (projectId: string,) => {
+
+
+
+
+  return `/api/v1/projects/${projectId}/work-threads`
+}
+
+export const createWorkThread = async (projectId: string,
+    createWorkThreadRequest: CreateWorkThreadRequest, options?: RequestInit): Promise<WorkThreadView> => {
+
+  return monopolyfunFetch<WorkThreadView>(getCreateWorkThreadUrl(projectId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createWorkThreadRequest,)
+  }
+);}
+
+
+
+export const getUpsertRevenueAddressUrl = (projectId: string,) => {
+
+
+
+
+  return `/api/v1/projects/${projectId}/revenue-address`
+}
+
+export const upsertRevenueAddress = async (projectId: string,
+    upsertProjectRevenueAddressRequest: UpsertProjectRevenueAddressRequest, options?: RequestInit): Promise<ProjectRevenueAddressView> => {
+
+  return monopolyfunFetch<ProjectRevenueAddressView>(getUpsertRevenueAddressUrl(projectId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      upsertProjectRevenueAddressRequest,)
+  }
+);}
+
+
+
+export const getCreateDistributionUrl = (projectId: string,) => {
+
+
+
+
+  return `/api/v1/projects/${projectId}/distributions`
+}
+
+export const createDistribution = async (projectId: string,
+    createDistributionBatchRequest: CreateDistributionBatchRequest, options?: RequestInit): Promise<DistributionBatchView> => {
+
+  return monopolyfunFetch<DistributionBatchView>(getCreateDistributionUrl(projectId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createDistributionBatchRequest,)
+  }
+);}
+
+
+
+export const getClaimDistributionUrl = (projectId: string,
+    period: string,) => {
+
+
+
+
+  return `/api/v1/projects/${projectId}/distributions/${period}/claim`
+}
+
+export const claimDistribution = async (projectId: string,
+    period: string,
+    claimDistributionRequest: ClaimDistributionRequest, options?: RequestInit): Promise<DistributionClaimView> => {
+
+  return monopolyfunFetch<DistributionClaimView>(getClaimDistributionUrl(projectId,period),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      claimDistributionRequest,)
+  }
+);}
+
 
 
 export const getProvisionProjectRepoUrl = () => {
 
 
-    return `/api/v1/project-repos/provision`
+
+
+  return `/api/v1/project-repos/provision`
 }
 
 export const provisionProjectRepo = async (provisionProjectRepoRequest: ProvisionProjectRepoRequest, options?: RequestInit): Promise<ProjectRepoProvisionResponse> => {
 
-    return monopolyfunFetch<ProjectRepoProvisionResponse>(getProvisionProjectRepoUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                provisionProjectRepoRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectRepoProvisionResponse>(getProvisionProjectRepoUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      provisionProjectRepoRequest,)
+  }
+);}
+
 
 
 export const getListPostItemsUrl = (postNo: string,
-                                    params?: ListPostItemsParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: ListPostItemsParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/posts/${postNo}/items?${stringifiedParams}` : `/api/v1/posts/${postNo}/items`
+  return stringifiedParams.length > 0 ? `/api/v1/posts/${postNo}/items?${stringifiedParams}` : `/api/v1/posts/${postNo}/items`
 }
 
 export const listPostItems = async (postNo: string,
-                                    params?: ListPostItemsParams, options?: RequestInit): Promise<PostItemView[]> => {
+    params?: ListPostItemsParams, options?: RequestInit): Promise<PostItemView[]> => {
 
-    return monopolyfunFetch<PostItemView[]>(getListPostItemsUrl(postNo, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PostItemView[]>(getListPostItemsUrl(postNo,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getCreatePostItemUrl = (postNo: string,
-                                     params?: CreatePostItemParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: CreatePostItemParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/posts/${postNo}/items?${stringifiedParams}` : `/api/v1/posts/${postNo}/items`
+  return stringifiedParams.length > 0 ? `/api/v1/posts/${postNo}/items?${stringifiedParams}` : `/api/v1/posts/${postNo}/items`
 }
 
 /**
@@ -1789,2283 +2136,2365 @@ export const getCreatePostItemUrl = (postNo: string,
  * @summary 创建报价或需求任务项
  */
 export const createPostItem = async (postNo: string,
-                                     createPostItemRequest: CreatePostItemRequest,
-                                     params?: CreatePostItemParams, options?: RequestInit): Promise<PostItemView> => {
+    createPostItemRequest: CreatePostItemRequest,
+    params?: CreatePostItemParams, options?: RequestInit): Promise<PostItemView> => {
 
-    return monopolyfunFetch<PostItemView>(getCreatePostItemUrl(postNo, params),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createPostItemRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<PostItemView>(getCreatePostItemUrl(postNo,params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createPostItemRequest,)
+  }
+);}
+
 
 
 export const getCreateIntentUrl = (orderNo: string,
-                                   params?: CreateIntentParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: CreateIntentParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/payments/orders/${orderNo}/intent?${stringifiedParams}` : `/api/v1/payments/orders/${orderNo}/intent`
+  return stringifiedParams.length > 0 ? `/api/v1/payments/orders/${orderNo}/intent?${stringifiedParams}` : `/api/v1/payments/orders/${orderNo}/intent`
 }
 
 export const createIntent = async (orderNo: string,
-                                   createPaymentIntentRequest: CreatePaymentIntentRequest,
-                                   params?: CreateIntentParams, options?: RequestInit): Promise<PaymentIntentResponse> => {
+    createPaymentIntentRequest: CreatePaymentIntentRequest,
+    params?: CreateIntentParams, options?: RequestInit): Promise<PaymentIntentResponse> => {
 
-    return monopolyfunFetch<PaymentIntentResponse>(getCreateIntentUrl(orderNo, params),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createPaymentIntentRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<PaymentIntentResponse>(getCreateIntentUrl(orderNo,params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createPaymentIntentRequest,)
+  }
+);}
+
 
 
 export const getRefundIntentUrl = (intentId: string,
-                                   params?: RefundIntentParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: RefundIntentParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}/refund?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}/refund`
+  return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}/refund?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}/refund`
 }
 
 export const refundIntent = async (intentId: string,
-                                   paymentActionRequest: PaymentActionRequest,
-                                   params?: RefundIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
+    paymentActionRequest: PaymentActionRequest,
+    params?: RefundIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
 
-    return monopolyfunFetch<PaymentIntentView>(getRefundIntentUrl(intentId, params),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                paymentActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<PaymentIntentView>(getRefundIntentUrl(intentId,params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentActionRequest,)
+  }
+);}
+
 
 
 export const getRefreshIntentUrl = (intentId: string,
-                                    params?: RefreshIntentParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: RefreshIntentParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}/refresh?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}/refresh`
+  return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}/refresh?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}/refresh`
 }
 
 export const refreshIntent = async (intentId: string,
-                                    paymentActionRequest: PaymentActionRequest,
-                                    params?: RefreshIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
+    paymentActionRequest: PaymentActionRequest,
+    params?: RefreshIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
 
-    return monopolyfunFetch<PaymentIntentView>(getRefreshIntentUrl(intentId, params),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                paymentActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<PaymentIntentView>(getRefreshIntentUrl(intentId,params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentActionRequest,)
+  }
+);}
+
 
 
 export const getDisputeIntentUrl = (intentId: string,
-                                    params?: DisputeIntentParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: DisputeIntentParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}/dispute?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}/dispute`
+  return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}/dispute?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}/dispute`
 }
 
 export const disputeIntent = async (intentId: string,
-                                    paymentActionRequest: PaymentActionRequest,
-                                    params?: DisputeIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
+    paymentActionRequest: PaymentActionRequest,
+    params?: DisputeIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
 
-    return monopolyfunFetch<PaymentIntentView>(getDisputeIntentUrl(intentId, params),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                paymentActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<PaymentIntentView>(getDisputeIntentUrl(intentId,params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentActionRequest,)
+  }
+);}
+
 
 
 export const getDefaultIntentUrl = (intentId: string,
-                                    params?: DefaultIntentParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: DefaultIntentParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}/default?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}/default`
+  return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}/default?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}/default`
 }
 
 export const defaultIntent = async (intentId: string,
-                                    paymentActionRequest: PaymentActionRequest,
-                                    params?: DefaultIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
+    paymentActionRequest: PaymentActionRequest,
+    params?: DefaultIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
 
-    return monopolyfunFetch<PaymentIntentView>(getDefaultIntentUrl(intentId, params),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                paymentActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<PaymentIntentView>(getDefaultIntentUrl(intentId,params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentActionRequest,)
+  }
+);}
+
 
 
 export const getCancelIntentUrl = (intentId: string,
-                                   params?: CancelIntentParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: CancelIntentParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}/cancel?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}/cancel`
+  return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}/cancel?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}/cancel`
 }
 
 export const cancelIntent = async (intentId: string,
-                                   paymentActionRequest: PaymentActionRequest,
-                                   params?: CancelIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
+    paymentActionRequest: PaymentActionRequest,
+    params?: CancelIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
 
-    return monopolyfunFetch<PaymentIntentView>(getCancelIntentUrl(intentId, params),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                paymentActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<PaymentIntentView>(getCancelIntentUrl(intentId,params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentActionRequest,)
+  }
+);}
+
 
 
 export const getListOffersUrl = (params?: ListOffersParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/offers?${stringifiedParams}` : `/api/v1/offers`
+  return stringifiedParams.length > 0 ? `/api/v1/offers?${stringifiedParams}` : `/api/v1/offers`
 }
 
 export const listOffers = async (params?: ListOffersParams, options?: RequestInit): Promise<PageResultOfferView> => {
 
-    return monopolyfunFetch<PageResultOfferView>(getListOffersUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PageResultOfferView>(getListOffersUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getPublishOfferUrl = (params?: PublishOfferParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/offers?${stringifiedParams}` : `/api/v1/offers`
+  return stringifiedParams.length > 0 ? `/api/v1/offers?${stringifiedParams}` : `/api/v1/offers`
 }
 
 export const publishOffer = async (publishOfferRequest: PublishOfferRequest,
-                                   params?: PublishOfferParams, options?: RequestInit): Promise<OfferCreateResponse> => {
+    params?: PublishOfferParams, options?: RequestInit): Promise<OfferCreateResponse> => {
 
-    return monopolyfunFetch<OfferCreateResponse>(getPublishOfferUrl(params),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                publishOfferRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<OfferCreateResponse>(getPublishOfferUrl(params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      publishOfferRequest,)
+  }
+);}
+
 
 
 export const getCloseOfferUrl = (offerNo: string,) => {
 
 
-    return `/api/v1/offers/${offerNo}/close`
+
+
+  return `/api/v1/offers/${offerNo}/close`
 }
 
 export const closeOffer = async (offerNo: string,
-                                 closePostRequest: ClosePostRequest, options?: RequestInit): Promise<OfferView> => {
+    closePostRequest: ClosePostRequest, options?: RequestInit): Promise<OfferView> => {
 
-    return monopolyfunFetch<OfferView>(getCloseOfferUrl(offerNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                closePostRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<OfferView>(getCloseOfferUrl(offerNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      closePostRequest,)
+  }
+);}
+
 
 
 export const getUploadDigitalInventoryUrl = (itemId: string,) => {
 
 
-    return `/api/v1/items/${itemId}/digital-inventory`
+
+
+  return `/api/v1/items/${itemId}/digital-inventory`
 }
 
 export const uploadDigitalInventory = async (itemId: string,
-                                             uploadDigitalInventoryRequest: UploadDigitalInventoryRequest, options?: RequestInit): Promise<DigitalInventoryUploadResponse> => {
+    uploadDigitalInventoryRequest: UploadDigitalInventoryRequest, options?: RequestInit): Promise<DigitalInventoryUploadResponse> => {
 
-    return monopolyfunFetch<DigitalInventoryUploadResponse>(getUploadDigitalInventoryUrl(itemId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                uploadDigitalInventoryRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<DigitalInventoryUploadResponse>(getUploadDigitalInventoryUrl(itemId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      uploadDigitalInventoryRequest,)
+  }
+);}
+
 
 
 export const getClosePostItemUrl = (itemId: string,) => {
 
 
-    return `/api/v1/items/${itemId}/close`
+
+
+  return `/api/v1/items/${itemId}/close`
 }
 
 export const closePostItem = async (itemId: string,
-                                    closePostRequest: ClosePostRequest, options?: RequestInit): Promise<PostItemView> => {
+    closePostRequest: ClosePostRequest, options?: RequestInit): Promise<PostItemView> => {
 
-    return monopolyfunFetch<PostItemView>(getClosePostItemUrl(itemId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                closePostRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<PostItemView>(getClosePostItemUrl(itemId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      closePostRequest,)
+  }
+);}
+
 
 
 export const getClaimPostItemUrl = (itemId: string,) => {
 
 
-    return `/api/v1/items/${itemId}/claim`
+
+
+  return `/api/v1/items/${itemId}/claim`
 }
 
 export const claimPostItem = async (itemId: string,
-                                    createPostOrderRequest: CreatePostOrderRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    createPostOrderRequest: CreatePostOrderRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getClaimPostItemUrl(itemId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createPostOrderRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getClaimPostItemUrl(itemId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createPostOrderRequest,)
+  }
+);}
+
 
 
 export const getCreateProposalUrl = () => {
 
 
-    return `/api/v1/initiative/proposals`
+
+
+  return `/api/v1/initiative/proposals`
 }
 
 export const createProposal = async (createProposalRequest: CreateProposalRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getCreateProposalUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createProposalRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getCreateProposalUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createProposalRequest,)
+  }
+);}
+
 
 
 export const getExecuteProposalUrl = (proposalNo: string,) => {
 
 
-    return `/api/v1/initiative/proposals/${proposalNo}/execute`
+
+
+  return `/api/v1/initiative/proposals/${proposalNo}/execute`
 }
 
 export const executeProposal = async (proposalNo: string,
-                                      executeProposalRequest: ExecuteProposalRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    executeProposalRequest: ExecuteProposalRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getExecuteProposalUrl(proposalNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                executeProposalRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getExecuteProposalUrl(proposalNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      executeProposalRequest,)
+  }
+);}
+
 
 
 export const getApproveProposalUrl = (proposalNo: string,) => {
 
 
-    return `/api/v1/initiative/proposals/${proposalNo}/approve`
+
+
+  return `/api/v1/initiative/proposals/${proposalNo}/approve`
 }
 
 export const approveProposal = async (proposalNo: string,
-                                      approveProposalRequest: ApproveProposalRequest, options?: RequestInit): Promise<CommandReceipt> => {
+    approveProposalRequest: ApproveProposalRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getApproveProposalUrl(proposalNo),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                approveProposalRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getApproveProposalUrl(proposalNo),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      approveProposalRequest,)
+  }
+);}
+
 
 
 export const getGenerateProjectRecommendationsUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/initiative/projects/${projectNo}/recommendations/generate`
+
+
+  return `/api/v1/initiative/projects/${projectNo}/recommendations/generate`
 }
 
 export const generateProjectRecommendations = async (projectNo: string, options?: RequestInit): Promise<ProjectInitiativeRecommendationEntity[]> => {
 
-    return monopolyfunFetch<ProjectInitiativeRecommendationEntity[]>(getGenerateProjectRecommendationsUrl(projectNo),
-        {
-            ...options,
-            method: 'POST'
+  return monopolyfunFetch<ProjectInitiativeRecommendationEntity[]>(getGenerateProjectRecommendationsUrl(projectNo),
+  {
+    ...options,
+    method: 'POST'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getDiscoverOpportunityUrl = () => {
 
 
-    return `/api/v1/initiative/opportunities`
+
+
+  return `/api/v1/initiative/opportunities`
 }
 
 export const discoverOpportunity = async (discoverOpportunitiesRequest: DiscoverOpportunitiesRequest, options?: RequestInit): Promise<CommandReceipt> => {
 
-    return monopolyfunFetch<CommandReceipt>(getDiscoverOpportunityUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                discoverOpportunitiesRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<CommandReceipt>(getDiscoverOpportunityUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      discoverOpportunitiesRequest,)
+  }
+);}
+
 
 
 export const getCreateMandateUrl = () => {
 
 
-    return `/api/v1/initiative/mandates`
+
+
+  return `/api/v1/initiative/mandates`
 }
 
 export const createMandate = async (createMandateRequest: CreateMandateRequest, options?: RequestInit): Promise<AgentMandateEntity> => {
 
-    return monopolyfunFetch<AgentMandateEntity>(getCreateMandateUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createMandateRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<AgentMandateEntity>(getCreateMandateUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createMandateRequest,)
+  }
+);}
+
 
 
 export const getCompleteVerificationUrl = (challengeId: string,) => {
 
 
-    return `/api/v1/identity/verifications/${challengeId}/complete`
+
+
+  return `/api/v1/identity/verifications/${challengeId}/complete`
 }
 
 export const completeVerification = async (challengeId: string,
-                                           completeIdentityVerificationRequest?: CompleteIdentityVerificationRequest, options?: RequestInit): Promise<void> => {
+    completeIdentityVerificationRequest?: CompleteIdentityVerificationRequest, options?: RequestInit): Promise<void> => {
 
-    return monopolyfunFetch<void>(getCompleteVerificationUrl(challengeId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                completeIdentityVerificationRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<void>(getCompleteVerificationUrl(challengeId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      completeIdentityVerificationRequest,)
+  }
+);}
+
 
 
 export const getStartVerificationUrl = () => {
 
 
-    return `/api/v1/identity/verifications/start`
+
+
+  return `/api/v1/identity/verifications/start`
 }
 
 export const startVerification = async (startIdentityVerificationRequest: StartIdentityVerificationRequest, options?: RequestInit): Promise<IdentityVerificationStartResponse> => {
 
-    return monopolyfunFetch<IdentityVerificationStartResponse>(getStartVerificationUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                startIdentityVerificationRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<IdentityVerificationStartResponse>(getStartVerificationUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      startIdentityVerificationRequest,)
+  }
+);}
+
 
 
 export const getUpdateDisplaySkinUrl = () => {
 
 
-    return `/api/v1/identity/display-skin`
+
+
+  return `/api/v1/identity/display-skin`
 }
 
 export const updateDisplaySkin = async (updateIdentityDisplaySkinRequest: UpdateIdentityDisplaySkinRequest, options?: RequestInit): Promise<IdentityPageView> => {
 
-    return monopolyfunFetch<IdentityPageView>(getUpdateDisplaySkinUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                updateIdentityDisplaySkinRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<IdentityPageView>(getUpdateDisplaySkinUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      updateIdentityDisplaySkinRequest,)
+  }
+);}
+
 
 
 export const getWatchRiskAccountUrl = (accountId: string,) => {
 
 
-    return `/api/v1/backoffice/risk/accounts/${accountId}/watch`
+
+
+  return `/api/v1/backoffice/risk/accounts/${accountId}/watch`
 }
 
 export const watchRiskAccount = async (accountId: string,
-                                       manualRiskActionRequest: ManualRiskActionRequest, options?: RequestInit): Promise<RiskAccountView> => {
+    manualRiskActionRequest: ManualRiskActionRequest, options?: RequestInit): Promise<RiskAccountView> => {
 
-    return monopolyfunFetch<RiskAccountView>(getWatchRiskAccountUrl(accountId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                manualRiskActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<RiskAccountView>(getWatchRiskAccountUrl(accountId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      manualRiskActionRequest,)
+  }
+);}
+
 
 
 export const getUnfreezeRiskAccountUrl = (accountId: string,) => {
 
 
-    return `/api/v1/backoffice/risk/accounts/${accountId}/unfreeze`
+
+
+  return `/api/v1/backoffice/risk/accounts/${accountId}/unfreeze`
 }
 
 export const unfreezeRiskAccount = async (accountId: string,
-                                          manualRiskActionRequest: ManualRiskActionRequest, options?: RequestInit): Promise<RiskAccountView> => {
+    manualRiskActionRequest: ManualRiskActionRequest, options?: RequestInit): Promise<RiskAccountView> => {
 
-    return monopolyfunFetch<RiskAccountView>(getUnfreezeRiskAccountUrl(accountId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                manualRiskActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<RiskAccountView>(getUnfreezeRiskAccountUrl(accountId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      manualRiskActionRequest,)
+  }
+);}
+
 
 
 export const getFreezeRiskAccountUrl = (accountId: string,) => {
 
 
-    return `/api/v1/backoffice/risk/accounts/${accountId}/freeze`
+
+
+  return `/api/v1/backoffice/risk/accounts/${accountId}/freeze`
 }
 
 export const freezeRiskAccount = async (accountId: string,
-                                        manualRiskActionRequest: ManualRiskActionRequest, options?: RequestInit): Promise<RiskAccountView> => {
+    manualRiskActionRequest: ManualRiskActionRequest, options?: RequestInit): Promise<RiskAccountView> => {
 
-    return monopolyfunFetch<RiskAccountView>(getFreezeRiskAccountUrl(accountId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                manualRiskActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<RiskAccountView>(getFreezeRiskAccountUrl(accountId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      manualRiskActionRequest,)
+  }
+);}
+
 
 
 export const getBanRiskAccountUrl = (accountId: string,) => {
 
 
-    return `/api/v1/backoffice/risk/accounts/${accountId}/ban`
+
+
+  return `/api/v1/backoffice/risk/accounts/${accountId}/ban`
 }
 
 export const banRiskAccount = async (accountId: string,
-                                     manualRiskActionRequest: ManualRiskActionRequest, options?: RequestInit): Promise<RiskAccountView> => {
+    manualRiskActionRequest: ManualRiskActionRequest, options?: RequestInit): Promise<RiskAccountView> => {
 
-    return monopolyfunFetch<RiskAccountView>(getBanRiskAccountUrl(accountId),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                manualRiskActionRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<RiskAccountView>(getBanRiskAccountUrl(accountId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      manualRiskActionRequest,)
+  }
+);}
+
 
 
 export const getIssueBackofficePasswordResetTokenUrl = () => {
 
 
-    return `/api/v1/backoffice/password-reset-tokens`
+
+
+  return `/api/v1/backoffice/password-reset-tokens`
 }
 
 export const issueBackofficePasswordResetToken = async (adminIssuePasswordResetRequest: AdminIssuePasswordResetRequest, options?: RequestInit): Promise<AdminPasswordResetTokenResponse> => {
 
-    return monopolyfunFetch<AdminPasswordResetTokenResponse>(getIssueBackofficePasswordResetTokenUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                adminIssuePasswordResetRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<AdminPasswordResetTokenResponse>(getIssueBackofficePasswordResetTokenUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      adminIssuePasswordResetRequest,)
+  }
+);}
+
 
 
 export const getRegisterUrl = () => {
 
 
-    return `/api/v1/auth/register`
+
+
+  return `/api/v1/auth/register`
 }
 
 export const register = async (registerAccountRequest: RegisterAccountRequest, options?: RequestInit): Promise<AuthSessionResponse> => {
 
-    return monopolyfunFetch<AuthSessionResponse>(getRegisterUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                registerAccountRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<AuthSessionResponse>(getRegisterUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      registerAccountRequest,)
+  }
+);}
+
 
 
 export const getRequestPasswordResetUrl = () => {
 
 
-    return `/api/v1/auth/password-reset/request`
+
+
+  return `/api/v1/auth/password-reset/request`
 }
 
 export const requestPasswordReset = async (passwordResetRequest: PasswordResetRequest, options?: RequestInit): Promise<PasswordResetRequestResponse> => {
 
-    return monopolyfunFetch<PasswordResetRequestResponse>(getRequestPasswordResetUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                passwordResetRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<PasswordResetRequestResponse>(getRequestPasswordResetUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      passwordResetRequest,)
+  }
+);}
+
 
 
 export const getConfirmPasswordResetUrl = () => {
 
 
-    return `/api/v1/auth/password-reset/confirm`
+
+
+  return `/api/v1/auth/password-reset/confirm`
 }
 
 export const confirmPasswordReset = async (passwordResetConfirmRequest: PasswordResetConfirmRequest, options?: RequestInit): Promise<AuthSessionResponse> => {
 
-    return monopolyfunFetch<AuthSessionResponse>(getConfirmPasswordResetUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                passwordResetConfirmRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<AuthSessionResponse>(getConfirmPasswordResetUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      passwordResetConfirmRequest,)
+  }
+);}
+
 
 
 export const getLogoutUrl = () => {
 
 
-    return `/api/v1/auth/logout`
+
+
+  return `/api/v1/auth/logout`
 }
 
-export const logout = async (options?: RequestInit): Promise<void> => {
+export const logout = async ( options?: RequestInit): Promise<void> => {
 
-    return monopolyfunFetch<void>(getLogoutUrl(),
-        {
-            ...options,
-            method: 'POST'
+  return monopolyfunFetch<void>(getLogoutUrl(),
+  {
+    ...options,
+    method: 'POST'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getLoginUrl = () => {
 
 
-    return `/api/v1/auth/login`
+
+
+  return `/api/v1/auth/login`
 }
 
 export const login = async (loginRequest: LoginRequest, options?: RequestInit): Promise<AuthSessionResponse> => {
 
-    return monopolyfunFetch<AuthSessionResponse>(getLoginUrl(),
-        {
-            ...options,
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                loginRequest,)
-        }
-    );
+  return monopolyfunFetch<AuthSessionResponse>(getLoginUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      loginRequest,)
+  }
+);}
+
+
+
+export const getTurnUrl = () => {
+
+
+
+
+  return `/api/v1/agent/turn`
 }
+
+export const turn = async (agentTurnRequest: AgentTurnRequest, options?: RequestInit): Promise<AgentTurnResult> => {
+
+  return monopolyfunFetch<AgentTurnResult>(getTurnUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      agentTurnRequest,)
+  }
+);}
+
 
 
 export const getGetRequestUrl = (requestNo: string,
-                                 params?: GetRequestParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: GetRequestParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/requests/${requestNo}?${stringifiedParams}` : `/api/v1/requests/${requestNo}`
+  return stringifiedParams.length > 0 ? `/api/v1/requests/${requestNo}?${stringifiedParams}` : `/api/v1/requests/${requestNo}`
 }
 
 export const getRequest = async (requestNo: string,
-                                 params?: GetRequestParams, options?: RequestInit): Promise<RequestView> => {
+    params?: GetRequestParams, options?: RequestInit): Promise<RequestView> => {
 
-    return monopolyfunFetch<RequestView>(getGetRequestUrl(requestNo, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<RequestView>(getGetRequestUrl(requestNo,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getUpdateRequestUrl = (requestNo: string,) => {
 
 
-    return `/api/v1/requests/${requestNo}`
+
+
+  return `/api/v1/requests/${requestNo}`
 }
 
 export const updateRequest = async (requestNo: string,
-                                    updateRequestPostRequest: UpdateRequestPostRequest, options?: RequestInit): Promise<RequestView> => {
+    updateRequestPostRequest: UpdateRequestPostRequest, options?: RequestInit): Promise<RequestView> => {
 
-    return monopolyfunFetch<RequestView>(getUpdateRequestUrl(requestNo),
-        {
-            ...options,
-            method: 'PATCH',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                updateRequestPostRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<RequestView>(getUpdateRequestUrl(requestNo),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      updateRequestPostRequest,)
+  }
+);}
+
 
 
 export const getGetProjectUrl = (projectNo: string,
-                                 params?: GetProjectParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: GetProjectParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/projects/${projectNo}?${stringifiedParams}` : `/api/v1/projects/${projectNo}`
+  return stringifiedParams.length > 0 ? `/api/v1/projects/${projectNo}?${stringifiedParams}` : `/api/v1/projects/${projectNo}`
 }
 
 export const getProject = async (projectNo: string,
-                                 params?: GetProjectParams, options?: RequestInit): Promise<ProjectView> => {
+    params?: GetProjectParams, options?: RequestInit): Promise<ProjectView> => {
 
-    return monopolyfunFetch<ProjectView>(getGetProjectUrl(projectNo, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectView>(getGetProjectUrl(projectNo,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getUpdateProjectUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}`
+
+
+  return `/api/v1/projects/${projectNo}`
 }
 
 export const updateProject = async (projectNo: string,
-                                    updateProjectPostRequest: UpdateProjectPostRequest, options?: RequestInit): Promise<ProjectView> => {
+    updateProjectPostRequest: UpdateProjectPostRequest, options?: RequestInit): Promise<ProjectView> => {
 
-    return monopolyfunFetch<ProjectView>(getUpdateProjectUrl(projectNo),
-        {
-            ...options,
-            method: 'PATCH',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                updateProjectPostRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<ProjectView>(getUpdateProjectUrl(projectNo),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      updateProjectPostRequest,)
+  }
+);}
+
 
 
 export const getUpdateLaunchUrl = (projectNo: string,
-                                   launchId: string,) => {
+    launchId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/launches/${launchId}`
+
+
+  return `/api/v1/projects/${projectNo}/launches/${launchId}`
 }
 
 export const updateLaunch = async (projectNo: string,
-                                   launchId: string,
-                                   updateLaunchRequest: UpdateLaunchRequest, options?: RequestInit): Promise<LaunchView> => {
+    launchId: string,
+    updateLaunchRequest: UpdateLaunchRequest, options?: RequestInit): Promise<LaunchView> => {
 
-    return monopolyfunFetch<LaunchView>(getUpdateLaunchUrl(projectNo, launchId),
-        {
-            ...options,
-            method: 'PATCH',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                updateLaunchRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<LaunchView>(getUpdateLaunchUrl(projectNo,launchId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      updateLaunchRequest,)
+  }
+);}
+
 
 
 export const getGetOfferUrl = (offerNo: string,
-                               params?: GetOfferParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: GetOfferParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/offers/${offerNo}?${stringifiedParams}` : `/api/v1/offers/${offerNo}`
+  return stringifiedParams.length > 0 ? `/api/v1/offers/${offerNo}?${stringifiedParams}` : `/api/v1/offers/${offerNo}`
 }
 
 export const getOffer = async (offerNo: string,
-                               params?: GetOfferParams, options?: RequestInit): Promise<OfferView> => {
+    params?: GetOfferParams, options?: RequestInit): Promise<OfferView> => {
 
-    return monopolyfunFetch<OfferView>(getGetOfferUrl(offerNo, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<OfferView>(getGetOfferUrl(offerNo,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getUpdateOfferUrl = (offerNo: string,) => {
 
 
-    return `/api/v1/offers/${offerNo}`
+
+
+  return `/api/v1/offers/${offerNo}`
 }
 
 export const updateOffer = async (offerNo: string,
-                                  updateOfferPostRequest: UpdateOfferPostRequest, options?: RequestInit): Promise<OfferView> => {
+    updateOfferPostRequest: UpdateOfferPostRequest, options?: RequestInit): Promise<OfferView> => {
 
-    return monopolyfunFetch<OfferView>(getUpdateOfferUrl(offerNo),
-        {
-            ...options,
-            method: 'PATCH',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                updateOfferPostRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<OfferView>(getUpdateOfferUrl(offerNo),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      updateOfferPostRequest,)
+  }
+);}
+
 
 
 export const getGetPostItemUrl = (itemId: string,
-                                  params?: GetPostItemParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: GetPostItemParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/items/${itemId}?${stringifiedParams}` : `/api/v1/items/${itemId}`
+  return stringifiedParams.length > 0 ? `/api/v1/items/${itemId}?${stringifiedParams}` : `/api/v1/items/${itemId}`
 }
 
 export const getPostItem = async (itemId: string,
-                                  params?: GetPostItemParams, options?: RequestInit): Promise<PostItemView> => {
+    params?: GetPostItemParams, options?: RequestInit): Promise<PostItemView> => {
 
-    return monopolyfunFetch<PostItemView>(getGetPostItemUrl(itemId, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PostItemView>(getGetPostItemUrl(itemId,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getUpdatePostItemUrl = (itemId: string,) => {
 
 
-    return `/api/v1/items/${itemId}`
+
+
+  return `/api/v1/items/${itemId}`
 }
 
 export const updatePostItem = async (itemId: string,
-                                     createPostItemRequest: CreatePostItemRequest, options?: RequestInit): Promise<PostItemView> => {
+    createPostItemRequest: CreatePostItemRequest, options?: RequestInit): Promise<PostItemView> => {
 
-    return monopolyfunFetch<PostItemView>(getUpdatePostItemUrl(itemId),
-        {
-            ...options,
-            method: 'PATCH',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                createPostItemRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<PostItemView>(getUpdatePostItemUrl(itemId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createPostItemRequest,)
+  }
+);}
+
 
 
 export const getUpdateProfileUrl = () => {
 
 
-    return `/api/v1/identity/profile`
+
+
+  return `/api/v1/identity/profile`
 }
 
 export const updateProfile = async (updateIdentityProfileRequest: UpdateIdentityProfileRequest, options?: RequestInit): Promise<IdentityPageView> => {
 
-    return monopolyfunFetch<IdentityPageView>(getUpdateProfileUrl(),
-        {
-            ...options,
-            method: 'PATCH',
-            headers: {'Content-Type': 'application/json', ...options?.headers},
-            body: JSON.stringify(
-                updateIdentityProfileRequest,)
-        }
-    );
-}
+  return monopolyfunFetch<IdentityPageView>(getUpdateProfileUrl(),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      updateIdentityProfileRequest,)
+  }
+);}
+
 
 
 export const getListWorkbenchItemsUrl = () => {
 
 
-    return `/api/v1/workbench`
+
+
+  return `/api/v1/workbench`
 }
 
-export const listWorkbenchItems = async (options?: RequestInit): Promise<WorkbenchItemView[]> => {
+export const listWorkbenchItems = async ( options?: RequestInit): Promise<WorkbenchItemView[]> => {
 
-    return monopolyfunFetch<WorkbenchItemView[]>(getListWorkbenchItemsUrl(),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<WorkbenchItemView[]>(getListWorkbenchItemsUrl(),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListWorkItemsUrl = () => {
 
 
-    return `/api/v1/work/items`
+
+
+  return `/api/v1/work/items`
 }
 
-export const listWorkItems = async (options?: RequestInit): Promise<WorkItemView[]> => {
+export const listWorkItems = async ( options?: RequestInit): Promise<WorkItemView[]> => {
 
-    return monopolyfunFetch<WorkItemView[]>(getListWorkItemsUrl(),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<WorkItemView[]>(getListWorkItemsUrl(),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetWorkItemUrl = (itemId: string,) => {
 
 
-    return `/api/v1/work/items/${itemId}`
+
+
+  return `/api/v1/work/items/${itemId}`
 }
 
 export const getWorkItem = async (itemId: string, options?: RequestInit): Promise<WorkItemView> => {
 
-    return monopolyfunFetch<WorkItemView>(getGetWorkItemUrl(itemId),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<WorkItemView>(getGetWorkItemUrl(itemId),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
+  }
+);}
+
+
+
+export const getGetPacketUrl = (threadId: string,) => {
+
+
+
+
+  return `/api/v1/work-threads/${threadId}/packet`
 }
+
+export const getPacket = async (threadId: string, options?: RequestInit): Promise<WorkThreadPacketView> => {
+
+  return monopolyfunFetch<WorkThreadPacketView>(getGetPacketUrl(threadId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 
 export const getGetShareReleaseRequestUrl = (requestId: string,
-                                             params?: GetShareReleaseRequestParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: GetShareReleaseRequestParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/share-release-requests/${requestId}?${stringifiedParams}` : `/api/v1/share-release-requests/${requestId}`
+  return stringifiedParams.length > 0 ? `/api/v1/share-release-requests/${requestId}?${stringifiedParams}` : `/api/v1/share-release-requests/${requestId}`
 }
 
 export const getShareReleaseRequest = async (requestId: string,
-                                             params?: GetShareReleaseRequestParams, options?: RequestInit): Promise<ShareReleaseRequestView> => {
+    params?: GetShareReleaseRequestParams, options?: RequestInit): Promise<ShareReleaseRequestView> => {
 
-    return monopolyfunFetch<ShareReleaseRequestView>(getGetShareReleaseRequestUrl(requestId, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ShareReleaseRequestView>(getGetShareReleaseRequestUrl(requestId,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListMyPendingShareReleaseRequestsUrl = (params?: ListMyPendingShareReleaseRequestsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/share-release-requests/pending/me?${stringifiedParams}` : `/api/v1/share-release-requests/pending/me`
+  return stringifiedParams.length > 0 ? `/api/v1/share-release-requests/pending/me?${stringifiedParams}` : `/api/v1/share-release-requests/pending/me`
 }
 
 export const listMyPendingShareReleaseRequests = async (params?: ListMyPendingShareReleaseRequestsParams, options?: RequestInit): Promise<ShareReleaseRequestView[]> => {
 
-    return monopolyfunFetch<ShareReleaseRequestView[]>(getListMyPendingShareReleaseRequestsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ShareReleaseRequestView[]>(getListMyPendingShareReleaseRequestsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetPublicProfileUrl = (handle: string,) => {
 
 
-    return `/api/v1/public/profiles/${handle}`
+
+
+  return `/api/v1/public/profiles/${handle}`
 }
 
 export const getPublicProfile = async (handle: string, options?: RequestInit): Promise<PublicProfileView> => {
 
-    return monopolyfunFetch<PublicProfileView>(getGetPublicProfileUrl(handle),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PublicProfileView>(getGetPublicProfileUrl(handle),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetMarketFeedUrl = (params?: GetMarketFeedParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/public/market-feed?${stringifiedParams}` : `/api/v1/public/market-feed`
+  return stringifiedParams.length > 0 ? `/api/v1/public/market-feed?${stringifiedParams}` : `/api/v1/public/market-feed`
 }
 
 export const getMarketFeed = async (params?: GetMarketFeedParams, options?: RequestInit): Promise<PublicFeedView> => {
 
-    return monopolyfunFetch<PublicFeedView>(getGetMarketFeedUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PublicFeedView>(getGetMarketFeedUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetHomeFeedUrl = () => {
 
 
-    return `/api/v1/public/home-feed`
+
+
+  return `/api/v1/public/home-feed`
 }
 
-export const getHomeFeed = async (options?: RequestInit): Promise<PublicFeedView> => {
+export const getHomeFeed = async ( options?: RequestInit): Promise<PublicFeedView> => {
 
-    return monopolyfunFetch<PublicFeedView>(getGetHomeFeedUrl(),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PublicFeedView>(getGetHomeFeedUrl(),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetProjectTimelineUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/timeline`
+
+
+  return `/api/v1/projects/${projectNo}/timeline`
 }
 
 export const getProjectTimeline = async (projectNo: string, options?: RequestInit): Promise<ProjectTimelineEventView[]> => {
 
-    return monopolyfunFetch<ProjectTimelineEventView[]>(getGetProjectTimelineUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectTimelineEventView[]>(getGetProjectTimelineUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListProjectRolesUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/roles`
+
+
+  return `/api/v1/projects/${projectNo}/roles`
 }
 
 export const listProjectRoles = async (projectNo: string, options?: RequestInit): Promise<ProjectRoleView[]> => {
 
-    return monopolyfunFetch<ProjectRoleView[]>(getListProjectRolesUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectRoleView[]>(getListProjectRolesUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListRewardsUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/rewards`
+
+
+  return `/api/v1/projects/${projectNo}/rewards`
 }
 
 export const listRewards = async (projectNo: string, options?: RequestInit): Promise<RewardView[]> => {
 
-    return monopolyfunFetch<RewardView[]>(getListRewardsUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<RewardView[]>(getListRewardsUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListReviewQueueUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/review-queue`
+
+
+  return `/api/v1/projects/${projectNo}/review-queue`
 }
 
 export const listReviewQueue = async (projectNo: string, options?: RequestInit): Promise<ReviewQueueItemView[]> => {
 
-    return monopolyfunFetch<ReviewQueueItemView[]>(getListReviewQueueUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ReviewQueueItemView[]>(getListReviewQueueUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getOverviewUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/memory`
+
+
+  return `/api/v1/projects/${projectNo}/memory`
 }
 
 export const overview = async (projectNo: string, options?: RequestInit): Promise<ProjectMemoryOverviewView> => {
 
-    return monopolyfunFetch<ProjectMemoryOverviewView>(getOverviewUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectMemoryOverviewView>(getOverviewUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getSourceContractUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/memory/source-contract`
+
+
+  return `/api/v1/projects/${projectNo}/memory/source-contract`
 }
 
 export const sourceContract = async (projectNo: string, options?: RequestInit): Promise<SourceContract200> => {
 
-    return monopolyfunFetch<SourceContract200>(getSourceContractUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<SourceContract200>(getSourceContractUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListLaunchProofsUrl = (projectNo: string,
-                                       launchId: string,) => {
+    launchId: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/launches/${launchId}/proofs`
+
+
+  return `/api/v1/projects/${projectNo}/launches/${launchId}/proofs`
 }
 
 export const listLaunchProofs = async (projectNo: string,
-                                       launchId: string, options?: RequestInit): Promise<ProofView[]> => {
+    launchId: string, options?: RequestInit): Promise<ProofView[]> => {
 
-    return monopolyfunFetch<ProofView[]>(getListLaunchProofsUrl(projectNo, launchId),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProofView[]>(getListLaunchProofsUrl(projectNo,launchId),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetPrCiStatusUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/development/pr-ci`
+
+
+  return `/api/v1/projects/${projectNo}/development/pr-ci`
 }
 
 export const getPrCiStatus = async (projectNo: string, options?: RequestInit): Promise<ProjectPrCiStatusView> => {
 
-    return monopolyfunFetch<ProjectPrCiStatusView>(getGetPrCiStatusUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectPrCiStatusView>(getGetPrCiStatusUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListResultCandidatesUrl = (projectNo: string,
-                                           params?: ListResultCandidatesParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: ListResultCandidatesParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/projects/${projectNo}/development/candidates?${stringifiedParams}` : `/api/v1/projects/${projectNo}/development/candidates`
+  return stringifiedParams.length > 0 ? `/api/v1/projects/${projectNo}/development/candidates?${stringifiedParams}` : `/api/v1/projects/${projectNo}/development/candidates`
 }
 
 export const listResultCandidates = async (projectNo: string,
-                                           params?: ListResultCandidatesParams, options?: RequestInit): Promise<ProjectResultCandidatePageView> => {
+    params?: ListResultCandidatesParams, options?: RequestInit): Promise<ProjectResultCandidatePageView> => {
 
-    return monopolyfunFetch<ProjectResultCandidatePageView>(getListResultCandidatesUrl(projectNo, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectResultCandidatePageView>(getListResultCandidatesUrl(projectNo,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getNextResultCandidateWindowUrl = (projectNo: string,
-                                                params?: NextResultCandidateWindowParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: NextResultCandidateWindowParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/projects/${projectNo}/development/candidates/next?${stringifiedParams}` : `/api/v1/projects/${projectNo}/development/candidates/next`
+  return stringifiedParams.length > 0 ? `/api/v1/projects/${projectNo}/development/candidates/next?${stringifiedParams}` : `/api/v1/projects/${projectNo}/development/candidates/next`
 }
 
 export const nextResultCandidateWindow = async (projectNo: string,
-                                                params?: NextResultCandidateWindowParams, options?: RequestInit): Promise<ProjectResultCandidateWindowView> => {
+    params?: NextResultCandidateWindowParams, options?: RequestInit): Promise<ProjectResultCandidateWindowView> => {
 
-    return monopolyfunFetch<ProjectResultCandidateWindowView>(getNextResultCandidateWindowUrl(projectNo, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectResultCandidateWindowView>(getNextResultCandidateWindowUrl(projectNo,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetProjectDashboardUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/dashboard`
+
+
+  return `/api/v1/projects/${projectNo}/dashboard`
 }
 
 export const getProjectDashboard = async (projectNo: string, options?: RequestInit): Promise<ProjectDashboardView> => {
 
-    return monopolyfunFetch<ProjectDashboardView>(getGetProjectDashboardUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectDashboardView>(getGetProjectDashboardUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetProjectCommercializationUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/commercialization`
+
+
+  return `/api/v1/projects/${projectNo}/commercialization`
 }
 
 export const getProjectCommercialization = async (projectNo: string, options?: RequestInit): Promise<ProjectCommercializationView> => {
 
-    return monopolyfunFetch<ProjectCommercializationView>(getGetProjectCommercializationUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectCommercializationView>(getGetProjectCommercializationUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetMyProjectAuthorityUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/authority/me`
+
+
+  return `/api/v1/projects/${projectNo}/authority/me`
 }
 
 export const getMyProjectAuthority = async (projectNo: string, options?: RequestInit): Promise<ProjectAuthorityContextView> => {
 
-    return monopolyfunFetch<ProjectAuthorityContextView>(getGetMyProjectAuthorityUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectAuthorityContextView>(getGetMyProjectAuthorityUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getInboxUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/agent/inbox`
+
+
+  return `/api/v1/projects/${projectNo}/agent/inbox`
 }
 
 export const inbox = async (projectNo: string, options?: RequestInit): Promise<ProjectAgentInboxView> => {
 
-    return monopolyfunFetch<ProjectAgentInboxView>(getInboxUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectAgentInboxView>(getInboxUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getAgentContextUrl = (projectNo: string,) => {
 
 
-    return `/api/v1/projects/${projectNo}/agent-context`
+
+
+  return `/api/v1/projects/${projectNo}/agent-context`
 }
 
 export const agentContext = async (projectNo: string, options?: RequestInit): Promise<ProjectAgentContextView> => {
 
-    return monopolyfunFetch<ProjectAgentContextView>(getAgentContextUrl(projectNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectAgentContextView>(getAgentContextUrl(projectNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
+  }
+);}
+
+
+
+export const getGetWorkroomUrl = (projectId: string,) => {
+
+
+
+
+  return `/api/v1/projects/${projectId}/workroom`
 }
+
+export const getWorkroom = async (projectId: string, options?: RequestInit): Promise<WorkThreadOverviewView> => {
+
+  return monopolyfunFetch<WorkThreadOverviewView>(getGetWorkroomUrl(projectId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getMyRewardsUrl = (projectId: string,) => {
+
+
+
+
+  return `/api/v1/projects/${projectId}/rewards/me`
+}
+
+export const myRewards = async (projectId: string, options?: RequestInit): Promise<ContributionRewardView> => {
+
+  return monopolyfunFetch<ContributionRewardView>(getMyRewardsUrl(projectId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 
 export const getGetRootProjectUrl = (params?: GetRootProjectParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/projects/root?${stringifiedParams}` : `/api/v1/projects/root`
+  return stringifiedParams.length > 0 ? `/api/v1/projects/root?${stringifiedParams}` : `/api/v1/projects/root`
 }
 
 export const getRootProject = async (params?: GetRootProjectParams, options?: RequestInit): Promise<ProjectView> => {
 
-    return monopolyfunFetch<ProjectView>(getGetRootProjectUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProjectView>(getGetRootProjectUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetPostWorkspaceUrl = (postNo: string,
-                                       params?: GetPostWorkspaceParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: GetPostWorkspaceParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/posts/${postNo}/workspace?${stringifiedParams}` : `/api/v1/posts/${postNo}/workspace`
+  return stringifiedParams.length > 0 ? `/api/v1/posts/${postNo}/workspace?${stringifiedParams}` : `/api/v1/posts/${postNo}/workspace`
 }
 
 export const getPostWorkspace = async (postNo: string,
-                                       params?: GetPostWorkspaceParams, options?: RequestInit): Promise<PostWorkspaceView> => {
+    params?: GetPostWorkspaceParams, options?: RequestInit): Promise<PostWorkspaceView> => {
 
-    return monopolyfunFetch<PostWorkspaceView>(getGetPostWorkspaceUrl(postNo, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PostWorkspaceView>(getGetPostWorkspaceUrl(postNo,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetIntentUrl = (intentId: string,
-                                params?: GetIntentParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: GetIntentParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}`
+  return stringifiedParams.length > 0 ? `/api/v1/payments/intents/${intentId}?${stringifiedParams}` : `/api/v1/payments/intents/${intentId}`
 }
 
 export const getIntent = async (intentId: string,
-                                params?: GetIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
+    params?: GetIntentParams, options?: RequestInit): Promise<PaymentIntentView> => {
 
-    return monopolyfunFetch<PaymentIntentView>(getGetIntentUrl(intentId, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PaymentIntentView>(getGetIntentUrl(intentId,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListOrdersUrl = (params?: ListOrdersParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/orders?${stringifiedParams}` : `/api/v1/orders`
+  return stringifiedParams.length > 0 ? `/api/v1/orders?${stringifiedParams}` : `/api/v1/orders`
 }
 
 export const listOrders = async (params?: ListOrdersParams, options?: RequestInit): Promise<PageResultOrderSummary> => {
 
-    return monopolyfunFetch<PageResultOrderSummary>(getListOrdersUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PageResultOrderSummary>(getListOrdersUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetOrderUrl = (orderNo: string,
-                               params?: GetOrderParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: GetOrderParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/orders/${orderNo}?${stringifiedParams}` : `/api/v1/orders/${orderNo}`
+  return stringifiedParams.length > 0 ? `/api/v1/orders/${orderNo}?${stringifiedParams}` : `/api/v1/orders/${orderNo}`
 }
 
 export const getOrder = async (orderNo: string,
-                               params?: GetOrderParams, options?: RequestInit): Promise<OrderDetailView> => {
+    params?: GetOrderParams, options?: RequestInit): Promise<OrderDetailView> => {
 
-    return monopolyfunFetch<OrderDetailView>(getGetOrderUrl(orderNo, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<OrderDetailView>(getGetOrderUrl(orderNo,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListReviewerCandidatesUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/orders/${orderNo}/reviewer-candidates`
+
+
+  return `/api/v1/orders/${orderNo}/reviewer-candidates`
 }
 
 export const listReviewerCandidates = async (orderNo: string, options?: RequestInit): Promise<AccountSummary[]> => {
 
-    return monopolyfunFetch<AccountSummary[]>(getListReviewerCandidatesUrl(orderNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<AccountSummary[]>(getListReviewerCandidatesUrl(orderNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getRevealDigitalDeliveryUrl = (orderNo: string,) => {
 
 
-    return `/api/v1/orders/${orderNo}/digital-delivery`
+
+
+  return `/api/v1/orders/${orderNo}/digital-delivery`
 }
 
 export const revealDigitalDelivery = async (orderNo: string, options?: RequestInit): Promise<DigitalDeliveryRevealView> => {
 
-    return monopolyfunFetch<DigitalDeliveryRevealView>(getRevealDigitalDeliveryUrl(orderNo),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<DigitalDeliveryRevealView>(getRevealDigitalDeliveryUrl(orderNo),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetMarketSharesLedgerUrl = (marketId: string,
-                                            params?: GetMarketSharesLedgerParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: GetMarketSharesLedgerParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/markets/${marketId}/shares-ledger?${stringifiedParams}` : `/api/v1/markets/${marketId}/shares-ledger`
+  return stringifiedParams.length > 0 ? `/api/v1/markets/${marketId}/shares-ledger?${stringifiedParams}` : `/api/v1/markets/${marketId}/shares-ledger`
 }
 
 export const getMarketSharesLedger = async (marketId: string,
-                                            params?: GetMarketSharesLedgerParams, options?: RequestInit): Promise<PageResultSharesLedgerEntryEntity> => {
+    params?: GetMarketSharesLedgerParams, options?: RequestInit): Promise<PageResultSharesLedgerEntryEntity> => {
 
-    return monopolyfunFetch<PageResultSharesLedgerEntryEntity>(getGetMarketSharesLedgerUrl(marketId, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PageResultSharesLedgerEntryEntity>(getGetMarketSharesLedgerUrl(marketId,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetDigitalInventorySummaryUrl = (itemId: string,
-                                                 params: GetDigitalInventorySummaryParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params: GetDigitalInventorySummaryParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/items/${itemId}/digital-inventory/summary?${stringifiedParams}` : `/api/v1/items/${itemId}/digital-inventory/summary`
+  return stringifiedParams.length > 0 ? `/api/v1/items/${itemId}/digital-inventory/summary?${stringifiedParams}` : `/api/v1/items/${itemId}/digital-inventory/summary`
 }
 
 export const getDigitalInventorySummary = async (itemId: string,
-                                                 params: GetDigitalInventorySummaryParams, options?: RequestInit): Promise<DigitalInventorySummaryView> => {
+    params: GetDigitalInventorySummaryParams, options?: RequestInit): Promise<DigitalInventorySummaryView> => {
 
-    return monopolyfunFetch<DigitalInventorySummaryView>(getGetDigitalInventorySummaryUrl(itemId, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<DigitalInventorySummaryView>(getGetDigitalInventorySummaryUrl(itemId,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetInitiativeUrl = () => {
 
 
-    return `/api/v1/initiative`
+
+
+  return `/api/v1/initiative`
 }
 
-export const getInitiative = async (options?: RequestInit): Promise<InitiativeProjectionView> => {
+export const getInitiative = async ( options?: RequestInit): Promise<InitiativeProjectionView> => {
 
-    return monopolyfunFetch<InitiativeProjectionView>(getGetInitiativeUrl(),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<InitiativeProjectionView>(getGetInitiativeUrl(),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetCurrentIdentityUrl = () => {
 
 
-    return `/api/v1/identity`
+
+
+  return `/api/v1/identity`
 }
 
-export const getCurrentIdentity = async (options?: RequestInit): Promise<IdentityPageView> => {
+export const getCurrentIdentity = async ( options?: RequestInit): Promise<IdentityPageView> => {
 
-    return monopolyfunFetch<IdentityPageView>(getGetCurrentIdentityUrl(),
-        {
-            ...options,
-            method: 'GET'
-
-
-        }
-    );
-}
+  return monopolyfunFetch<IdentityPageView>(getGetCurrentIdentityUrl(),
+  {
+    ...options,
+    method: 'GET'
 
 
-export const getGithubVerificationCallbackUrl = (params: GithubVerificationCallbackParams,) => {
-    const normalizedParams = new URLSearchParams();
+  }
+);}
 
-    Object.entries(params || {}).forEach(([key, value]) => {
-
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
-
-    const stringifiedParams = normalizedParams.toString();
-
-    return stringifiedParams.length > 0 ? `/api/v1/identity/oauth/github/callback?${stringifiedParams}` : `/api/v1/identity/oauth/github/callback`
-}
-
-export const githubVerificationCallback = async (params: GithubVerificationCallbackParams, options?: RequestInit): Promise<void> => {
-
-    return monopolyfunFetch<void>(getGithubVerificationCallbackUrl(params),
-        {
-            ...options,
-            method: 'GET'
-
-
-        }
-    );
-}
 
 
 export const getListCertifiersUrl = () => {
 
 
-    return `/api/v1/identity/certifiers`
+
+
+  return `/api/v1/identity/certifiers`
 }
 
-export const listCertifiers = async (options?: RequestInit): Promise<IdentityCertifierView[]> => {
+export const listCertifiers = async ( options?: RequestInit): Promise<IdentityCertifierView[]> => {
 
-    return monopolyfunFetch<IdentityCertifierView[]>(getListCertifiersUrl(),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<IdentityCertifierView[]>(getListCertifiersUrl(),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetBackofficeDashboardUrl = () => {
 
 
-    return `/api/v1/backoffice`
+
+
+  return `/api/v1/backoffice`
 }
 
-export const getBackofficeDashboard = async (options?: RequestInit): Promise<BackofficeDashboardView> => {
+export const getBackofficeDashboard = async ( options?: RequestInit): Promise<BackofficeDashboardView> => {
 
-    return monopolyfunFetch<BackofficeDashboardView>(getGetBackofficeDashboardUrl(),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<BackofficeDashboardView>(getGetBackofficeDashboardUrl(),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListBackofficeSettlementEventsUrl = (params?: ListBackofficeSettlementEventsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/backoffice/settlement-events?${stringifiedParams}` : `/api/v1/backoffice/settlement-events`
+  return stringifiedParams.length > 0 ? `/api/v1/backoffice/settlement-events?${stringifiedParams}` : `/api/v1/backoffice/settlement-events`
 }
 
 export const listBackofficeSettlementEvents = async (params?: ListBackofficeSettlementEventsParams, options?: RequestInit): Promise<SettlementEventEntity[]> => {
 
-    return monopolyfunFetch<SettlementEventEntity[]>(getListBackofficeSettlementEventsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<SettlementEventEntity[]>(getListBackofficeSettlementEventsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListRiskAccountsUrl = (params?: ListRiskAccountsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/backoffice/risk/accounts?${stringifiedParams}` : `/api/v1/backoffice/risk/accounts`
+  return stringifiedParams.length > 0 ? `/api/v1/backoffice/risk/accounts?${stringifiedParams}` : `/api/v1/backoffice/risk/accounts`
 }
 
 export const listRiskAccounts = async (params?: ListRiskAccountsParams, options?: RequestInit): Promise<PageResultRiskAccountView> => {
 
-    return monopolyfunFetch<PageResultRiskAccountView>(getListRiskAccountsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PageResultRiskAccountView>(getListRiskAccountsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetRiskAccountUrl = (accountId: string,) => {
 
 
-    return `/api/v1/backoffice/risk/accounts/${accountId}`
+
+
+  return `/api/v1/backoffice/risk/accounts/${accountId}`
 }
 
 export const getRiskAccount = async (accountId: string, options?: RequestInit): Promise<RiskAccountView> => {
 
-    return monopolyfunFetch<RiskAccountView>(getGetRiskAccountUrl(accountId),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<RiskAccountView>(getGetRiskAccountUrl(accountId),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListBackofficeRiskEventsUrl = (params?: ListBackofficeRiskEventsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/backoffice/risk-events?${stringifiedParams}` : `/api/v1/backoffice/risk-events`
+  return stringifiedParams.length > 0 ? `/api/v1/backoffice/risk-events?${stringifiedParams}` : `/api/v1/backoffice/risk-events`
 }
 
 export const listBackofficeRiskEvents = async (params?: ListBackofficeRiskEventsParams, options?: RequestInit): Promise<RiskEventView[]> => {
 
-    return monopolyfunFetch<RiskEventView[]>(getListBackofficeRiskEventsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<RiskEventView[]>(getListBackofficeRiskEventsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListBackofficeProofAssetsUrl = (params?: ListBackofficeProofAssetsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/backoffice/proof-assets?${stringifiedParams}` : `/api/v1/backoffice/proof-assets`
+  return stringifiedParams.length > 0 ? `/api/v1/backoffice/proof-assets?${stringifiedParams}` : `/api/v1/backoffice/proof-assets`
 }
 
 export const listBackofficeProofAssets = async (params?: ListBackofficeProofAssetsParams, options?: RequestInit): Promise<ProofAssetView[]> => {
 
-    return monopolyfunFetch<ProofAssetView[]>(getListBackofficeProofAssetsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<ProofAssetView[]>(getListBackofficeProofAssetsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListBackofficePaymentProviderEventsUrl = (params?: ListBackofficePaymentProviderEventsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/backoffice/payment-provider-events?${stringifiedParams}` : `/api/v1/backoffice/payment-provider-events`
+  return stringifiedParams.length > 0 ? `/api/v1/backoffice/payment-provider-events?${stringifiedParams}` : `/api/v1/backoffice/payment-provider-events`
 }
 
 export const listBackofficePaymentProviderEvents = async (params?: ListBackofficePaymentProviderEventsParams, options?: RequestInit): Promise<PaymentProviderEventEntity[]> => {
 
-    return monopolyfunFetch<PaymentProviderEventEntity[]>(getListBackofficePaymentProviderEventsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PaymentProviderEventEntity[]>(getListBackofficePaymentProviderEventsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListBackofficePaymentIntentsUrl = (params?: ListBackofficePaymentIntentsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/backoffice/payment-intents?${stringifiedParams}` : `/api/v1/backoffice/payment-intents`
+  return stringifiedParams.length > 0 ? `/api/v1/backoffice/payment-intents?${stringifiedParams}` : `/api/v1/backoffice/payment-intents`
 }
 
 export const listBackofficePaymentIntents = async (params?: ListBackofficePaymentIntentsParams, options?: RequestInit): Promise<PaymentIntentView[]> => {
 
-    return monopolyfunFetch<PaymentIntentView[]>(getListBackofficePaymentIntentsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PaymentIntentView[]>(getListBackofficePaymentIntentsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListBackofficeDeliveryAttemptsUrl = (params?: ListBackofficeDeliveryAttemptsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/backoffice/delivery-attempts?${stringifiedParams}` : `/api/v1/backoffice/delivery-attempts`
+  return stringifiedParams.length > 0 ? `/api/v1/backoffice/delivery-attempts?${stringifiedParams}` : `/api/v1/backoffice/delivery-attempts`
 }
 
 export const listBackofficeDeliveryAttempts = async (params?: ListBackofficeDeliveryAttemptsParams, options?: RequestInit): Promise<DeliveryAttemptEntity[]> => {
 
-    return monopolyfunFetch<DeliveryAttemptEntity[]>(getListBackofficeDeliveryAttemptsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<DeliveryAttemptEntity[]>(getListBackofficeDeliveryAttemptsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListBackofficeAuditEventsUrl = (params?: ListBackofficeAuditEventsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/backoffice/audit-events?${stringifiedParams}` : `/api/v1/backoffice/audit-events`
+  return stringifiedParams.length > 0 ? `/api/v1/backoffice/audit-events?${stringifiedParams}` : `/api/v1/backoffice/audit-events`
 }
 
 export const listBackofficeAuditEvents = async (params?: ListBackofficeAuditEventsParams, options?: RequestInit): Promise<AuditEventView[]> => {
 
-    return monopolyfunFetch<AuditEventView[]>(getListBackofficeAuditEventsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<AuditEventView[]>(getListBackofficeAuditEventsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
 
-
-export const getGithubAuthorizeRedirectUrl = (params?: GithubAuthorizeRedirectParams,) => {
-    const normalizedParams = new URLSearchParams();
-
-    Object.entries(params || {}).forEach(([key, value]) => {
-
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
-
-    const stringifiedParams = normalizedParams.toString();
-
-    return stringifiedParams.length > 0 ? `/api/v1/auth/oauth/github/redirect?${stringifiedParams}` : `/api/v1/auth/oauth/github/redirect`
-}
-
-export const githubAuthorizeRedirect = async (params?: GithubAuthorizeRedirectParams, options?: RequestInit): Promise<void> => {
-
-    return monopolyfunFetch<void>(getGithubAuthorizeRedirectUrl(params),
-        {
-            ...options,
-            method: 'GET'
-
-
-        }
-    );
-}
-
-
-export const getGithubCallbackUrl = (params: GithubCallbackParams,) => {
-    const normalizedParams = new URLSearchParams();
-
-    Object.entries(params || {}).forEach(([key, value]) => {
-
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
-
-    const stringifiedParams = normalizedParams.toString();
-
-    return stringifiedParams.length > 0 ? `/api/v1/auth/oauth/github/callback?${stringifiedParams}` : `/api/v1/auth/oauth/github/callback`
-}
-
-export const githubCallback = async (params: GithubCallbackParams, options?: RequestInit): Promise<void> => {
-
-    return monopolyfunFetch<void>(getGithubCallbackUrl(params),
-        {
-            ...options,
-            method: 'GET'
-
-
-        }
-    );
-}
-
-
-export const getGithubAuthorizeUrl = (params?: GithubAuthorizeParams,) => {
-    const normalizedParams = new URLSearchParams();
-
-    Object.entries(params || {}).forEach(([key, value]) => {
-
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
-
-    const stringifiedParams = normalizedParams.toString();
-
-    return stringifiedParams.length > 0 ? `/api/v1/auth/oauth/github/authorize?${stringifiedParams}` : `/api/v1/auth/oauth/github/authorize`
-}
-
-export const githubAuthorize = async (params?: GithubAuthorizeParams, options?: RequestInit): Promise<OAuthAuthorizeResponse> => {
-
-    return monopolyfunFetch<OAuthAuthorizeResponse>(getGithubAuthorizeUrl(params),
-        {
-            ...options,
-            method: 'GET'
-
-
-        }
-    );
-}
 
 
 export const getMeUrl = () => {
 
 
-    return `/api/v1/auth/me`
+
+
+  return `/api/v1/auth/me`
 }
 
-export const me = async (options?: RequestInit): Promise<AuthSessionResponse> => {
+export const me = async ( options?: RequestInit): Promise<AuthSessionResponse> => {
 
-    return monopolyfunFetch<AuthSessionResponse>(getMeUrl(),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<AuthSessionResponse>(getMeUrl(),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListPublicAccountsUrl = (params?: ListPublicAccountsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/accounts?${stringifiedParams}` : `/api/v1/accounts`
+  return stringifiedParams.length > 0 ? `/api/v1/accounts?${stringifiedParams}` : `/api/v1/accounts`
 }
 
 export const listPublicAccounts = async (params?: ListPublicAccountsParams, options?: RequestInit): Promise<PageResultPublicAccountSummary> => {
 
-    return monopolyfunFetch<PageResultPublicAccountSummary>(getListPublicAccountsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PageResultPublicAccountSummary>(getListPublicAccountsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getGetAccountSharesLedgerUrl = (accountId: string,
-                                             params?: GetAccountSharesLedgerParams,) => {
-    const normalizedParams = new URLSearchParams();
+    params?: GetAccountSharesLedgerParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/accounts/${accountId}/shares-ledger?${stringifiedParams}` : `/api/v1/accounts/${accountId}/shares-ledger`
+  return stringifiedParams.length > 0 ? `/api/v1/accounts/${accountId}/shares-ledger?${stringifiedParams}` : `/api/v1/accounts/${accountId}/shares-ledger`
 }
 
 export const getAccountSharesLedger = async (accountId: string,
-                                             params?: GetAccountSharesLedgerParams, options?: RequestInit): Promise<PageResultSharesLedgerEntryEntity> => {
+    params?: GetAccountSharesLedgerParams, options?: RequestInit): Promise<PageResultSharesLedgerEntryEntity> => {
 
-    return monopolyfunFetch<PageResultSharesLedgerEntryEntity>(getGetAccountSharesLedgerUrl(accountId, params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PageResultSharesLedgerEntryEntity>(getGetAccountSharesLedgerUrl(accountId,params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getLookupPublicAccountsUrl = (params: LookupPublicAccountsParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/accounts/lookup?${stringifiedParams}` : `/api/v1/accounts/lookup`
+  return stringifiedParams.length > 0 ? `/api/v1/accounts/lookup?${stringifiedParams}` : `/api/v1/accounts/lookup`
 }
 
 export const lookupPublicAccounts = async (params: LookupPublicAccountsParams, options?: RequestInit): Promise<PublicAccountSummary[]> => {
 
-    return monopolyfunFetch<PublicAccountSummary[]>(getLookupPublicAccountsUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PublicAccountSummary[]>(getLookupPublicAccountsUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
+
 
 
 export const getListAccountDirectoryUrl = (params?: ListAccountDirectoryParams,) => {
-    const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-    Object.entries(params || {}).forEach(([key, value]) => {
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-        if (value !== undefined) {
-            normalizedParams.append(key, value === null ? 'null' : value.toString())
-        }
-    });
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-    const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-    return stringifiedParams.length > 0 ? `/api/v1/accounts/directory?${stringifiedParams}` : `/api/v1/accounts/directory`
+  return stringifiedParams.length > 0 ? `/api/v1/accounts/directory?${stringifiedParams}` : `/api/v1/accounts/directory`
 }
 
 export const listAccountDirectory = async (params?: ListAccountDirectoryParams, options?: RequestInit): Promise<PageResultAccountSummary> => {
 
-    return monopolyfunFetch<PageResultAccountSummary>(getListAccountDirectoryUrl(params),
-        {
-            ...options,
-            method: 'GET'
+  return monopolyfunFetch<PageResultAccountSummary>(getListAccountDirectoryUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
-        }
-    );
-}
+  }
+);}
 
 
 
