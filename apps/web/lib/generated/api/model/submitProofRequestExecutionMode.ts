@@ -10,7 +10,7 @@ export type SubmitProofRequestExecutionMode = typeof SubmitProofRequestExecution
 
 
 export const SubmitProofRequestExecutionMode = {
-    HUMAN: 'HUMAN',
-    AGENT: 'AGENT',
-    MIXED: 'MIXED',
+  HUMAN: 'HUMAN',
+  AGENT: 'AGENT',
+  MIXED: 'MIXED',
 } as const;

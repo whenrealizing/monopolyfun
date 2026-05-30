@@ -7,9 +7,9 @@
  */
 
 export interface SettlementPreview {
-    settlementType?: string;
-    amount?: number;
-    accountId?: string;
-    willMintShares?: boolean;
-    description?: string;
+  settlementType?: string;
+  amount?: number;
+  accountId?: string;
+  willMintShares?: boolean;
+  description?: string;
 }

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
-import { BadgeCheck, Github, Home, Search, ShieldCheck } from "lucide-react";
+import { BadgeCheck, Home, Search, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageSection } from "@/components/ui/page-layout";
@@ -128,7 +128,7 @@ function relativeDateLabel(value: string, locale: string) {
 }
 
 function ownerBadge(item: FeedItem, owner: ReturnType<typeof buildSurfaceOwnerIdentity>, t: MarketSurfaceTranslator) {
-  if (owner.verified) return { icon: Github, label: t("card.owner.githubVerified") };
+  if (owner.verified) return { icon: ShieldCheck, label: t("card.owner.verified") };
   if (item.kind === "project" && item.projectLevel === "root") return { icon: ShieldCheck, label: t("card.owner.coreProject") };
   return null;
 }

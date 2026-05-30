@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {OfferView} from './offerView';
-import type {PageInfo} from './pageInfo';
+import type { OfferView } from './offerView';
+import type { PageInfo } from './pageInfo';
 
 export interface PageResultOfferView {
-    items?: OfferView[];
-    pageInfo?: PageInfo;
+  items?: OfferView[];
+  pageInfo?: PageInfo;
 }

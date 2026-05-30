@@ -5,17 +5,17 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {OfferView} from './offerView';
-import type {ProjectView} from './projectView';
-import type {PublicFeedViewAccountsById} from './publicFeedViewAccountsById';
-import type {PublicFeedViewCounts} from './publicFeedViewCounts';
-import type {RequestView} from './requestView';
+import type { OfferView } from './offerView';
+import type { ProjectView } from './projectView';
+import type { PublicFeedViewAccountsById } from './publicFeedViewAccountsById';
+import type { PublicFeedViewCounts } from './publicFeedViewCounts';
+import type { RequestView } from './requestView';
 
 export interface PublicFeedView {
-    accountsById?: PublicFeedViewAccountsById;
-    offers?: OfferView[];
-    requests?: RequestView[];
-    projects?: ProjectView[];
-    rootProject?: ProjectView;
-    counts?: PublicFeedViewCounts;
+  accountsById?: PublicFeedViewAccountsById;
+  offers?: OfferView[];
+  requests?: RequestView[];
+  projects?: ProjectView[];
+  rootProject?: ProjectView;
+  counts?: PublicFeedViewCounts;
 }

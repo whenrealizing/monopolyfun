@@ -5,18 +5,18 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {MarketSummarySettlementType} from './marketSummarySettlementType';
-import type {MarketSummaryStatus} from './marketSummaryStatus';
+import type { MarketSummarySettlementType } from './marketSummarySettlementType';
+import type { MarketSummaryStatus } from './marketSummaryStatus';
 
 export interface MarketSummary {
-    id?: string;
-    name?: string;
-    summary?: string;
-    listingGoal?: string;
-    leadAccountId?: string;
-    settlementType?: MarketSummarySettlementType;
-    nextCurveSlot?: number;
-    status?: MarketSummaryStatus;
-    sourceRef?: string;
-    surfaceUrl?: string;
+  id?: string;
+  name?: string;
+  summary?: string;
+  listingGoal?: string;
+  leadAccountId?: string;
+  settlementType?: MarketSummarySettlementType;
+  nextCurveSlot?: number;
+  status?: MarketSummaryStatus;
+  sourceRef?: string;
+  surfaceUrl?: string;
 }

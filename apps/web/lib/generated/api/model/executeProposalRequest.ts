@@ -7,6 +7,6 @@
  */
 
 export interface ExecuteProposalRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
+  /** @minLength 1 */
+  actorAccountId: string;
 }

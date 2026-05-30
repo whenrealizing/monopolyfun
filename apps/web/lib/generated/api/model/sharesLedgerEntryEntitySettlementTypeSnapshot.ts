@@ -10,8 +10,8 @@ export type SharesLedgerEntryEntitySettlementTypeSnapshot = typeof SharesLedgerE
 
 
 export const SharesLedgerEntryEntitySettlementTypeSnapshot = {
-    MONEY: 'MONEY',
-    SHARES: 'SHARES',
-    POINTS: 'POINTS',
-    MIXED: 'MIXED',
+  MONEY: 'MONEY',
+  SHARES: 'SHARES',
+  POINTS: 'POINTS',
+  MIXED: 'MIXED',
 } as const;

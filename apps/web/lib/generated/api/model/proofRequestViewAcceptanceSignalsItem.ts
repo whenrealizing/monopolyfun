@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type ProofRequestViewAcceptanceSignalsItem = { [key: string]: unknown };
+export type ProofRequestViewAcceptanceSignalsItem = {[key: string]: unknown};

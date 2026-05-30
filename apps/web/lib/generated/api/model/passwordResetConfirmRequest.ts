@@ -7,11 +7,11 @@
  */
 
 export interface PasswordResetConfirmRequest {
-    /** @minLength 1 */
-    resetToken: string;
-    /**
+  /** @minLength 1 */
+  resetToken: string;
+  /**
      * @minLength 8
      * @maxLength 120
      */
-    newPassword: string;
+  newPassword: string;
 }

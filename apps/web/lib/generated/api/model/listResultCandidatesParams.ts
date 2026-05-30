@@ -7,7 +7,7 @@
  */
 
 export type ListResultCandidatesParams = {
-    status?: string;
-    limit?: number;
-    cursor?: string;
+status?: string;
+limit?: number;
+cursor?: string;
 };

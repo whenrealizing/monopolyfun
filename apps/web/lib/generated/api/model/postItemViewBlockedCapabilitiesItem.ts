@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type PostItemViewBlockedCapabilitiesItem = { [key: string]: unknown };
+export type PostItemViewBlockedCapabilitiesItem = {[key: string]: unknown};

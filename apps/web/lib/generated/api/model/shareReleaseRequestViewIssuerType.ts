@@ -10,5 +10,5 @@ export type ShareReleaseRequestViewIssuerType = typeof ShareReleaseRequestViewIs
 
 
 export const ShareReleaseRequestViewIssuerType = {
-    project: 'project',
+  project: 'project',
 } as const;

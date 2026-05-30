@@ -49,7 +49,7 @@ class OrderFirstApiSmokeTest extends AbstractPostgresIntegrationTest {
                 "围绕公开市场、社媒风险、链上安全事件，持续交付可验证的情报页面和报告流。",
                 "完成 3 个可公开展示的分析页面，达到持续招募和上市标准。",
                 "acct-lead",
-                "github.com/monopolyfun/ai-finance-lab",
+                "localhost:3001/monopolyfun/ai-finance-lab",
                 "https://opencompany.example/ai-finance",
                 "shares",
                 7,

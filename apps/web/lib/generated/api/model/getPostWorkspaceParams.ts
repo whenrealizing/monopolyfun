@@ -7,5 +7,5 @@
  */
 
 export type GetPostWorkspaceParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

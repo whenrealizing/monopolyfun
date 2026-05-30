@@ -5,17 +5,17 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {MarketSummary} from './marketSummary';
-import type {PostItemView} from './postItemView';
-import type {PostWorkspaceViewItemCounts} from './postWorkspaceViewItemCounts';
-import type {PostWorkspaceViewPostKind} from './postWorkspaceViewPostKind';
-import type {ProjectSharesView} from './projectSharesView';
+import type { MarketSummary } from './marketSummary';
+import type { PostItemView } from './postItemView';
+import type { PostWorkspaceViewItemCounts } from './postWorkspaceViewItemCounts';
+import type { PostWorkspaceViewPostKind } from './postWorkspaceViewPostKind';
+import type { ProjectSharesView } from './projectSharesView';
 
 export interface PostWorkspaceView {
-    postKind?: PostWorkspaceViewPostKind;
-    post?: unknown;
-    market?: MarketSummary;
-    shares?: ProjectSharesView;
-    items?: PostItemView[];
-    itemCounts?: PostWorkspaceViewItemCounts;
+  postKind?: PostWorkspaceViewPostKind;
+  post?: unknown;
+  market?: MarketSummary;
+  shares?: ProjectSharesView;
+  items?: PostItemView[];
+  itemCounts?: PostWorkspaceViewItemCounts;
 }

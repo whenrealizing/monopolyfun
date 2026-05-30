@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectRepoBindingView} from './projectRepoBindingView';
+import type { ProjectRepoBindingView } from './projectRepoBindingView';
 
 export interface DashboardSectionViewListProjectRepoBindingView {
-    status?: string;
-    data?: ProjectRepoBindingView[];
-    errorCode?: string;
+  status?: string;
+  data?: ProjectRepoBindingView[];
+  errorCode?: string;
 }

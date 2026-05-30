@@ -5,11 +5,11 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectAuthorityContextViewRoleCodesItem} from './projectAuthorityContextViewRoleCodesItem';
+import type { ProjectAuthorityContextViewRoleCodesItem } from './projectAuthorityContextViewRoleCodesItem';
 
 export interface ProjectAuthorityContextView {
-    accountId?: string;
-    projectId?: string;
-    roleCodes?: ProjectAuthorityContextViewRoleCodesItem[];
-    capabilities?: string[];
+  accountId?: string;
+  projectId?: string;
+  roleCodes?: ProjectAuthorityContextViewRoleCodesItem[];
+  capabilities?: string[];
 }

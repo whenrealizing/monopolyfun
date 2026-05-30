@@ -7,7 +7,7 @@
  */
 
 export interface AcceptOrderRequest {
-    /** @minLength 1 */
-    acceptedByAccountId: string;
-    note?: string;
+  /** @minLength 1 */
+  acceptedByAccountId: string;
+  note?: string;
 }

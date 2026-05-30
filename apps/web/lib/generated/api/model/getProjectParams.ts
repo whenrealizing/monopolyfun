@@ -7,5 +7,5 @@
  */
 
 export type GetProjectParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

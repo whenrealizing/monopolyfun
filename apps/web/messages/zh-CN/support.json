@@ -6,8 +6,7 @@
     "title": "关于 monopolyfun",
     "hero": {
       "title": "把一句想法推进成可协作的项目",
-      "primaryCta": "发布项目",
-      "githubCta": "查看 GitHub"
+      "primaryCta": "发布项目"
     },
     "flow": {
       "cardTitle": "项目协作闭环",

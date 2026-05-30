@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectPrCiStatusView} from './projectPrCiStatusView';
+import type { ProjectPrCiStatusView } from './projectPrCiStatusView';
 
 export interface DashboardSectionViewProjectPrCiStatusView {
-    status?: string;
-    data?: ProjectPrCiStatusView;
-    errorCode?: string;
+  status?: string;
+  data?: ProjectPrCiStatusView;
+  errorCode?: string;
 }

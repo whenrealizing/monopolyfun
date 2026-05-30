@@ -7,7 +7,7 @@
  */
 
 export interface AdminPasswordResetTokenResponse {
-    handle?: string;
-    resetToken?: string;
-    expiresAt?: string;
+  handle?: string;
+  resetToken?: string;
+  expiresAt?: string;
 }

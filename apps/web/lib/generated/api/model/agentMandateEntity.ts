@@ -5,18 +5,18 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {AgentMandateEntityBudget} from './agentMandateEntityBudget';
-import type {AgentMandateEntityRiskPolicy} from './agentMandateEntityRiskPolicy';
+import type { AgentMandateEntityBudget } from './agentMandateEntityBudget';
+import type { AgentMandateEntityRiskPolicy } from './agentMandateEntityRiskPolicy';
 
 export interface AgentMandateEntity {
-    id?: string;
-    mandateNo?: string;
-    accountId?: string;
-    goal?: string;
-    scope?: string[];
-    budget?: AgentMandateEntityBudget;
-    riskPolicy?: AgentMandateEntityRiskPolicy;
-    status?: string;
-    createdAt?: string;
-    updatedAt?: string;
+  id?: string;
+  mandateNo?: string;
+  accountId?: string;
+  goal?: string;
+  scope?: string[];
+  budget?: AgentMandateEntityBudget;
+  riskPolicy?: AgentMandateEntityRiskPolicy;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

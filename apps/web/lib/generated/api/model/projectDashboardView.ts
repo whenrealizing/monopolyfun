@@ -5,20 +5,18 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {DashboardSectionViewListProjectRepoBindingView} from './dashboardSectionViewListProjectRepoBindingView';
-import type {DashboardSectionViewProjectAgentContextView} from './dashboardSectionViewProjectAgentContextView';
-import type {
-    DashboardSectionViewProjectCommercializationView
-} from './dashboardSectionViewProjectCommercializationView';
-import type {DashboardSectionViewProjectMemoryOverviewView} from './dashboardSectionViewProjectMemoryOverviewView';
-import type {DashboardSectionViewProjectPrCiStatusView} from './dashboardSectionViewProjectPrCiStatusView';
-import type {PostWorkspaceView} from './postWorkspaceView';
+import type { DashboardSectionViewListProjectRepoBindingView } from './dashboardSectionViewListProjectRepoBindingView';
+import type { DashboardSectionViewProjectAgentContextView } from './dashboardSectionViewProjectAgentContextView';
+import type { DashboardSectionViewProjectCommercializationView } from './dashboardSectionViewProjectCommercializationView';
+import type { DashboardSectionViewProjectMemoryOverviewView } from './dashboardSectionViewProjectMemoryOverviewView';
+import type { DashboardSectionViewProjectPrCiStatusView } from './dashboardSectionViewProjectPrCiStatusView';
+import type { PostWorkspaceView } from './postWorkspaceView';
 
 export interface ProjectDashboardView {
-    workspace?: PostWorkspaceView;
-    repoBindings?: DashboardSectionViewListProjectRepoBindingView;
-    prCiStatus?: DashboardSectionViewProjectPrCiStatusView;
-    projectMemory?: DashboardSectionViewProjectMemoryOverviewView;
-    agentContext?: DashboardSectionViewProjectAgentContextView;
-    commercialization?: DashboardSectionViewProjectCommercializationView;
+  workspace?: PostWorkspaceView;
+  repoBindings?: DashboardSectionViewListProjectRepoBindingView;
+  prCiStatus?: DashboardSectionViewProjectPrCiStatusView;
+  projectMemory?: DashboardSectionViewProjectMemoryOverviewView;
+  agentContext?: DashboardSectionViewProjectAgentContextView;
+  commercialization?: DashboardSectionViewProjectCommercializationView;
 }

@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type ProjectMemoryRepoSyncRequestRawRoot = { [key: string]: unknown };
+export type ProjectMemoryRepoSyncRequestRawRoot = {[key: string]: unknown};

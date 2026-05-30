@@ -7,9 +7,9 @@
  */
 
 export interface CompleteUploadRequest {
-    /** @minLength 1 */
-    contentType: string;
-    contentLengthBytes?: number;
-    /** @minLength 1 */
-    checksumSha256: string;
+  /** @minLength 1 */
+  contentType: string;
+  contentLengthBytes?: number;
+  /** @minLength 1 */
+  checksumSha256: string;
 }

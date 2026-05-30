@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {PublicProfileActivityView} from './publicProfileActivityView';
-import type {PublicProfileIdentityView} from './publicProfileIdentityView';
+import type { PublicProfileActivityView } from './publicProfileActivityView';
+import type { PublicProfileIdentityView } from './publicProfileIdentityView';
 
 export interface PublicProfileView {
-    profile?: PublicProfileIdentityView;
-    activity?: PublicProfileActivityView;
+  profile?: PublicProfileIdentityView;
+  activity?: PublicProfileActivityView;
 }

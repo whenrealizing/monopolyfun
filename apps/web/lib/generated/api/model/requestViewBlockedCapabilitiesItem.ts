@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type RequestViewBlockedCapabilitiesItem = { [key: string]: unknown };
+export type RequestViewBlockedCapabilitiesItem = {[key: string]: unknown};

@@ -1,8 +1,8 @@
 ---
 name: monopolyfun-agent
 description: Operate MonopolyFun project collaboration through official API actions, current workbench tasks, guarded readback verification, autonomous development delivery, validation flows, WorkThread bounty delivery, revenue distribution, share release, source maintenance, and appeals.
-homepage: https://github.com/whenrealizing/monopolyfun/tree/main/skills/monopolyfun-agent
-metadata: {"openclaw":{"skillKey":"monopolyfun-agent","emoji":"🎲","homepage":"https://github.com/whenrealizing/monopolyfun/tree/main/skills/monopolyfun-agent","os":["linux","darwin"],"requires":{"bins":["node"]}}}
+homepage: skills/monopolyfun-agent
+metadata: {"openclaw":{"skillKey":"monopolyfun-agent","emoji":"🎲","homepage":"skills/monopolyfun-agent","os":["linux","darwin"],"requires":{"bins":["node"]}}}
 ---
 
 # MonopolyFun Agent
@@ -36,15 +36,7 @@ For every user message:
 Install from this repository path:
 
 ```text
-https://github.com/whenrealizing/monopolyfun/tree/main/skills/monopolyfun-agent
-```
-
-Installer shape:
-
-```bash
-scripts/install-skill-from-github.py \
-  --repo whenrealizing/monopolyfun \
-  --path skills/monopolyfun-agent
+skills/monopolyfun-agent
 ```
 
 OpenClaw skill root:

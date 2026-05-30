@@ -5,69 +5,69 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectPrCiEventRequestPayload} from './projectPrCiEventRequestPayload';
+import type { ProjectPrCiEventRequestPayload } from './projectPrCiEventRequestPayload';
 
 export interface ProjectPrCiEventRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    eventType: string;
-    /**
+  eventType: string;
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    validationTaskId?: string;
-    /**
+  validationTaskId?: string;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    repoUrl?: string;
-    prNumber?: number;
-    /**
+  repoUrl?: string;
+  prNumber?: number;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    prUrl?: string;
-    /**
+  prUrl?: string;
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    headSha?: string;
-    /**
+  headSha?: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    baseBranch?: string;
-    /**
+  baseBranch?: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    branchName?: string;
-    /**
+  branchName?: string;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    state?: string;
-    /**
+  state?: string;
+  /**
      * @minLength 0
      * @maxLength 160
      */
-    checkName?: string;
-    /**
+  checkName?: string;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    status?: string;
-    /**
+  status?: string;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    conclusion?: string;
-    /**
+  conclusion?: string;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    detailsUrl?: string;
-    payload?: ProjectPrCiEventRequestPayload;
+  detailsUrl?: string;
+  payload?: ProjectPrCiEventRequestPayload;
 }

@@ -7,5 +7,5 @@
  */
 
 export type RefreshIntentParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

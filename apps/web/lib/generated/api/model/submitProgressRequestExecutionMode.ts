@@ -10,7 +10,7 @@ export type SubmitProgressRequestExecutionMode = typeof SubmitProgressRequestExe
 
 
 export const SubmitProgressRequestExecutionMode = {
-    HUMAN: 'HUMAN',
-    AGENT: 'AGENT',
-    MIXED: 'MIXED',
+  HUMAN: 'HUMAN',
+  AGENT: 'AGENT',
+  MIXED: 'MIXED',
 } as const;

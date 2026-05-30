@@ -5,13 +5,13 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectAgentActionCardViewContext} from './projectAgentActionCardViewContext';
+import type { ProjectAgentActionCardViewContext } from './projectAgentActionCardViewContext';
 
 export interface ProjectAgentActionCardView {
-    cardId?: string;
-    type?: string;
-    title?: string;
-    packId?: string;
-    context?: ProjectAgentActionCardViewContext;
-    requiredFields?: string[];
+  cardId?: string;
+  type?: string;
+  title?: string;
+  packId?: string;
+  context?: ProjectAgentActionCardViewContext;
+  requiredFields?: string[];
 }

@@ -7,9 +7,9 @@
  */
 
 export type ListRiskAccountsParams = {
-    status?: string;
-    riskLevel?: string;
-    q?: string;
-    limit?: number;
-    cursor?: string;
+status?: string;
+riskLevel?: string;
+q?: string;
+limit?: number;
+cursor?: string;
 };

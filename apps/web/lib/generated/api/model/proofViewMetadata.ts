@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type ProofViewMetadata = { [key: string]: unknown };
+export type ProofViewMetadata = {[key: string]: unknown};

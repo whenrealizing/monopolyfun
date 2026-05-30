@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monopolyfun.modules.workthread.domain.DistributionBatchEntity;
 import com.monopolyfun.modules.workthread.domain.DistributionClaimEntity;
 import com.monopolyfun.modules.workthread.domain.ProjectRevenueAddressEntity;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,9 +33,11 @@ public class JsonRpcDistributionChainReceiptVerifier implements DistributionChai
 
     private final ObjectMapper objectMapper;
     private final HttpClient httpClient;
+    private final Environment environment;
 
-    public JsonRpcDistributionChainReceiptVerifier(ObjectMapper objectMapper) {
+    public JsonRpcDistributionChainReceiptVerifier(ObjectMapper objectMapper, Environment environment) {
         this.objectMapper = objectMapper;
+        this.environment = environment;
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(10))
                 .version(HttpClient.Version.HTTP_1_1)
@@ -152,7 +155,14 @@ public class JsonRpcDistributionChainReceiptVerifier implements DistributionChai
 
     private String rpcUrl(String chainId) {
         String key = "MONOPOLYFUN_REVENUE_RPC_" + chainId.toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]", "_");
-        String value = System.getenv(key);
+        String propertyKey = "monopolyfun.revenue.rpc." + chainId.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "-");
+        String value = environment.getProperty(propertyKey);
+        if (value == null || value.isBlank()) {
+            value = environment.getProperty(key);
+        }
+        if (value == null || value.isBlank()) {
+            value = System.getenv(key);
+        }
         if (value == null || value.isBlank()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Revenue chain RPC is not configured for " + chainId);
         }

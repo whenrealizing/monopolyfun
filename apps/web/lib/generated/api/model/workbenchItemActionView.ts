@@ -7,10 +7,10 @@
  */
 
 export interface WorkbenchItemActionView {
-    id?: string;
-    label?: string;
-    mode?: string;
-    requiredInputs?: string[];
-    targetHref?: string;
-    destructive?: boolean;
+  id?: string;
+  label?: string;
+  mode?: string;
+  requiredInputs?: string[];
+  targetHref?: string;
+  destructive?: boolean;
 }

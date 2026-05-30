@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {CommandReceipt} from './commandReceipt';
-import type {OfferView} from './offerView';
+import type { CommandReceipt } from './commandReceipt';
+import type { OfferView } from './offerView';
 
 export interface OfferCreateResponse {
-    offer?: OfferView;
-    receipt?: CommandReceipt;
+  offer?: OfferView;
+  receipt?: CommandReceipt;
 }

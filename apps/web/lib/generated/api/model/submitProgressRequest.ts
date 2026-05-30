@@ -5,43 +5,43 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProofLink} from './proofLink';
-import type {SubmitProgressRequestExecutionMode} from './submitProgressRequestExecutionMode';
-import type {SubmitProgressRequestProgressPayload} from './submitProgressRequestProgressPayload';
+import type { ProofLink } from './proofLink';
+import type { SubmitProgressRequestExecutionMode } from './submitProgressRequestExecutionMode';
+import type { SubmitProgressRequestProgressPayload } from './submitProgressRequestProgressPayload';
 
 export interface SubmitProgressRequest {
-    /** @minLength 1 */
-    submittedByAccountId: string;
-    /**
+  /** @minLength 1 */
+  submittedByAccountId: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    stepTitle: string;
-    /**
+  stepTitle: string;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    summary: string;
-    /**
+  summary: string;
+  /**
      * @minItems 0
      * @maxItems 20
      */
-    links?: ProofLink[];
-    /**
+  links?: ProofLink[];
+  /**
      * @minItems 0
      * @maxItems 20
      */
-    artifacts?: string[];
-    progressPayload?: SubmitProgressRequestProgressPayload;
-    executionMode: SubmitProgressRequestExecutionMode;
-    /**
+  artifacts?: string[];
+  progressPayload?: SubmitProgressRequestProgressPayload;
+  executionMode: SubmitProgressRequestExecutionMode;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    agentSessionId?: string;
-    /**
+  agentSessionId?: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    agentRuntime?: string;
+  agentRuntime?: string;
 }

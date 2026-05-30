@@ -5,23 +5,23 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProofValidationStatsView} from './proofValidationStatsView';
-import type {ProofViewEvidenceItemsItem} from './proofViewEvidenceItemsItem';
-import type {ProofViewMetadata} from './proofViewMetadata';
+import type { ProofValidationStatsView } from './proofValidationStatsView';
+import type { ProofViewEvidenceItemsItem } from './proofViewEvidenceItemsItem';
+import type { ProofViewMetadata } from './proofViewMetadata';
 
 export interface ProofView {
-    id?: string;
-    projectId?: string;
-    launchId?: string;
-    taskId?: string;
-    summary?: string;
-    evidenceItems?: ProofViewEvidenceItemsItem[];
-    linkedProofRequestIds?: string[];
-    notes?: string;
-    status?: string;
-    validationStats?: ProofValidationStatsView;
-    metadata?: ProofViewMetadata;
-    submittedByAccountId?: string;
-    createdAt?: string;
-    updatedAt?: string;
+  id?: string;
+  projectId?: string;
+  launchId?: string;
+  taskId?: string;
+  summary?: string;
+  evidenceItems?: ProofViewEvidenceItemsItem[];
+  linkedProofRequestIds?: string[];
+  notes?: string;
+  status?: string;
+  validationStats?: ProofValidationStatsView;
+  metadata?: ProofViewMetadata;
+  submittedByAccountId?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

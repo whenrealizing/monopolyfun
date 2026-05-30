@@ -7,30 +7,30 @@
  */
 
 export interface PublishProjectItemRequest {
-    /**
+  /**
      * 项目初始任务名称。
      * @minLength 0
      * @maxLength 120
      */
-    name: string;
-    /**
+  name: string;
+  /**
      * 项目初始任务补充说明。
      * @minLength 0
      * @maxLength 1000
      */
-    description?: string;
-    /**
+  description?: string;
+  /**
      * 任务交付标准。agentInstruction 由系统根据交付标准派生。
      * @minLength 0
      * @maxLength 1000
      */
-    deliveryStandard: string;
-    /**
+  deliveryStandard: string;
+  /**
      * 任务验收标准列表。为空时系统回退到 deliveryStandard。
      * @minItems 0
      * @maxItems 20
      */
-    acceptanceCriteria?: string[];
-    /** 项目任务难度分，用于领取时计算 shares。范围 0.5 到 8。 */
-    difficultyScore?: number;
+  acceptanceCriteria?: string[];
+  /** 项目任务难度分，用于领取时计算 shares。范围 0.5 到 8。 */
+  difficultyScore?: number;
 }

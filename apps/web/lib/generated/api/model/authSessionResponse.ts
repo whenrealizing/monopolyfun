@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {AccountSummary} from './accountSummary';
+import type { AccountSummary } from './accountSummary';
 
 export interface AuthSessionResponse {
-    tokenType?: string;
-    expiresAt?: string;
-    account?: AccountSummary;
+  tokenType?: string;
+  expiresAt?: string;
+  account?: AccountSummary;
 }

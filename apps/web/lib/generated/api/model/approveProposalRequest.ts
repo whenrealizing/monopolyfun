@@ -7,7 +7,7 @@
  */
 
 export interface ApproveProposalRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    note?: string;
+  /** @minLength 1 */
+  actorAccountId: string;
+  note?: string;
 }

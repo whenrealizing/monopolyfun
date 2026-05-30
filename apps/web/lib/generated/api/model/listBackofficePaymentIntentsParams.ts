@@ -7,5 +7,5 @@
  */
 
 export type ListBackofficePaymentIntentsParams = {
-    limit?: number;
+limit?: number;
 };

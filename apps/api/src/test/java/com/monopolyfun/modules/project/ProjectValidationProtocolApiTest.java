@@ -55,6 +55,7 @@ class ProjectValidationProtocolApiTest extends AbstractPostgresIntegrationTest {
                   work_receipts,
                   work_runs,
                   work_items,
+                  contribution_ledger,
                   project_memory_sync_events,
                   project_memory_repo_entries,
                   project_memory_repo_sources,
@@ -86,9 +87,9 @@ class ProjectValidationProtocolApiTest extends AbstractPostgresIntegrationTest {
                 ('acct-agent', '@agent', 'Agent', '{}'::jsonb)
                 """);
         when(repoProviderClient.provisionPublicRepository(any())).thenReturn(new RepoProviderClient.ProvisionedRepository(
-                "github",
-                "https://github.com/whenrealizing/monopolyfun",
-                "https://github.com/whenrealizing/monopolyfun.git",
+                "forgejo",
+                "http://localhost:3001/whenrealizing/monopolyfun",
+                "http://localhost:3001/whenrealizing/monopolyfun.git",
                 "whenrealizing",
                 "monopolyfun",
                 "main",
@@ -380,6 +381,30 @@ class ProjectValidationProtocolApiTest extends AbstractPostgresIntegrationTest {
                 """, BigDecimal.class);
         assertThat(submitterAmount).isGreaterThan(reviewerAmount);
         assertThat(reviewerAmount).isGreaterThan(new BigDecimal("500"));
+        assertThat(jdbcTemplate.queryForObject("""
+                select count(*)
+                from contribution_ledger contribution
+                join projects project on project.id = contribution.project_id
+                where project.project_no = ?
+                  and contribution.source_type = 'validation_reward'
+                  and contribution.contribution_role in ('proof_submitter', 'proof_validator')
+                """, Integer.class, projectNo)).isEqualTo(2);
+        assertThat(jdbcTemplate.queryForObject("""
+                select count(*)
+                from shares_ledger ledger
+                join projects project on project.id = ledger.project_id
+                where project.project_no = ?
+                  and ledger.source_type = 'validation_reward'
+                  and ledger.reason::text in ('validation_submitter', 'validation_validator')
+                """, Integer.class, projectNo)).isEqualTo(2);
+
+        mockMvc.perform(get("/api/v1/projects/" + projectNo + "/commercialization")
+                        .with(SecurityTestSupport.session(jdbcTemplate, "acct-founder")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.contributionLedger.length()").value(2))
+                .andExpect(jsonPath("$.contributors.length()").value(2))
+                .andExpect(jsonPath("$.contributionLedger[0].sourceType").value("validation_reward"))
+                .andExpect(jsonPath("$.currentDistribution.eligibleShareMinted").value(org.hamcrest.Matchers.greaterThan(0)));
 
         assertThat(jdbcTemplate.queryForObject(
                 """
@@ -558,9 +583,9 @@ class ProjectValidationProtocolApiTest extends AbstractPostgresIntegrationTest {
         developmentRepository.savePrLink(
                 projectId,
                 acceptedTaskId,
-                "https://github.com/whenrealizing/monopolyfun",
+                "http://localhost:3001/whenrealizing/monopolyfun",
                 128,
-                "https://github.com/whenrealizing/monopolyfun/pull/128",
+                "http://localhost:3001/whenrealizing/monopolyfun/pulls/128",
                 "newhead456",
                 "main",
                 "feature/" + acceptedTaskId,
@@ -702,7 +727,7 @@ class ProjectValidationProtocolApiTest extends AbstractPostgresIntegrationTest {
                                       "summary": "已提交搜索页面实现"
                                     },
                                     "artifacts": [
-                                      {"kind": "pull_request", "url": "https://github.com/org/repo/pull/12", "headSha": "packhead123", "mergeable": true, "checksConclusion": "success"},
+                                      {"kind": "pull_request", "url": "http://localhost:3001/org/repo/pulls/12", "headSha": "packhead123", "mergeable": true, "checksConclusion": "success"},
                                       {"kind": "screenshot", "url": "https://example.com/search.png"},
                                       {"kind": "test_result", "summary": "mvn test passed"}
                                     ],
@@ -801,7 +826,7 @@ class ProjectValidationProtocolApiTest extends AbstractPostgresIntegrationTest {
                                     "work": {"objective": "ship search"},
                                     "implementation": {"type": "code", "summary": "first PR"},
                                     "artifacts": [
-                                      {"kind": "pull_request", "url": "https://github.com/org/repo/pull/13", "headSha": "oldsha", "mergeable": true, "checksConclusion": "success"}
+                                      {"kind": "pull_request", "url": "http://localhost:3001/org/repo/pulls/13", "headSha": "oldsha", "mergeable": true, "checksConclusion": "success"}
                                     ],
                                     "initialImpact": {"scope": 70, "complexity": 70, "leverage": 70, "evidence": 70}
                                   }
@@ -844,7 +869,7 @@ class ProjectValidationProtocolApiTest extends AbstractPostgresIntegrationTest {
                                     "reason": "修复摘要页 bug。",
                                     "implementation": {"type": "code", "summary": "bug fix PR"},
                                     "artifacts": [
-                                      {"kind": "pull_request", "url": "https://github.com/org/repo/pull/14", "headSha": "newsha", "mergeable": true, "checksConclusion": "success"}
+                                      {"kind": "pull_request", "url": "http://localhost:3001/org/repo/pulls/14", "headSha": "newsha", "mergeable": true, "checksConclusion": "success"}
                                     ]
                                   }
                                 }
@@ -928,7 +953,7 @@ class ProjectValidationProtocolApiTest extends AbstractPostgresIntegrationTest {
     void candidatePoolRechecksOpenCandidatesWhenPullRequestMerges() throws Exception {
         String projectId = createProject();
         String projectNo = projectNo(projectId);
-        String repoUrl = "https://github.com/whenrealizing/monopolyfun";
+        String repoUrl = "http://localhost:3001/whenrealizing/monopolyfun";
         String launchId = "launch-candidate-recheck";
         String mergedTaskId = "vtask-candidate-merged";
         String recheckTaskId = "vtask-candidate-recheck";
@@ -960,7 +985,7 @@ class ProjectValidationProtocolApiTest extends AbstractPostgresIntegrationTest {
                 mergedTaskId,
                 repoUrl,
                 128,
-                repoUrl + "/pull/128",
+                repoUrl + "/pulls/128",
                 "def456",
                 "main",
                 "feature/" + mergedTaskId,
@@ -1049,9 +1074,9 @@ class ProjectValidationProtocolApiTest extends AbstractPostgresIntegrationTest {
                         insert into project_external_refs (
                           id, ref_type, project_id, validation_task_id, repo_url, pr_number, pr_url, head_sha, base_branch, branch_name, state,
                           last_synced_at, raw_payload
-                        ) values (?, 'pull_request', ?, ?, 'https://github.com/whenrealizing/monopolyfun', ?, ?, 'abc123', 'main', ?, ?, now(), ?::jsonb)
+                        ) values (?, 'pull_request', ?, ?, 'http://localhost:3001/whenrealizing/monopolyfun', ?, ?, 'abc123', 'main', ?, ?, now(), ?::jsonb)
                         """, "ppr-" + taskId, projectId, taskId, prNumber,
-                "https://github.com/whenrealizing/monopolyfun/pull/" + prNumber,
+                "http://localhost:3001/whenrealizing/monopolyfun/pulls/" + prNumber,
                 "feature/" + taskId, state, payloadJson);
     }
 
@@ -1059,7 +1084,7 @@ class ProjectValidationProtocolApiTest extends AbstractPostgresIntegrationTest {
         jdbcTemplate.update("""
                 insert into project_external_refs (
                   id, ref_type, project_id, validation_task_id, pr_number, check_name, status, conclusion, details_url, completed_at, raw_payload
-                ) values (?, 'ci_check', ?, ?, ?, 'api-test', ?, ?, 'https://github.com/whenrealizing/monopolyfun/actions/runs/1', now(), '{}'::jsonb)
+                ) values (?, 'ci_check', ?, ?, ?, 'api-test', ?, ?, 'http://localhost:3001/whenrealizing/monopolyfun/actions/runs/1', now(), '{}'::jsonb)
                 """, "pci-" + taskId, projectId, taskId, prNumber, status, conclusion);
     }
 

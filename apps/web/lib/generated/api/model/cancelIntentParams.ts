@@ -7,5 +7,5 @@
  */
 
 export type CancelIntentParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

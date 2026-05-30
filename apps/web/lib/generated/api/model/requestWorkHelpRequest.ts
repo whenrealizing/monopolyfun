@@ -5,14 +5,14 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {RequestWorkHelpRequestHelpPayload} from './requestWorkHelpRequestHelpPayload';
+import type { RequestWorkHelpRequestHelpPayload } from './requestWorkHelpRequestHelpPayload';
 
 export interface RequestWorkHelpRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    /** @minLength 1 */
-    reason: string;
-    title?: string;
-    evidenceRefs?: string[];
-    helpPayload?: RequestWorkHelpRequestHelpPayload;
+  /** @minLength 1 */
+  actorAccountId: string;
+  /** @minLength 1 */
+  reason: string;
+  title?: string;
+  evidenceRefs?: string[];
+  helpPayload?: RequestWorkHelpRequestHelpPayload;
 }

@@ -1,4 +1,4 @@
-import {ArrowRight, CheckCircle2, Github, GitBranch, ShieldCheck, UsersRound} from "lucide-react";
+import {ArrowRight, CheckCircle2, GitBranch, ShieldCheck, UsersRound} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import type {ReactNode} from "react";
 
@@ -43,12 +43,6 @@ export default async function AboutPage() {
                                     {t("hero.primaryCta")}
                                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                                 </Link>
-                            </Button>
-                            <Button asChild variant="outline" className="gap-2">
-                                <a href="https://github.com/whenrealizing/monopolyfun" target="_blank" rel="noreferrer">
-                                    <Github className="h-4 w-4" aria-hidden="true" />
-                                    {t("hero.githubCta")}
-                                </a>
                             </Button>
                         </div>
                     </div>

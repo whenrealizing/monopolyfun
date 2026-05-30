@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type CommandReceiptPayload = { [key: string]: unknown };
+export type CommandReceiptPayload = {[key: string]: unknown};

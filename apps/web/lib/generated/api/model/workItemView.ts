@@ -5,24 +5,24 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {WorkItemActionView} from './workItemActionView';
-import type {WorkItemViewOutputSchema} from './workItemViewOutputSchema';
+import type { WorkItemActionView } from './workItemActionView';
+import type { WorkItemViewOutputSchema } from './workItemViewOutputSchema';
 
 export interface WorkItemView {
-    id?: string;
-    itemNo?: string;
-    title?: string;
-    goal?: string;
-    status?: string;
-    sourceType?: string;
-    sourceId?: string;
-    urgency?: string;
-    requiredRole?: string;
-    requiredCapability?: string;
-    claimExpiresAt?: string;
-    acceptanceCriteria?: string[];
-    inputRefs?: string[];
-    outputSchema?: WorkItemViewOutputSchema;
-    actions?: WorkItemActionView[];
-    updatedAt?: string;
+  id?: string;
+  itemNo?: string;
+  title?: string;
+  goal?: string;
+  status?: string;
+  sourceType?: string;
+  sourceId?: string;
+  urgency?: string;
+  requiredRole?: string;
+  requiredCapability?: string;
+  claimExpiresAt?: string;
+  acceptanceCriteria?: string[];
+  inputRefs?: string[];
+  outputSchema?: WorkItemViewOutputSchema;
+  actions?: WorkItemActionView[];
+  updatedAt?: string;
 }

@@ -84,10 +84,10 @@ public class PostCommandService {
     private static final int MAX_PROJECT_REFERENCE_LINKS = 5;
     private static final String PROJECT_MAINTENANCE_MODE_REPO_FIRST = "repo_first";
     private static final List<String> PROJECT_REPO_MAINTENANCE_COMMANDS = List.of(
-            "gh repo view",
-            "gh issue list",
-            "gh pr list",
-            "gh workflow list");
+            "git remote -v",
+            "git branch --show-current",
+            "git log --oneline -5",
+            "git status --short");
     private static final Map<String, Object> PROJECT_REPO_MAINTENANCE_PLAYBOOK = Map.of(
             "taskTypes", List.of("backlog_triage", "pr_review", "workflow_health", "release_sync"),
             "evidenceTypes", List.of("issue_url", "pr_url", "commit_url", "workflow_run_url", "release_url"));
@@ -378,8 +378,6 @@ public class PostCommandService {
             initiativeService.generateProjectRecommendations(project.projectNo());
             return new CommandResult(project.projectNo(), "project_created", Map.of("projectNo", project.projectNo()), List.of());
         });
-        // 中文注释：Project 创建完成后立即生成 owner 下一步推荐，保证 agent 与 workbench 都有可执行入口。
-        initiativeService.generateProjectRecommendations(project.projectNo());
         ProjectView view = com.monopolyfun.modules.project.service.mapper.ProjectViewMapper.project(project, List.of());
         if (includeAgent) {
             // 中文注释：普通 Project 创建后开放市场任务能力，角色任命集中到 Root Project。
@@ -1019,8 +1017,9 @@ public class PostCommandService {
             URI uri = new URI(value);
             String host = uri.getHost() == null ? "" : uri.getHost().toLowerCase(Locale.ROOT);
             String[] parts = uri.getPath() == null ? new String[0] : uri.getPath().replaceFirst("^/+", "").split("/");
-            if (host.equals("github.com") && parts.length >= 2 && !parts[0].isBlank() && !parts[1].isBlank()) {
-                return new RepoReference("github", parts[0], parts[1].replaceFirst("\\.git$", ""));
+            if (parts.length >= 2 && !parts[0].isBlank() && !parts[1].isBlank()) {
+                // 中文注释：仓库维护事实源统一落到轻量 Git provider，项目交付链路只依赖通用仓库事实。
+                return new RepoReference("forgejo", parts[0], parts[1].replaceFirst("\\.git$", ""));
             }
             return new RepoReference(host.isBlank() ? "external_git" : host, "", "");
         } catch (URISyntaxException exception) {

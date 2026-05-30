@@ -10,11 +10,11 @@ export type PaymentIntentViewStatus = typeof PaymentIntentViewStatus[keyof typeo
 
 
 export const PaymentIntentViewStatus = {
-    PENDING: 'PENDING',
-    AUTHORIZED: 'AUTHORIZED',
-    CAPTURED: 'CAPTURED',
-    REFUNDED: 'REFUNDED',
-    CANCELLED: 'CANCELLED',
-    DISPUTED: 'DISPUTED',
-    FAILED: 'FAILED',
+  PENDING: 'PENDING',
+  AUTHORIZED: 'AUTHORIZED',
+  CAPTURED: 'CAPTURED',
+  REFUNDED: 'REFUNDED',
+  CANCELLED: 'CANCELLED',
+  DISPUTED: 'DISPUTED',
+  FAILED: 'FAILED',
 } as const;

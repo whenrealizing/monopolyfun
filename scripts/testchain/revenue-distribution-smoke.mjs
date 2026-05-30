@@ -63,8 +63,8 @@ try {
     taskValue: 5000,
     bountyAmountMinor: 0,
     bountyToken: "USDC",
-    repoRef: "github.com/monopolyfun/testchain",
-    issueUrl: "https://github.com/monopolyfun/testchain/issues/1",
+    repoRef: "localhost:3001/monopolyfun/testchain",
+    issueUrl: "http://localhost:3001/monopolyfun/testchain/issues/1",
   });
   await api.as(worker).post(`/api/v1/work-threads/${thread.id}/claim`, {
     actorAccountId: worker.account.id,
@@ -507,7 +507,7 @@ function resultMarkdown(threadId) {
     "Connected local testchain revenue claim.",
     "",
     "## Evidence",
-    "- PR: https://github.com/monopolyfun/testchain/pull/1",
+    "- PR: http://localhost:3001/monopolyfun/testchain/pulls/1",
     "- Test: scripts/testchain/revenue-distribution-smoke.mjs passed",
     "",
     "## Changed Files",

@@ -5,20 +5,20 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {DeliveryAttemptEntityReceiptPayload} from './deliveryAttemptEntityReceiptPayload';
-import type {DeliveryAttemptEntityRequestPayload} from './deliveryAttemptEntityRequestPayload';
+import type { DeliveryAttemptEntityReceiptPayload } from './deliveryAttemptEntityReceiptPayload';
+import type { DeliveryAttemptEntityRequestPayload } from './deliveryAttemptEntityRequestPayload';
 
 export interface DeliveryAttemptEntity {
-    id?: string;
-    orderId?: string;
-    paymentIntentId?: string;
-    provider?: string;
-    providerOrderId?: string;
-    status?: string;
-    idempotencyKey?: string;
-    requestPayload?: DeliveryAttemptEntityRequestPayload;
-    receiptPayload?: DeliveryAttemptEntityReceiptPayload;
-    errorMessage?: string;
-    createdAt?: string;
-    updatedAt?: string;
+  id?: string;
+  orderId?: string;
+  paymentIntentId?: string;
+  provider?: string;
+  providerOrderId?: string;
+  status?: string;
+  idempotencyKey?: string;
+  requestPayload?: DeliveryAttemptEntityRequestPayload;
+  receiptPayload?: DeliveryAttemptEntityReceiptPayload;
+  errorMessage?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

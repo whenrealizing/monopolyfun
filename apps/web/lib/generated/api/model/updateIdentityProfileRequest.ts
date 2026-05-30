@@ -7,19 +7,19 @@
  */
 
 export interface UpdateIdentityProfileRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 60
      */
-    displayName: string;
-    /**
+  displayName: string;
+  /**
      * @minLength 0
      * @maxLength 240
      */
-    agentSummary?: string;
-    /**
+  agentSummary?: string;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    avatarUrl?: string;
+  avatarUrl?: string;
 }

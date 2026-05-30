@@ -7,10 +7,10 @@
  */
 
 export interface SupportProjectResultCandidateRequest {
-    prNumber?: number;
-    /**
+  prNumber?: number;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    reason?: string;
+  reason?: string;
 }

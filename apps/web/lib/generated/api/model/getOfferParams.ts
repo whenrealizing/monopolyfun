@@ -7,5 +7,5 @@
  */
 
 export type GetOfferParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

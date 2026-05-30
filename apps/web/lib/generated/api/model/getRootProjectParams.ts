@@ -7,5 +7,5 @@
  */
 
 export type GetRootProjectParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

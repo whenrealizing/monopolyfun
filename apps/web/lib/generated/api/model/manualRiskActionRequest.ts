@@ -7,10 +7,10 @@
  */
 
 export interface ManualRiskActionRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    reason: string;
-    freezeHours?: number;
+  reason: string;
+  freezeHours?: number;
 }

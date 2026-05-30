@@ -7,9 +7,9 @@
  */
 
 export interface ProjectMemoryReviewRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    note?: string;
+  note?: string;
 }

@@ -7,5 +7,5 @@
  */
 
 export type GetPostItemParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

@@ -7,14 +7,14 @@
  */
 
 export interface ProvisionProjectRepoRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    goal: string;
-    /**
+  goal: string;
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    titleHint?: string;
+  titleHint?: string;
 }

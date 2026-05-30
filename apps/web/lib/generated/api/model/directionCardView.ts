@@ -7,16 +7,16 @@
  */
 
 export interface DirectionCardView {
-    directionId?: string;
-    statement?: string;
-    hypothesis?: string;
-    audience?: string;
-    successMetric?: string;
-    score?: number;
-    status?: string;
-    taskIds?: string[];
-    taskCount?: number;
-    claimedCount?: number;
-    proofCount?: number;
-    acceptedCount?: number;
+  directionId?: string;
+  statement?: string;
+  hypothesis?: string;
+  audience?: string;
+  successMetric?: string;
+  score?: number;
+  status?: string;
+  taskIds?: string[];
+  taskCount?: number;
+  claimedCount?: number;
+  proofCount?: number;
+  acceptedCount?: number;
 }

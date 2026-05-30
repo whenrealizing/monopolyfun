@@ -1,9 +1,7 @@
 package com.monopolyfun.config;
 
-import com.monopolyfun.modules.identity.service.security.GitHubOAuth2SuccessHandler;
 import com.monopolyfun.shared.observability.TraceFilter;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,7 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -30,9 +27,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             TraceFilter traceFilter,
-            CsrfTokenRepository csrfTokenRepository,
-            ObjectProvider<ClientRegistrationRepository> clientRegistrationRepository,
-            GitHubOAuth2SuccessHandler githubOAuth2SuccessHandler) throws Exception {
+            CsrfTokenRepository csrfTokenRepository) throws Exception {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf
@@ -44,7 +39,6 @@ public class SecurityConfig {
                                 "/api/v1/auth/register",
                                 "/api/v1/auth/password-reset/request",
                                 "/api/v1/auth/password-reset/confirm",
-                                "/api/v1/github/app/webhook",
                                 "/api/v1/payments/callback/fake",
                                 "/api/v1/payments/callback/okx/a2a"))
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -61,12 +55,6 @@ public class SecurityConfig {
                         .requestMatchers("/actuator/health", "/actuator/health/**", "/actuator/info", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET,
-                                "/api/v1/auth/oauth/github/authorize",
-                                "/api/v1/auth/oauth/github/redirect",
-                                "/api/v1/auth/oauth/github/callback",
-                                "/api/v1/auth/oauth2/callback/*",
-                                "/oauth2/authorization/*",
-                                "/api/v1/identity/oauth/github/callback",
                                 "/api/v1/public/**",
                                 "/api/v1/accounts",
                                 "/api/v1/accounts/lookup",
@@ -91,20 +79,13 @@ public class SecurityConfig {
                                 "/api/v1/auth/register",
                                 "/api/v1/auth/password-reset/request",
                                 "/api/v1/auth/password-reset/confirm",
-                                "/api/v1/github/app/webhook",
                                 "/api/v1/payments/callback/fake",
                                 "/api/v1/payments/callback/okx/a2a")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(traceFilter, UsernamePasswordAuthenticationFilter.class);
-        if (clientRegistrationRepository.getIfAvailable() != null) {
-            // 中文注释：GitHub OAuth2 Login 成功后进入业务会话签发，Spring principal 只作为外部身份输入。
-            http.oauth2Login(oauth -> oauth
-                    .redirectionEndpoint(redirection -> redirection.baseUri("/api/v1/auth/oauth2/callback/*"))
-                    .successHandler(githubOAuth2SuccessHandler));
-        } else {
-            http.oauth2Login(AbstractHttpConfigurer::disable);
-        }
+        // 中文注释：身份入口收敛到本地账号和公开证明认证，外部 OAuth2 登录面保持关闭。
+        http.oauth2Login(AbstractHttpConfigurer::disable);
         return http.build();
     }
 

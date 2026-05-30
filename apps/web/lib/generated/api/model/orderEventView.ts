@@ -5,12 +5,12 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {OrderEventViewPayload} from './orderEventViewPayload';
+import type { OrderEventViewPayload } from './orderEventViewPayload';
 
 export interface OrderEventView {
-    id?: string;
-    eventType?: string;
-    actorAccountId?: string;
-    payload?: OrderEventViewPayload;
-    createdAt?: string;
+  id?: string;
+  eventType?: string;
+  actorAccountId?: string;
+  payload?: OrderEventViewPayload;
+  createdAt?: string;
 }

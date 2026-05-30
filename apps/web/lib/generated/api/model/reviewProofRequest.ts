@@ -5,29 +5,29 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ReviewProofRequestMetadata} from './reviewProofRequestMetadata';
-import type {ReviewProofRequestRequestedEvidenceItem} from './reviewProofRequestRequestedEvidenceItem';
-import type {ReviewProofRequestScoreInputs} from './reviewProofRequestScoreInputs';
+import type { ReviewProofRequestMetadata } from './reviewProofRequestMetadata';
+import type { ReviewProofRequestRequestedEvidenceItem } from './reviewProofRequestRequestedEvidenceItem';
+import type { ReviewProofRequestScoreInputs } from './reviewProofRequestScoreInputs';
 
 export interface ReviewProofRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    result: string;
-    /**
+  result: string;
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    reason?: string;
-    /**
+  reason?: string;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    validationMode?: string;
-    stakedShares?: number;
-    requestedEvidence?: ReviewProofRequestRequestedEvidenceItem[];
-    riskFlags?: string[];
-    scoreInputs?: ReviewProofRequestScoreInputs;
-    metadata?: ReviewProofRequestMetadata;
+  validationMode?: string;
+  stakedShares?: number;
+  requestedEvidence?: ReviewProofRequestRequestedEvidenceItem[];
+  riskFlags?: string[];
+  scoreInputs?: ReviewProofRequestScoreInputs;
+  metadata?: ReviewProofRequestMetadata;
 }

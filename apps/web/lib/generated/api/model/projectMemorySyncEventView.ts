@@ -5,13 +5,13 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectMemorySyncEventViewPayload} from './projectMemorySyncEventViewPayload';
+import type { ProjectMemorySyncEventViewPayload } from './projectMemorySyncEventViewPayload';
 
 export interface ProjectMemorySyncEventView {
-    id?: string;
-    eventType?: string;
-    status?: string;
-    message?: string;
-    payload?: ProjectMemorySyncEventViewPayload;
-    createdAt?: string;
+  id?: string;
+  eventType?: string;
+  status?: string;
+  message?: string;
+  payload?: ProjectMemorySyncEventViewPayload;
+  createdAt?: string;
 }

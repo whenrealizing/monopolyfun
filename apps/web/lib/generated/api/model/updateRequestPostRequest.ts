@@ -7,28 +7,28 @@
  */
 
 export interface UpdateRequestPostRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    /**
+  /** @minLength 1 */
+  actorAccountId: string;
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    title: string;
-    /**
+  title: string;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    description: string;
-    /**
+  description: string;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    deliveryStandard?: string;
-    currency?: string;
-    paymentMethod?: string;
-    paymentProfile?: string;
-    paymentNetwork?: string;
-    paymentAsset?: string;
-    paymentRecipient?: string;
-    deadlineAt?: string;
+  deliveryStandard?: string;
+  currency?: string;
+  paymentMethod?: string;
+  paymentProfile?: string;
+  paymentNetwork?: string;
+  paymentAsset?: string;
+  paymentRecipient?: string;
+  deadlineAt?: string;
 }

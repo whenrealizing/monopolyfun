@@ -10,7 +10,7 @@ export type ShareReleaseRequestViewApprovedRoleCodesItem = typeof ShareReleaseRe
 
 
 export const ShareReleaseRequestViewApprovedRoleCodesItem = {
-    system_ceo: 'system_ceo',
-    system_cto: 'system_cto',
-    system_cfo: 'system_cfo',
+  system_ceo: 'system_ceo',
+  system_cto: 'system_cto',
+  system_cfo: 'system_cfo',
 } as const;

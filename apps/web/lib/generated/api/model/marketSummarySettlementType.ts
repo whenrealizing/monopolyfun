@@ -10,8 +10,8 @@ export type MarketSummarySettlementType = typeof MarketSummarySettlementType[key
 
 
 export const MarketSummarySettlementType = {
-    MONEY: 'MONEY',
-    SHARES: 'SHARES',
-    POINTS: 'POINTS',
-    MIXED: 'MIXED',
+  MONEY: 'MONEY',
+  SHARES: 'SHARES',
+  POINTS: 'POINTS',
+  MIXED: 'MIXED',
 } as const;

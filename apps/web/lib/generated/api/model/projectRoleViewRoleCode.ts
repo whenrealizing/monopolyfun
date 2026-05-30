@@ -10,7 +10,7 @@ export type ProjectRoleViewRoleCode = typeof ProjectRoleViewRoleCode[keyof typeo
 
 
 export const ProjectRoleViewRoleCode = {
-    system_ceo: 'system_ceo',
-    system_cto: 'system_cto',
-    system_cfo: 'system_cfo',
+  system_ceo: 'system_ceo',
+  system_cto: 'system_cto',
+  system_cfo: 'system_cfo',
 } as const;

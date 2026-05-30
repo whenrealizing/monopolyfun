@@ -88,24 +88,23 @@ monopolyfun:
       max-timeout-seconds: ${OKX_ONCHAIN_PAY_MAX_TIMEOUT_SECONDS:300}
   digital-inventory:
     encryption-secret: ${DIGITAL_INVENTORY_ENCRYPTION_SECRET:}
-  oauth:
-    github:
-      client-id: ${GITHUB_CLIENT_ID:}
-      client-secret: ${GITHUB_CLIENT_SECRET:}
-      authorize-url: ${GITHUB_AUTHORIZE_URL:https://github.com/login/oauth/authorize}
-      token-url: ${GITHUB_TOKEN_URL:https://github.com/login/oauth/access_token}
-      user-url: ${GITHUB_USER_URL:https://api.github.com/user}
-      redirect-uri: ${GITHUB_REDIRECT_URI:http://localhost:8080/api/v1/auth/oauth/github/callback}
-      verification-redirect-uri: ${GITHUB_VERIFICATION_REDIRECT_URI:http://localhost:8080/api/v1/identity/oauth/github/callback}
-      web-callback-url: ${GITHUB_WEB_CALLBACK_URL:http://localhost:3000/oauth/callback}
-  github-app:
-    api-base-url: ${GITHUB_APP_API_BASE_URL:https://api.github.com}
-    app-id: ${GITHUB_APP_ID:}
-    client-id: ${GITHUB_APP_CLIENT_ID:}
-    client-secret: ${GITHUB_APP_CLIENT_SECRET:}
-    private-key: ${GITHUB_APP_PRIVATE_KEY:}
-    webhook-secret: ${GITHUB_APP_WEBHOOK_SECRET:}
-    organization: ${GITHUB_APP_ORGANIZATION:}
-    template-owner: ${GITHUB_APP_TEMPLATE_OWNER:}
-    template-repo: ${GITHUB_APP_TEMPLATE_REPO:}
-    default-branch: ${GITHUB_APP_DEFAULT_BRANCH:main}
+  repo:
+    forgejo:
+      api-base-url: ${FORGEJO_API_BASE_URL:http://forgejo:3000/api/v1}
+      web-base-url: ${FORGEJO_WEB_BASE_URL:http://localhost:3001}
+      organization: ${FORGEJO_ORGANIZATION:}
+      username: ${FORGEJO_USERNAME:monopolyfun}
+      password: ${FORGEJO_PASSWORD:monopolyfun-dev-password}
+      access-token: ${FORGEJO_ACCESS_TOKEN:}
+      default-branch: ${FORGEJO_DEFAULT_BRANCH:main}
+  revenue:
+    chain-id: ${MONOPOLYFUN_REVENUE_CHAIN_ID:eip155:31337}
+    chain-name: ${MONOPOLYFUN_REVENUE_CHAIN_NAME:Anvil}
+    asset: ${MONOPOLYFUN_REVENUE_ASSET:USDC}
+    token-type: ${MONOPOLYFUN_REVENUE_TOKEN_TYPE:mock-erc20}
+    token-address: ${MONOPOLYFUN_REVENUE_TOKEN_ADDRESS:}
+    router-address: ${MONOPOLYFUN_REVENUE_ROUTER_ADDRESS:}
+    min-distribution-minor: ${MONOPOLYFUN_REVENUE_MIN_DISTRIBUTION_MINOR:100000}
+    minor-per-share: ${MONOPOLYFUN_REVENUE_MINOR_PER_SHARE:20}
+    rpc:
+      eip155-31337: ${MONOPOLYFUN_REVENUE_RPC_EIP155_31337:http://anvil:8545}

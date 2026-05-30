@@ -5,17 +5,17 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {SettlementEventEntityPayload} from './settlementEventEntityPayload';
+import type { SettlementEventEntityPayload } from './settlementEventEntityPayload';
 
 export interface SettlementEventEntity {
-    id?: string;
-    orderId?: string;
-    paymentIntentId?: string;
-    eventType?: string;
-    idempotencyKey?: string;
-    amountMinor?: number;
-    currency?: string;
-    actorAccountId?: string;
-    payload?: SettlementEventEntityPayload;
-    createdAt?: string;
+  id?: string;
+  orderId?: string;
+  paymentIntentId?: string;
+  eventType?: string;
+  idempotencyKey?: string;
+  amountMinor?: number;
+  currency?: string;
+  actorAccountId?: string;
+  payload?: SettlementEventEntityPayload;
+  createdAt?: string;
 }

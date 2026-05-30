@@ -7,5 +7,5 @@
  */
 
 export type ListBackofficeAuditEventsParams = {
-    limit?: number;
+limit?: number;
 };

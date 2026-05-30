@@ -7,6 +7,6 @@
  */
 
 export type ListPublicAccountsParams = {
-    limit?: number;
-    cursor?: string;
+limit?: number;
+cursor?: string;
 };

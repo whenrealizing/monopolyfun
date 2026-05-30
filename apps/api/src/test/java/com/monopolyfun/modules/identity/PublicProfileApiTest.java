@@ -52,10 +52,10 @@ class PublicProfileApiTest extends AbstractPostgresIntegrationTest {
         projectRoleRepository.assignRole(RootProjectService.ROOT_PROJECT_ID, ProjectRoleCode.SYSTEM_CTO, "acct-lead", "acct-root");
 
         insertIdentityFact(
-                "ifact-github-lead",
+                "ifact-x-lead",
                 "acct-lead",
-                "github_oauth",
-                "github",
+                "x_public_proof",
+                "x",
                 "external_identity",
                 "verified",
                 "octolead",
@@ -64,7 +64,7 @@ class PublicProfileApiTest extends AbstractPostgresIntegrationTest {
                           "handle": "octolead",
                           "displayName": "Octo Lead",
                           "avatarUrl": "https://example.com/octolead.png",
-                          "profileUrl": "https://github.com/octolead"
+                          "profileUrl": "https://x.com/octolead"
                         }
                         """);
         insertIdentityBadge("ibadge-lead", "acct-lead", "identity", "trusted_builder", "Trusted Builder", "badge-check", 88);

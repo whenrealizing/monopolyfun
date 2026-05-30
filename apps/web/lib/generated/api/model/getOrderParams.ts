@@ -7,5 +7,5 @@
  */
 
 export type GetOrderParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

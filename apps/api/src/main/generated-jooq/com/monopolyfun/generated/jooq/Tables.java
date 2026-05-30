@@ -7,23 +7,19 @@ package com.monopolyfun.generated.jooq;
 import com.monopolyfun.generated.jooq.tables.Accounts;
 import com.monopolyfun.generated.jooq.tables.AuditEvents;
 import com.monopolyfun.generated.jooq.tables.BusinessIdSequences;
+import com.monopolyfun.generated.jooq.tables.ContributionLedger;
 import com.monopolyfun.generated.jooq.tables.DeliveryAttempts;
 import com.monopolyfun.generated.jooq.tables.DigitalInventoryItems;
-import com.monopolyfun.generated.jooq.tables.ExternalEventDedup;
+import com.monopolyfun.generated.jooq.tables.DistributionBatches;
+import com.monopolyfun.generated.jooq.tables.DistributionClaims;
+import com.monopolyfun.generated.jooq.tables.DistributionEntitlements;
 import com.monopolyfun.generated.jooq.tables.IdentityBadges;
 import com.monopolyfun.generated.jooq.tables.IdentityFacts;
 import com.monopolyfun.generated.jooq.tables.IdentityVerificationChallenges;
 import com.monopolyfun.generated.jooq.tables.Listings;
-import com.monopolyfun.generated.jooq.tables.MarketClusters;
-import com.monopolyfun.generated.jooq.tables.MarketIntentResolutions;
 import com.monopolyfun.generated.jooq.tables.MarketItemsReadModel;
 import com.monopolyfun.generated.jooq.tables.MarketMembers;
-import com.monopolyfun.generated.jooq.tables.MarketPriceTicks;
-import com.monopolyfun.generated.jooq.tables.MarketSpecs;
 import com.monopolyfun.generated.jooq.tables.Markets;
-import com.monopolyfun.generated.jooq.tables.MatchProposals;
-import com.monopolyfun.generated.jooq.tables.OauthIdentities;
-import com.monopolyfun.generated.jooq.tables.OauthStates;
 import com.monopolyfun.generated.jooq.tables.Offers;
 import com.monopolyfun.generated.jooq.tables.OrderEvents;
 import com.monopolyfun.generated.jooq.tables.OrderParticipants;
@@ -42,6 +38,7 @@ import com.monopolyfun.generated.jooq.tables.ProjectMemoryRepoRoots;
 import com.monopolyfun.generated.jooq.tables.ProjectMemoryRepoSources;
 import com.monopolyfun.generated.jooq.tables.ProjectMemorySyncEvents;
 import com.monopolyfun.generated.jooq.tables.ProjectRepoBindings;
+import com.monopolyfun.generated.jooq.tables.ProjectRevenueAddresses;
 import com.monopolyfun.generated.jooq.tables.ProjectRoles;
 import com.monopolyfun.generated.jooq.tables.ProjectSharePools;
 import com.monopolyfun.generated.jooq.tables.ProjectTimelineEvents;
@@ -60,8 +57,11 @@ import com.monopolyfun.generated.jooq.tables.SpringSessionAttributes;
 import com.monopolyfun.generated.jooq.tables.WorkEvents;
 import com.monopolyfun.generated.jooq.tables.WorkItems;
 import com.monopolyfun.generated.jooq.tables.WorkReceipts;
+import com.monopolyfun.generated.jooq.tables.WorkResults;
 import com.monopolyfun.generated.jooq.tables.WorkReviews;
 import com.monopolyfun.generated.jooq.tables.WorkRuns;
+import com.monopolyfun.generated.jooq.tables.WorkThreadReviews;
+import com.monopolyfun.generated.jooq.tables.WorkThreads;
 import com.monopolyfun.generated.jooq.tables.WorkTrustEvents;
 import com.monopolyfun.generated.jooq.tables.WorkbenchDismissals;
 
@@ -69,7 +69,7 @@ import com.monopolyfun.generated.jooq.tables.WorkbenchDismissals;
 /**
  * Convenience access to all tables in public.
  */
-@SuppressWarnings({"all", "unchecked", "rawtypes", "this-escape"})
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
 
     /**
@@ -88,6 +88,11 @@ public class Tables {
     public static final BusinessIdSequences BUSINESS_ID_SEQUENCES = BusinessIdSequences.BUSINESS_ID_SEQUENCES;
 
     /**
+     * The table <code>public.contribution_ledger</code>.
+     */
+    public static final ContributionLedger CONTRIBUTION_LEDGER = ContributionLedger.CONTRIBUTION_LEDGER;
+
+    /**
      * The table <code>public.delivery_attempts</code>.
      */
     public static final DeliveryAttempts DELIVERY_ATTEMPTS = DeliveryAttempts.DELIVERY_ATTEMPTS;
@@ -98,9 +103,19 @@ public class Tables {
     public static final DigitalInventoryItems DIGITAL_INVENTORY_ITEMS = DigitalInventoryItems.DIGITAL_INVENTORY_ITEMS;
 
     /**
-     * The table <code>public.external_event_dedup</code>.
+     * The table <code>public.distribution_batches</code>.
      */
-    public static final ExternalEventDedup EXTERNAL_EVENT_DEDUP = ExternalEventDedup.EXTERNAL_EVENT_DEDUP;
+    public static final DistributionBatches DISTRIBUTION_BATCHES = DistributionBatches.DISTRIBUTION_BATCHES;
+
+    /**
+     * The table <code>public.distribution_claims</code>.
+     */
+    public static final DistributionClaims DISTRIBUTION_CLAIMS = DistributionClaims.DISTRIBUTION_CLAIMS;
+
+    /**
+     * The table <code>public.distribution_entitlements</code>.
+     */
+    public static final DistributionEntitlements DISTRIBUTION_ENTITLEMENTS = DistributionEntitlements.DISTRIBUTION_ENTITLEMENTS;
 
     /**
      * The table <code>public.identity_badges</code>.
@@ -123,16 +138,6 @@ public class Tables {
     public static final Listings LISTINGS = Listings.LISTINGS;
 
     /**
-     * The table <code>public.market_clusters</code>.
-     */
-    public static final MarketClusters MARKET_CLUSTERS = MarketClusters.MARKET_CLUSTERS;
-
-    /**
-     * The table <code>public.market_intent_resolutions</code>.
-     */
-    public static final MarketIntentResolutions MARKET_INTENT_RESOLUTIONS = MarketIntentResolutions.MARKET_INTENT_RESOLUTIONS;
-
-    /**
      * The table <code>public.market_items_read_model</code>.
      */
     public static final MarketItemsReadModel MARKET_ITEMS_READ_MODEL = MarketItemsReadModel.MARKET_ITEMS_READ_MODEL;
@@ -143,34 +148,9 @@ public class Tables {
     public static final MarketMembers MARKET_MEMBERS = MarketMembers.MARKET_MEMBERS;
 
     /**
-     * The table <code>public.market_price_ticks</code>.
-     */
-    public static final MarketPriceTicks MARKET_PRICE_TICKS = MarketPriceTicks.MARKET_PRICE_TICKS;
-
-    /**
-     * The table <code>public.market_specs</code>.
-     */
-    public static final MarketSpecs MARKET_SPECS = MarketSpecs.MARKET_SPECS;
-
-    /**
      * The table <code>public.markets</code>.
      */
     public static final Markets MARKETS = Markets.MARKETS;
-
-    /**
-     * The table <code>public.match_proposals</code>.
-     */
-    public static final MatchProposals MATCH_PROPOSALS = MatchProposals.MATCH_PROPOSALS;
-
-    /**
-     * The table <code>public.oauth_identities</code>.
-     */
-    public static final OauthIdentities OAUTH_IDENTITIES = OauthIdentities.OAUTH_IDENTITIES;
-
-    /**
-     * The table <code>public.oauth_states</code>.
-     */
-    public static final OauthStates OAUTH_STATES = OauthStates.OAUTH_STATES;
 
     /**
      * The table <code>public.offers</code>.
@@ -263,6 +243,11 @@ public class Tables {
     public static final ProjectRepoBindings PROJECT_REPO_BINDINGS = ProjectRepoBindings.PROJECT_REPO_BINDINGS;
 
     /**
+     * The table <code>public.project_revenue_addresses</code>.
+     */
+    public static final ProjectRevenueAddresses PROJECT_REVENUE_ADDRESSES = ProjectRevenueAddresses.PROJECT_REVENUE_ADDRESSES;
+
+    /**
      * The table <code>public.project_roles</code>.
      */
     public static final ProjectRoles PROJECT_ROLES = ProjectRoles.PROJECT_ROLES;
@@ -353,6 +338,11 @@ public class Tables {
     public static final WorkReceipts WORK_RECEIPTS = WorkReceipts.WORK_RECEIPTS;
 
     /**
+     * The table <code>public.work_results</code>.
+     */
+    public static final WorkResults WORK_RESULTS = WorkResults.WORK_RESULTS;
+
+    /**
      * The table <code>public.work_reviews</code>.
      */
     public static final WorkReviews WORK_REVIEWS = WorkReviews.WORK_REVIEWS;
@@ -361,6 +351,16 @@ public class Tables {
      * The table <code>public.work_runs</code>.
      */
     public static final WorkRuns WORK_RUNS = WorkRuns.WORK_RUNS;
+
+    /**
+     * The table <code>public.work_thread_reviews</code>.
+     */
+    public static final WorkThreadReviews WORK_THREAD_REVIEWS = WorkThreadReviews.WORK_THREAD_REVIEWS;
+
+    /**
+     * The table <code>public.work_threads</code>.
+     */
+    public static final WorkThreads WORK_THREADS = WorkThreads.WORK_THREADS;
 
     /**
      * The table <code>public.work_trust_events</code>.

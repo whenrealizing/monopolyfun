@@ -5,16 +5,16 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {AuditEventViewPayload} from './auditEventViewPayload';
+import type { AuditEventViewPayload } from './auditEventViewPayload';
 
 export interface AuditEventView {
-    id?: string;
-    type?: string;
-    subjectType?: string;
-    subjectId?: string;
-    actorAccountId?: string;
-    traceId?: string;
-    outcome?: string;
-    payload?: AuditEventViewPayload;
-    createdAt?: string;
+  id?: string;
+  type?: string;
+  subjectType?: string;
+  subjectId?: string;
+  actorAccountId?: string;
+  traceId?: string;
+  outcome?: string;
+  payload?: AuditEventViewPayload;
+  createdAt?: string;
 }

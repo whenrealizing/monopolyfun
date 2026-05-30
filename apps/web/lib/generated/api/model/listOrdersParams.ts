@@ -7,7 +7,7 @@
  */
 
 export type ListOrdersParams = {
-    limit?: number;
-    cursor?: string;
-    includeAgent?: boolean;
+limit?: number;
+cursor?: string;
+includeAgent?: boolean;
 };

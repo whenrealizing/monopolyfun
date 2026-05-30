@@ -5,34 +5,34 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {OfferViewBlockedCapabilitiesItem} from './offerViewBlockedCapabilitiesItem';
-import type {PostItemSummaryView} from './postItemSummaryView';
+import type { OfferViewBlockedCapabilitiesItem } from './offerViewBlockedCapabilitiesItem';
+import type { PostItemSummaryView } from './postItemSummaryView';
 
 export interface OfferView {
-    id?: string;
-    offerNo?: string;
-    actorAccountId?: string;
-    actorHandle?: string;
-    title?: string;
-    description?: string;
-    deliveryStandard?: string;
-    priceAmount?: number;
-    currency?: string;
-    paymentMethod?: string;
-    paymentProfile?: string;
-    paymentNetwork?: string;
-    paymentAsset?: string;
-    paymentRecipient?: string;
-    inventoryPolicy?: string;
-    stockTotal?: number;
-    stockSold?: number;
-    status?: string;
-    tradeStatus?: string;
-    visibility?: string;
-    createdAt?: string;
-    updatedAt?: string;
-    itemSummary?: PostItemSummaryView;
-    resourceKey?: string;
-    capabilities?: string[];
-    blockedCapabilities?: OfferViewBlockedCapabilitiesItem[];
+  id?: string;
+  offerNo?: string;
+  actorAccountId?: string;
+  actorHandle?: string;
+  title?: string;
+  description?: string;
+  deliveryStandard?: string;
+  priceAmount?: number;
+  currency?: string;
+  paymentMethod?: string;
+  paymentProfile?: string;
+  paymentNetwork?: string;
+  paymentAsset?: string;
+  paymentRecipient?: string;
+  inventoryPolicy?: string;
+  stockTotal?: number;
+  stockSold?: number;
+  status?: string;
+  tradeStatus?: string;
+  visibility?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  itemSummary?: PostItemSummaryView;
+  resourceKey?: string;
+  capabilities?: string[];
+  blockedCapabilities?: OfferViewBlockedCapabilitiesItem[];
 }

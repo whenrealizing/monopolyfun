@@ -5,20 +5,20 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {RewardViewMetadata} from './rewardViewMetadata';
-import type {RewardViewRewardSnapshot} from './rewardViewRewardSnapshot';
+import type { RewardViewMetadata } from './rewardViewMetadata';
+import type { RewardViewRewardSnapshot } from './rewardViewRewardSnapshot';
 
 export interface RewardView {
-    id?: string;
-    projectId?: string;
-    launchId?: string;
-    taskId?: string;
-    proofId?: string;
-    recipientAccountId?: string;
-    status?: string;
-    contributionWeight?: number;
-    rewardSnapshot?: RewardViewRewardSnapshot;
-    metadata?: RewardViewMetadata;
-    createdAt?: string;
-    updatedAt?: string;
+  id?: string;
+  projectId?: string;
+  launchId?: string;
+  taskId?: string;
+  proofId?: string;
+  recipientAccountId?: string;
+  status?: string;
+  contributionWeight?: number;
+  rewardSnapshot?: RewardViewRewardSnapshot;
+  metadata?: RewardViewMetadata;
+  createdAt?: string;
+  updatedAt?: string;
 }

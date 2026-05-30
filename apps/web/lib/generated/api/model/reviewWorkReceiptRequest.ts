@@ -7,11 +7,11 @@
  */
 
 export interface ReviewWorkReceiptRequest {
-    /** @minLength 1 */
-    reviewerAccountId: string;
-    /** @minLength 1 */
-    decision: string;
-    /** @minLength 1 */
-    reason: string;
-    evidenceRefs?: string[];
+  /** @minLength 1 */
+  reviewerAccountId: string;
+  /** @minLength 1 */
+  decision: string;
+  /** @minLength 1 */
+  reason: string;
+  evidenceRefs?: string[];
 }

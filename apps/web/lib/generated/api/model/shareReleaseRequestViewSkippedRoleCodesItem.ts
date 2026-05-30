@@ -10,7 +10,7 @@ export type ShareReleaseRequestViewSkippedRoleCodesItem = typeof ShareReleaseReq
 
 
 export const ShareReleaseRequestViewSkippedRoleCodesItem = {
-    system_ceo: 'system_ceo',
-    system_cto: 'system_cto',
-    system_cfo: 'system_cfo',
+  system_ceo: 'system_ceo',
+  system_cto: 'system_cto',
+  system_cfo: 'system_cfo',
 } as const;

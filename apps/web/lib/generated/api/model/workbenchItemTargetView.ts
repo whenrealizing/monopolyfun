@@ -7,6 +7,6 @@
  */
 
 export interface WorkbenchItemTargetView {
-    type?: string;
-    id?: string;
+  type?: string;
+  id?: string;
 }

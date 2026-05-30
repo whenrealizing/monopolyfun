@@ -5,22 +5,22 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {RepoDeliverySessionResponseMetadata} from './repoDeliverySessionResponseMetadata';
+import type { RepoDeliverySessionResponseMetadata } from './repoDeliverySessionResponseMetadata';
 
 export interface RepoDeliverySessionResponse {
-    deliverySessionId?: string;
-    projectNo?: string;
-    orderNo?: string;
-    repoUrl?: string;
-    provider?: string;
-    baseBranch?: string;
-    headBranch?: string;
-    prUrl?: string;
-    headCommit?: string;
-    ciStatus?: string;
-    status?: string;
-    runtime?: string;
-    tokenSecretRef?: string;
-    expiresAt?: string;
-    metadata?: RepoDeliverySessionResponseMetadata;
+  deliverySessionId?: string;
+  projectNo?: string;
+  orderNo?: string;
+  repoUrl?: string;
+  provider?: string;
+  baseBranch?: string;
+  headBranch?: string;
+  prUrl?: string;
+  headCommit?: string;
+  ciStatus?: string;
+  status?: string;
+  runtime?: string;
+  tokenSecretRef?: string;
+  expiresAt?: string;
+  metadata?: RepoDeliverySessionResponseMetadata;
 }

@@ -5,32 +5,32 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {WorkbenchItemActionView} from './workbenchItemActionView';
-import type {WorkbenchItemTargetView} from './workbenchItemTargetView';
-import type {WorkbenchItemViewNextAction} from './workbenchItemViewNextAction';
-import type {WorkbenchItemViewSummaryFactsItem} from './workbenchItemViewSummaryFactsItem';
+import type { WorkbenchItemActionView } from './workbenchItemActionView';
+import type { WorkbenchItemTargetView } from './workbenchItemTargetView';
+import type { WorkbenchItemViewNextAction } from './workbenchItemViewNextAction';
+import type { WorkbenchItemViewSummaryFactsItem } from './workbenchItemViewSummaryFactsItem';
 
 export interface WorkbenchItemView {
-    id?: string;
-    title?: string;
-    description?: string;
-    lane?: string;
-    urgency?: string;
-    reason?: string;
-    category?: string;
-    filterTags?: string[];
-    roleBucket?: string;
-    domain?: string;
-    actionKind?: string;
-    targetHref?: string;
-    summaryFacts?: WorkbenchItemViewSummaryFactsItem[];
-    canDismiss?: boolean;
-    target?: WorkbenchItemTargetView;
-    actions?: WorkbenchItemActionView[];
-    requiredInputs?: string[];
-    acceptanceCriteria?: string[];
-    nextAction?: WorkbenchItemViewNextAction;
-    requiredCapability?: string;
-    requiredRoleCode?: string;
-    updatedAt?: string;
+  id?: string;
+  title?: string;
+  description?: string;
+  lane?: string;
+  urgency?: string;
+  reason?: string;
+  category?: string;
+  filterTags?: string[];
+  roleBucket?: string;
+  domain?: string;
+  actionKind?: string;
+  targetHref?: string;
+  summaryFacts?: WorkbenchItemViewSummaryFactsItem[];
+  canDismiss?: boolean;
+  target?: WorkbenchItemTargetView;
+  actions?: WorkbenchItemActionView[];
+  requiredInputs?: string[];
+  acceptanceCriteria?: string[];
+  nextAction?: WorkbenchItemViewNextAction;
+  requiredCapability?: string;
+  requiredRoleCode?: string;
+  updatedAt?: string;
 }

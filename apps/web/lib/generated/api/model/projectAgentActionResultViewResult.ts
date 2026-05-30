@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type ProjectAgentActionResultViewResult = { [key: string]: unknown };
+export type ProjectAgentActionResultViewResult = {[key: string]: unknown};

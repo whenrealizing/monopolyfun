@@ -85,10 +85,15 @@ export default async function ProjectDetailPage({params}: { params: Promise<{ pr
         project.ownerHandle,
         ...project.roles.map((role) => role.accountId),
         ...contributors.map((contributor) => contributor.accountId),
+        ...(commercialization?.contributors ?? []).map((contributor) => contributor.accountId),
     ]);
     const accounts = await lookupPublicAccounts(accountIds).catch(() => []);
     const accountsById = Object.fromEntries(accounts.flatMap((account) => [[account.id, account], [account.handle.replace(/^@+/, "").toLowerCase(), account]]));
     const owner = buildSurfaceOwnerIdentity(project.ownerHandle, accountsById);
+    const contributionAccountsById = Object.fromEntries((commercialization?.contributors ?? []).map((contributor) => {
+        const identity = buildSurfaceOwnerIdentity(contributor.accountId, accountsById);
+        return [contributor.accountId, {displayName: identity.displayName, handle: identity.handle}];
+    }));
     // 中文注释：项目顶部展示第一版任务闭环事实，帮助用户直接判断任务、成果、验证和奖励状态。
     const activeValidationTaskCount = validationTasks.filter((task) => ["open", "claimed", "working", "proof_submitted", "changes_requested"].includes(task.status)).length;
     const submittedValidationProofCount = validationProofs.filter((proof) => proof.status === "submitted").length;
@@ -249,9 +254,13 @@ export default async function ProjectDetailPage({params}: { params: Promise<{ pr
             </div>
             <ProjectContributionLedgerPanel
                 commercialization={commercialization ?? null}
+                accountsById={contributionAccountsById}
                 labels={{
                     title: t("commercialization.title"),
                     description: t("commercialization.description"),
+                    ledgerTitle: t("commercialization.ledgerTitle"),
+                    contributorsTitle: t("commercialization.contributorsTitle"),
+                    empty: t("commercialization.empty"),
                     status: {
                         planned: t("commercialization.status.planned"),
                         active: t("commercialization.status.active"),
@@ -267,6 +276,20 @@ export default async function ProjectDetailPage({params}: { params: Promise<{ pr
                         virtualSharePool: t("commercialization.metrics.virtualSharePool"),
                         claimed: t("commercialization.metrics.claimed"),
                         virtualShares: t("commercialization.metrics.virtualShares"),
+                        contributors: t("commercialization.metrics.contributors"),
+                        ledgerEntries: t("commercialization.metrics.ledgerEntries"),
+                        weight: t("commercialization.metrics.weight"),
+                    },
+                    sourceTypes: {
+                        order: t("commercialization.sourceTypes.order"),
+                        work_thread: t("commercialization.sourceTypes.workThread"),
+                        validation_reward: t("commercialization.sourceTypes.validationReward"),
+                    },
+                    roles: {
+                        assignee: t("commercialization.roles.assignee"),
+                        proof_submitter: t("commercialization.roles.proofSubmitter"),
+                        proof_validator: t("commercialization.roles.proofValidator"),
+                        order_assignee: t("commercialization.roles.orderAssignee"),
                     },
                 }}
             />

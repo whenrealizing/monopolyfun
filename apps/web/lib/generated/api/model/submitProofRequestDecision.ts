@@ -10,6 +10,6 @@ export type SubmitProofRequestDecision = typeof SubmitProofRequestDecision[keyof
 
 
 export const SubmitProofRequestDecision = {
-    ACCEPT_ORIGINAL: 'ACCEPT_ORIGINAL',
-    CLOSE_ORIGINAL: 'CLOSE_ORIGINAL',
+  ACCEPT_ORIGINAL: 'ACCEPT_ORIGINAL',
+  CLOSE_ORIGINAL: 'CLOSE_ORIGINAL',
 } as const;
