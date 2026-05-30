@@ -32,7 +32,6 @@
     "logout": "退出登录",
     "accountMenu": "账号菜单",
     "create": "创建",
-    "github": "GitHub 仓库",
     "searchPlaceholder": "搜索供给、需求、项目",
     "primaryNavigation": "主导航",
     "expandSidebar": "展开侧栏",
@@ -128,6 +127,6 @@
   },
   "OAuth": {
     "preparing": "正在准备 OAuth 登录回调...",
-    "completing": "正在完成 GitHub OAuth 登录..."
+    "completing": "正在完成登录..."
   }
 }

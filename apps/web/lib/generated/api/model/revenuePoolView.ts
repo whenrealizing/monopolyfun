@@ -7,7 +7,7 @@
  */
 
 export interface RevenuePoolView {
-    currency?: string;
-    eventCount?: number;
-    totalMinor?: number;
+  currency?: string;
+  eventCount?: number;
+  totalMinor?: number;
 }

@@ -7,23 +7,23 @@
  */
 
 export interface ShareSettlementHoldView {
-    id?: string;
-    orderId?: string;
-    orderNo?: string;
-    orderStatus?: string;
-    marketId?: string;
-    projectId?: string;
-    itemId?: string;
-    accountId?: string;
-    amount?: number;
-    curveSlot?: number;
-    reason?: string;
-    status?: string;
-    lockReason?: string;
-    releaseReason?: string;
-    disputeWindowExpiresAt?: string;
-    releasedAt?: string;
-    cancelledAt?: string;
-    createdAt?: string;
-    updatedAt?: string;
+  id?: string;
+  orderId?: string;
+  orderNo?: string;
+  orderStatus?: string;
+  marketId?: string;
+  projectId?: string;
+  itemId?: string;
+  accountId?: string;
+  amount?: number;
+  curveSlot?: number;
+  reason?: string;
+  status?: string;
+  lockReason?: string;
+  releaseReason?: string;
+  disputeWindowExpiresAt?: string;
+  releasedAt?: string;
+  cancelledAt?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

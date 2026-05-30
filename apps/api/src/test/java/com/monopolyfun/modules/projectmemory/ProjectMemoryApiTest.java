@@ -54,9 +54,9 @@ class ProjectMemoryApiTest extends AbstractPostgresIntegrationTest {
                 ('acct-worker', '@worker', 'Worker', '{}'::jsonb)
                 """);
         when(repoProviderClient.provisionPublicRepository(any())).thenReturn(new RepoProviderClient.ProvisionedRepository(
-                "github",
-                "https://github.com/whenrealizing/monopolyfun",
-                "https://github.com/whenrealizing/monopolyfun.git",
+                "forgejo",
+                "http://localhost:3001/whenrealizing/monopolyfun",
+                "http://localhost:3001/whenrealizing/monopolyfun.git",
                 "whenrealizing",
                 "monopolyfun",
                 "main",

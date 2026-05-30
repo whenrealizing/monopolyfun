@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type IdentityVerificationChallengeViewInstructions = { [key: string]: unknown };
+export type IdentityVerificationChallengeViewInstructions = {[key: string]: unknown};

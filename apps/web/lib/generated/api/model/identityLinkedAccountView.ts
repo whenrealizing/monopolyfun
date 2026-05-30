@@ -7,12 +7,12 @@
  */
 
 export interface IdentityLinkedAccountView {
-    certifierId?: string;
-    provider?: string;
-    platformUserId?: string;
-    handle?: string;
-    displayName?: string;
-    avatarUrl?: string;
-    profileUrl?: string;
-    verifiedAt?: string;
+  certifierId?: string;
+  provider?: string;
+  platformUserId?: string;
+  handle?: string;
+  displayName?: string;
+  avatarUrl?: string;
+  profileUrl?: string;
+  verifiedAt?: string;
 }

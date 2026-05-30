@@ -7,12 +7,12 @@
  */
 
 export interface ProjectRepoBindingView {
-    id?: string;
-    projectId?: string;
-    provider?: string;
-    repoUrl?: string;
-    repoOwner?: string;
-    repoName?: string;
-    defaultBranch?: string;
-    installationId?: string;
+  id?: string;
+  projectId?: string;
+  provider?: string;
+  repoUrl?: string;
+  repoOwner?: string;
+  repoName?: string;
+  defaultBranch?: string;
+  installationId?: string;
 }

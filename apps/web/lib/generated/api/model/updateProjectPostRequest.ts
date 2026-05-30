@@ -7,26 +7,26 @@
  */
 
 export interface UpdateProjectPostRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    /**
+  /** @minLength 1 */
+  actorAccountId: string;
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    title: string;
-    /**
+  title: string;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    description: string;
-    /**
+  description: string;
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    goal?: string;
-    /**
+  goal?: string;
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    ownerIntro?: string;
+  ownerIntro?: string;
 }

@@ -5,20 +5,20 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {DirectionCardView} from './directionCardView';
-import type {DistributionEpochView} from './distributionEpochView';
-import type {ProjectSharesView} from './projectSharesView';
-import type {ProofStatsView} from './proofStatsView';
-import type {RevenuePoolView} from './revenuePoolView';
+import type { DirectionCardView } from './directionCardView';
+import type { DistributionEpochView } from './distributionEpochView';
+import type { ProjectSharesView } from './projectSharesView';
+import type { ProofStatsView } from './proofStatsView';
+import type { RevenuePoolView } from './revenuePoolView';
 
 export interface ProjectCommercializationView {
-    projectNo?: string;
-    projectId?: string;
-    directions?: DirectionCardView[];
-    leadingDirection?: DirectionCardView;
-    validatedDirections?: DirectionCardView[];
-    proofStats?: ProofStatsView;
-    sharePool?: ProjectSharesView;
-    revenuePool?: RevenuePoolView;
-    currentDistribution?: DistributionEpochView;
+  projectNo?: string;
+  projectId?: string;
+  directions?: DirectionCardView[];
+  leadingDirection?: DirectionCardView;
+  validatedDirections?: DirectionCardView[];
+  proofStats?: ProofStatsView;
+  sharePool?: ProjectSharesView;
+  revenuePool?: RevenuePoolView;
+  currentDistribution?: DistributionEpochView;
 }

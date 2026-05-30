@@ -6,8 +6,7 @@
     "title": "About monopolyfun",
     "hero": {
       "title": "Turn one idea into a project people can join",
-      "primaryCta": "Publish project",
-      "githubCta": "View GitHub"
+      "primaryCta": "Publish project"
     },
     "flow": {
       "cardTitle": "Project collaboration loop",

@@ -5,19 +5,19 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {UploadDownloadResponseDownloadHeaders} from './uploadDownloadResponseDownloadHeaders';
-import type {UploadDownloadResponseStatus} from './uploadDownloadResponseStatus';
+import type { UploadDownloadResponseDownloadHeaders } from './uploadDownloadResponseDownloadHeaders';
+import type { UploadDownloadResponseStatus } from './uploadDownloadResponseStatus';
 
 export interface UploadDownloadResponse {
-    assetId?: string;
-    artifactRef?: string;
-    filename?: string;
-    contentType?: string;
-    contentLengthBytes?: number;
-    checksumSha256?: string;
-    status?: UploadDownloadResponseStatus;
-    downloadMethod?: string;
-    downloadUrl?: string;
-    downloadHeaders?: UploadDownloadResponseDownloadHeaders;
-    expiresAt?: string;
+  assetId?: string;
+  artifactRef?: string;
+  filename?: string;
+  contentType?: string;
+  contentLengthBytes?: number;
+  checksumSha256?: string;
+  status?: UploadDownloadResponseStatus;
+  downloadMethod?: string;
+  downloadUrl?: string;
+  downloadHeaders?: UploadDownloadResponseDownloadHeaders;
+  expiresAt?: string;
 }

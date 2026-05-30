@@ -66,9 +66,6 @@ require_not_value DATABASE_PASSWORD postgres
 require_present UPLOAD_BUCKET
 require_present UPLOAD_BASE_URL
 require_present DATABASE_URL
-require_present GITHUB_APP_ID
-require_present GITHUB_APP_PRIVATE_KEY
-require_present GITHUB_APP_ORGANIZATION
 
 payment_callback_secret="${PAYMENT_CALLBACK_SECRET:-}"
 digital_inventory_secret="${DIGITAL_INVENTORY_ENCRYPTION_SECRET:-}"
@@ -92,15 +89,6 @@ if printf '%s' "${DATABASE_URL:-}" | grep -Eq 'localhost|127\.0\.0\.1'; then
 else
   echo "ok DATABASE_URL"
 fi
-
-for callback_name in GITHUB_REDIRECT_URI GITHUB_VERIFICATION_REDIRECT_URI GITHUB_WEB_CALLBACK_URL; do
-  if printf '%s' "${!callback_name:-}" | grep -Eq 'localhost|127\.0\.0\.1'; then
-    echo "fail ${callback_name} must use a production domain"
-    failures=$((failures + 1))
-  else
-    echo "ok ${callback_name}"
-  fi
-done
 
 case "${UPLOAD_PROVIDER:-}" in
   s3|s3-compatible|r2)

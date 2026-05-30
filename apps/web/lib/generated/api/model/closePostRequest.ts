@@ -7,11 +7,11 @@
  */
 
 export interface ClosePostRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    /**
+  /** @minLength 1 */
+  actorAccountId: string;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    reason?: string;
+  reason?: string;
 }

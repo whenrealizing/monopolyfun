@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectAgentContextView} from './projectAgentContextView';
+import type { ProjectAgentContextView } from './projectAgentContextView';
 
 export interface DashboardSectionViewProjectAgentContextView {
-    status?: string;
-    data?: ProjectAgentContextView;
-    errorCode?: string;
+  status?: string;
+  data?: ProjectAgentContextView;
+  errorCode?: string;
 }

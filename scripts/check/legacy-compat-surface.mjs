@@ -13,7 +13,6 @@ const publicApiPath = join(root, "apps/web/lib/api/index.ts");
 const workQueryServicePath = join(root, "apps/api/src/main/java/com/monopolyfun/modules/work/service/WorkQueryService.java");
 const publishProjectRequestPath = join(root, "apps/api/src/main/java/com/monopolyfun/modules/project/api/request/PublishProjectRequest.java");
 const paymentControllerPath = join(root, "apps/api/src/main/java/com/monopolyfun/modules/payment/api/PaymentController.java");
-const githubWebhookControllerPath = join(root, "apps/api/src/main/java/com/monopolyfun/modules/repo/api/GitHubAppWebhookController.java");
 const forbiddenPublicOrderWritePattern = /\/api\/v1\/orders\/(?:\$\{[^}]+}|[^/"`']+|\{orderNo})\/(?:proofs|progress|accept|dispute|cancel-dispute|appeal|assign-reviewer|override-review|close)/g;
 
 for (const file of walk(join(root, "apps/api/src/main/java"))) {
@@ -82,9 +81,9 @@ if (exists(publishProjectRequestPath)) {
   }
 }
 
-for (const controllerPath of [paymentControllerPath, githubWebhookControllerPath].filter(exists)) {
+for (const controllerPath of [paymentControllerPath].filter(exists)) {
   const controller = readFileSync(controllerPath, "utf8");
-  if ((controller.includes("/callback/okx/a2a") || controller.includes("/api/v1/github/app/webhook")) && !controller.includes("@Hidden")) {
+  if (controller.includes("/callback/okx/a2a") && !controller.includes("@Hidden")) {
     failures.push(`${relative(root, controllerPath)}: provider callbacks must stay hidden from generated public clients`);
   }
 }
@@ -99,7 +98,6 @@ for (const file of [generatedApiPath, generatedModelIndexPath].filter(exists)) {
     "getFakeCallbackUrl",
     "okxA2aCallback",
     "getOkxA2aCallbackUrl",
-    "githubAppWebhook",
     "getHandleUrl",
     "rewardModel",
   ];

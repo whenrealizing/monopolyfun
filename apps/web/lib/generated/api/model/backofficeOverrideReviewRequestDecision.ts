@@ -10,6 +10,6 @@ export type BackofficeOverrideReviewRequestDecision = typeof BackofficeOverrideR
 
 
 export const BackofficeOverrideReviewRequestDecision = {
-    ACCEPT_ORIGINAL: 'ACCEPT_ORIGINAL',
-    CLOSE_ORIGINAL: 'CLOSE_ORIGINAL',
+  ACCEPT_ORIGINAL: 'ACCEPT_ORIGINAL',
+  CLOSE_ORIGINAL: 'CLOSE_ORIGINAL',
 } as const;

@@ -7,5 +7,5 @@
  */
 
 export type PublishProjectParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

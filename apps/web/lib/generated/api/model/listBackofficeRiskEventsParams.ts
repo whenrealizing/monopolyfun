@@ -7,5 +7,5 @@
  */
 
 export type ListBackofficeRiskEventsParams = {
-    limit?: number;
+limit?: number;
 };

@@ -5,12 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {
-    ProjectCandidateBlockedSummaryViewTopReasonsItem
-} from './projectCandidateBlockedSummaryViewTopReasonsItem';
+import type { ProjectCandidateBlockedSummaryViewTopReasonsItem } from './projectCandidateBlockedSummaryViewTopReasonsItem';
 
 export interface ProjectCandidateBlockedSummaryView {
-    integrationChecking?: number;
-    integrationBlocked?: number;
-    topReasons?: ProjectCandidateBlockedSummaryViewTopReasonsItem[];
+  integrationChecking?: number;
+  integrationBlocked?: number;
+  topReasons?: ProjectCandidateBlockedSummaryViewTopReasonsItem[];
 }

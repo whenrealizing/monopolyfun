@@ -7,9 +7,9 @@
  */
 
 export interface DisputeOrderRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    /** @minLength 1 */
-    reason: string;
-    evidenceRefs?: string[];
+  /** @minLength 1 */
+  actorAccountId: string;
+  /** @minLength 1 */
+  reason: string;
+  evidenceRefs?: string[];
 }

@@ -1,15 +1,13 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { BadgeCheck, Clock3, Crown, Flame, Github, ShieldCheck, Sprout } from "lucide-react";
+import { BadgeCheck, Clock3, Crown, Flame, ShieldCheck, Sprout } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import type { IdentityBadge } from "@/lib/api";
 
 function badgeIcon(icon: IdentityBadge["icon"]): ReactNode {
   switch (icon) {
-    case "github":
-      return <Github className="h-3.5 w-3.5" />;
     case "crown":
       return <Crown className="h-3.5 w-3.5" />;
     case "flame":

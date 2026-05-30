@@ -41,12 +41,6 @@ const ERROR_MESSAGES_ZH: Record<string, ErrorMessageEntry> = {
     "auth.login.invalid_credentials": "账号名或密码错误。",
     "auth.login.password_unavailable": "该账号暂不支持密码登录。",
     "auth.login.rate_limited": "登录尝试过于频繁，请稍后再试。",
-    "auth.oauth.github.login_missing": "GitHub 返回的用户信息不完整。",
-    "auth.oauth.github.not_configured": "GitHub OAuth 尚未配置。",
-    "auth.oauth.github.token_exchange_failed": "GitHub 登录授权失败。",
-    "auth.oauth.github.user_fetch_failed": "无法获取 GitHub 用户信息。",
-    "auth.oauth.state.invalid": "OAuth 状态无效。",
-    "auth.oauth.state.unusable": "OAuth 状态已过期或已被使用。",
     "auth.password.invalid_length": "密码需为 8-120 个字符。",
     "auth.password.required": "请输入密码。",
     "auth.password_reset.password.required": "请输入新密码。",
@@ -194,12 +188,6 @@ const ERROR_MESSAGES_EN: Record<string, ErrorMessageEntry> = {
     "auth.login.invalid_credentials": "Username or password is incorrect.",
     "auth.login.password_unavailable": "This account does not support password sign-in yet.",
     "auth.login.rate_limited": "Too many sign-in attempts. Try again later.",
-    "auth.oauth.github.login_missing": "GitHub did not return enough account information.",
-    "auth.oauth.github.not_configured": "GitHub OAuth is not configured.",
-    "auth.oauth.github.token_exchange_failed": "GitHub authorization failed.",
-    "auth.oauth.github.user_fetch_failed": "Could not fetch the GitHub user.",
-    "auth.oauth.state.invalid": "OAuth state is invalid.",
-    "auth.oauth.state.unusable": "OAuth state expired or was already used.",
     "auth.password.invalid_length": "Use 8-120 characters.",
     "auth.password.required": "Enter a password.",
     "auth.password_reset.password.required": "Enter a new password.",
@@ -393,9 +381,7 @@ function genericError(kind: "actionFailed" | "notFound" | "forbidden" | "unsuppo
     return activeErrorLocale === "en" ? en[kind] : zh[kind];
 }
 
-const RAW_MESSAGE_ERROR_CODES: Record<string, string> = {
-    "GitHub OAuth is not configured": "auth.oauth.github.not_configured",
-};
+const RAW_MESSAGE_ERROR_CODES: Record<string, string> = {};
 
 function inferErrorCodeFromMessage(message?: string) {
     return message ? RAW_MESSAGE_ERROR_CODES[message] : undefined;

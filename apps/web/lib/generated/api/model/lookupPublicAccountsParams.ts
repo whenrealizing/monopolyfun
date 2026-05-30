@@ -7,5 +7,5 @@
  */
 
 export type LookupPublicAccountsParams = {
-    ids: string[];
+ids: string[];
 };

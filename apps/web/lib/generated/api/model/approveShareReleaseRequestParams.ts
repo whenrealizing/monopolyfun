@@ -7,5 +7,5 @@
  */
 
 export type ApproveShareReleaseRequestParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

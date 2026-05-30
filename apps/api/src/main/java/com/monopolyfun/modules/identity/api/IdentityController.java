@@ -13,18 +13,13 @@ import com.monopolyfun.modules.identity.service.view.IdentityPageView;
 import com.monopolyfun.modules.identity.service.view.IdentityVerificationStartResponse;
 import com.monopolyfun.shared.security.CurrentAccountAccess;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -89,16 +84,5 @@ public class IdentityController {
                 currentAccountAccess.requireAccountId(),
                 request.source(),
                 request.certifierId());
-    }
-
-    @GetMapping("/oauth/github/callback")
-    public ResponseEntity<Void> githubVerificationCallback(
-            @RequestParam String code,
-            @RequestParam String state) {
-        var challenge = identityQueryService.findChallengeByToken(state);
-        identityVerificationService.completeVerification(challenge.accountId(), challenge.id(), java.util.Map.of("code", code, "state", state));
-        return ResponseEntity.status(302)
-                .header(HttpHeaders.LOCATION, URI.create("/identity").toString())
-                .build();
     }
 }

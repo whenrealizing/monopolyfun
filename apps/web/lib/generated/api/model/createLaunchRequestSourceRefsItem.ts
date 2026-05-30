@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type CreateLaunchRequestSourceRefsItem = { [key: string]: unknown };
+export type CreateLaunchRequestSourceRefsItem = {[key: string]: unknown};

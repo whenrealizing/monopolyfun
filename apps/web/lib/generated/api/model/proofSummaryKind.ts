@@ -10,6 +10,6 @@ export type ProofSummaryKind = typeof ProofSummaryKind[keyof typeof ProofSummary
 
 
 export const ProofSummaryKind = {
-    WORK_PROOF: 'WORK_PROOF',
-    REVIEW_PROOF: 'REVIEW_PROOF',
+  WORK_PROOF: 'WORK_PROOF',
+  REVIEW_PROOF: 'REVIEW_PROOF',
 } as const;

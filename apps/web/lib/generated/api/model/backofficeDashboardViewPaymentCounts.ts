@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type BackofficeDashboardViewPaymentCounts = { [key: string]: number };
+export type BackofficeDashboardViewPaymentCounts = {[key: string]: number};

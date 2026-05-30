@@ -12,6 +12,7 @@ This directory keeps public documentation organized by audience and lifecycle.
 
 ## Deployment
 
+- [Local lightweight stack](deployment/local-lightweight-stack.md)
 - [Self-hosting](deployment/self-hosting.md)
 
 ## Governance
@@ -21,6 +22,7 @@ This directory keeps public documentation organized by audience and lifecycle.
 ## Stable Product Specs
 
 - [Project lifecycle](product/project-lifecycle.md)
+- [One-sentence company video script](product/one-sentence-company-video-script.md)
 
 ## Testing Notes
 

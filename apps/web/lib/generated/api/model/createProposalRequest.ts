@@ -5,19 +5,19 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {CreateProposalRequestInput} from './createProposalRequestInput';
+import type { CreateProposalRequestInput } from './createProposalRequestInput';
 
 export interface CreateProposalRequest {
-    opportunityNo?: string;
-    /** @minLength 1 */
-    mandateNo: string;
-    /** @minLength 1 */
-    actionId: string;
-    /** @minLength 1 */
-    reason: string;
-    /** @minLength 1 */
-    risk: string;
-    input?: CreateProposalRequestInput;
-    /** @minLength 1 */
-    expectedOutcome: string;
+  opportunityNo?: string;
+  /** @minLength 1 */
+  mandateNo: string;
+  /** @minLength 1 */
+  actionId: string;
+  /** @minLength 1 */
+  reason: string;
+  /** @minLength 1 */
+  risk: string;
+  input?: CreateProposalRequestInput;
+  /** @minLength 1 */
+  expectedOutcome: string;
 }

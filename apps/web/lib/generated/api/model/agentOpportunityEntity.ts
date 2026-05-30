@@ -7,15 +7,15 @@
  */
 
 export interface AgentOpportunityEntity {
-    id?: string;
-    opportunityNo?: string;
-    mandateId?: string;
-    type?: string;
-    reason?: string;
-    targetType?: string;
-    targetId?: string;
-    suggestedAction?: string;
-    status?: string;
-    createdAt?: string;
-    updatedAt?: string;
+  id?: string;
+  opportunityNo?: string;
+  mandateId?: string;
+  type?: string;
+  reason?: string;
+  targetType?: string;
+  targetId?: string;
+  suggestedAction?: string;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

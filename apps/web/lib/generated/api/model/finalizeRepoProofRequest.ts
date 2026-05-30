@@ -7,24 +7,24 @@
  */
 
 export interface FinalizeRepoProofRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    summary: string;
-    /**
+  summary: string;
+  /**
      * @minItems 0
      * @maxItems 20
      */
-    artifacts: string[];
-    /**
+  artifacts: string[];
+  /**
      * @minItems 0
      * @maxItems 20
      */
-    criteriaRefs?: string[];
-    /**
+  criteriaRefs?: string[];
+  /**
      * @minItems 0
      * @maxItems 20
      */
-    evidenceRefs?: string[];
+  evidenceRefs?: string[];
 }

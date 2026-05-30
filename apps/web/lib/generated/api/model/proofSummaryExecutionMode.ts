@@ -10,7 +10,7 @@ export type ProofSummaryExecutionMode = typeof ProofSummaryExecutionMode[keyof t
 
 
 export const ProofSummaryExecutionMode = {
-    HUMAN: 'HUMAN',
-    AGENT: 'AGENT',
-    MIXED: 'MIXED',
+  HUMAN: 'HUMAN',
+  AGENT: 'AGENT',
+  MIXED: 'MIXED',
 } as const;

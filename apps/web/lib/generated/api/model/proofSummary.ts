@@ -5,30 +5,30 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProofLink} from './proofLink';
-import type {ProofSummaryDecision} from './proofSummaryDecision';
-import type {ProofSummaryExecutionMode} from './proofSummaryExecutionMode';
-import type {ProofSummaryKind} from './proofSummaryKind';
-import type {ProofSummaryProofPayload} from './proofSummaryProofPayload';
+import type { ProofLink } from './proofLink';
+import type { ProofSummaryDecision } from './proofSummaryDecision';
+import type { ProofSummaryExecutionMode } from './proofSummaryExecutionMode';
+import type { ProofSummaryKind } from './proofSummaryKind';
+import type { ProofSummaryProofPayload } from './proofSummaryProofPayload';
 
 export interface ProofSummary {
-    id?: string;
-    orderId?: string;
-    kind?: ProofSummaryKind;
-    parentOrderId?: string;
-    submittedByAccountId?: string;
-    summary?: string;
-    links?: ProofLink[];
-    artifacts?: string[];
-    proofPayload?: ProofSummaryProofPayload;
-    executionMode?: ProofSummaryExecutionMode;
-    agentSessionId?: string;
-    agentRuntime?: string;
-    decision?: ProofSummaryDecision;
-    evidenceRefs?: string[];
-    contentHashes?: string[];
-    criteriaRefs?: string[];
-    visibility?: string;
-    executionTraceRef?: string;
-    createdAt?: string;
+  id?: string;
+  orderId?: string;
+  kind?: ProofSummaryKind;
+  parentOrderId?: string;
+  submittedByAccountId?: string;
+  summary?: string;
+  links?: ProofLink[];
+  artifacts?: string[];
+  proofPayload?: ProofSummaryProofPayload;
+  executionMode?: ProofSummaryExecutionMode;
+  agentSessionId?: string;
+  agentRuntime?: string;
+  decision?: ProofSummaryDecision;
+  evidenceRefs?: string[];
+  contentHashes?: string[];
+  criteriaRefs?: string[];
+  visibility?: string;
+  executionTraceRef?: string;
+  createdAt?: string;
 }

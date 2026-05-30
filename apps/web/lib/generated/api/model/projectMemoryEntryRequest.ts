@@ -7,48 +7,48 @@
  */
 
 export interface ProjectMemoryEntryRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    memoryId?: string;
-    /**
+  memoryId?: string;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    kind: string;
-    /**
+  kind: string;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    content: string;
-    sourceRefs?: string[];
-    confidence?: number;
-    /**
+  content: string;
+  sourceRefs?: string[];
+  confidence?: number;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    visibility?: string;
-    /**
+  visibility?: string;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    riskLevel?: string;
-    retrievalTags?: string[];
-    supersedes?: string[];
-    /**
+  riskLevel?: string;
+  retrievalTags?: string[];
+  supersedes?: string[];
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    originEventType?: string;
-    /**
+  originEventType?: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    originEventId?: string;
-    /**
+  originEventId?: string;
+  /**
      * @minLength 0
      * @maxLength 200
      */
-    maintenanceReason?: string;
+  maintenanceReason?: string;
 }

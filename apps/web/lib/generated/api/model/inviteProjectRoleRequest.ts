@@ -7,11 +7,11 @@
  */
 
 export interface InviteProjectRoleRequest {
-    /** @minLength 1 */
-    accountId: string;
-    /**
+  /** @minLength 1 */
+  accountId: string;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    message?: string;
+  message?: string;
 }

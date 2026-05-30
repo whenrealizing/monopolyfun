@@ -5,18 +5,18 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ResolveFeedbackRequestMetadata} from './resolveFeedbackRequestMetadata';
+import type { ResolveFeedbackRequestMetadata } from './resolveFeedbackRequestMetadata';
 
 export interface ResolveFeedbackRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    status: string;
-    /**
+  status: string;
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    resolution?: string;
-    metadata?: ResolveFeedbackRequestMetadata;
+  resolution?: string;
+  metadata?: ResolveFeedbackRequestMetadata;
 }

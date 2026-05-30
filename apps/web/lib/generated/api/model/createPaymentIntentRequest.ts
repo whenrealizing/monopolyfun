@@ -5,18 +5,18 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {CreatePaymentIntentRequestPaymentPayload} from './createPaymentIntentRequestPaymentPayload';
-import type {CreatePaymentIntentRequestReconciliation} from './createPaymentIntentRequestReconciliation';
+import type { CreatePaymentIntentRequestPaymentPayload } from './createPaymentIntentRequestPaymentPayload';
+import type { CreatePaymentIntentRequestReconciliation } from './createPaymentIntentRequestReconciliation';
 
 export interface CreatePaymentIntentRequest {
-    /** @minLength 1 */
-    accountId: string;
-    /**
+  /** @minLength 1 */
+  accountId: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    payer?: string;
-    paymentPayload?: CreatePaymentIntentRequestPaymentPayload;
-    syncSettle?: boolean;
-    reconciliation?: CreatePaymentIntentRequestReconciliation;
+  payer?: string;
+  paymentPayload?: CreatePaymentIntentRequestPaymentPayload;
+  syncSettle?: boolean;
+  reconciliation?: CreatePaymentIntentRequestReconciliation;
 }

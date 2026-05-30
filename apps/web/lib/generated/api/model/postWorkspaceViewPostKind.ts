@@ -10,8 +10,8 @@ export type PostWorkspaceViewPostKind = typeof PostWorkspaceViewPostKind[keyof t
 
 
 export const PostWorkspaceViewPostKind = {
-    OFFER: 'OFFER',
-    REQUEST: 'REQUEST',
-    PROJECT: 'PROJECT',
-    REVIEW: 'REVIEW',
+  OFFER: 'OFFER',
+  REQUEST: 'REQUEST',
+  PROJECT: 'PROJECT',
+  REVIEW: 'REVIEW',
 } as const;

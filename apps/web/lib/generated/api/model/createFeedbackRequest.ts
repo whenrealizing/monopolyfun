@@ -5,40 +5,40 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {CreateFeedbackRequestEvidenceItem} from './createFeedbackRequestEvidenceItem';
-import type {CreateFeedbackRequestMetadata} from './createFeedbackRequestMetadata';
+import type { CreateFeedbackRequestEvidenceItem } from './createFeedbackRequestEvidenceItem';
+import type { CreateFeedbackRequestMetadata } from './createFeedbackRequestMetadata';
 
 export interface CreateFeedbackRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    launchId?: string;
-    /**
+  launchId?: string;
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    subjectType: string;
-    /**
+  subjectType: string;
+  /**
      * @minLength 0
      * @maxLength 200
      */
-    subjectId: string;
-    /**
+  subjectId: string;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    intent: string;
-    /**
+  intent: string;
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    reason: string;
-    evidence?: CreateFeedbackRequestEvidenceItem[];
-    /**
+  reason: string;
+  evidence?: CreateFeedbackRequestEvidenceItem[];
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    suggestedAction?: string;
-    metadata?: CreateFeedbackRequestMetadata;
+  suggestedAction?: string;
+  metadata?: CreateFeedbackRequestMetadata;
 }

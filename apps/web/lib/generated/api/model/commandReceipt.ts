@@ -5,16 +5,16 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {CommandReceiptPayload} from './commandReceiptPayload';
+import type { CommandReceiptPayload } from './commandReceiptPayload';
 
 export interface CommandReceipt {
-    id?: string;
-    type?: string;
-    subjectId?: string;
-    status?: string;
-    payload?: CommandReceiptPayload;
-    actorAccountId?: string;
-    traceId?: string;
-    auditId?: string;
-    createdAt?: string;
+  id?: string;
+  type?: string;
+  subjectId?: string;
+  status?: string;
+  payload?: CommandReceiptPayload;
+  actorAccountId?: string;
+  traceId?: string;
+  auditId?: string;
+  createdAt?: string;
 }

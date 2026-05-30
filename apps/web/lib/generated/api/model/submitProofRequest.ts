@@ -5,65 +5,65 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProofLink} from './proofLink';
-import type {SubmitProofRequestDecision} from './submitProofRequestDecision';
-import type {SubmitProofRequestExecutionMode} from './submitProofRequestExecutionMode';
-import type {SubmitProofRequestProofPayload} from './submitProofRequestProofPayload';
+import type { ProofLink } from './proofLink';
+import type { SubmitProofRequestDecision } from './submitProofRequestDecision';
+import type { SubmitProofRequestExecutionMode } from './submitProofRequestExecutionMode';
+import type { SubmitProofRequestProofPayload } from './submitProofRequestProofPayload';
 
 export interface SubmitProofRequest {
-    /** @minLength 1 */
-    submittedByAccountId: string;
-    /**
+  /** @minLength 1 */
+  submittedByAccountId: string;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    summary: string;
-    /**
+  summary: string;
+  /**
      * @minItems 0
      * @maxItems 20
      */
-    links?: ProofLink[];
-    /**
+  links?: ProofLink[];
+  /**
      * @minItems 0
      * @maxItems 20
      */
-    artifacts?: string[];
-    proofPayload?: SubmitProofRequestProofPayload;
-    executionMode: SubmitProofRequestExecutionMode;
-    /**
+  artifacts?: string[];
+  proofPayload?: SubmitProofRequestProofPayload;
+  executionMode: SubmitProofRequestExecutionMode;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    agentSessionId?: string;
-    /**
+  agentSessionId?: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    agentRuntime?: string;
-    decision?: SubmitProofRequestDecision;
-    /**
+  agentRuntime?: string;
+  decision?: SubmitProofRequestDecision;
+  /**
      * @minItems 0
      * @maxItems 20
      */
-    evidenceRefs?: string[];
-    /**
+  evidenceRefs?: string[];
+  /**
      * @minItems 0
      * @maxItems 20
      */
-    contentHashes?: string[];
-    /**
+  contentHashes?: string[];
+  /**
      * @minItems 0
      * @maxItems 20
      */
-    criteriaRefs?: string[];
-    /**
+  criteriaRefs?: string[];
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    visibility?: string;
-    /**
+  visibility?: string;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    executionTraceRef?: string;
+  executionTraceRef?: string;
 }

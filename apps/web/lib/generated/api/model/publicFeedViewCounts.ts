@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type PublicFeedViewCounts = { [key: string]: number };
+export type PublicFeedViewCounts = {[key: string]: number};

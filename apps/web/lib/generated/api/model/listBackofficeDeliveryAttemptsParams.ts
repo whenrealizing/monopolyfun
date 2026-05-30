@@ -7,5 +7,5 @@
  */
 
 export type ListBackofficeDeliveryAttemptsParams = {
-    limit?: number;
+limit?: number;
 };

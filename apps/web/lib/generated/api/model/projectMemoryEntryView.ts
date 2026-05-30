@@ -7,19 +7,19 @@
  */
 
 export interface ProjectMemoryEntryView {
-    id?: string;
-    memoryId?: string;
-    kind?: string;
-    content?: string;
-    sourceRefs?: string[];
-    confidence?: number;
-    visibility?: string;
-    riskLevel?: string;
-    retrievalTags?: string[];
-    supersedes?: string[];
-    status?: string;
-    createdByAccountId?: string;
-    approvedByAccountId?: string;
-    approvedAt?: string;
-    updatedAt?: string;
+  id?: string;
+  memoryId?: string;
+  kind?: string;
+  content?: string;
+  sourceRefs?: string[];
+  confidence?: number;
+  visibility?: string;
+  riskLevel?: string;
+  retrievalTags?: string[];
+  supersedes?: string[];
+  status?: string;
+  createdByAccountId?: string;
+  approvedByAccountId?: string;
+  approvedAt?: string;
+  updatedAt?: string;
 }

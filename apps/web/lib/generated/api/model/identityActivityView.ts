@@ -5,20 +5,20 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {IdentityActivityViewAgentCapabilitySummary} from './identityActivityViewAgentCapabilitySummary';
-import type {OfferView} from './offerView';
-import type {OrderSummary} from './orderSummary';
-import type {ProjectView} from './projectView';
-import type {RequestView} from './requestView';
-import type {ShareSettlementHoldView} from './shareSettlementHoldView';
-import type {SharesLedgerEntryEntity} from './sharesLedgerEntryEntity';
+import type { IdentityActivityViewAgentCapabilitySummary } from './identityActivityViewAgentCapabilitySummary';
+import type { OfferView } from './offerView';
+import type { OrderSummary } from './orderSummary';
+import type { ProjectView } from './projectView';
+import type { RequestView } from './requestView';
+import type { ShareSettlementHoldView } from './shareSettlementHoldView';
+import type { SharesLedgerEntryEntity } from './sharesLedgerEntryEntity';
 
 export interface IdentityActivityView {
-    myOffers?: OfferView[];
-    myRequests?: RequestView[];
-    myProjects?: ProjectView[];
-    myOrders?: OrderSummary[];
-    sharesLedger?: SharesLedgerEntryEntity[];
-    shareSettlementHolds?: ShareSettlementHoldView[];
-    agentCapabilitySummary?: IdentityActivityViewAgentCapabilitySummary;
+  myOffers?: OfferView[];
+  myRequests?: RequestView[];
+  myProjects?: ProjectView[];
+  myOrders?: OrderSummary[];
+  sharesLedger?: SharesLedgerEntryEntity[];
+  shareSettlementHolds?: ShareSettlementHoldView[];
+  agentCapabilitySummary?: IdentityActivityViewAgentCapabilitySummary;
 }

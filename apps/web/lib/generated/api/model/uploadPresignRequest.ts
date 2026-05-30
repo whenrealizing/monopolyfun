@@ -7,23 +7,23 @@
  */
 
 export interface UploadPresignRequest {
-    /** @minLength 1 */
-    orderId: string;
-    /** @minLength 1 */
-    filename: string;
-    /** @minLength 1 */
-    contentType: string;
-    contentLengthBytes?: number;
-    /** @minLength 1 */
-    checksumSha256: string;
-    /**
+  /** @minLength 1 */
+  orderId: string;
+  /** @minLength 1 */
+  filename: string;
+  /** @minLength 1 */
+  contentType: string;
+  contentLengthBytes?: number;
+  /** @minLength 1 */
+  checksumSha256: string;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    purpose?: string;
-    /**
+  purpose?: string;
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    visibility?: string;
+  visibility?: string;
 }

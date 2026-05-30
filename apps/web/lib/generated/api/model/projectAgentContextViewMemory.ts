@@ -5,6 +5,6 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectMemoryEntryView} from './projectMemoryEntryView';
+import type { ProjectMemoryEntryView } from './projectMemoryEntryView';
 
-export type ProjectAgentContextViewMemory = { [key: string]: ProjectMemoryEntryView[] };
+export type ProjectAgentContextViewMemory = {[key: string]: ProjectMemoryEntryView[]};

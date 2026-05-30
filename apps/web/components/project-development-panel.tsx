@@ -25,7 +25,7 @@ export function ProjectDevelopmentPanel({
             代码记录回流
           </div>
           <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-            GitHub 合并请求和自动检查进入项目记录后，会在待办里生成处理项。
+            Forgejo 合并请求和自动检查进入项目记录后，会在待办里生成处理项。
           </p>
         </div>
         <span className={cn("mf-chip", failedChecks.length ? "border-[rgba(245,98,98,0.3)] text-[var(--accent-red)]" : "border-[rgba(72,230,174,0.28)] text-[var(--accent-green)]")}>
@@ -53,7 +53,7 @@ export function ProjectDevelopmentPanel({
                   <ExternalLink className="h-3.5 w-3.5 shrink-0 text-[var(--muted-foreground)] group-hover:text-[var(--foreground)]" />
                 </div>
                 <div className="mt-1 truncate text-[11px] font-semibold text-[var(--muted-foreground)]">
-                  {binding.provider ?? "github"} · {binding.defaultBranch ?? "main"}
+                  {binding.provider ?? "forgejo"} · {binding.defaultBranch ?? "main"}
                 </div>
               </a>
             )) : (

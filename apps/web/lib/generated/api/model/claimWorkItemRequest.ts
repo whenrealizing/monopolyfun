@@ -7,7 +7,7 @@
  */
 
 export interface ClaimWorkItemRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    executionMode?: string;
+  /** @minLength 1 */
+  actorAccountId: string;
+  executionMode?: string;
 }

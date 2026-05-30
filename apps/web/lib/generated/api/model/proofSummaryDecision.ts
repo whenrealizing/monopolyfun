@@ -10,6 +10,6 @@ export type ProofSummaryDecision = typeof ProofSummaryDecision[keyof typeof Proo
 
 
 export const ProofSummaryDecision = {
-    ACCEPT_ORIGINAL: 'ACCEPT_ORIGINAL',
-    CLOSE_ORIGINAL: 'CLOSE_ORIGINAL',
+  ACCEPT_ORIGINAL: 'ACCEPT_ORIGINAL',
+  CLOSE_ORIGINAL: 'CLOSE_ORIGINAL',
 } as const;

@@ -7,6 +7,6 @@
  */
 
 export interface AssignProjectRoleRequest {
-    /** @minLength 1 */
-    accountId: string;
+  /** @minLength 1 */
+  accountId: string;
 }

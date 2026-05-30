@@ -5,23 +5,23 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectInitiativeRecommendationEntityInput} from './projectInitiativeRecommendationEntityInput';
+import type { ProjectInitiativeRecommendationEntityInput } from './projectInitiativeRecommendationEntityInput';
 
 export interface ProjectInitiativeRecommendationEntity {
-    id?: string;
-    recommendationNo?: string;
-    accountId?: string;
-    projectId?: string;
-    projectNo?: string;
-    recommendationType?: string;
-    targetKey?: string;
-    targetRoleCode?: string;
-    title?: string;
-    reason?: string;
-    suggestedAction?: string;
-    input?: ProjectInitiativeRecommendationEntityInput;
-    status?: string;
-    workItemId?: string;
-    createdAt?: string;
-    updatedAt?: string;
+  id?: string;
+  recommendationNo?: string;
+  accountId?: string;
+  projectId?: string;
+  projectNo?: string;
+  recommendationType?: string;
+  targetKey?: string;
+  targetRoleCode?: string;
+  title?: string;
+  reason?: string;
+  suggestedAction?: string;
+  input?: ProjectInitiativeRecommendationEntityInput;
+  status?: string;
+  workItemId?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

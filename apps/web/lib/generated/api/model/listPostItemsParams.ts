@@ -7,5 +7,5 @@
  */
 
 export type ListPostItemsParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

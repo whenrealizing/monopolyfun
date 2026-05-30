@@ -124,7 +124,7 @@
     },
     {
       "id": "subject-mismatch-archive",
-      "text": "把 github issue monopolyfun/qa-smoke#subject-mismatch 归档到 MF260101PRJ0000000，内容写入 MF260521PRJ0000001 的真实项目上下文。",
+      "text": "把 forgejo issue monopolyfun/qa-smoke#subject-mismatch 归档到 MF260101PRJ0000000，内容写入 MF260521PRJ0000001 的真实项目上下文。",
       "expectedAction": "archive-discussion"
     }
   ]

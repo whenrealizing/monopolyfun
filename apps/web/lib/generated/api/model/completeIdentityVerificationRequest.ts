@@ -5,8 +5,8 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {CompleteIdentityVerificationRequestInput} from './completeIdentityVerificationRequestInput';
+import type { CompleteIdentityVerificationRequestInput } from './completeIdentityVerificationRequestInput';
 
 export interface CompleteIdentityVerificationRequest {
-    input?: CompleteIdentityVerificationRequestInput;
+  input?: CompleteIdentityVerificationRequestInput;
 }

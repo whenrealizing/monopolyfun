@@ -23,11 +23,11 @@ class IdentityBadgeProjectorTest {
         IdentityBadgeProjector projector = new IdentityBadgeProjector(repository);
         AccountEntity account = account();
         List<IdentityFactEntity> facts = List.of(
-                identityFact("ifact-github", "github_oauth", "github", "oauth", "verified", null, null),
+                identityFact("ifact-reddit", "reddit_public_proof", "reddit", "public_proof", "verified", null, null),
                 identityFact("ifact-x", "x_public_proof", "x", "public_proof", "verified", null, null),
-                identityFact("ifact-expired", "github_oauth", "github", "oauth", "verified", Instant.now().minusSeconds(1), null),
-                identityFact("ifact-revoked", "github_oauth", "github", "oauth", "verified", null, Instant.now().minusSeconds(1)),
-                identityFact("ifact-pending", "github_oauth", "github", "oauth", "pending", null, null));
+                identityFact("ifact-expired", "reddit_public_proof", "reddit", "public_proof", "verified", Instant.now().minusSeconds(1), null),
+                identityFact("ifact-revoked", "reddit_public_proof", "reddit", "public_proof", "verified", null, Instant.now().minusSeconds(1)),
+                identityFact("ifact-pending", "reddit_public_proof", "reddit", "public_proof", "pending", null, null));
 
         projector.project(account, facts);
         List<String> firstIds = repository.findByAccountId(account.id()).stream().map(IdentityBadgeEntity::id).sorted().toList();
@@ -37,7 +37,7 @@ class IdentityBadgeProjectorTest {
         assertEquals(firstIds, secondIds);
         assertEquals(List.of(
                 "ibadge:acct-1:tenure:tenure_newcomer:native",
-                "ibadge:acct-1:verified:github_oauth_verified:ifact-github",
+                "ibadge:acct-1:verified:reddit_public_proof_verified:ifact-reddit",
                 "ibadge:acct-1:verified:x_public_proof_verified:ifact-x"), secondIds);
     }
 

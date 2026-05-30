@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type BackofficeDashboardViewRiskCounts = { [key: string]: number };
+export type BackofficeDashboardViewRiskCounts = {[key: string]: number};

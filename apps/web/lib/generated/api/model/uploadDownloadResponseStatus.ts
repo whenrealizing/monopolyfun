@@ -10,10 +10,10 @@ export type UploadDownloadResponseStatus = typeof UploadDownloadResponseStatus[k
 
 
 export const UploadDownloadResponseStatus = {
-    PENDING: 'PENDING',
-    UPLOADED: 'UPLOADED',
-    VERIFIED: 'VERIFIED',
-    QUARANTINED: 'QUARANTINED',
-    FAILED: 'FAILED',
-    CANCELLED: 'CANCELLED',
+  PENDING: 'PENDING',
+  UPLOADED: 'UPLOADED',
+  VERIFIED: 'VERIFIED',
+  QUARANTINED: 'QUARANTINED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
 } as const;

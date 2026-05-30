@@ -5,16 +5,16 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {PaymentProviderEventEntityPayload} from './paymentProviderEventEntityPayload';
+import type { PaymentProviderEventEntityPayload } from './paymentProviderEventEntityPayload';
 
 export interface PaymentProviderEventEntity {
-    id?: string;
-    provider?: string;
-    providerEventId?: string;
-    paymentIntentId?: string;
-    providerPaymentRef?: string;
-    txHash?: string;
-    status?: string;
-    payload?: PaymentProviderEventEntityPayload;
-    createdAt?: string;
+  id?: string;
+  provider?: string;
+  providerEventId?: string;
+  paymentIntentId?: string;
+  providerPaymentRef?: string;
+  txHash?: string;
+  status?: string;
+  payload?: PaymentProviderEventEntityPayload;
+  createdAt?: string;
 }

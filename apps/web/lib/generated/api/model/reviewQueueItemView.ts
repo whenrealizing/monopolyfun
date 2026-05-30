@@ -5,16 +5,16 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProofView} from './proofView';
-import type {ReviewQueueItemViewReviewRewardPreview} from './reviewQueueItemViewReviewRewardPreview';
+import type { ProofView } from './proofView';
+import type { ReviewQueueItemViewReviewRewardPreview } from './reviewQueueItemViewReviewRewardPreview';
 
 export interface ReviewQueueItemView {
-    proof?: ProofView;
-    launchTitle?: string;
-    launchStatus?: string;
-    taskTitle?: string;
-    taskStatus?: string;
-    submittedByAccountId?: string;
-    submittedAt?: string;
-    reviewRewardPreview?: ReviewQueueItemViewReviewRewardPreview;
+  proof?: ProofView;
+  launchTitle?: string;
+  launchStatus?: string;
+  taskTitle?: string;
+  taskStatus?: string;
+  submittedByAccountId?: string;
+  submittedAt?: string;
+  reviewRewardPreview?: ReviewQueueItemViewReviewRewardPreview;
 }

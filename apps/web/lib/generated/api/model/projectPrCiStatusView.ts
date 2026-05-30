@@ -5,10 +5,10 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectPrCiStatusViewChecksItem} from './projectPrCiStatusViewChecksItem';
-import type {ProjectPrCiStatusViewPullRequestsItem} from './projectPrCiStatusViewPullRequestsItem';
+import type { ProjectPrCiStatusViewChecksItem } from './projectPrCiStatusViewChecksItem';
+import type { ProjectPrCiStatusViewPullRequestsItem } from './projectPrCiStatusViewPullRequestsItem';
 
 export interface ProjectPrCiStatusView {
-    pullRequests?: ProjectPrCiStatusViewPullRequestsItem[];
-    checks?: ProjectPrCiStatusViewChecksItem[];
+  pullRequests?: ProjectPrCiStatusViewPullRequestsItem[];
+  checks?: ProjectPrCiStatusViewChecksItem[];
 }

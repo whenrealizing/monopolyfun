@@ -7,7 +7,7 @@
  */
 
 export interface UpdateIdentityDisplaySkinRequest {
-    /** @minLength 1 */
-    source: string;
-    certifierId?: string;
+  /** @minLength 1 */
+  source: string;
+  certifierId?: string;
 }

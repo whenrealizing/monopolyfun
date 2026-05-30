@@ -5,9 +5,9 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {PaymentIntentView} from './paymentIntentView';
+import type { PaymentIntentView } from './paymentIntentView';
 
 export interface PaymentIntentResponse {
-    paymentIntent?: PaymentIntentView;
-    checkoutUrl?: string;
+  paymentIntent?: PaymentIntentView;
+  checkoutUrl?: string;
 }

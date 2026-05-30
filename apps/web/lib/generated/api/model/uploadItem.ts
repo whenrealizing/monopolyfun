@@ -7,9 +7,9 @@
  */
 
 export interface UploadItem {
-    /**
+  /**
      * @minLength 0
      * @maxLength 5000
      */
-    payload: string;
+  payload: string;
 }

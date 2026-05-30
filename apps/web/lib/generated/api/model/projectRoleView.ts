@@ -5,13 +5,13 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectRoleViewRoleCode} from './projectRoleViewRoleCode';
+import type { ProjectRoleViewRoleCode } from './projectRoleViewRoleCode';
 
 export interface ProjectRoleView {
-    projectId?: string;
-    roleCode?: ProjectRoleViewRoleCode;
-    accountId?: string;
-    assignedByAccountId?: string;
-    assignedAt?: string;
-    updatedAt?: string;
+  projectId?: string;
+  roleCode?: ProjectRoleViewRoleCode;
+  accountId?: string;
+  assignedByAccountId?: string;
+  assignedAt?: string;
+  updatedAt?: string;
 }

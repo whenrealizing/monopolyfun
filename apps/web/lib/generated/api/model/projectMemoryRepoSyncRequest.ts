@@ -5,28 +5,28 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectMemoryRepoSyncRequestRawRoot} from './projectMemoryRepoSyncRequestRawRoot';
+import type { ProjectMemoryRepoSyncRequestRawRoot } from './projectMemoryRepoSyncRequestRawRoot';
 
 export interface ProjectMemoryRepoSyncRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    repoBindingId?: string;
-    /**
+  repoBindingId?: string;
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    commitSha?: string;
-    /**
+  commitSha?: string;
+  /**
      * @minLength 0
      * @maxLength 120
      */
-    rootHash?: string;
-    /**
+  rootHash?: string;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    latestPath?: string;
-    rawRoot?: ProjectMemoryRepoSyncRequestRawRoot;
+  latestPath?: string;
+  rawRoot?: ProjectMemoryRepoSyncRequestRawRoot;
 }

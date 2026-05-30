@@ -10,10 +10,10 @@ export type ProofAssetViewStatus = typeof ProofAssetViewStatus[keyof typeof Proo
 
 
 export const ProofAssetViewStatus = {
-    PENDING: 'PENDING',
-    UPLOADED: 'UPLOADED',
-    VERIFIED: 'VERIFIED',
-    QUARANTINED: 'QUARANTINED',
-    FAILED: 'FAILED',
-    CANCELLED: 'CANCELLED',
+  PENDING: 'PENDING',
+  UPLOADED: 'UPLOADED',
+  VERIFIED: 'VERIFIED',
+  QUARANTINED: 'QUARANTINED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
 } as const;

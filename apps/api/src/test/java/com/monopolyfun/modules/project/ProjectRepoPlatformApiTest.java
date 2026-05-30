@@ -38,7 +38,7 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
 
     @BeforeEach
     void resetSchema() {
-        jdbcTemplate.execute("truncate table external_event_dedup, project_external_refs, repo_jobs, work_trust_events, work_reviews, work_receipts, work_runs, work_items, business_id_sequences, share_release_requests, project_roles, organization_events, order_progress_updates, proof_assets, offers, requests, projects, order_events, shares_ledger, proofs, orders, listings, markets, accounts cascade");
+        jdbcTemplate.execute("truncate table project_external_refs, repo_jobs, work_trust_events, work_reviews, work_receipts, work_runs, work_items, business_id_sequences, share_release_requests, project_roles, organization_events, order_progress_updates, proof_assets, offers, requests, projects, order_events, shares_ledger, proofs, orders, listings, markets, accounts cascade");
         jdbcTemplate.update("""
                 insert into accounts (id, handle, display_name, metadata)
                 values
@@ -51,9 +51,9 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
     @Test
     void publishProjectWithoutReferenceLinksAutoProvisionsPlatformRepo() throws Exception {
         when(repoProviderClient.provisionPublicRepository(any())).thenReturn(new RepoProviderClient.ProvisionedRepository(
-                "github",
-                "https://github.com/monopolyfun-projects/mf-20260507-auto-research",
-                "https://github.com/monopolyfun-projects/mf-20260507-auto-research.git",
+                "forgejo",
+                "http://localhost:3001/monopolyfun-projects/mf-20260507-auto-research",
+                "http://localhost:3001/monopolyfun-projects/mf-20260507-auto-research.git",
                 "monopolyfun-projects",
                 "mf-20260507-auto-research",
                 "main",
@@ -79,8 +79,8 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
                                 """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.project.projectNo").isNotEmpty())
-                .andExpect(jsonPath("$.project.referenceLinks[0]").value("https://github.com/monopolyfun-projects/mf-20260507-auto-research"))
-                .andExpect(jsonPath("$.project.repoProvider").value("github"))
+                .andExpect(jsonPath("$.project.referenceLinks[0]").value("http://localhost:3001/monopolyfun-projects/mf-20260507-auto-research"))
+                .andExpect(jsonPath("$.project.repoProvider").value("forgejo"))
                 .andExpect(jsonPath("$.project.repoOwner").value("monopolyfun-projects"))
                 .andExpect(jsonPath("$.project.repoName").value("mf-20260507-auto-research"))
                 .andExpect(jsonPath("$.project.maintenanceMode").value("repo_first"));
@@ -89,9 +89,9 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
     @Test
     void publishProjectUsesPlatformManagedRepoWithoutUserTemplateInput() throws Exception {
         when(repoProviderClient.provisionPublicRepository(any())).thenReturn(new RepoProviderClient.ProvisionedRepository(
-                "github",
-                "https://github.com/monopolyfun-projects/mf-20260510-template-project",
-                "https://github.com/monopolyfun-projects/mf-20260510-template-project.git",
+                "forgejo",
+                "http://localhost:3001/monopolyfun-projects/mf-20260510-template-project",
+                "http://localhost:3001/monopolyfun-projects/mf-20260510-template-project.git",
                 "monopolyfun-projects",
                 "mf-20260510-template-project",
                 "main",
@@ -116,15 +116,15 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
                                 }
                                 """))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.project.referenceLinks[0]").value("https://github.com/monopolyfun-projects/mf-20260510-template-project"));
+                .andExpect(jsonPath("$.project.referenceLinks[0]").value("http://localhost:3001/monopolyfun-projects/mf-20260510-template-project"));
     }
 
     @Test
     void projectRepoDeliverySessionCanReportPullRequestAndFinalizeProof() throws Exception {
         when(repoProviderClient.provisionPublicRepository(any())).thenReturn(new RepoProviderClient.ProvisionedRepository(
-                "github",
-                "https://github.com/monopolyfun-projects/mf-20260507-code-task",
-                "https://github.com/monopolyfun-projects/mf-20260507-code-task.git",
+                "forgejo",
+                "http://localhost:3001/monopolyfun-projects/mf-20260507-code-task",
+                "http://localhost:3001/monopolyfun-projects/mf-20260507-code-task.git",
                 "monopolyfun-projects",
                 "mf-20260507-code-task",
                 "main",
@@ -138,7 +138,7 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
         when(repoProviderClient.inspectPullRequest(any())).thenAnswer(invocation -> {
             RepoProviderClient.InspectPullRequestCommand command = invocation.getArgument(0);
             return new RepoProviderClient.PullRequestInspection(
-                    "https://github.com/monopolyfun-projects/mf-20260507-code-task",
+                    "http://localhost:3001/monopolyfun-projects/mf-20260507-code-task",
                     command.prUrl(),
                     command.expectedHeadCommit(),
                     "main",
@@ -216,13 +216,13 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                  "prUrl": "https://github.com/monopolyfun-projects/mf-20260507-code-task/pull/3",
+                                  "prUrl": "http://localhost:3001/monopolyfun-projects/mf-20260507-code-task/pulls/3",
                                   "headCommit": "abc123def456",
                                   "diffSummary": "新增 repo delivery session 和 PR proof 绑定"
                                 }
                                 """))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.prUrl").value("https://github.com/monopolyfun-projects/mf-20260507-code-task/pull/3"))
+                .andExpect(jsonPath("$.prUrl").value("http://localhost:3001/monopolyfun-projects/mf-20260507-code-task/pulls/3"))
                 .andExpect(jsonPath("$.headCommit").value("abc123def456"))
                 .andExpect(jsonPath("$.ciStatus").value("not_required"))
                 .andExpect(jsonPath("$.status").value("pr_reported"));
@@ -255,15 +255,15 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
                         """,
                 Integer.class,
                 "wb-delivery-result-" + orderNo,
-                "https://github.com/monopolyfun-projects/mf-20260507-code-task/pull/3")).isEqualTo(1);
+                "http://localhost:3001/monopolyfun-projects/mf-20260507-code-task/pulls/3")).isEqualTo(1);
     }
 
     @Test
     void repoDeliveryEnforcesWorkerAccessAndOwnerRevisionLoop() throws Exception {
         when(repoProviderClient.provisionPublicRepository(any())).thenReturn(new RepoProviderClient.ProvisionedRepository(
-                "github",
-                "https://github.com/monopolyfun-projects/mf-20260510-review-loop",
-                "https://github.com/monopolyfun-projects/mf-20260510-review-loop.git",
+                "forgejo",
+                "http://localhost:3001/monopolyfun-projects/mf-20260510-review-loop",
+                "http://localhost:3001/monopolyfun-projects/mf-20260510-review-loop.git",
                 "monopolyfun-projects",
                 "mf-20260510-review-loop",
                 "main",
@@ -277,7 +277,7 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
         when(repoProviderClient.inspectPullRequest(any())).thenAnswer(invocation -> {
             RepoProviderClient.InspectPullRequestCommand command = invocation.getArgument(0);
             return new RepoProviderClient.PullRequestInspection(
-                    "https://github.com/monopolyfun-projects/mf-20260510-review-loop",
+                    "http://localhost:3001/monopolyfun-projects/mf-20260510-review-loop",
                     command.prUrl(),
                     command.expectedHeadCommit(),
                     "main",
@@ -362,7 +362,7 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                  "prUrl": "https://github.com/monopolyfun-projects/mf-20260510-review-loop/pull/7",
+                                  "prUrl": "http://localhost:3001/monopolyfun-projects/mf-20260510-review-loop/pulls/7",
                                   "headCommit": "abc123def456"
                                 }
                                 """))
@@ -373,7 +373,7 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                  "prUrl": "https://github.com/monopolyfun-projects/mf-20260510-review-loop/pull/7",
+                                  "prUrl": "http://localhost:3001/monopolyfun-projects/mf-20260510-review-loop/pulls/7",
                                   "headCommit": "abc123def456",
                                   "diffSummary": "首轮实现 PR"
                                 }
@@ -433,13 +433,13 @@ class ProjectRepoPlatformApiTest extends AbstractPostgresIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                  "prUrl": "https://github.com/monopolyfun-projects/mf-20260510-review-loop/pull/7",
+                                  "prUrl": "http://localhost:3001/monopolyfun-projects/mf-20260510-review-loop/pulls/7",
                                   "headCommit": "def456abc789",
                                   "diffSummary": "补充测试后的 PR"
                                 }
                                 """))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.prUrl").value("https://github.com/monopolyfun-projects/mf-20260510-review-loop/pull/7"));
+                .andExpect(jsonPath("$.prUrl").value("http://localhost:3001/monopolyfun-projects/mf-20260510-review-loop/pulls/7"));
 
         insertProofAsset(orderNo, "asset-proof-review-002");
         mockMvc.perform(post("/api/v1/work/repo-delivery-sessions/" + sessionId + "/finalize-proof")

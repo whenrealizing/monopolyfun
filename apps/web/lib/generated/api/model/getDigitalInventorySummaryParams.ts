@@ -7,5 +7,5 @@
  */
 
 export type GetDigitalInventorySummaryParams = {
-    actorAccountId: string;
+actorAccountId: string;
 };

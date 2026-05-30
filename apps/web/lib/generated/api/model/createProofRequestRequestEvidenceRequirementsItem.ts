@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type CreateProofRequestRequestEvidenceRequirementsItem = { [key: string]: unknown };
+export type CreateProofRequestRequestEvidenceRequirementsItem = {[key: string]: unknown};

@@ -7,8 +7,8 @@
  */
 
 export interface ClaimProjectOwnerRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    reason?: string;
-    plan?: string;
+  /** @minLength 1 */
+  actorAccountId: string;
+  reason?: string;
+  plan?: string;
 }

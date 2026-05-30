@@ -7,16 +7,16 @@
  */
 
 export interface ProjectSharesView {
-    marketId?: string;
-    shareTotal?: number;
-    shareMinted?: number;
-    shareReserved?: number;
-    shareRemaining?: number;
-    taskBudget?: number;
-    taskMinted?: number;
-    taskReserved?: number;
-    taskRemaining?: number;
-    reserveBudget?: number;
-    nextCurveSlot?: number;
-    currentBaseReward?: number;
+  marketId?: string;
+  shareTotal?: number;
+  shareMinted?: number;
+  shareReserved?: number;
+  shareRemaining?: number;
+  taskBudget?: number;
+  taskMinted?: number;
+  taskReserved?: number;
+  taskRemaining?: number;
+  reserveBudget?: number;
+  nextCurveSlot?: number;
+  currentBaseReward?: number;
 }

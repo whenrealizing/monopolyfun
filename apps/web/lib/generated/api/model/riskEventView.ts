@@ -5,16 +5,16 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {RiskEventViewPayload} from './riskEventViewPayload';
+import type { RiskEventViewPayload } from './riskEventViewPayload';
 
 export interface RiskEventView {
-    id?: string;
-    kind?: string;
-    subjectType?: string;
-    subjectId?: string;
-    actorRef?: string;
-    severity?: string;
-    reason?: string;
-    payload?: RiskEventViewPayload;
-    createdAt?: string;
+  id?: string;
+  kind?: string;
+  subjectType?: string;
+  subjectId?: string;
+  actorRef?: string;
+  severity?: string;
+  reason?: string;
+  payload?: RiskEventViewPayload;
+  createdAt?: string;
 }

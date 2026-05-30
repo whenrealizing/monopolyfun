@@ -9,6 +9,6 @@
     "SKILL.md stays below 120 lines",
     "OpenClaw loads one action runbook per user turn",
     "Workbench output contains at most 3 current project items",
-    "Proof URLs use github.com or raw.githubusercontent.com for project smoke"
+    "Proof URLs use local Forgejo or preview URLs for project smoke"
   ]
 }

@@ -5,14 +5,14 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {UploadItem} from './uploadItem';
+import type { UploadItem } from './uploadItem';
 
 export interface UploadDigitalInventoryRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    /**
+  /** @minLength 1 */
+  actorAccountId: string;
+  /**
      * @minItems 0
      * @maxItems 500
      */
-    items: UploadItem[];
+  items: UploadItem[];
 }

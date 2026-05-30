@@ -5,29 +5,27 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {CreateProofRequestRequestAcceptanceSignalsItem} from './createProofRequestRequestAcceptanceSignalsItem';
-import type {
-    CreateProofRequestRequestEvidenceRequirementsItem
-} from './createProofRequestRequestEvidenceRequirementsItem';
-import type {CreateProofRequestRequestMetadata} from './createProofRequestRequestMetadata';
+import type { CreateProofRequestRequestAcceptanceSignalsItem } from './createProofRequestRequestAcceptanceSignalsItem';
+import type { CreateProofRequestRequestEvidenceRequirementsItem } from './createProofRequestRequestEvidenceRequirementsItem';
+import type { CreateProofRequestRequestMetadata } from './createProofRequestRequestMetadata';
 
 export interface CreateProofRequestRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 160
      */
-    title: string;
-    /**
+  title: string;
+  /**
      * @minLength 0
      * @maxLength 1000
      */
-    intent: string;
-    evidenceRequirements?: CreateProofRequestRequestEvidenceRequirementsItem[];
-    acceptanceSignals?: CreateProofRequestRequestAcceptanceSignalsItem[];
-    /**
+  intent: string;
+  evidenceRequirements?: CreateProofRequestRequestEvidenceRequirementsItem[];
+  acceptanceSignals?: CreateProofRequestRequestAcceptanceSignalsItem[];
+  /**
      * @minLength 0
      * @maxLength 40
      */
-    riskLevel?: string;
-    metadata?: CreateProofRequestRequestMetadata;
+  riskLevel?: string;
+  metadata?: CreateProofRequestRequestMetadata;
 }

@@ -7,10 +7,10 @@
  */
 
 export type GetMarketFeedParams = {
-    kind?: string;
-    status?: string;
-    q?: string;
-    sort?: string;
-    limit?: number;
-    cursor?: string;
+kind?: string;
+status?: string;
+q?: string;
+sort?: string;
+limit?: number;
+cursor?: string;
 };

@@ -5,27 +5,27 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {CreateLaunchRequestMetadata} from './createLaunchRequestMetadata';
-import type {CreateLaunchRequestSourceRefsItem} from './createLaunchRequestSourceRefsItem';
-import type {ProofRequestDraft} from './proofRequestDraft';
+import type { CreateLaunchRequestMetadata } from './createLaunchRequestMetadata';
+import type { CreateLaunchRequestSourceRefsItem } from './createLaunchRequestSourceRefsItem';
+import type { ProofRequestDraft } from './proofRequestDraft';
 
 export interface CreateLaunchRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 160
      */
-    title: string;
-    /**
+  title: string;
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    hypothesis: string;
-    proofRequests?: ProofRequestDraft[];
-    /**
+  hypothesis: string;
+  proofRequests?: ProofRequestDraft[];
+  /**
      * @minLength 0
      * @maxLength 80
      */
-    parentLaunchId?: string;
-    sourceRefs?: CreateLaunchRequestSourceRefsItem[];
-    metadata?: CreateLaunchRequestMetadata;
+  parentLaunchId?: string;
+  sourceRefs?: CreateLaunchRequestSourceRefsItem[];
+  metadata?: CreateLaunchRequestMetadata;
 }

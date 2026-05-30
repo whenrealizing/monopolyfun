@@ -7,5 +7,5 @@
  */
 
 export type RefundIntentParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

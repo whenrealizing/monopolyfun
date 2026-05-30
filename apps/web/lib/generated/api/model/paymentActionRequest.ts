@@ -7,16 +7,16 @@
  */
 
 export interface PaymentActionRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    /**
+  /** @minLength 1 */
+  actorAccountId: string;
+  /**
      * @minLength 0
      * @maxLength 500
      */
-    reason?: string;
-    /**
+  reason?: string;
+  /**
      * @minLength 0
      * @maxLength 128
      */
-    refundTxHash?: string;
+  refundTxHash?: string;
 }

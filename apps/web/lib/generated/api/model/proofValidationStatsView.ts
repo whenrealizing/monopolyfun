@@ -7,13 +7,13 @@
  */
 
 export interface ProofValidationStatsView {
-    participantCount?: number;
-    minParticipantCount?: number;
-    ordinaryValidationCount?: number;
-    stakedValidationCount?: number;
-    stakedShares?: number;
-    effectiveValidationCount?: number;
-    minEffectiveValidationCount?: number;
-    sharesPerEffectiveValidator?: number;
-    finalized?: boolean;
+  participantCount?: number;
+  minParticipantCount?: number;
+  ordinaryValidationCount?: number;
+  stakedValidationCount?: number;
+  stakedShares?: number;
+  effectiveValidationCount?: number;
+  minEffectiveValidationCount?: number;
+  sharesPerEffectiveValidator?: number;
+  finalized?: boolean;
 }

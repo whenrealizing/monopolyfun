@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type CreateLaunchRequestMetadata = { [key: string]: unknown };
+export type CreateLaunchRequestMetadata = {[key: string]: unknown};

@@ -5,11 +5,11 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {DigitalInventorySummaryView} from './digitalInventorySummaryView';
+import type { DigitalInventorySummaryView } from './digitalInventorySummaryView';
 
 export interface DigitalInventoryUploadResponse {
-    itemId?: string;
-    uploaded?: number;
-    inventoryItemIds?: string[];
-    summary?: DigitalInventorySummaryView;
+  itemId?: string;
+  uploaded?: number;
+  inventoryItemIds?: string[];
+  summary?: DigitalInventorySummaryView;
 }

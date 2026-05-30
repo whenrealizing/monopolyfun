@@ -5,12 +5,12 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {BackofficeOverrideReviewRequestDecision} from './backofficeOverrideReviewRequestDecision';
+import type { BackofficeOverrideReviewRequestDecision } from './backofficeOverrideReviewRequestDecision';
 
 export interface BackofficeOverrideReviewRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    decision: BackofficeOverrideReviewRequestDecision;
-    /** @minLength 1 */
-    reason: string;
+  /** @minLength 1 */
+  actorAccountId: string;
+  decision: BackofficeOverrideReviewRequestDecision;
+  /** @minLength 1 */
+  reason: string;
 }

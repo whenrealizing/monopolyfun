@@ -5,18 +5,18 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {IdentityCertifierViewCompleteInputSchema} from './identityCertifierViewCompleteInputSchema';
-import type {IdentityCertifierViewStartInputSchema} from './identityCertifierViewStartInputSchema';
+import type { IdentityCertifierViewCompleteInputSchema } from './identityCertifierViewCompleteInputSchema';
+import type { IdentityCertifierViewStartInputSchema } from './identityCertifierViewStartInputSchema';
 
 export interface IdentityCertifierView {
-    id?: string;
-    name?: string;
-    provider?: string;
-    verificationMethod?: string;
-    description?: string;
-    trustLevel?: string;
-    badgeCode?: string;
-    expiresInDays?: number;
-    startInputSchema?: IdentityCertifierViewStartInputSchema;
-    completeInputSchema?: IdentityCertifierViewCompleteInputSchema;
+  id?: string;
+  name?: string;
+  provider?: string;
+  verificationMethod?: string;
+  description?: string;
+  trustLevel?: string;
+  badgeCode?: string;
+  expiresInDays?: number;
+  startInputSchema?: IdentityCertifierViewStartInputSchema;
+  completeInputSchema?: IdentityCertifierViewCompleteInputSchema;
 }

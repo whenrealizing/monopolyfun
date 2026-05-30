@@ -5,14 +5,14 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProjectMemoryEntryView} from './projectMemoryEntryView';
-import type {ProjectMemoryRootView} from './projectMemoryRootView';
-import type {ProjectMemorySourceView} from './projectMemorySourceView';
-import type {ProjectMemorySyncEventView} from './projectMemorySyncEventView';
+import type { ProjectMemoryEntryView } from './projectMemoryEntryView';
+import type { ProjectMemoryRootView } from './projectMemoryRootView';
+import type { ProjectMemorySourceView } from './projectMemorySourceView';
+import type { ProjectMemorySyncEventView } from './projectMemorySyncEventView';
 
 export interface ProjectMemoryOverviewView {
-    latestRoot?: ProjectMemoryRootView;
-    sources?: ProjectMemorySourceView[];
-    entries?: ProjectMemoryEntryView[];
-    events?: ProjectMemorySyncEventView[];
+  latestRoot?: ProjectMemoryRootView;
+  sources?: ProjectMemorySourceView[];
+  entries?: ProjectMemoryEntryView[];
+  events?: ProjectMemorySyncEventView[];
 }

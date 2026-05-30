@@ -13,7 +13,6 @@ import {
   ChevronDown,
   CircleDashed,
   Fingerprint,
-  Github,
   Info,
   KeyRound,
   ListChecks,
@@ -483,9 +482,7 @@ function IdentityProfileStrip({
         avatarClassName={cn(
           displaySkin.themeKey === "x"
             ? "border-[rgba(255,255,255,0.3)] bg-black"
-            : displaySkin.themeKey === "github"
-              ? "border-[rgba(255,255,255,0.22)] bg-[#24292f]"
-              : "border-[rgba(72,108,230,0.48)]",
+            : "border-[rgba(72,108,230,0.48)]",
         )}
         badges={(
           <>
@@ -736,15 +733,11 @@ function SkinOptionIcon({ themeKey, provider, avatarUrl }: { themeKey?: string |
       "flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[var(--border)] text-[var(--foreground)]",
       themeKey === "x" || provider === "x" || provider === "twitter"
         ? "bg-black"
-        : themeKey === "github" || provider === "github"
-          ? "bg-[#24292f]"
-          : "bg-[var(--surface-2)]",
+        : "bg-[var(--surface-2)]",
     )}>
       {avatarUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={avatarUrl} alt="" className="h-full w-full object-cover" />
-      ) : themeKey === "github" || provider === "github" ? (
-        <Github className="h-4 w-4" />
       ) : themeKey === "youtube" || provider === "youtube" ? (
         <Youtube className="h-4 w-4" />
       ) : (
@@ -1258,7 +1251,7 @@ function ProfilePane({
             identity.profile.linkedAccounts.map((account) => (
               <ListRow
                 key={`${account.certifierId}:${account.platformUserId}`}
-                icon={account.provider === "github" ? Github : LinkIcon}
+                icon={LinkIcon}
                 title={account.displayName || account.platformUserId}
                 meta={`${account.handle ? `@${account.handle}` : account.platformUserId} · ${providerLabel(account.provider)} · ${formatDate(account.verifiedAt)}`}
                 trailing={<Badge variant="success">已认证</Badge>}
@@ -1301,9 +1294,9 @@ function DisplaySkinChooser({
               >
                 <span className={cn(
                   "flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[var(--border)] text-[var(--foreground)]",
-                  certifier.provider === "github" ? "bg-[#24292f]" : certifier.provider === "x" || certifier.provider === "twitter" ? "bg-black" : "bg-[var(--surface-2)]",
+                  certifier.provider === "x" || certifier.provider === "twitter" ? "bg-black" : "bg-[var(--surface-2)]",
                 )}>
-                  {certifier.provider === "github" ? <Github className="h-4 w-4" /> : <Fingerprint className="h-4 w-4" />}
+                  <Fingerprint className="h-4 w-4" />
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-black text-[var(--foreground)]">{certifier.name}</span>
@@ -1342,13 +1335,11 @@ function DisplaySkinChooser({
             >
               <span className={cn(
                 "flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[var(--border)] text-[var(--foreground)]",
-                skin.themeKey === "x" ? "bg-black" : skin.themeKey === "github" ? "bg-[#24292f]" : "bg-[var(--surface-2)]",
+                skin.themeKey === "x" ? "bg-black" : "bg-[var(--surface-2)]",
               )}>
                 {skin.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={skin.avatarUrl} alt="" className="h-full w-full object-cover" />
-                ) : skin.themeKey === "github" ? (
-                  <Github className="h-4 w-4" />
                 ) : (
                   <Fingerprint className="h-4 w-4" />
                 )}
@@ -1670,7 +1661,7 @@ function buildBadgeTiles(
       label: `${certifier.name} 认证`,
       description: linked ? "认证已完成。" : pending ? "认证流程处理中。" : "点击进入认证页点亮这个 Badge。",
       status: linked ? "earned" as const : pending ? "pending" as const : "available" as const,
-      icon: certifier.provider === "github" ? <Github className="h-4 w-4" /> : <ShieldCheck className="h-4 w-4" />,
+      icon: <ShieldCheck className="h-4 w-4" />,
       href: linked ? undefined : identityHref("badges", "verification", { certifier: certifier.id }),
     };
   });
@@ -1690,8 +1681,6 @@ function dedupeBadges(badges: IdentityBadge[]) {
 
 function badgeIcon(icon: IdentityBadge["icon"]) {
   switch (icon) {
-    case "github":
-      return <Github className="h-4 w-4" />;
     case "flame":
       return <Award className="h-4 w-4" />;
     case "clock":
@@ -1928,7 +1917,6 @@ function normalizeOrderStatusFilter(value: string | null): OrderStatusFilter {
 }
 
 function providerLabel(provider: string) {
-  if (provider === "github") return "GitHub";
   if (provider === "x") return "X";
   if (provider === "twitter") return "X";
   if (provider === "reddit") return "Reddit";
@@ -1939,7 +1927,6 @@ function providerLabel(provider: string) {
 }
 
 function providerIcon(provider: string) {
-  if (provider === "github") return <Github className="h-4 w-4" />;
   if (provider === "youtube") return <Youtube className="h-4 w-4" />;
   return <ShieldCheck className="h-4 w-4" />;
 }

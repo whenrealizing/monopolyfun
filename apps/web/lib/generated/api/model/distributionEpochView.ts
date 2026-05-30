@@ -7,10 +7,10 @@
  */
 
 export interface DistributionEpochView {
-    epochId?: string;
-    status?: string;
-    currency?: string;
-    totalRevenueMinor?: number;
-    eligibleShareMinted?: number;
-    acceptedTaskCount?: number;
+  epochId?: string;
+  status?: string;
+  currency?: string;
+  totalRevenueMinor?: number;
+  eligibleShareMinted?: number;
+  acceptedTaskCount?: number;
 }

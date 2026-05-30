@@ -5,9 +5,9 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {IdentityVerificationChallengeView} from './identityVerificationChallengeView';
+import type { IdentityVerificationChallengeView } from './identityVerificationChallengeView';
 
 export interface IdentityVerificationStartResponse {
-    challenge?: IdentityVerificationChallengeView;
-    actionUrl?: string;
+  challenge?: IdentityVerificationChallengeView;
+  actionUrl?: string;
 }

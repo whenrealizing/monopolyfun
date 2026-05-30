@@ -7,5 +7,5 @@
  */
 
 export type DefaultIntentParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

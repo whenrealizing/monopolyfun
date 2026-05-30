@@ -5,19 +5,19 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {SettleLaunchRequestCurveSnapshot} from './settleLaunchRequestCurveSnapshot';
-import type {SettleLaunchRequestMetadata} from './settleLaunchRequestMetadata';
-import type {SettleLaunchRequestRewardSnapshot} from './settleLaunchRequestRewardSnapshot';
-import type {SettleLaunchRequestScoreSnapshot} from './settleLaunchRequestScoreSnapshot';
+import type { SettleLaunchRequestCurveSnapshot } from './settleLaunchRequestCurveSnapshot';
+import type { SettleLaunchRequestMetadata } from './settleLaunchRequestMetadata';
+import type { SettleLaunchRequestRewardSnapshot } from './settleLaunchRequestRewardSnapshot';
+import type { SettleLaunchRequestScoreSnapshot } from './settleLaunchRequestScoreSnapshot';
 
 export interface SettleLaunchRequest {
-    /**
+  /**
      * @minLength 0
      * @maxLength 2000
      */
-    reason?: string;
-    scoreSnapshot?: SettleLaunchRequestScoreSnapshot;
-    curveSnapshot?: SettleLaunchRequestCurveSnapshot;
-    rewardSnapshot?: SettleLaunchRequestRewardSnapshot;
-    metadata?: SettleLaunchRequestMetadata;
+  reason?: string;
+  scoreSnapshot?: SettleLaunchRequestScoreSnapshot;
+  curveSnapshot?: SettleLaunchRequestCurveSnapshot;
+  rewardSnapshot?: SettleLaunchRequestRewardSnapshot;
+  metadata?: SettleLaunchRequestMetadata;
 }

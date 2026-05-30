@@ -7,15 +7,15 @@
  */
 
 export interface RegisterAccountRequest {
-    /**
+  /**
      * @minLength 3
      * @maxLength 20
      * @pattern ^[a-zA-Z0-9_-]+$
      */
-    handle: string;
-    /**
+  handle: string;
+  /**
      * @minLength 8
      * @maxLength 120
      */
-    password: string;
+  password: string;
 }

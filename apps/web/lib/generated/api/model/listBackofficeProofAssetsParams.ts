@@ -7,5 +7,5 @@
  */
 
 export type ListBackofficeProofAssetsParams = {
-    limit?: number;
+limit?: number;
 };

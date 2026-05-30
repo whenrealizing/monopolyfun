@@ -7,5 +7,5 @@
  */
 
 export type PublishRequestParams = {
-    includeAgent?: boolean;
+includeAgent?: boolean;
 };

@@ -6,4 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type RewardViewMetadata = { [key: string]: unknown };
+export type RewardViewMetadata = {[key: string]: unknown};

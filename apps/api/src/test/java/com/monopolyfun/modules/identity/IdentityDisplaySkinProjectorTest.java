@@ -34,11 +34,11 @@ class IdentityDisplaySkinProjectorTest {
 
     @Test
     void selectsVerifiedCertifierWhenPreferenceMatches() {
-        Map<String, Object> metadata = projector.writePreference(Map.of(), new IdentityDisplaySkinPreference("verified_identity", "github_oauth"));
-        var projection = projector.project(account(metadata), List.of(githubFact("verified", null, null)));
+        Map<String, Object> metadata = projector.writePreference(Map.of(), new IdentityDisplaySkinPreference("verified_identity", "x_public_proof"));
+        var projection = projector.project(account(metadata), List.of(xFact("verified", null, null)));
 
         assertEquals("verified_identity", projection.selected().source());
-        assertEquals("github_oauth", projection.selected().certifierId());
+        assertEquals("x_public_proof", projection.selected().certifierId());
         assertEquals("Octo Founder", projection.selected().displayName());
         assertEquals("octo", projection.selected().displayHandle());
         assertTrue(projection.selected().verified());
@@ -50,18 +50,18 @@ class IdentityDisplaySkinProjectorTest {
     void keepsUnverifiedFactsAsVerificationPromptOptions() {
         Instant now = Instant.now();
         var projection = projector.project(
-                account(projector.writePreference(Map.of(), new IdentityDisplaySkinPreference("verified_identity", "github_oauth"))),
+                account(projector.writePreference(Map.of(), new IdentityDisplaySkinPreference("verified_identity", "x_public_proof"))),
                 List.of(
-                        githubFact("pending", null, null),
-                        githubFact("verified", now.minusSeconds(1), null),
-                        githubFact("verified", null, now.minusSeconds(1))));
+                        xFact("pending", null, null),
+                        xFact("verified", now.minusSeconds(1), null),
+                        xFact("verified", null, now.minusSeconds(1))));
 
         assertEquals("native", projection.selected().source());
         assertTrue(projection.candidates().stream().anyMatch(candidate ->
                 "external_identity".equals(candidate.source())
-                        && "github_oauth".equals(candidate.certifierId())
+                        && "x_public_proof".equals(candidate.certifierId())
                         && !candidate.verified()));
-        assertFalse(projector.hasSelectableCertifier(account(Map.of()), List.of(githubFact("pending", null, null)), "github_oauth"));
+        assertFalse(projector.hasSelectableCertifier(account(Map.of()), List.of(xFact("pending", null, null)), "x_public_proof"));
     }
 
     private AccountEntity account(Map<String, Object> metadata) {
@@ -69,23 +69,23 @@ class IdentityDisplaySkinProjectorTest {
         return new AccountEntity("acct-1", "founder", "Founder", "hash", RiskAccountStatus.ACTIVE, RiskLevel.NORMAL, null, null, null, metadata, now, now);
     }
 
-    private IdentityFactEntity githubFact(String status, Instant expiresAt, Instant revokedAt) {
+    private IdentityFactEntity xFact(String status, Instant expiresAt, Instant revokedAt) {
         Instant now = Instant.now();
         return new IdentityFactEntity(
                 "ifact-1",
                 "acct-1",
                 "challenge-1",
-                "github_oauth",
-                "github",
+                "x_public_proof",
+                "x",
                 "external_identity",
-                "oauth",
+                "public_proof",
                 status,
                 "octo",
                 Map.of(
                         "handle", "octo",
                         "displayName", "Octo Founder",
                         "avatarUrl", "https://avatars.example/octo.png",
-                        "profileUrl", "https://github.com/octo"),
+                        "profileUrl", "https://x.com/octo"),
                 now,
                 expiresAt,
                 revokedAt,

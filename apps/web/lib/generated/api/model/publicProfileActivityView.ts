@@ -5,12 +5,12 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {OfferView} from './offerView';
-import type {ProjectView} from './projectView';
-import type {RequestView} from './requestView';
+import type { OfferView } from './offerView';
+import type { ProjectView } from './projectView';
+import type { RequestView } from './requestView';
 
 export interface PublicProfileActivityView {
-    offers?: OfferView[];
-    requests?: RequestView[];
-    projects?: ProjectView[];
+  offers?: OfferView[];
+  requests?: RequestView[];
+  projects?: ProjectView[];
 }

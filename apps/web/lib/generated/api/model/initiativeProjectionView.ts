@@ -5,16 +5,16 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {AgentActionProposalEntity} from './agentActionProposalEntity';
-import type {AgentActionRunEntity} from './agentActionRunEntity';
-import type {AgentMandateEntity} from './agentMandateEntity';
-import type {AgentOpportunityEntity} from './agentOpportunityEntity';
-import type {ProjectInitiativeRecommendationEntity} from './projectInitiativeRecommendationEntity';
+import type { AgentActionProposalEntity } from './agentActionProposalEntity';
+import type { AgentActionRunEntity } from './agentActionRunEntity';
+import type { AgentMandateEntity } from './agentMandateEntity';
+import type { AgentOpportunityEntity } from './agentOpportunityEntity';
+import type { ProjectInitiativeRecommendationEntity } from './projectInitiativeRecommendationEntity';
 
 export interface InitiativeProjectionView {
-    mandates?: AgentMandateEntity[];
-    opportunities?: AgentOpportunityEntity[];
-    actionRuns?: AgentActionRunEntity[];
-    proposals?: AgentActionProposalEntity[];
-    projectRecommendations?: ProjectInitiativeRecommendationEntity[];
+  mandates?: AgentMandateEntity[];
+  opportunities?: AgentOpportunityEntity[];
+  actionRuns?: AgentActionRunEntity[];
+  proposals?: AgentActionProposalEntity[];
+  projectRecommendations?: ProjectInitiativeRecommendationEntity[];
 }

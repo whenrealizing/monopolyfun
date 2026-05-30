@@ -1188,8 +1188,8 @@ public class OrderCommandService {
         }
 
         Map<String, Object> security = securityEvidence(proofPayload);
-        String repoUrl = firstNonBlank(securityText(security, "repoUrl", "repositoryUrl"), githubRepoLink(links));
-        String prUrl = firstNonBlank(securityText(security, "prUrl", "pullRequestUrl"), githubPrLink(links));
+        String repoUrl = firstNonBlank(securityText(security, "repoUrl", "repositoryUrl"), gitRepoLink(links));
+        String prUrl = firstNonBlank(securityText(security, "prUrl", "pullRequestUrl"), gitPrLink(links));
         String commitSha = securityText(security, "commitSha", "headSha", "commit");
         String ciStatus = securityText(security, "ciStatus", "ciResult", "ciConclusion");
         String securityPolicyResult = securityText(security, "securityPolicyResult", "prSecurityPolicyResult", "securityPolicyStatus");
@@ -1218,7 +1218,7 @@ public class OrderCommandService {
         if (proofPayload.containsKey("prSecurity") || proofPayload.containsKey("securityPolicyResult")) {
             return true;
         }
-        return links != null && links.stream().anyMatch(this::isGithubCodeLink);
+        return links != null && links.stream().anyMatch(this::isGitCodeLink);
     }
 
     private Map<String, Object> securityEvidence(Map<String, Object> proofPayload) {
@@ -1338,31 +1338,47 @@ public class OrderCommandService {
         return value instanceof String text && !text.isBlank() ? text.trim() : null;
     }
 
-    private boolean isGithubCodeLink(ProofLink link) {
+    private boolean isGitCodeLink(ProofLink link) {
         String href = link == null ? null : link.href();
         if (href == null) {
             return false;
         }
         String normalized = href.toLowerCase(Locale.ROOT);
-        return normalized.contains("github.com/") && (normalized.contains("/pull/") || normalized.contains("/commit/"));
+        return (normalized.startsWith("http://") || normalized.startsWith("https://"))
+                && (normalized.contains("/pull/") || normalized.contains("/pulls/") || normalized.contains("/commit/"));
     }
 
-    private String githubPrLink(List<ProofLink> links) {
-        return githubLink(links, "/pull/");
+    private String gitPrLink(List<ProofLink> links) {
+        String pulls = gitLink(links, "/pulls/");
+        return pulls == null ? gitLink(links, "/pull/") : pulls;
     }
 
-    private String githubRepoLink(List<ProofLink> links) {
-        String href = githubLink(links, "github.com/");
+    private String gitRepoLink(List<ProofLink> links) {
+        String href = gitPrLink(links);
         if (href == null) {
-            return null;
+            href = gitLink(links, "/commit/");
+            if (href == null) {
+                return null;
+            }
         }
         int pullIndex = href.indexOf("/pull/");
+        int pullsIndex = href.indexOf("/pulls/");
         int commitIndex = href.indexOf("/commit/");
-        int endIndex = pullIndex > 0 ? pullIndex : commitIndex;
+        int endIndex = firstPositive(pullIndex, pullsIndex, commitIndex);
         return endIndex > 0 ? href.substring(0, endIndex) : href;
     }
 
-    private String githubLink(List<ProofLink> links, String marker) {
+    private int firstPositive(int... values) {
+        int first = -1;
+        for (int value : values) {
+            if (value > 0 && (first < 0 || value < first)) {
+                first = value;
+            }
+        }
+        return first;
+    }
+
+    private String gitLink(List<ProofLink> links, String marker) {
         if (links == null) {
             return null;
         }

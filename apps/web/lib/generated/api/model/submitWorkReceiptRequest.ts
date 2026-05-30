@@ -5,21 +5,21 @@
  * Market -> Listing -> Order -> Proof -> Dispute -> Settlement API.
  * OpenAPI spec version: 0.1.0
  */
-import type {ProofLink} from './proofLink';
-import type {SubmitWorkReceiptRequestOutput} from './submitWorkReceiptRequestOutput';
-import type {SubmitWorkReceiptRequestSourceReceipt} from './submitWorkReceiptRequestSourceReceipt';
+import type { ProofLink } from './proofLink';
+import type { SubmitWorkReceiptRequestOutput } from './submitWorkReceiptRequestOutput';
+import type { SubmitWorkReceiptRequestSourceReceipt } from './submitWorkReceiptRequestSourceReceipt';
 
 export interface SubmitWorkReceiptRequest {
-    /** @minLength 1 */
-    actorAccountId: string;
-    /** @minLength 1 */
-    summary: string;
-    output?: SubmitWorkReceiptRequestOutput;
-    sourceReceipt?: SubmitWorkReceiptRequestSourceReceipt;
-    evidenceRefs?: string[];
-    traceRefs?: string[];
-    contentHashes?: string[];
-    links?: ProofLink[];
-    artifacts?: string[];
-    agentRuntime?: string;
+  /** @minLength 1 */
+  actorAccountId: string;
+  /** @minLength 1 */
+  summary: string;
+  output?: SubmitWorkReceiptRequestOutput;
+  sourceReceipt?: SubmitWorkReceiptRequestSourceReceipt;
+  evidenceRefs?: string[];
+  traceRefs?: string[];
+  contentHashes?: string[];
+  links?: ProofLink[];
+  artifacts?: string[];
+  agentRuntime?: string;
 }
